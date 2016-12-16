@@ -46,6 +46,8 @@ Mechanics
 
 Biased implementation
 - I am leaning towards using HTML canvas and emulating the whole LCD screen. But something that I do need to keep in mind is how I draw these things and keeping it quite responsive. http://www.html5gamedevs.com/topic/7735-myths-and-realities-of-canvas-javascript-performance/
+- Turns out you can draw images (see at the bottom of the page on the next link)
+- http://www.w3schools.com/TAgs/canvas_drawimage.asp
 - What I find extremely interesting watching these old digivices at work is that there seems to be some sort of “clock” cycle that things operate on, sprites need to be shifted onto the screen, other things are shifted out of focus, the refresh rate it seems needs to be really good and I am wonder if it would be better if I drew in the native size and then stretch the canvas out. However as noted in my previous project that I was part of (in Orion) it seems when you scale the canvas up, there is all this “aliasing” effect that blurs the edges and lines to the background.
 Perhaps there is a way to avoid this…
 - So I will need some sort of “sprite” reader that reads a sprite and then converts it into an actual image. I will also need to “Create” digimon
