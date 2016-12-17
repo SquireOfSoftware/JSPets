@@ -4,18 +4,10 @@
     <meta charset="UTF-8">
     <title>JSPets</title>
     <link rel="shortcut icon" href="egg.png" />
+    <link rel="stylesheet" href="css/game.css" />
 </head>
 <body>
-    <canvas id="ctx" style="width: 100%; height: auto; image-rendering: pixelated" height="20" width="75"></canvas>
+    <canvas id="ctx" height="20" width="45"></canvas>
 </body>
-<script>
-    var image = new Image();
-    image.src = "sprites/digim-recreate.png";
-    var canvas = document.getElementById("ctx");
-    var context = canvas.getContext("2d");
-    console.log(image);
-    image.onload = function () {
-        context.drawImage(image, 0, 0);
-    };
-</script>
+<script src="js/game.js"></script>
 </html>
