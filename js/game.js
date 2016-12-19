@@ -165,7 +165,6 @@ function processKeyDown(event) {
     console.log(updateScreen);
     /*if (updateScreen)
         mapScreen.render();*/
-
 }
 
 //console.log(pet);
