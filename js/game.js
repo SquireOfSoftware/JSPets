@@ -82,9 +82,10 @@ function loopPet() {
 
 function screen(options) {
     var self = {};
-    self.home = options.home;
+    self.up = options.up;
     self.left = options.left;
     self.right = options.right;
+    self.down = options.down;
     self.screenPos = options.screenPos;
     self.image = options.image;
     self.context = options.context;
@@ -92,35 +93,22 @@ function screen(options) {
     self.processKeyDown = function(event) {
         switch(event.keyCode) {
             case 37: // left
-                self.left();
-                self.render();
-                break;
+                return self.left();
             case 38: // up
-                //self.home.update();
-                self.render();
-                break;
+                return self.up();
             case 39: // right
-                self.right();
-                self.render();
-                break;
+                return self.right();
             case 40: // down
-                self.context.clearRect(0, 0, self.context.canvas.width, self.context.canvas.height);
-                console.log(self.context);
-                loopPet();
-                break;
+                return self.down();
             default:
-                console.log("TEST");
+                return false;
         }
     };
 
     self.render = function() {
         self.context.clearRect(0, 0, self.context.canvas.width, self.context.canvas.height);
-        self.context.drawImage(self.image, 0, 0);
-    };
 
-    self.image.onload = function(){
-        console.log("LOADED MAP");
-        console.log(this);
+        self.context.drawImage(self.image, 0, 0);
     };
 
     return self;
@@ -130,21 +118,33 @@ var mapIMG = new Image();
 mapIMG.src = "sprites/map-screen.png";
 
 var mapScreen = screen({
-    home: this,
-    left: function(){console.log("Hello")},
-    right: function(){console.log("World")},
+    up: function(){
+        clearScreen();
+        loopPet();
+        return false;
+    },
+    left: function(){console.log("Hello"); return true;},
+    right: function(){console.log("World"); return true;},
+    down: function() { return true; },
     screenPos: {x: 3, y: 3},
     image: mapIMG,
     context: context
 });
 
+
+function clearScreen() {
+    console.log(context.canvas.width, context.canvas.height);
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+}
+
 // need onkeydown for arrow keys left:37, up:38, right:39, down:40
 function processKeyDown(event) {
     //console.log(event.keyCode);
     cancelAnimationFrame(animationFrame);
-    //context.clearRect(0, 0, self.context.width, self.context.height);
-    //mapScreen.render();
-    mapScreen.processKeyDown(event);
+    var updateScreen = mapScreen.processKeyDown(event);
+    console.log(updateScreen);
+    if (updateScreen)
+        mapScreen.render();
 
 }
 
