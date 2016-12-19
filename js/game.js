@@ -11,53 +11,52 @@ var sprites = new Image();
 sprites.src = "sprites/spritesheet.png";
 
 function sprite(options) {
-    var spriteObj = {};
+    var self = {};
     var frameIndex = 0;
     var tickCount = 0;
     ticksPerFrame = options.ticksPerFrame || 0;
     numberOfFrames = options.numberOfFrames || 1;
 
-    spriteObj.context = options.context;
-    spriteObj.width = options.width;
-    spriteObj.height = options.height;
-    spriteObj.image = options.image;
-    spriteObj.togglePosition = options.togglePosition;
-    //spriteObj.loop = options.loop;
+    self.context = options.context;
+    self.width = options.width;
+    self.height = options.height;
+    self.image = options.image;
+    self.togglePosition = options.togglePosition;
 
-    spriteObj.render = function() {
-        spriteObj.context.clearRect(15, 0, spriteObj.width, spriteObj.height);
-        spriteObj.context.drawImage(
-            spriteObj.image,
-            spriteObj.width, // x position
-            //spriteObj.width / numberOfFrames,
-            //frameIndex * spriteObj.width / numberOfFrames,
-            //spriteObj.height,// y position
-            //spriteObj.height / numberOfFrames,
-            spriteObj.height - spriteObj.height * frameIndex,
-            spriteObj.width -1, // width on spritesheet
-            spriteObj.height -1,// height on spritesheet
+    self.render = function() {
+        self.context.clearRect(15, 0, self.width, self.height);
+        self.context.drawImage(
+            self.image,
+            self.width, // x position
+            self.height - self.height * frameIndex, // the next sprite is 16 pixels down
+            self.width -1, // width on spritesheet
+            self.height -1,// height on spritesheet
             15,
             0,
-            spriteObj.width -1, // width on canvas
-            spriteObj.height -1// height on canvas
+            self.width -1, // width on canvas
+            self.height -1// height on canvas
         )
     };
 
-    spriteObj.update = function() {
+    self.update = function() {
         tickCount++;
 
         if (tickCount > ticksPerFrame) {
             tickCount = 0;
             if (frameIndex < numberOfFrames - 1)
                 frameIndex++;
-            else{ //if (spriteObj.loop) {
+            else {
                 frameIndex = 0;
             }
         }
     };
 
-    return spriteObj;
+    return self;
 }
+
+// animation relies on image loading
+
+// same with the screens
 
 var pet = sprite({
     context: context,
@@ -65,22 +64,86 @@ var pet = sprite({
     height: 16,
     image: sprites,
     togglePosition: {x: 15, y: 0},
-    //loop: loopPet,
     ticksPerFrame: 20,
     numberOfFrames: 2
 });
 
 sprites.onload = function() {
-    loopPet(pet);
+    loopPet();
 };
 
+var animationFrame = null;
+
 function loopPet() {
-    requestAnimationFrame(loopPet);
+    animationFrame = requestAnimationFrame(loopPet);
     pet.update();
     pet.render();
 }
 
-console.log(pet);
+function screen(options) {
+    var self = {};
+    self.home = options.home;
+    self.left = options.left;
+    self.right = options.right;
+    self.screenPos = options.screenPos;
+    self.image = options.image;
+    self.context = options.context;
+
+    self.processKeyDown = function(event) {
+        switch(event.keyCode) {
+            case 37: // left
+                self.left();
+                break;
+            case 38: // up
+                //self.home.update();
+                break;
+            case 39: // right
+                self.right();
+                break;
+            case 40: // down
+                self.context.clearRect(0, 0, context.width, context.height);
+                loopPet();
+                break;
+            default:
+                console.log("TEST");
+        }
+    };
+
+    self.render = function() {
+        self.context.clearRect(0, 0, self.context.width, self.context.height);
+        self.context.drawImage(self.image, 0, 0);
+    };
+
+    self.image.onload = function(){
+        console.log("LOADED MAP");
+        console.log(this);
+    };
+
+    return self;
+}
+
+var mapIMG = new Image();
+mapIMG.src = "sprites/map-screen.png";
+
+var mapScreen = screen({
+    home: this,
+    left: function(){console.log("Hello")},
+    right: function(){console.log("World")},
+    screenPos: {x: 3, y: 3},
+    image: mapIMG,
+    context: context
+});
+
+// need onkeydown for arrow keys left:37, up:38, right:39, down:40
+function processKeyDown(event) {
+    //console.log(event.keyCode);
+    cancelAnimationFrame(animationFrame);
+    mapScreen.render();
+    mapScreen.processKeyDown(event);
+
+}
+
+//console.log(pet);
 
 // http://jsfiddle.net/Q98xZ/16/?utm_source=website&utm_medium=embed&utm_campaign=Q98xZ
 // full description of canvas and how to use it well
