@@ -89,6 +89,7 @@ function screen(options) {
     self.screenPos = options.screenPos;
     self.image = options.image;
     self.context = options.context;
+    self.name = options.name;
 
     self.processKeyDown = function(event) {
         switch(event.keyCode) {
@@ -117,18 +118,37 @@ function screen(options) {
 var mapIMG = new Image();
 mapIMG.src = "sprites/map-screen.png";
 
+var careIMG = new Image();
+careIMG.src = "sprites/care-screen.png";
+
 var mapScreen = screen({
     up: function(){
         clearScreen();
         loopPet();
         return false;
     },
-    left: function(){console.log("Hello"); return true;},
-    right: function(){console.log("World"); return true;},
-    down: function() { return true; },
+    left: function(){ careScreen.render(); return true;},
+    right: function(){ this.render(); return true;},
+    down: function() { this.render() },
     screenPos: {x: 3, y: 3},
     image: mapIMG,
-    context: context
+    context: context,
+    name: "map"
+});
+
+var careScreen = screen({
+    up: function(){
+        clearScreen();
+        loopPet();
+        return false;
+    },
+    left: function(){ this.render(); return true;},
+    right: function(){ mapScreen.render(); return true;},
+    down: function() { return true; },
+    screenPos: {x: 3, y: 3},
+    image: careIMG,
+    context: context,
+    name: "care"
 });
 
 
@@ -143,8 +163,8 @@ function processKeyDown(event) {
     cancelAnimationFrame(animationFrame);
     var updateScreen = mapScreen.processKeyDown(event);
     console.log(updateScreen);
-    if (updateScreen)
-        mapScreen.render();
+    /*if (updateScreen)
+        mapScreen.render();*/
 
 }
 
