@@ -93,15 +93,19 @@ function screen(options) {
         switch(event.keyCode) {
             case 37: // left
                 self.left();
+                self.render();
                 break;
             case 38: // up
                 //self.home.update();
+                self.render();
                 break;
             case 39: // right
                 self.right();
+                self.render();
                 break;
             case 40: // down
-                self.context.clearRect(0, 0, context.width, context.height);
+                self.context.clearRect(0, 0, self.context.canvas.width, self.context.canvas.height);
+                console.log(self.context);
                 loopPet();
                 break;
             default:
@@ -110,7 +114,7 @@ function screen(options) {
     };
 
     self.render = function() {
-        self.context.clearRect(0, 0, self.context.width, self.context.height);
+        self.context.clearRect(0, 0, self.context.canvas.width, self.context.canvas.height);
         self.context.drawImage(self.image, 0, 0);
     };
 
@@ -138,7 +142,8 @@ var mapScreen = screen({
 function processKeyDown(event) {
     //console.log(event.keyCode);
     cancelAnimationFrame(animationFrame);
-    mapScreen.render();
+    //context.clearRect(0, 0, self.context.width, self.context.height);
+    //mapScreen.render();
     mapScreen.processKeyDown(event);
 
 }
