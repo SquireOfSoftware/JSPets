@@ -8,7 +8,16 @@
 var canvas = document.getElementById("ctx");
 var context = canvas.getContext("2d");
 var sprites = new Image();
-sprites.src = "sprites/spritesheet.png";
+sprites.src = "sprites/duckling.png";
+
+// the sprite state
+var spriteState = {
+    idle: 0,
+    attack: 1,
+    hurt: 2,
+    evolving: 3,
+    devolving: 4
+};
 
 function sprite(options) {
     var self = {};
@@ -22,20 +31,44 @@ function sprite(options) {
     self.height = options.height;
     self.image = options.image;
     self.togglePosition = options.togglePosition;
+    self.state = spriteState.idle;
 
     self.render = function() {
         self.context.clearRect(15, 0, self.width, self.height);
-        self.context.drawImage(
-            self.image,
-            self.width, // x position
-            self.height - self.height * frameIndex, // the next sprite is 16 pixels down
-            self.width -1, // width on spritesheet
-            self.height -1,// height on spritesheet
-            15,
-            0,
-            self.width -1, // width on canvas
-            self.height -1// height on canvas
-        )
+        switch (self.state) {
+            case spriteState.idle: {
+                self.context.drawImage(
+                    self.image,
+                    self.width * frameIndex, // x position
+                    //self.height - self.height * frameIndex, // the next sprite is 16 pixels down
+                    //self.height,
+                    0,
+                    self.width - 1, // width on spritesheet
+                    self.height,// height on spritesheet
+                    15, // x position on canvas
+                    0,  // y position on canvas
+                    self.width - 1, // width on canvas
+                    self.height// height on canvas
+                );
+                break;
+            }
+            case spriteState.attack: {
+                self.context.drawImage(
+                    self.image,
+                    self.width * 2, // x position
+                    //self.height - self.height * frameIndex, // the next sprite is 16 pixels down
+                    //self.height,
+                    0,
+                    self.width - 1, // width on spritesheet
+                    self.height,// height on spritesheet
+                    15, // x position on canvas
+                    0,  // y position on canvas
+                    self.width - 1, // width on canvas
+                    self.height// height on canvas
+                );
+                break;
+            }
+        }
     };
 
     self.update = function() {
@@ -43,8 +76,10 @@ function sprite(options) {
 
         if (tickCount > ticksPerFrame) {
             tickCount = 0;
-            if (frameIndex < numberOfFrames - 1)
+            if (frameIndex < numberOfFrames - 1) {
                 frameIndex++;
+                console.log(frameIndex);
+            }
             else {
                 frameIndex = 0;
             }
@@ -63,19 +98,20 @@ var pet = sprite({
     width: 16,
     height: 16,
     image: sprites,
-    togglePosition: {x: 15, y: 0},
+    togglePosition: {x: 0, y: 0},
     ticksPerFrame: 20,
     numberOfFrames: 2
 });
 
+// this is the initial screen that is seen
 sprites.onload = function() {
     loopPet();
 };
 
-var animationFrame = null;
+var petFrame = null;
 
 function loopPet() {
-    animationFrame = requestAnimationFrame(loopPet);
+    petFrame = requestAnimationFrame(loopPet);
     pet.update();
     pet.render();
 }
@@ -90,21 +126,6 @@ function screen(options) {
     self.image = options.image;
     self.context = options.context;
     self.name = options.name;
-
-    self.processKeyDown = function(event) {
-        switch(event.keyCode) {
-            case 37: // left
-                return self.left();
-            case 38: // up
-                return self.up();
-            case 39: // right
-                return self.right();
-            case 40: // down
-                return self.down();
-            default:
-                return false;
-        }
-    };
 
     self.render = function() {
         self.context.clearRect(0, 0, self.context.canvas.width, self.context.canvas.height);
@@ -122,14 +143,6 @@ var careIMG = new Image();
 careIMG.src = "sprites/care-screen.png";
 
 var mapScreen = screen({
-    up: function(){
-        clearScreen();
-        loopPet();
-        return false;
-    },
-    left: function(){ careScreen.render(); return true;},
-    right: function(){ this.render(); return true;},
-    down: function() { this.render() },
     screenPos: {x: 3, y: 3},
     image: mapIMG,
     context: context,
@@ -137,14 +150,6 @@ var mapScreen = screen({
 });
 
 var careScreen = screen({
-    up: function(){
-        clearScreen();
-        loopPet();
-        return false;
-    },
-    left: function(){ this.render(); return true;},
-    right: function(){ mapScreen.render(); return true;},
-    down: function() { return true; },
     screenPos: {x: 3, y: 3},
     image: careIMG,
     context: context,
@@ -157,14 +162,37 @@ function clearScreen() {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 }
 
+var currentScreen = 0;
+
 // need onkeydown for arrow keys left:37, up:38, right:39, down:40
 function processKeyDown(event) {
     //console.log(event.keyCode);
-    cancelAnimationFrame(animationFrame);
-    var updateScreen = mapScreen.processKeyDown(event);
+    cancelAnimationFrame(petFrame);
+    switch(event.keyCode) {
+        case 37: // left
+            switch (currentScreen) {
+                case 0: // walking screen
+                    loopPet();
+                case 1: // map screen
+                    return;
+            }
+            break;
+        case 38: // up
+            //return self.up();
+            pet.state = spriteState.attack;
+            pet.render();
+            break;
+        case 39: // right
+            //return self.right();
+            pet.state = spriteState.idle;
+            loopPet();
+            break;
+        case 40: // down
+            //return self.down();
+        default:
+            return false;
+    }
     console.log(updateScreen);
-    /*if (updateScreen)
-        mapScreen.render();*/
 }
 
 //console.log(pet);
