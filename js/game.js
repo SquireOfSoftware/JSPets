@@ -23,6 +23,7 @@ var screenState = {
     map: 0,
     care: 1,
     menu: 2,
+    about: 14,
     pet: 15
 };
 
@@ -89,10 +90,6 @@ function sprite(options) {
 
     return self;
 }
-
-// animation relies on image loading
-
-// same with the screens
 
 var pet = sprite({
     context: context,
@@ -181,22 +178,23 @@ mapScreenIMG.src = "sprites/map-screens.png";
 var menuScreenIMG = new Image();
 menuScreenIMG.src = "sprites/menu-screen.png";
 
+var aboutScreenIMG = new Image();
+aboutScreenIMG.src = "sprites/about-screen.png";
+
 var menuScreen = screen({
     image: menuScreenIMG,
     context: context,
     name: "menu",
-    // do you need screen sate?
     width: 45,
-    height: 20,
-    //frameLimit: menuScreenIMG.width / 45 // assuming this comes out nicely
+    height: 20
 });
 
 console.log("total screens", menuScreenIMG.width / 45);
 
 menuScreen.previousFrame = function() {
-    self.internalCounter--;
-    if (self.internalCounter < 0){
-        self.internalCounter = self.frameLimit;
+    this.internalCounter--;
+    if (this.internalCounter < 0){
+        this.internalCounter = this.frameLimit - 1;
     }
 };
 
@@ -208,6 +206,14 @@ var mapScreen = screen({
     width: 45,
     height: 20,
     frameLimit: 4
+});
+
+var aboutScreen = screen({
+    image: aboutScreenIMG,
+    context: context,
+    name: "about",
+    width: 45,
+    height: 20
 });
 
 function clearScreen() {
@@ -226,13 +232,15 @@ function processKeyDown(event) {
             console.log("left");
             switch (currentScreenState) {
                 case screenState.menu: // map screen
-                    menuScreen.update();
+                    menuScreen.previousFrame();
                     menuScreen.render();
                     break;
                 case screenState.map:
                     break;
                 case screenState.pet: // walking screen
                 default:
+                    menuScreen.reset();
+                    clearScreen();
                     loopPet();
                     break;
             }
@@ -241,29 +249,18 @@ function processKeyDown(event) {
             console.log("up");
             switch (currentScreenState) {
                 case screenState.map: // map screen
-                    /*if (mapScreen.internalCounter !== 0) {
-                        mapScreen.reset();
-                        mapScreen.render();
-                    }
-                    else {
-                        clearScreen();
-                        loopPet();
-                    }*/
                     currentScreenState = screenState.menu;
                     menuScreen.render();
                     break;
                 case screenState.menu: // map screen
-                    if (menuScreen.internalCounter !== 0) {
-                        menuScreen.reset();
-                        menuScreen.render();
-                    }
-                    else {
-                        clearScreen();
-                        loopPet();
-                    }
+                    menuScreen.reset();
+                    clearScreen();
+                    loopPet();
                     break;
                 case screenState.pet: // walking screen
                 default:
+                    menuScreen.reset();
+                    clearScreen();
                     loopPet();
                     break;
             }
@@ -276,11 +273,11 @@ function processKeyDown(event) {
                     menuScreen.render();
                     break;
                 case screenState.map: // map screen
-                    /*mapScreen.update();
-                    mapScreen.render();*/
                     break;
                 case screenState.pet: // walking screen
                 default:
+                    menuScreen.reset();
+                    clearScreen();
                     loopPet();
                     break;
             }
@@ -294,12 +291,14 @@ function processKeyDown(event) {
                     console.log("Trying to render map screen");
                     break;
                 case screenState.menu:
-                    /*menuScreen.reset();
-                    menuScreen.render();*/
                     switch(menuScreen.internalCounter) {
-                        case 0:
+                        case 0: // map screen
                             currentScreenState = screenState.map;
                             mapScreen.render();
+                            break;
+                        case 2: // about screen
+                            currentScreenState = screenState.about;
+                            aboutScreen.render();
                             break;
                         default:
                             break;
@@ -310,6 +309,8 @@ function processKeyDown(event) {
                     mapScreen.render();
                     break;
                 default:
+                    menuScreen.reset();
+                    clearScreen();
                     loopPet();
                     break;
             }
