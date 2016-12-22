@@ -223,6 +223,7 @@ var stepScreen = {
     height: 20,
 
     runningTotal: bigInt(0),
+    previousCount: "0",
 
     meats: bigInt(0),
     alphabet: [0, 4, 8, 12, 16, 20, 24, 28, 32, 36],
@@ -245,12 +246,24 @@ var stepScreen = {
         // 45 / 4 px wide char ~ 11 digits - with 1 px spaces in 4px
         // 20 / 6 px high char ~ 3 digits - with 1 px spaces in 5px
         // can fit approximate 33 digits, height will look a little funny
-        this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+        if(this.previousCount === "0")
+            this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
         // every 11 digits, bring up to new line
         var column = 10;
         var row = 2;
+        var previousCountIndex = this.previousCount.length - 1;
         // change running total into string
         for(var index = this.runningTotal.toString().length - 1; index > -1 && row > -1; index--){
+            // assumes runningTotal is always larger than previousCount
+            // goal of this code is to just clear what needs to be cleared, if its a large number
+            // only the bits that get updated are redrawn
+            if (previousCountIndex > -1  &&
+                this.runningTotal.toString().charAt(index) !== this.previousCount.charAt(previousCountIndex)) {
+                this.context.clearRect(column * 4, row * 6, 4, 5);
+                // clear a single character
+                previousCountIndex--;
+            }
+            // write a single character
             context.drawImage(
                 this.image,
                 this.alphabet[parseInt(this.runningTotal.toString().charAt(index))], // x position
@@ -262,12 +275,18 @@ var stepScreen = {
                 4, // width on canvas
                 5// height on canvas
             );
+            previousCountIndex--;
             column--;
             if (column === -1) {
                 column = 10;
                 row--;
             }
         }
+        this.previousCount = this.runningTotal.toString();
+    },
+
+    resetPreviousCount: function () {
+        this.previousCount = "0";
     }
 };
 
@@ -303,6 +322,7 @@ function processKeyDown(event) {
         case 38: // up, cancel
             switch (currentScreenState) {
                 case screenState.step:
+                    stepScreen.resetPreviousCount();
                 case screenState.map: // map screen
                     currentScreenState = screenState.menu;
                     menuScreen.render();
