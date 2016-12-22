@@ -227,32 +227,44 @@ var stepScreen = {
 
     //runningTotal: 0, // should start at 0
     //runningTotal: 23968239069047333275096019614393720754979513,
-    runningTotal: 9007199254740991,
+    //runningTotal: bigInt("23968239069047333275096019614393720754979513"), // 44 digit test
+    //runningTotal: bigInt("536266667070563751619897065504336"),
+    //runningTotal: bigInt("999999999999999999999999999999990"), // 33 digit test
+    runningTotal: bigInt("11111111111111111111111111111111"),
+    //runningTotal: bigInt(0),
+    //runningTotal: 9007199254740991,
     previousTotal: 0,
     meats: 0,
     alphabet: [0, 4, 8, 12, 16, 20, 24, 28, 32, 36],
 
     update: function() {
-        this.runningTotal++;
-        console.log(this.runningTotal);
-        if (this.runningTotal % 100) {
-            this.meats++;
+        //console.log(typeof(this.runningTotal), this.runningTotal);
+        if(this.runningTotal.add(1).toString().length < 34) {
+            this.runningTotal = this.runningTotal.add(1);
+            if (this.runningTotal.mod(100)) {
+                this.meats++;
+                //console.log(this.meats);
+            }
         }
+        else {
+            console.log("Number is too big for the screen, no of digits are: ", this.runningTotal.toString().length);
+        }
+
     },
 
     render: function() { // only update when walking, problem is: "how fast is a walk?"
         // we have 45 by 20 pixels
-        // 45 / 4 px wide char ~ 11 digits - with spaces in 4px
-        // 20 / 5 px high char ~ 4 digits - with no spaces in 5px
-        // can fit approximate 44 digits, height will look a little funny
-        console.log("trying to render steps page");
+        // 45 / 4 px wide char ~ 11 digits - with 1 px spaces in 4px
+        // 20 / 6 px high char ~ 3 digits - with 1 px spaces in 5px
+        // can fit approximate 33 digits, height will look a little funny
+        //console.log(this.runningTotal.toString());
         this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
         // every 11 digits, bring up to new line
         var column = 10;
-        var row = 3;
+        var row = 2;
         // change running total into string
         for(var index = this.runningTotal.toString().length - 1; index > -1 && row > -1; index--){
-            console.log(index, column, row * 4);
+            //console.log(index, column, row * 4);
             context.drawImage(
                 this.image,
                 this.alphabet[parseInt(this.runningTotal.toString().charAt(index))], // x position
@@ -260,7 +272,7 @@ var stepScreen = {
                 4, // width on spritesheet
                 5,// height on spritesheet
                 column * 4, // x position on canvas
-                row * 5,  // y position on canvas
+                row * 6,  // y position on canvas
                 4, // width on canvas
                 5// height on canvas
             );
@@ -274,7 +286,7 @@ var stepScreen = {
 };
 
 function clearScreen() {
-    console.log(context.canvas.width, context.canvas.height);
+    //console.log(context.canvas.width, context.canvas.height);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 }
 
@@ -283,10 +295,10 @@ var currentScreenState = screenState.pet;
 // need onkeydown for arrow keys left:37, up:38, right:39, down:40
 function processKeyDown(event) {
     cancelAnimationFrame(animationFrame);
-    console.log("current screen state: ",currentScreenState);
+    //console.log("current screen state: ",currentScreenState);
     switch(event.keyCode) {
         case 37: // left
-            console.log("left");
+            //console.log("left");
             switch (currentScreenState) {
                 case screenState.menu: // map screen
                     menuScreen.previousFrame();
@@ -305,7 +317,7 @@ function processKeyDown(event) {
             }
             break;
         case 38: // up, cancel
-            console.log("up");
+            //console.log("up");
             switch (currentScreenState) {
                 case screenState.step:
                 case screenState.map: // map screen
@@ -323,7 +335,7 @@ function processKeyDown(event) {
             }
             break;
         case 39: // right
-            console.log("right");
+            //console.log("right");
             switch (currentScreenState) {
                 case screenState.menu: // map screen
                     menuScreen.update();
@@ -342,12 +354,12 @@ function processKeyDown(event) {
             }
             break;
         case 40: // down - represents menu and item selection
-            console.log("down");
+            //console.log("down");
             switch (currentScreenState) {
                 case screenState.pet: // walking screen
                     currentScreenState = screenState.menu;
                     menuScreen.render();
-                    console.log("Trying to render map screen");
+                    //console.log("Trying to render map screen");
                     break;
                 case screenState.menu:
                     switch(menuScreen.internalCounter) {
@@ -386,7 +398,7 @@ function processKeyDown(event) {
 
 function walk() {
     stepScreen.update();
-    document.getElementById("test").value = stepScreen.runningTotal;
+    document.getElementById("test").value = stepScreen.runningTotal.toString();
     if (currentScreenState === screenState.step)
         stepScreen.render();
 }
