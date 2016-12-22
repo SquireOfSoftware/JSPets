@@ -26,6 +26,9 @@ menuScreenIMG.src = "sprites/menu-screen.png";
 aboutScreenIMG = new Image();
 aboutScreenIMG.src = "sprites/about-screen.png";
 
+stepScreenIMG = new Image();
+stepScreenIMG.src = "sprites/step-alphabet.png";
+
 // the sprite state
 var spriteState = {
     idle: 0,
@@ -39,6 +42,7 @@ var screenState = {
     map: 0,
     care: 1,
     menu: 2,
+    step: 3,
     about: 14,
     pet: 15
 };
@@ -115,11 +119,10 @@ var pet = sprite({
     numberOfFrames: 2
 });
 
-
-var petFrame = null;
+var animationFrame = null;
 
 function loopPet() {
-    petFrame = requestAnimationFrame(loopPet);
+    animationFrame = requestAnimationFrame(loopPet);
     currentScreenState = screenState.pet;
     pet.state = spriteState.idle;
     pet.update();
@@ -190,7 +193,7 @@ var menuScreen = screen({
     height: 20
 });
 
-console.log("total screens", menuScreenIMG.width / 45);
+//console.log("total screens", menuScreenIMG.width / 45);
 
 menuScreen.previousFrame = function() {
     this.internalCounter--;
@@ -217,6 +220,70 @@ var aboutScreen = screen({
     height: 20
 });
 
+var stepScreen = {
+    image: stepScreenIMG,
+    context: context,
+    name: "step",
+    width: 45,
+    height: 20,
+
+    frameIndex: 0,
+
+    runningTotal: 0, // should start at 0
+    previousTotal: 0,
+    meats: 0,
+    alphabet: [0, 4, 8, 12, 16, 20, 24, 28, 32, 36],
+
+    update: function() {
+        this.runningTotal++;
+        console.log(this.runningTotal);
+        if (this.runningTotal % 100) {
+            this.meats++;
+        }
+    },
+
+    render: function() { // only update when walking, problem is: "how fast is a walk?"
+        // we have 45 by 20 pixels
+        // 45 / 4 px wide char ~ 11 digits - with spaces in 4px
+        // 20 / 5 px high char ~ 4 digits - with no spaces in 5px
+        // can fit approximate 44 digits, height will look a little funny
+        console.log("trying to render steps page");
+        //console.log(this.alphabet, this.image);
+        this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+        //this.context.drawImage(this.image, 0, 0, 4, 5, 0, 0, 4, 5);
+        // every 11 digits, bring up to new line
+        var column = 10;
+        var row = 3;
+        // change running total into string
+        for(var index = this.runningTotal.toString().length - 1; index > -1 && row > -1; index--){
+            console.log(index, column, row * 4);
+            context.drawImage(
+                this.image,
+                this.alphabet[parseInt(this.runningTotal.toString().charAt(index))], // x position
+                0,
+                4, // width on spritesheet
+                5,// height on spritesheet
+                column * 4, // x position on canvas
+                row * 5,  // y position on canvas
+                //40, 15,
+                4, // width on canvas
+                5// height on canvas
+            );
+            column--;
+            if (column === -1) {
+                column = 10;
+                row--;
+            }
+        }
+    }
+};
+
+function loopStep() {
+    animationFrame = requestAnimationFrame(loopStep);
+    currentScreenState = screenState.step;
+    stepScreen.render();
+}
+
 function clearScreen() {
     console.log(context.canvas.width, context.canvas.height);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -226,7 +293,7 @@ var currentScreenState = screenState.pet;
 
 // need onkeydown for arrow keys left:37, up:38, right:39, down:40
 function processKeyDown(event) {
-    cancelAnimationFrame(petFrame);
+    cancelAnimationFrame(animationFrame);
     console.log("current screen state: ",currentScreenState);
     switch(event.keyCode) {
         case 37: // left
@@ -237,6 +304,8 @@ function processKeyDown(event) {
                     menuScreen.render();
                     break;
                 case screenState.map:
+                    break;
+                case screenState.step:
                     break;
                 case screenState.pet: // walking screen
                 default:
@@ -249,15 +318,13 @@ function processKeyDown(event) {
         case 38: // up, cancel
             console.log("up");
             switch (currentScreenState) {
+                case screenState.step:
                 case screenState.map: // map screen
                     currentScreenState = screenState.menu;
                     menuScreen.render();
                     break;
+
                 case screenState.menu: // map screen
-                    menuScreen.reset();
-                    clearScreen();
-                    loopPet();
-                    break;
                 case screenState.pet: // walking screen
                 default:
                     menuScreen.reset();
@@ -274,6 +341,8 @@ function processKeyDown(event) {
                     menuScreen.render();
                     break;
                 case screenState.map: // map screen
+                    break;
+                case screenState.step:
                     break;
                 case screenState.pet: // walking screen
                 default:
@@ -301,11 +370,18 @@ function processKeyDown(event) {
                             currentScreenState = screenState.about;
                             aboutScreen.render();
                             break;
+                        case 3: // steps screen
+                            currentScreenState = screenState.step;
+                            stepScreen.render();
+                            //loopStep();
+                            break;
                         default:
                             break;
                     }
                     break;
                 case screenState.map: // map screen
+                    break;
+                case screenState.step:
                     break;
                 default:
                     menuScreen.reset();
@@ -319,9 +395,9 @@ function processKeyDown(event) {
     }
 
 }
-
+/*
 var steps = {
-    runningTotal: 0,
+    runningTotal: 0, // should start at 0
     meats: 0,
 
     update: function() {
@@ -331,15 +407,19 @@ var steps = {
             this.meats++;
         }
     }
-};
+};*/
 
 function walk() {
-    if (currentScreenState === screenState.pet) {
+    //cancelAnimationFrame(animationFrame);
+    //if (currentScreenState === screenState.pet ||
+    //    currentScreenState === screenState.step) {
         //steps.runningTotal++;
-        steps.update();
-        document.getElementById("test").value = steps.runningTotal;
-
-    }
+        stepScreen.update();
+        document.getElementById("test").value = stepScreen.runningTotal;
+        if (currentScreenState === screenState.step)
+            stepScreen.render();
+        //loopStep();
+    //}
 }
 
 // http://jsfiddle.net/Q98xZ/16/?utm_source=website&utm_medium=embed&utm_campaign=Q98xZ
