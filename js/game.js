@@ -77,14 +77,12 @@ function sprite(options) {
         self.context.drawImage(
             self.image,
             framePosition, // x position
-            //self.height - self.height * frameIndex, // the next sprite is 16 pixels down
-            //self.height,
             0,
-            self.width - 1, // width on spritesheet
+            self.width, // width on spritesheet
             self.height,// height on spritesheet
             15, // x position on canvas
             0,  // y position on canvas
-            self.width - 1, // width on canvas
+            self.width, // width on canvas
             self.height// height on canvas
         );
     };
@@ -150,11 +148,11 @@ function screen(options) {
             self.image,
             framePosition, // x position
             0,
-            self.width - 1, // width on spritesheet
+            self.width, // width on spritesheet
             self.height,// height on spritesheet
             0, // x position on canvas
             0,  // y position on canvas
-            self.width - 1, // width on canvas
+            self.width, // width on canvas
             self.height// height on canvas
         );
     };
@@ -320,6 +318,28 @@ function processKeyDown(event) {
             return false;
     }
 
+}
+
+var steps = {
+    runningTotal: 0,
+    meats: 0,
+
+    update: function() {
+        this.runningTotal++;
+        console.log(this.runningTotal);
+        if(this.runningTotal % 100) {
+            this.meats++;
+        }
+    }
+};
+
+function walk() {
+    if (currentScreenState === screenState.pet) {
+        //steps.runningTotal++;
+        steps.update();
+        document.getElementById("test").value = steps.runningTotal;
+
+    }
 }
 
 // http://jsfiddle.net/Q98xZ/16/?utm_source=website&utm_medium=embed&utm_campaign=Q98xZ
