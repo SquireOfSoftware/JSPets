@@ -193,8 +193,6 @@ var menuScreen = screen({
     height: 20
 });
 
-//console.log("total screens", menuScreenIMG.width / 45);
-
 menuScreen.previousFrame = function() {
     this.internalCounter--;
     if (this.internalCounter < 0){
@@ -227,9 +225,9 @@ var stepScreen = {
     width: 45,
     height: 20,
 
-    frameIndex: 0,
-
-    runningTotal: 0, // should start at 0
+    //runningTotal: 0, // should start at 0
+    //runningTotal: 23968239069047333275096019614393720754979513,
+    runningTotal: 9007199254740991,
     previousTotal: 0,
     meats: 0,
     alphabet: [0, 4, 8, 12, 16, 20, 24, 28, 32, 36],
@@ -248,9 +246,7 @@ var stepScreen = {
         // 20 / 5 px high char ~ 4 digits - with no spaces in 5px
         // can fit approximate 44 digits, height will look a little funny
         console.log("trying to render steps page");
-        //console.log(this.alphabet, this.image);
         this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
-        //this.context.drawImage(this.image, 0, 0, 4, 5, 0, 0, 4, 5);
         // every 11 digits, bring up to new line
         var column = 10;
         var row = 3;
@@ -265,7 +261,6 @@ var stepScreen = {
                 5,// height on spritesheet
                 column * 4, // x position on canvas
                 row * 5,  // y position on canvas
-                //40, 15,
                 4, // width on canvas
                 5// height on canvas
             );
@@ -277,12 +272,6 @@ var stepScreen = {
         }
     }
 };
-
-function loopStep() {
-    animationFrame = requestAnimationFrame(loopStep);
-    currentScreenState = screenState.step;
-    stepScreen.render();
-}
 
 function clearScreen() {
     console.log(context.canvas.width, context.canvas.height);
@@ -373,7 +362,6 @@ function processKeyDown(event) {
                         case 3: // steps screen
                             currentScreenState = screenState.step;
                             stepScreen.render();
-                            //loopStep();
                             break;
                         default:
                             break;
@@ -395,31 +383,12 @@ function processKeyDown(event) {
     }
 
 }
-/*
-var steps = {
-    runningTotal: 0, // should start at 0
-    meats: 0,
-
-    update: function() {
-        this.runningTotal++;
-        console.log(this.runningTotal);
-        if(this.runningTotal % 100) {
-            this.meats++;
-        }
-    }
-};*/
 
 function walk() {
-    //cancelAnimationFrame(animationFrame);
-    //if (currentScreenState === screenState.pet ||
-    //    currentScreenState === screenState.step) {
-        //steps.runningTotal++;
-        stepScreen.update();
-        document.getElementById("test").value = stepScreen.runningTotal;
-        if (currentScreenState === screenState.step)
-            stepScreen.render();
-        //loopStep();
-    //}
+    stepScreen.update();
+    document.getElementById("test").value = stepScreen.runningTotal;
+    if (currentScreenState === screenState.step)
+        stepScreen.render();
 }
 
 // http://jsfiddle.net/Q98xZ/16/?utm_source=website&utm_medium=embed&utm_campaign=Q98xZ
