@@ -7,8 +7,24 @@
 
 var canvas = document.getElementById("ctx");
 var context = canvas.getContext("2d");
-var sprites = new Image();
-sprites.src = "sprites/duckling.png";
+var petSprite, menuScreenIMG, mapScreenIMG, aboutScreenIMG;
+
+petSprite = new Image();
+petSprite.src = "sprites/duckling.png";
+
+// this is the initial screen that is seen
+petSprite.onload = function() {
+    loopPet();
+};
+
+mapScreenIMG = new Image();
+mapScreenIMG.src = "sprites/map-screens.png";
+
+menuScreenIMG = new Image();
+menuScreenIMG.src = "sprites/menu-screen.png";
+
+aboutScreenIMG = new Image();
+aboutScreenIMG.src = "sprites/about-screen.png";
 
 // the sprite state
 var spriteState = {
@@ -95,16 +111,12 @@ var pet = sprite({
     context: context,
     width: 16,
     height: 16,
-    image: sprites,
+    image: petSprite,
     togglePosition: {x: 0, y: 0},
     ticksPerFrame: 20,
     numberOfFrames: 2
 });
 
-// this is the initial screen that is seen
-sprites.onload = function() {
-    loopPet();
-};
 
 var petFrame = null;
 
@@ -172,15 +184,6 @@ function screen(options) {
     return self;
 }
 
-var mapScreenIMG = new Image();
-mapScreenIMG.src = "sprites/map-screens.png";
-
-var menuScreenIMG = new Image();
-menuScreenIMG.src = "sprites/menu-screen.png";
-
-var aboutScreenIMG = new Image();
-aboutScreenIMG.src = "sprites/about-screen.png";
-
 var menuScreen = screen({
     image: menuScreenIMG,
     context: context,
@@ -205,7 +208,7 @@ var mapScreen = screen({
     // do you need screen sate?
     width: 45,
     height: 20,
-    frameLimit: 4
+    frameLimit: 5
 });
 
 var aboutScreen = screen({
@@ -305,8 +308,6 @@ function processKeyDown(event) {
                     }
                     break;
                 case screenState.map: // map screen
-                    mapScreen.update();
-                    mapScreen.render();
                     break;
                 default:
                     menuScreen.reset();
