@@ -112,6 +112,7 @@ var petFrame = null;
 
 function loopPet() {
     petFrame = requestAnimationFrame(loopPet);
+    currentScreenState = screenState.pet;
     pet.state = spriteState.idle;
     pet.update();
     pet.render();
@@ -124,12 +125,40 @@ function screen(options) {
     self.context = options.context;
     self.name = options.name;
     self.state = options.state;
-    self.width = options.weight;
+    self.width = options.width;
+    self.height = options.height;
+    self.internalCounter = 0;
+    self.frameLimit = options.frameLimit;
 
     self.render = function() {
         self.context.clearRect(0, 0, self.context.canvas.width, self.context.canvas.height);
 
-        self.context.drawImage(self.image, self.width * self.state, 0);
+        //self.context.drawImage(self.image, self.width * self.internalCounter, 0);
+        var framePosition = self.width * self.internalCounter;
+        console.log(self.image, self.width, self.height);
+
+        self.context.drawImage(
+            self.image,
+            framePosition, // x position
+            0,
+            self.width - 1, // width on spritesheet
+            self.height,// height on spritesheet
+            0, // x position on canvas
+            0,  // y position on canvas
+            self.width - 1, // width on canvas
+            self.height// height on canvas
+        );
+    };
+
+    self.update = function() {
+        self.internalCounter ++;
+        if (self.internalCounter > self.frameLimit) {
+            self.internalCounter = 0;
+        }
+    };
+
+    self.reset = function() {
+        self.internalCounter = 0;
     };
 
     self.clear = function() {
@@ -138,23 +167,23 @@ function screen(options) {
 
     return self;
 }
-/*
-var mapIMG = new Image();
-mapIMG.src = "sprites/map-screen.png";
-
-var careIMG = new Image();
-careIMG.src = "sprites/care-screen.png";*/
 
 var currentScreenSprite = new Image();
 currentScreenSprite.src = "sprites/screens.png";
-/*
+
+currentScreenSprite.onload = function () {
+    console.log("Map has just loaded");
+};
+
 var mapScreen = screen({
-    screenPos: {x: 3, y: 3},
-    state: screenState.map,
-    image: mapIMG,
+    image: currentScreenSprite,
     context: context,
-    name: "map"
-});*/
+    name: "map",
+    // do you need screen sate?
+    width: 45,
+    height: 20,
+    frameLimit: 5
+});
 
 function clearScreen() {
     console.log(context.canvas.width, context.canvas.height);
@@ -167,30 +196,72 @@ var currentScreenState = screenState.pet;
 function processKeyDown(event) {
     //console.log(event.keyCode);
     cancelAnimationFrame(petFrame);
+    console.log("current screen state: ",currentScreenState);
     switch(event.keyCode) {
         case 37: // left
-            pet.state = spriteState.attack;
-            pet.render();
-            break;
-        case 38: // up
-            switch (currentScreenState.state) {
+            console.log("left");
+            switch (currentScreenState) {
+                case screenState.map: // map screen
+                    break;
                 case screenState.pet: // walking screen
+                default:
                     loopPet();
                     break;
+            }
+            break;
+        case 38: // up, cancel
+            console.log("up");
+            switch (currentScreenState) {
                 case screenState.map: // map screen
+                    if (mapScreen.internalCounter !== 0) {
+                        mapScreen.reset();
+                        mapScreen.render();
+                    }
+                    else {
+                        clearScreen();
+                        loopPet();
+                    }
+                    break;
+                case screenState.pet: // walking screen
+                default:
+                    loopPet();
+                    break;
             }
             break;
         case 39: // right
-            loopPet();
+            console.log("right");
+            switch (currentScreenState) {
+                case screenState.map: // map screen
+                    mapScreen.update();
+                    mapScreen.render();
+                    break;
+                case screenState.pet: // walking screen
+                default:
+                    loopPet();
+                    break;
+            }
             break;
-        case 40: // down
-            pet.state = spriteState.hurt;
-            pet.render();
+        case 40: // down - represents menu and item selection
+            console.log("down");
+            switch (currentScreenState) {
+                case screenState.pet: // walking screen
+                    currentScreenState = screenState.map;
+                    mapScreen.render();
+                    console.log("Trying to render map screen");
+                    break;
+                case screenState.map: // map screen
+                    mapScreen.update();
+                    mapScreen.render();
+                    break;
+                default:
+                    loopPet();
+                    break;
+            }
             break;
         default:
             return false;
     }
-    console.log(currentScreenState);
+
 }
 
 //console.log(pet);
