@@ -43,6 +43,8 @@ var screenState = {
     care: 1,
     menu: 2,
     step: 3,
+    help: 4,
+    battle: 5,
     about: 14,
     pet: 15
 };
@@ -123,7 +125,7 @@ var animationFrame = null;
 function loopPet() {
     animationFrame = requestAnimationFrame(loopPet);
     currentScreenState = screenState.pet;
-    pet.state = spriteState.idle;
+    //pet.state = spriteState.hurt;
     pet.update();
     pet.render();
 }
@@ -287,6 +289,10 @@ var stepScreen = {
 
     resetPreviousCount: function () {
         this.previousCount = "0";
+    },
+
+    isAtABattle: function() {
+        return this.runningTotal.mod(500).equals(0);
     }
 };
 
@@ -367,6 +373,16 @@ function processKeyDown(event) {
                             currentScreenState = screenState.map;
                             mapScreen.render();
                             break;
+                        case 1: // care screen
+                            if (pet.state === spriteState.hurt) {
+                                pet.state = spriteState.idle;
+                                clearScreen();
+                                pet.render();
+                            }
+                            menuScreen.reset();
+                            clearScreen();
+                            loopPet();
+                            break;
                         case 2: // about screen
                             currentScreenState = screenState.about;
                             aboutScreen.render();
@@ -383,6 +399,15 @@ function processKeyDown(event) {
                     break;
                 case screenState.step:
                     break;
+                /*case screenState.care:
+                    if (pet.state === spriteState.hurt) {
+                        pet.state = spriteState.idle;
+                        pet.render();
+                    }
+                    menuScreen.reset();
+                    clearScreen();
+                    loopPet();
+                    break;*/
                 default:
                     menuScreen.reset();
                     clearScreen();
@@ -399,7 +424,10 @@ function processKeyDown(event) {
 function walk() {
     stepScreen.update();
     document.getElementById("test").value = stepScreen.runningTotal.toString();
-    if (currentScreenState === screenState.step)
+    if (stepScreen.isAtABattle()) { // player is at a battle, need to determine which battle
+        currentScreenState = screenState.battle;
+    }
+    else if (currentScreenState === screenState.step)
         stepScreen.render();
 }
 

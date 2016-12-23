@@ -6,6 +6,12 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+New Source:
+https://www.youtube.com/watch?v=Ev3NXnDSLKw
+- Theres a timeout function to reset back to the walking animation
+- Screen button - turns it off
+- There is running animation as well - https://www.youtube.com/watch?v=KSYOaRzQ2XY - that might help breakdown the sprite up, birds tilt their bodies and their feet do the moving
+
 Screen dimensions
 - One of the major things that I need to figure out, is how big exactly are the screens.
 - Someone on reddit has made a watchface built onto a digivice.
