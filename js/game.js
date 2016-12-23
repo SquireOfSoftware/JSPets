@@ -296,6 +296,12 @@ var stepScreen = {
     }
 };
 
+// formulated from: (JP original) https://www.youtube.com/watch?v=VjtTnl4juPk
+// https://www.youtube.com/watch?v=MTDRCDDrDfY
+var battleScreen = {
+
+};
+
 function clearScreen() {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 }
@@ -418,7 +424,6 @@ function processKeyDown(event) {
         default:
             return false;
     }
-
 }
 
 function walk() {
@@ -430,6 +435,8 @@ function walk() {
     else if (currentScreenState === screenState.step)
         stepScreen.render();
 }
+
+
 
 // http://jsfiddle.net/Q98xZ/16/?utm_source=website&utm_medium=embed&utm_campaign=Q98xZ
 // full description of canvas and how to use it well

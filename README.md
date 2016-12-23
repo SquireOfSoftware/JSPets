@@ -50,6 +50,20 @@ Mechanics
 - Digging around I found this: http://withthewill.net/threads/15183-(COMPLETED*)-DIGIVICE-VER-15th-COMPREHENSIVE-GUIDE
 - DP is gained by meat or by walking 100 steps (maybe I should translate this into clicks for PC users) - champion evolution is 3DP consumption whilst, the next up is 7DP
 
+Battle mechanics
+- For the purposes of this project I will not be covering "countering", unless I have time. The reason for this because the countering system in itself is its own system with timings to trigger on particular frames, to figure out what to do and then process the "overwhelming" factor, which is the counter beating the current attack or neutralising the attack or just "overwhelming" the attack and doing damage to the attacker, also note that this counter can be stacked and each counter can get stronger and stronger until someone mistimes the attack or just has no more power ups or whatever. As such I believe it is far too complex since I dont even have a battle sequence working.
+- When you arrive at a certain threshold you trigger a battle
+- The battle mainly operates whoever is faster (need to record speed per creature), they start the battle first
+- The faster pet attacks first, the attack can be "blocked" or taken, blocking is random
+- Then the slower pet attacks, repeat until one of them is dead
+- If HP of your pet is 0 then devolve and put into hurt sprite and add 500 steps to "boss", in the hurt state the pet cannot walk, you need to "care" for it and then you can walk again.
+- "Evolving" costs "evolve power", I need to figure out what to do with this (how you gain power back, how much it costs to "evolve", if max and you choose to "evolve" again, ideally should do nothing)
+- Do we also do "evolving outside of battle"? If so, do we put a step counter to it before the "evolution" time runs out? Could allow you to evolve before going into battle, saving a turn or so.
+- Need a battle menu - fight, evolve, escape (run), change partners (dont have other partners yet)
+
+Battle animations
+- This is a completely different kettle of fish
+
 Biased implementation
 - I am leaning towards using HTML canvas and emulating the whole LCD screen. But something that I do need to keep in mind is how I draw these things and keeping it quite responsive. http://www.html5gamedevs.com/topic/7735-myths-and-realities-of-canvas-javascript-performance/
 - Turns out you can draw images (see at the bottom of the page on the next link)
