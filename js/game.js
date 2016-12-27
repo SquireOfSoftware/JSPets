@@ -7,7 +7,7 @@
 
 var canvas = document.getElementById("ctx");
 var context = canvas.getContext("2d");
-var petSprite, menuScreenIMG, mapScreenIMG, aboutScreenIMG;
+var petSprite, catSprite, menuScreenIMG, mapScreenIMG, aboutScreenIMG;
 
 petSprite = new Image();
 petSprite.src = "sprites/duckling.png";
@@ -28,6 +28,10 @@ aboutScreenIMG.src = "sprites/about-screen.png";
 
 stepScreenIMG = new Image();
 stepScreenIMG.src = "sprites/step-alphabet.png";
+
+catSprite = new Image();
+catSprite.src = "sprites/cat.png";
+
 
 var WIDTHOFSCREEN = 45;
 var HEIGHTOFSCREEN = 20;
@@ -70,7 +74,7 @@ function sprite(options) {
     self.width = options.width;
     self.height = options.height;
     self.image = options.image;
-    self.togglePosition = options.togglePosition;
+    self.canvasPosition = options.canvasPosition;
     self.state = spriteState.idle;
 
     self.render = function() {
@@ -96,8 +100,8 @@ function sprite(options) {
             0,
             self.width, // width on spritesheet
             self.height,// height on spritesheet
-            15, // x position on canvas
-            0,  // y position on canvas
+            self.canvasPosition.x, // x position on canvas
+            self.canvasPosition.y,  // y position on canvas
             self.width, // width on canvas
             self.height// height on canvas
         );
@@ -125,7 +129,17 @@ var pet = sprite({
     width: 16,
     height: 16,
     image: petSprite,
-    togglePosition: {x: 0, y: 0},
+    canvasPosition: {x: 15, y: 0},
+    ticksPerFrame: 20,
+    numberOfFrames: 2
+});
+
+var cat = sprite({
+    context:context,
+    width: 16,
+    height: 16,
+    image: catSprite,
+    canvasPosition: {x: 15, y: 0},
     ticksPerFrame: 20,
     numberOfFrames: 2
 });
@@ -401,37 +415,45 @@ var initialiseBattle = {
     frameIndex: 0,
     tickCount: 0,
     ticksPerFrame: 20, // default for sprites
-    numberOfFrames: 8, // depends on how large the battle sequence is
+    numberOfFrames: 20, // depends on how large the battle sequence is
     context: context,
     width: WIDTHOFSCREEN,
     height: HEIGHTOFSCREEN,
+    shiftingIndex: -15,
 
     render: function() {
-        //clearScreen();
-        //var framePosition = this.width;
-        switch (this.frameIndex) {
-            case 0: // flash circle
-            case 2:
-            case 4:
-                clearScreen();
+        if (this.frameIndex < 8) { // flash attack animation
+            clearScreen();
+            if (this.frameIndex % 2 === 1)
                 pet.state = spriteState.attack;
-                pet.render();
-                this.context.drawImage(battleCircleIMG, 0, 0);
-                //pet.render();
-                break;
-            case 1: // flash your pet
-            case 3:
-            case 5:
-                clearScreen();
+            else
                 pet.state = spriteState.idle;
-                pet.render();
-                break;
-            case 6: // slide in enemy
-            case 7:
 
-            default:
-                battleScreen.menu.render();
+            pet.render();
+            if (this.frameIndex % 2 === 1)
+                this.context.drawImage(battleCircleIMG, 0, 0);
         }
+        else if (this.frameIndex < 12) { // flash enemy
+            clearScreen();
+            cat.canvasPosition.x = this.shiftingIndex;
+            cat.state = spriteState.idle;
+            cat.render();
+        }
+        else if (this.frameIndex < 18) {
+            clearScreen();
+            this.shiftingIndex = 0;
+            cat.canvasPosition.x = this.shiftingIndex;
+            if (this.frameIndex % 2 === 1)
+                cat.state = spriteState.attack;
+            else
+                cat.state = spriteState.idle;
+
+            cat.render();
+        }
+        else {
+            battleScreen.menu.render();
+        }
+
         /*
         this.context.drawImage(
             this.image,
@@ -453,7 +475,13 @@ var initialiseBattle = {
             this.tickCount = 0;
             if (this.frameIndex < this.numberOfFrames - 1) {
                 this.frameIndex++;
+                this.shiftingIndex += 4;
+                console.log(this.shiftingIndex);
             }
+        }
+
+        if (this.shiftingIndex > 0) {
+            this.shiftingIndex = -15;
         }
     },
 

@@ -51,6 +51,7 @@ Mechanics
 - DP is gained by meat or by walking 100 steps (maybe I should translate this into clicks for PC users) - champion evolution is 3DP consumption whilst, the next up is 7DP
 
 Battle mechanics
+- https://www.youtube.com/watch?v=AUdRM14qngo&t=15s
 - For the purposes of this project I will not be covering "countering", unless I have time. The reason for this because the countering system in itself is its own system with timings to trigger on particular frames, to figure out what to do and then process the "overwhelming" factor, which is the counter beating the current attack or neutralising the attack or just "overwhelming" the attack and doing damage to the attacker, also note that this counter can be stacked and each counter can get stronger and stronger until someone mistimes the attack or just has no more power ups or whatever. As such I believe it is far too complex since I dont even have a battle sequence working.
 - When you arrive at a certain threshold you trigger a battle
 - The battle mainly operates whoever is faster (need to record speed per creature), they start the battle first
