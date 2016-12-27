@@ -77,6 +77,8 @@ function sprite(options) {
     self.canvasPosition = options.canvasPosition;
     self.state = spriteState.idle;
 
+    self.stats = options.stats;
+
     self.render = function() {
         self.context.clearRect(15, 0, self.width, self.height);
         var framePosition = self.width;
@@ -131,7 +133,12 @@ var pet = sprite({
     image: petSprite,
     canvasPosition: {x: 15, y: 0},
     ticksPerFrame: 20,
-    numberOfFrames: 2
+    numberOfFrames: 2,
+    stats: {
+        hp: 20,
+        attack: 10,
+        speed: 10
+    }
 });
 
 var cat = sprite({
@@ -141,7 +148,12 @@ var cat = sprite({
     image: catSprite,
     canvasPosition: {x: 15, y: 0},
     ticksPerFrame: 20,
-    numberOfFrames: 2
+    numberOfFrames: 2,
+    stats: {
+        hp: 21,
+        attack: 10,
+        speed: 9
+    }
 });
 
 var animationFrame = null;
@@ -411,61 +423,64 @@ var battleScreen = {
 var battleCircleIMG = new Image(); // must be transparent
 battleCircleIMG.src = "sprites/battle-seq-circle.png";
 
+var battleSequenceState = {
+    showPet: 0,
+    showEnemy: 1,
+    showEnemyAttk: 2,
+    showMenu: 3,
+    showAttack: 4,
+    takeDamageOnEnemy: 5,
+    takeDamageOnPet: 6
+};
+
 var initialiseBattle = {
     frameIndex: 0,
     tickCount: 0,
     ticksPerFrame: 20, // default for sprites
-    numberOfFrames: 20, // depends on how large the battle sequence is
+    numberOfFrames: 22, // depends on how large the battle sequence is
     context: context,
     width: WIDTHOFSCREEN,
     height: HEIGHTOFSCREEN,
     shiftingIndex: -15,
+    pet: pet,
+    enemy: cat,
+    state: battleSequenceState.pet,
 
     render: function() {
-        if (this.frameIndex < 8) { // flash attack animation
+        if (this.frameIndex < 6) { // flash attack animation
             clearScreen();
             if (this.frameIndex % 2 === 1)
-                pet.state = spriteState.attack;
+                this.pet.state = spriteState.attack;
             else
-                pet.state = spriteState.idle;
+                this.pet.state = spriteState.idle;
 
-            pet.render();
+            this.pet.render();
             if (this.frameIndex % 2 === 1)
                 this.context.drawImage(battleCircleIMG, 0, 0);
         }
-        else if (this.frameIndex < 12) { // flash enemy
+        else if (this.frameIndex < 10) { // flash enemy
             clearScreen();
-            cat.canvasPosition.x = this.shiftingIndex;
-            cat.state = spriteState.idle;
-            cat.render();
+            this.state = battleSequenceState.showEnemy;
+            this.enemy.canvasPosition.x = this.shiftingIndex;
+            this.enemy.state = spriteState.idle;
+            this.enemy.render();
         }
         else if (this.frameIndex < 18) {
+            this.state = battleSequenceState.showEnemyAttk;
             clearScreen();
             this.shiftingIndex = 0;
-            cat.canvasPosition.x = this.shiftingIndex;
+            this.enemy.canvasPosition.x = this.shiftingIndex;
             if (this.frameIndex % 2 === 1)
-                cat.state = spriteState.attack;
+                this.enemy.state = spriteState.attack;
             else
-                cat.state = spriteState.idle;
+                this.enemy.state = spriteState.idle;
 
-            cat.render();
+            this.enemy.render();
         }
         else {
+            this.state = battleSequenceState.showMenu;
             battleScreen.menu.render();
         }
-
-        /*
-        this.context.drawImage(
-            this.image,
-            framePosition, // x position
-            0,
-            this.width, // width on spritesheet
-            this.height,// height on spritesheet
-            15, // x position on canvas
-            0,  // y position on canvas
-            this.width, // width on canvas
-            this.height// height on canvas
-        );*/
     },
 
     update: function() {
@@ -475,13 +490,13 @@ var initialiseBattle = {
             this.tickCount = 0;
             if (this.frameIndex < this.numberOfFrames - 1) {
                 this.frameIndex++;
-                this.shiftingIndex += 4;
-                console.log(this.shiftingIndex);
+                if (this.state === battleSequenceState.showEnemy) {
+                    this.shiftingIndex += 4;
+                    if (this.shiftingIndex > 0) {
+                        this.shiftingIndex = -15;
+                    }
+                }
             }
-        }
-
-        if (this.shiftingIndex > 0) {
-            this.shiftingIndex = -15;
         }
     },
 
@@ -496,7 +511,6 @@ function loopBattleInitialisation() {
         initialiseBattle.render();
         initialiseBattle.update();
     }
-
 }
 
 function clearScreen() {
@@ -635,8 +649,11 @@ function processKeyDown(event) {
 }
 
 function walk() {
-    stepScreen.update();
-    document.getElementById("test").value = stepScreen.runningTotal.toString();
+    if (currentScreenState !== screenState.battle) {
+        stepScreen.update();
+        document.getElementById("test").value = stepScreen.runningTotal.toString();
+    }
+    //console.log(stepScreen.isAtABattle() && currentScreenState !== screenState.battle);
     if (stepScreen.isAtABattle() && currentScreenState !== screenState.battle) { // player is at a battle, need to determine which battle
         currentScreenState = screenState.battle;
         cancelAnimationFrame(animationFrame);
