@@ -29,6 +29,9 @@ aboutScreenIMG.src = "sprites/about-screen.png";
 stepScreenIMG = new Image();
 stepScreenIMG.src = "sprites/step-alphabet.png";
 
+var WIDTHOFSCREEN = 45;
+var HEIGHTOFSCREEN = 20;
+
 // the sprite state
 var spriteState = {
     idle: 0,
@@ -47,6 +50,13 @@ var screenState = {
     battle: 5,
     about: 14,
     pet: 15
+};
+
+var ARROWS = {
+    left: 37,
+    up: 38,
+    right: 39,
+    down: 40
 };
 
 function sprite(options) {
@@ -188,8 +198,8 @@ var menuScreen = screen({
     image: menuScreenIMG,
     context: context,
     name: "menu",
-    width: 45,
-    height: 20
+    width: WIDTHOFSCREEN,
+    height: HEIGHTOFSCREEN
 });
 
 menuScreen.previousFrame = function() {
@@ -204,8 +214,8 @@ var mapScreen = screen({
     context: context,
     name: "map",
     // do you need screen sate?
-    width: 45,
-    height: 20,
+    width: WIDTHOFSCREEN,
+    height: HEIGHTOFSCREEN,
     frameLimit: 5
 });
 
@@ -213,18 +223,18 @@ var aboutScreen = screen({
     image: aboutScreenIMG,
     context: context,
     name: "about",
-    width: 45,
-    height: 20
+    width: WIDTHOFSCREEN,
+    height: HEIGHTOFSCREEN
 });
 
 var stepScreen = {
     image: stepScreenIMG,
     context: context,
     name: "step",
-    width: 45,
-    height: 20,
+    width: WIDTHOFSCREEN,
+    height: HEIGHTOFSCREEN,
 
-    runningTotal: bigInt(0),
+    runningTotal: bigInt(499),
     previousCount: "0",
 
     meats: bigInt(0),
@@ -296,9 +306,164 @@ var stepScreen = {
     }
 };
 
+var battleMenuStates = {
+    fight: 0,
+    care: 1,
+    evolve: 2,
+    escape: 3
+};
+
+var battleMenuIMG = new Image();
+battleMenuIMG.src = "sprites/battle-menu-screens.png";
+
 // formulated from: (JP original) https://www.youtube.com/watch?v=VjtTnl4juPk
 // https://www.youtube.com/watch?v=MTDRCDDrDfY
 var battleScreen = {
+    setEnemy: {},
+    currentPet: {},
+    context: context,
+    menu: {
+        context: this.context,
+        image: battleMenuIMG,
+        internalCounter: 0,
+        width: WIDTHOFSCREEN,
+        height: HEIGHTOFSCREEN,
+        frameLimit: 4,
+        currentScreen: battleMenuStates.fight,
+
+        render: function() {
+            this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+
+            var framePosition = this.width * this.internalCounter;
+
+            this.context.drawImage(
+                this.image,
+                framePosition, // x position
+                0,
+                this.width, // width on spritesheet
+                this.height,// height on spritesheet
+                0, // x position on canvas
+                0,  // y position on canvas
+                this.width, // width on canvas
+                this.height// height on canvas
+            );
+        },
+
+        update: function() {
+            this.internalCounter++;
+            if (this.internalCounter >= this.frameLimit) {
+                this.internalCounter = 0;
+            }
+        },
+
+        processKeyDown: function(keyCode) {
+            switch(keyCode) {
+                case ARROWS.left:
+                    this.internalCounter--;
+                    if (this.internalCounter < 0)
+                        this.internalCounter = this.frameLimit - 1;
+                    this.render();
+                    break;
+                case ARROWS.up:
+                    break;
+                case ARROWS.right:
+                    this.internalCounter++;
+                    if (this.internalCounter > (this.frameLimit - 1))
+                        this.internalCounter = 0;
+                    this.render();
+                    break;
+                case ARROWS.down:
+                    switch(this.internalCounter) {
+                        case battleMenuStates.fight:
+                            break;
+                        case battleMenuStates.care:
+                            break;
+                        case battleMenuStates.escape:
+                            currentScreenState = screenState.pet;
+                            clearScreen();
+                            loopPet();
+                            break;
+                        case battleMenuStates.evolve:
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+            }
+        }
+    }
+};
+
+/**
+ * var self = {};
+ var frameIndex = 0;
+ var tickCount = 0;
+ ticksPerFrame = options.ticksPerFrame || 0;
+ numberOfFrames = options.numberOfFrames || 1;
+
+ self.context = options.context;
+ self.width = options.width;
+ self.height = options.height;
+ self.image = options.image;
+ self.togglePosition = options.togglePosition;
+ self.state = spriteState.idle;
+
+ self.render = function() {
+        self.context.clearRect(15, 0, self.width, self.height);
+        var framePosition = self.width;
+        switch (self.state) {
+            case spriteState.idle: {
+                framePosition = self.width * frameIndex; // alternating between first and second sprite
+                break;
+            }
+            case spriteState.attack: {
+                framePosition = self.width * 2; // 3rd sprite
+                break;
+            }
+            case spriteState.hurt: {
+                framePosition = self.width * 3; // 4th sprite
+                break;
+            }
+        }
+        self.context.drawImage(
+            self.image,
+            framePosition, // x position
+            0,
+            self.width, // width on spritesheet
+            self.height,// height on spritesheet
+            15, // x position on canvas
+            0,  // y position on canvas
+            self.width, // width on canvas
+            self.height// height on canvas
+        );
+    };
+
+ self.update = function() {
+        tickCount++;
+
+        if (tickCount > ticksPerFrame) {
+            tickCount = 0;
+            if (frameIndex < numberOfFrames - 1) {
+                frameIndex++;
+            }
+            else {
+                frameIndex = 0;
+            }
+        }
+    };
+
+ return self;
+ */
+
+var initialiseBattle = {
+    frameIndex: 0,
+    tickCount: 0,
+    ticksPerFrame: 20, // default for sprites
+    numberOfFrames: 0, // depends on how large the battle sequence is
+    context: context,
+    width: WIDTHOFSCREEN,
+    height: HEIGHTOFSCREEN
+
 
 };
 
@@ -313,7 +478,7 @@ function processKeyDown(event) {
     cancelAnimationFrame(animationFrame);
     //console.log("current screen state: ",currentScreenState);
     switch(event.keyCode) {
-        case 37: // left
+        case ARROWS.left: // left
             switch (currentScreenState) {
                 case screenState.menu: // map screen
                     menuScreen.previousFrame();
@@ -323,6 +488,9 @@ function processKeyDown(event) {
                     break;
                 case screenState.step:
                     break;
+                case screenState.battle:
+                    battleScreen.menu.processKeyDown(ARROWS.left);
+                    break;
                 case screenState.pet: // walking screen
                 default:
                     menuScreen.reset();
@@ -331,7 +499,7 @@ function processKeyDown(event) {
                     break;
             }
             break;
-        case 38: // up, cancel
+        case ARROWS.up: // up, cancel
             switch (currentScreenState) {
                 case screenState.step:
                     stepScreen.resetPreviousCount();
@@ -339,7 +507,9 @@ function processKeyDown(event) {
                     currentScreenState = screenState.menu;
                     menuScreen.render();
                     break;
-
+                case screenState.battle:
+                    battleScreen.menu.processKeyDown(ARROWS.up);
+                    break;
                 case screenState.menu: // map screen
                 case screenState.pet: // walking screen
                 default:
@@ -349,7 +519,7 @@ function processKeyDown(event) {
                     break;
             }
             break;
-        case 39: // right
+        case ARROWS.right: // right
             switch (currentScreenState) {
                 case screenState.menu: // map screen
                     menuScreen.update();
@@ -359,6 +529,9 @@ function processKeyDown(event) {
                     break;
                 case screenState.step:
                     break;
+                case screenState.battle:
+                    battleScreen.menu.processKeyDown(ARROWS.right);
+                    break;
                 case screenState.pet: // walking screen
                 default:
                     menuScreen.reset();
@@ -367,7 +540,7 @@ function processKeyDown(event) {
                     break;
             }
             break;
-        case 40: // down - represents menu and item selection
+        case ARROWS.down: // down - represents menu and item selection
             switch (currentScreenState) {
                 case screenState.pet: // walking screen
                     currentScreenState = screenState.menu;
@@ -414,6 +587,9 @@ function processKeyDown(event) {
                     clearScreen();
                     loopPet();
                     break;*/
+                case screenState.battle:
+                    battleScreen.menu.processKeyDown(ARROWS.down);
+                    break;
                 default:
                     menuScreen.reset();
                     clearScreen();
@@ -431,6 +607,8 @@ function walk() {
     document.getElementById("test").value = stepScreen.runningTotal.toString();
     if (stepScreen.isAtABattle()) { // player is at a battle, need to determine which battle
         currentScreenState = screenState.battle;
+        cancelAnimationFrame(animationFrame);
+        battleScreen.menu.render();
     }
     else if (currentScreenState === screenState.step)
         stepScreen.render();
