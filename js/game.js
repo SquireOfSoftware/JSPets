@@ -394,78 +394,82 @@ var battleScreen = {
     }
 };
 
-/**
- * var self = {};
- var frameIndex = 0;
- var tickCount = 0;
- ticksPerFrame = options.ticksPerFrame || 0;
- numberOfFrames = options.numberOfFrames || 1;
-
- self.context = options.context;
- self.width = options.width;
- self.height = options.height;
- self.image = options.image;
- self.togglePosition = options.togglePosition;
- self.state = spriteState.idle;
-
- self.render = function() {
-        self.context.clearRect(15, 0, self.width, self.height);
-        var framePosition = self.width;
-        switch (self.state) {
-            case spriteState.idle: {
-                framePosition = self.width * frameIndex; // alternating between first and second sprite
-                break;
-            }
-            case spriteState.attack: {
-                framePosition = self.width * 2; // 3rd sprite
-                break;
-            }
-            case spriteState.hurt: {
-                framePosition = self.width * 3; // 4th sprite
-                break;
-            }
-        }
-        self.context.drawImage(
-            self.image,
-            framePosition, // x position
-            0,
-            self.width, // width on spritesheet
-            self.height,// height on spritesheet
-            15, // x position on canvas
-            0,  // y position on canvas
-            self.width, // width on canvas
-            self.height// height on canvas
-        );
-    };
-
- self.update = function() {
-        tickCount++;
-
-        if (tickCount > ticksPerFrame) {
-            tickCount = 0;
-            if (frameIndex < numberOfFrames - 1) {
-                frameIndex++;
-            }
-            else {
-                frameIndex = 0;
-            }
-        }
-    };
-
- return self;
- */
+var battleCircleIMG = new Image(); // must be transparent
+battleCircleIMG.src = "sprites/battle-seq-circle.png";
 
 var initialiseBattle = {
     frameIndex: 0,
     tickCount: 0,
     ticksPerFrame: 20, // default for sprites
-    numberOfFrames: 0, // depends on how large the battle sequence is
+    numberOfFrames: 8, // depends on how large the battle sequence is
     context: context,
     width: WIDTHOFSCREEN,
-    height: HEIGHTOFSCREEN
+    height: HEIGHTOFSCREEN,
 
+    render: function() {
+        //clearScreen();
+        //var framePosition = this.width;
+        switch (this.frameIndex) {
+            case 0: // flash circle
+            case 2:
+            case 4:
+                clearScreen();
+                pet.state = spriteState.attack;
+                pet.render();
+                this.context.drawImage(battleCircleIMG, 0, 0);
+                //pet.render();
+                break;
+            case 1: // flash your pet
+            case 3:
+            case 5:
+                clearScreen();
+                pet.state = spriteState.idle;
+                pet.render();
+                break;
+            case 6: // slide in enemy
+            case 7:
 
+            default:
+                battleScreen.menu.render();
+        }
+        /*
+        this.context.drawImage(
+            this.image,
+            framePosition, // x position
+            0,
+            this.width, // width on spritesheet
+            this.height,// height on spritesheet
+            15, // x position on canvas
+            0,  // y position on canvas
+            this.width, // width on canvas
+            this.height// height on canvas
+        );*/
+    },
+
+    update: function() {
+        this.tickCount++;
+
+        if (this.tickCount > this.ticksPerFrame) {
+            this.tickCount = 0;
+            if (this.frameIndex < this.numberOfFrames - 1) {
+                this.frameIndex++;
+            }
+        }
+    },
+
+    isAtEnd: function () {
+        return this.frameIndex >= this.numberOfFrames;
+    }
 };
+
+function loopBattleInitialisation() {
+    if (!initialiseBattle.isAtEnd()) {
+        animationFrame = requestAnimationFrame(loopBattleInitialisation);
+        initialiseBattle.render();
+        initialiseBattle.update();
+    }
+
+}
 
 function clearScreen() {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -605,10 +609,11 @@ function processKeyDown(event) {
 function walk() {
     stepScreen.update();
     document.getElementById("test").value = stepScreen.runningTotal.toString();
-    if (stepScreen.isAtABattle()) { // player is at a battle, need to determine which battle
+    if (stepScreen.isAtABattle() && currentScreenState !== screenState.battle) { // player is at a battle, need to determine which battle
         currentScreenState = screenState.battle;
         cancelAnimationFrame(animationFrame);
-        battleScreen.menu.render();
+        loopBattleInitialisation();
+        //battleScreen.menu.render();
     }
     else if (currentScreenState === screenState.step)
         stepScreen.render();
