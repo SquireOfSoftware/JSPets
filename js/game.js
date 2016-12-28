@@ -89,7 +89,7 @@ function sprite(options) {
 
     self.stats = options.stats;
 
-    //if (options.render === undefined) {
+    if (options.render === undefined) {
         self.render = function () {
             //console.log(self.canvasPosition);
             self.context.clearRect(self.canvasPosition.x, self.canvasPosition.y, self.width, self.height);
@@ -130,10 +130,10 @@ function sprite(options) {
                 self.height// height on canvas
             );
         };
-    /*}
+    }
     else {
         self.render = options.render;
-    }*/
+    }
 
     self.update = function() {
         self.tickCount++;
@@ -248,8 +248,8 @@ function screen(options) {
 
 function animationSequence(options) {
     var self = {};
-    self.petSprite = options.petSprite;
-    self.enemySprite = options.enemySprite;
+    self.fasterSprite = options.fasterSprite;
+    self.slowerSprite = options.slowerSprite;
     self.context = options.context;
     self.frameIndex = 0;
     self.tickCount = 0;
@@ -599,32 +599,6 @@ function loopAttackSequence() {
         battleSequence.update();
     }
 }
-/*
-var attackSpriteObj = {
-    image: attackSprites,
-    context: context,
-    width: 16,
-    height: 16,
-    spriteXPosition: 0,
-    frameIndex: 0,
-    storeAttack: function(value) {
-        if(value < 10)
-            this.spriteXPosition = 0;
-        else if (value < 20)
-            this.spriteXPosition = 1;
-        else if (value < 30)
-            this.spriteXPosition = 2;
-        else
-            this.spriteXPosition = 3;
-    },
-    render: function() {
-
-    },
-    update: function() {
-
-    }
-};*/
-
 
 var attackSpriteObj = sprite({
     context:context,
@@ -646,14 +620,16 @@ var damageSpriteObj = sprite({
     numberOfFrames: 2
 });
 
+console.log(pet);
+
 var battleSequence = animationSequence({
-    petSprite: pet,
-    enemySprite: cat,
+    fasterSprite: pet,
+    slowerSprite: cat, // need to figure out how to display this
     context: context,
     tickCount: 0,
     frameIndex: 0,
     ticksPerFrame: 20,
-    numberOfFrames: 16,
+    numberOfFrames: 18,
     render: function() {
         //clearScreen();
         if (this.frameIndex < 4) {
@@ -662,10 +638,11 @@ var battleSequence = animationSequence({
 
             attackSpriteObj.canvasPosition = {x: 15 - this.frameIndex * 5, y: 3};
             attackSpriteObj.render();
+            console.log(this.fasterSprite);//, this.fasterSprite.width);
 
-            this.petSprite.canvasPosition = {x: this.context.canvas.width - this.petSprite.width, y: 0};
-            this.petSprite.state = spriteState.attack;
-            this.petSprite.render();
+            this.fasterSprite.canvasPosition = {x: this.context.canvas.width - this.fasterSprite.width, y: 0};
+            this.fasterSprite.state = spriteState.attack;
+            this.fasterSprite.render();
             // four frames of attack power moving out
 
 
@@ -678,9 +655,10 @@ var battleSequence = animationSequence({
 
             if (this.context.canvas.width - this.frameIndex * 5 > 16) {
                 attackSpriteObj.render();
-                this.enemySprite.state = spriteState.idle;
+                this.slowerSprite.canvasPosition.x = 0;
+                this.slowerSprite.state = spriteState.idle;
 
-                this.enemySprite.render();
+                this.slowerSprite.render();
             }
             else {
                 context.clearRect(16, 0, 16, 16);
@@ -691,9 +669,14 @@ var battleSequence = animationSequence({
             // take damage/dodge (4 frames for damage, 2 frames for dodge)
 
         }
-        else if (this.frameIndex < 14) {
+        else if (this.frameIndex < 16) {
             // display health (2 frames)
+            context.clearRect(0, 0, 16, 16);
+            this.slowerSprite.canvasPosition.x = 15;
+            this.slowerSprite.render();
 
+            // figure out how to display the remaining health
+            // get the stats
         }
         else {
             console.log("finishing the attack");
@@ -708,7 +691,7 @@ var battleSequence = animationSequence({
 });
 
 var healingSequence = animationSequence({
-    petSprite: pet,
+    fasterSprite: pet,
     context: context,
     tickCount: 0,
     frameIndex: 0,
@@ -718,17 +701,17 @@ var healingSequence = animationSequence({
         //console.log("frameIndex:", this.frameIndex);
         if (this.frameIndex < 6) {
             if (this.frameIndex % 2 === 1) {
-                this.petSprite.state = spriteState.healing;
+                this.fasterSprite.state = spriteState.healing;
             }
             else
-                this.petSprite.state = spriteState.hurt;
+                this.fasterSprite.state = spriteState.hurt;
 
-            this.petSprite.render();
+            this.fasterSprite.render();
             if (this.frameIndex % 2 === 0)
                this.context.clearRect(self.context.canvas.width - 8, 0, 8, 8);
         }
         else {
-            this.petSprite.state = spriteState.idle;
+            this.fasterSprite.state = spriteState.idle;
             clearScreen();
             loopPet();
         }
