@@ -655,9 +655,9 @@ var battleSequence = animationSequence({
     tickCount: 0,
     frameIndex: 0,
     ticksPerFrame: 20,
-    numberOfFrames: 20,
+    numberOfFrames: 40, // doubling the frames for the response
     render: function() {
-        //clearScreen();
+
         if (this.frameIndex < 4) {
             // display pet/enemy in attack sprite
             attackSpriteObj.frameIndex = Math.round(this.fasterSprite.stats.attack / 10, 0) - 1;
@@ -700,7 +700,7 @@ var battleSequence = animationSequence({
 
             this.context.drawImage(blackbar, 0, 0);
             var hp = this.slowerSprite.stats.hp.toString();
-            if (this.frameIndex > 15) {
+            if (this.frameIndex > 14) {
                 if ((this.slowerSprite.stats.hp - this.fasterSprite.stats.attack) > 0)
                     hp = (this.slowerSprite.stats.hp - this.fasterSprite.stats.attack).toString();
                 else
