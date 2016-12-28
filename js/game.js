@@ -7,7 +7,9 @@
 
 var canvas = document.getElementById("ctx");
 var context = canvas.getContext("2d");
-var petSprite, catSprite, statusSprite, damageSprite, attackSprites, menuScreenIMG, mapScreenIMG, aboutScreenIMG;
+var petSprite, catSprite, statusSprite,
+    damageSprite, attackSprites, blackbar,
+    menuScreenIMG, mapScreenIMG, aboutScreenIMG;
 
 petSprite = new Image();
 petSprite.src = "sprites/duckling.png";
@@ -29,6 +31,8 @@ aboutScreenIMG.src = "sprites/about-screen.png";
 stepScreenIMG = new Image();
 stepScreenIMG.src = "sprites/step-alphabet.png";
 
+var alphabet = [0, 4, 8, 12, 16, 20, 24, 28, 32, 36];
+
 catSprite = new Image();
 catSprite.src = "sprites/cat.png";
 
@@ -40,6 +44,16 @@ attackSprites.src = "sprites/attacks.png";
 
 damageSprite = new Image();
 damageSprite.src = "sprites/damage-sprite.png";
+
+blackbar = new Image();
+blackbar.src = "sprites/black-bar.png";
+
+var battleMenuIMG = new Image();
+battleMenuIMG.src = "sprites/battle-menu-screens.png";
+
+var battleCircleIMG = new Image(); // must be transparent
+battleCircleIMG.src = "sprites/battle-seq-circle.png";
+
 
 var WIDTHOFSCREEN = 45;
 var HEIGHTOFSCREEN = 20;
@@ -335,7 +349,6 @@ var stepScreen = {
     previousCount: "0",
 
     meats: bigInt(0),
-    alphabet: [0, 4, 8, 12, 16, 20, 24, 28, 32, 36],
 
     update: function() {
         if(this.runningTotal.add(1).toString().length < 34) {
@@ -375,7 +388,7 @@ var stepScreen = {
             // write a single character
             context.drawImage(
                 this.image,
-                this.alphabet[parseInt(this.runningTotal.toString().charAt(index))], // x position
+                alphabet[parseInt(this.runningTotal.toString().charAt(index))], // x position
                 0,
                 4, // width on spritesheet
                 5,// height on spritesheet
@@ -416,9 +429,6 @@ var attackingStates = {
     lost: 2,
     notInBattle: 3
 };
-
-var battleMenuIMG = new Image();
-battleMenuIMG.src = "sprites/battle-menu-screens.png";
 
 // formulated from: (JP original) https://www.youtube.com/watch?v=VjtTnl4juPk
 // https://www.youtube.com/watch?v=MTDRCDDrDfY
@@ -504,9 +514,6 @@ var battleScreen = {
         }
     }
 };
-
-var battleCircleIMG = new Image(); // must be transparent
-battleCircleIMG.src = "sprites/battle-seq-circle.png";
 
 var battleSequenceState = {
     showPet: 0,
@@ -601,13 +608,33 @@ function loopAttackSequence() {
 }
 
 var attackSpriteObj = sprite({
-    context:context,
+    context: context,
     width: 16,
     height: 16,
     image: attackSprites,
     canvasPosition: {x: 0, y: 0},
     ticksPerFrame: 20,
-    numberOfFrames: 4
+    numberOfFrames: 4,
+    render: function () {
+        //console.log("frameIndex:", this.frameIndex);
+        this.context.clearRect(
+            this.canvasPosition.x,
+            this.canvasPosition.y,
+            this.width + 5, // apparently this isnt clearing properly
+            this.height);
+
+        this.context.drawImage(
+            this.image,
+            this.frameIndex * this.width,
+            0,
+            this.width,
+            this.height,
+            this.canvasPosition.x,
+            this.canvasPosition.y,
+            this.width,
+            this.height
+        );
+    }
 });
 
 var damageSpriteObj = sprite({
@@ -620,8 +647,6 @@ var damageSpriteObj = sprite({
     numberOfFrames: 2
 });
 
-console.log(pet);
-
 var battleSequence = animationSequence({
     fasterSprite: pet,
     slowerSprite: cat, // need to figure out how to display this
@@ -629,27 +654,24 @@ var battleSequence = animationSequence({
     tickCount: 0,
     frameIndex: 0,
     ticksPerFrame: 20,
-    numberOfFrames: 18,
+    numberOfFrames: 20,
     render: function() {
         //clearScreen();
         if (this.frameIndex < 4) {
             // display pet/enemy in attack sprite
-            console.log("attacking");
+            attackSpriteObj.frameIndex = Math.round(this.fasterSprite.stats.attack / 10, 0) - 1;
 
             attackSpriteObj.canvasPosition = {x: 15 - this.frameIndex * 5, y: 3};
             attackSpriteObj.render();
-            console.log(this.fasterSprite);//, this.fasterSprite.width);
 
             this.fasterSprite.canvasPosition = {x: this.context.canvas.width - this.fasterSprite.width, y: 0};
             this.fasterSprite.state = spriteState.attack;
             this.fasterSprite.render();
             // four frames of attack power moving out
-
-
         }
         else if (this.frameIndex < 12) {
             // display enemy/pet in idle sprite
-            console.log("receiving the attack");
+            //console.log("receiving the attack");
             // (4 frames for attack to arrive)
             attackSpriteObj.canvasPosition = {x: this.context.canvas.width - this.frameIndex * 5, y: 3};
 
@@ -661,7 +683,7 @@ var battleSequence = animationSequence({
                 this.slowerSprite.render();
             }
             else {
-                context.clearRect(16, 0, 16, 16);
+                this.context.clearRect(16, 0, 16 + 5, 16);
                 damageSpriteObj.render();
                 damageSpriteObj.update();
             }
@@ -669,17 +691,37 @@ var battleSequence = animationSequence({
             // take damage/dodge (4 frames for damage, 2 frames for dodge)
 
         }
-        else if (this.frameIndex < 16) {
+        else if (this.frameIndex < 18) {
             // display health (2 frames)
-            context.clearRect(0, 0, 16, 16);
+            this.context.clearRect(0, 0, 16, 16);
             this.slowerSprite.canvasPosition.x = 15;
             this.slowerSprite.render();
+
+            this.context.drawImage(blackbar, 0, 0);
+            var hp = this.slowerSprite.stats.hp.toString();
+            if (this.frameIndex > 15) {
+                hp = (this.slowerSprite.stats.hp - this.fasterSprite.stats.attack).toString();
+            }
+            for(var index = hp.length - 1; index > -1; index--) {
+                this.context.drawImage(
+                    stepScreenIMG,
+                    alphabet[parseInt(hp.charAt(index))],
+                    5, // y position on spritesheet
+                    4, // width
+                    5, // height
+                    this.context.canvas.width - 12 - index * 4, // x position on canvas
+                    this.context.canvas.height - 6, // y position on canvas
+                    4, // width on canvas
+                    5 // height on canvas
+                );
+            }
 
             // figure out how to display the remaining health
             // get the stats
         }
         else {
-            console.log("finishing the attack");
+            console.log("finishing the attack", this.slowerSprite.stats.hp);
+            this.slowerSprite.stats.hp -= this.fasterSprite.stats.attack;
             // figure out if either pet or enemy is dead
             // if not dead, display battle menu
             // otherwise display win/lose screen
