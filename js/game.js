@@ -249,7 +249,7 @@ function animationSequence(options) {
             self.tickCount++;
 
             if (self.tickCount > self.ticksPerFrame) {
-                tickCount = 0;
+                self.tickCount = 0;
                 if (self.frameIndex < self.numberOfFrames - 1) {
                     self.frameIndex++;
                     console.log("Animation sequence: ", self.frameIndex);
@@ -629,27 +629,25 @@ var healingSequence = animationSequence({
             }
             else
                 this.petSprite.state = spriteState.hurt;
-        }
-        else
-            this.petSprite.state = spriteState.idle;
-        clearScreen();
-        this.petSprite.render();
 
-        //console.log(this.petSprite.state);
-        //loopPet();
+            this.petSprite.render();
+            if (this.frameIndex % 2 === 0)
+               this.context.clearRect(self.context.canvas.width - 8, 0, 8, 8);
+        }
+        else {
+            this.petSprite.state = spriteState.idle;
+            clearScreen();
+            loopPet();
+        }
     }
 });
 
 function loopHealing() {
     if (pet.state !== spriteState.idle) {
-        console.log("Attempting to heal");
         animationFrame = requestAnimationFrame(loopHealing);
-        //healingSequence.update();
         healingSequence.render();
         healingSequence.update();
     }
-    else
-        cancelAnimationFrame(animationFrame);
 }
 
 function loopBattleInitialisation() {
@@ -747,19 +745,12 @@ function processKeyDown(event) {
                             break;
                         case 1: // care screen
                             if (pet.state === spriteState.hurt) {
+                                healingSequence.reset();
                                 pet.state = spriteState.healing;
                                 clearScreen();
                                 loopHealing();
+                                menuScreen.reset();
                             }
-                            //healingSequence.reset();
-                                /*
-                                pet.render();
-                                pet.state = spriteState.idle;
-                            }*/
-                                /*
-                            menuScreen.reset();
-                            clearScreen();
-                            loopPet();*/
                             break;
                         case 2: // about screen
                             currentScreenState = screenState.about;
