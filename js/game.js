@@ -175,6 +175,7 @@ var pet = sprite({
     ticksPerFrame: 20,
     numberOfFrames: 2,
     stats: {
+        originalHp: 20,
         hp: 20,
         attack: 10,
         speed: 10
@@ -190,7 +191,8 @@ var cat = sprite({
     ticksPerFrame: 20,
     numberOfFrames: 2,
     stats: {
-        hp: 21,
+        originalHp: 21,
+        hp: 1,
         attack: 10,
         speed: 9
     }
@@ -201,7 +203,6 @@ var animationFrame = null;
 function loopPet() {
     animationFrame = requestAnimationFrame(loopPet);
     currentScreenState = screenState.pet;
-    //pet.state = spriteState.hurt;
     pet.update();
     pet.render();
 }
@@ -700,36 +701,53 @@ var battleSequence = animationSequence({
             this.context.drawImage(blackbar, 0, 0);
             var hp = this.slowerSprite.stats.hp.toString();
             if (this.frameIndex > 15) {
-                hp = (this.slowerSprite.stats.hp - this.fasterSprite.stats.attack).toString();
+                if ((this.slowerSprite.stats.hp - this.fasterSprite.stats.attack) > 0)
+                    hp = (this.slowerSprite.stats.hp - this.fasterSprite.stats.attack).toString();
+                else
+                    hp = "0";
             }
-            for(var index = hp.length - 1; index > -1; index--) {
+            for(var index = 0; index < hp.length; index++) {
+                console.log("index:", hp);
                 this.context.drawImage(
                     stepScreenIMG,
                     alphabet[parseInt(hp.charAt(index))],
                     5, // y position on spritesheet
                     4, // width
                     5, // height
-                    this.context.canvas.width - 12 - index * 4, // x position on canvas
+                    this.context.canvas.width + (-1 * hp.length + index - 3) * 4, // x position on canvas
                     this.context.canvas.height - 6, // y position on canvas
                     4, // width on canvas
                     5 // height on canvas
                 );
             }
-
             // figure out how to display the remaining health
             // get the stats
         }
         else {
-            console.log("finishing the attack", this.slowerSprite.stats.hp);
-            this.slowerSprite.stats.hp -= this.fasterSprite.stats.attack;
             // figure out if either pet or enemy is dead
             // if not dead, display battle menu
             // otherwise display win/lose screen
             battleScreen.currentBattleState = attackingStates.notInBattle;
             this.frameIndex = 0;
-            battleScreen.menu.render();
+
+            if ((this.slowerSprite.stats.hp - this.fasterSprite.stats.attack) > 0) {
+                this.slowerSprite.stats.hp -= this.fasterSprite.stats.attack;
+                battleScreen.menu.render();
+            }
+            else if (this.fasterSprite.stats.hp > 0) {
+                clearScreen();
+                cancelAnimationFrame(animationFrame);
+                currentScreenState = screenState.pet;
+                pet.stats.hp = pet.stats.originalHp;
+                pet.canvasPosition = {x: 15, y: 0};
+                pet.state = spriteState.idle;
+                loopPet();
+            }
+
+
         }
-    }
+    }//,
+    //attack: function(attackSprites, )
 });
 
 var healingSequence = animationSequence({
