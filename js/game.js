@@ -7,7 +7,7 @@
 
 var canvas = document.getElementById("ctx");
 var context = canvas.getContext("2d");
-var petSprite, catSprite, menuScreenIMG, mapScreenIMG, aboutScreenIMG;
+var petSprite, catSprite, statusSprite, menuScreenIMG, mapScreenIMG, aboutScreenIMG;
 
 petSprite = new Image();
 petSprite.src = "sprites/duckling.png";
@@ -32,6 +32,8 @@ stepScreenIMG.src = "sprites/step-alphabet.png";
 catSprite = new Image();
 catSprite.src = "sprites/cat.png";
 
+statusSprite = new Image();
+statusSprite.src = "sprites/status-sprites.png";
 
 var WIDTHOFSCREEN = 45;
 var HEIGHTOFSCREEN = 20;
@@ -41,8 +43,10 @@ var spriteState = {
     idle: 0,
     attack: 1,
     hurt: 2,
-    evolving: 3,
-    devolving: 4
+    healing: 3,
+    evolving: 4,
+    devolving: 5,
+    running: 6
 };
 
 var screenState = {
@@ -75,12 +79,12 @@ function sprite(options) {
     self.height = options.height;
     self.image = options.image;
     self.canvasPosition = options.canvasPosition;
-    self.state = spriteState.idle;
+    self.state = spriteState.hurt;
 
     self.stats = options.stats;
 
     self.render = function() {
-        self.context.clearRect(15, 0, self.width, self.height);
+        self.context.clearRect(self.canvasPosition.x, self.canvasPosition.y, self.width, self.height);
         var framePosition = self.width;
         switch (self.state) {
             case spriteState.idle: {
@@ -93,6 +97,16 @@ function sprite(options) {
             }
             case spriteState.hurt: {
                 framePosition = self.width * 3; // 4th sprite
+                self.context.drawImage(statusSprite, 8, 0, 8, 8, self.context.canvas.width - 8, 0, 8, 8);
+                break;
+            }
+            case spriteState.healing: {
+                framePosition = self.width * 4;
+                self.context.drawImage(statusSprite, 0, 0, 8, 8, self.context.canvas.width - 8, 0, 8, 8);
+                break;
+            }
+            case spriteState.running: {
+                framePosition = self.width * (5 + frameIndex);
                 break;
             }
         }
@@ -215,6 +229,57 @@ function screen(options) {
         if (self.frameLimit === undefined) {
             self.frameLimit = self.image.width / self.width;
         }
+    };
+
+    return self;
+}
+
+function animationSequence(options) {
+    var self = {};
+    self.petSprite = options.petSprite;
+    self.enemySprite = options.enemySprite;
+    self.context = options.context;
+    self.frameIndex = 0;
+    self.tickCount = 0;
+    self.ticksPerFrame = options.ticksPerFrame || 0;
+    self.numberOfFrames = options.numberOfFrames || 1;
+
+    if (options.update === undefined)
+        self.update = function() {
+            self.tickCount++;
+
+            if (self.tickCount > self.ticksPerFrame) {
+                tickCount = 0;
+                if (self.frameIndex < self.numberOfFrames - 1) {
+                    self.frameIndex++;
+                    console.log("Animation sequence: ", self.frameIndex);
+                }
+            }
+        };
+    else
+        self.update = options.update;
+
+    console.log("update", self.update);
+
+    if (options.render === undefined)
+        self.render = function() {
+            console.log("Please redefine this render method");
+            if (self.frameIndex < 4) {
+
+            }
+            else {
+
+            }
+        };
+    else
+        self.render = options.render;
+
+
+    console.log("render", self.render);
+
+    self.reset = function() {
+        frameIndex = 0;
+        tickCount = 0;
     };
 
     return self;
@@ -505,6 +570,88 @@ var initialiseBattle = {
     }
 };
 
+var battleSequence = animationSequence({
+    petSprite: pet,
+    enemySprite: cat,
+    context: context,
+    tickCount: 0,
+    frameIndex: 0,
+    ticksPerFrame: 20,
+    numberOfFrames: 10,
+    /*update: function() {
+        this.tickCount++;
+
+        if (this.tickCount > this.ticksPerFrame) {
+            this.tickCount = 0;
+            if (this.frameIndex < this.numberOfFrames - 1) {
+                this.frameIndex++;
+            }
+        }
+    },*/
+    render: function() {
+        if (this.frameIndex < 4) {
+            // display pet/enemy in attack sprite
+
+            // four frames of attack power moving out
+        }
+        else if (this.frameIndex < 12) {
+            // display enemy/pet in idle sprite
+
+            // (4 frames for attack to arrive)
+
+            // take damage/dodge (4 frames for damage, 2 frames for dodge)
+
+        }
+        else if (this.frameIndex < 14) {
+            // display health (2 frames)
+
+        }
+        else {
+            // figure out if either pet or enemy is dead
+            // if not dead, display battle menu
+            // otherwise display win/lose screen
+        }
+    }
+});
+
+var healingSequence = animationSequence({
+    petSprite: pet,
+    context: context,
+    tickCount: 0,
+    frameIndex: 0,
+    ticksPerFrame: 20,
+    numberOfFrames: 8,
+    render: function() {
+        console.log("frameIndex:", this.frameIndex);
+        if (this.frameIndex < 6) {
+            if (this.frameIndex % 2 === 1) {
+                this.petSprite.state = spriteState.healing;
+            }
+            else
+                this.petSprite.state = spriteState.hurt;
+        }
+        else
+            this.petSprite.state = spriteState.idle;
+        clearScreen();
+        this.petSprite.render();
+
+        //console.log(this.petSprite.state);
+        //loopPet();
+    }
+});
+
+function loopHealing() {
+    if (pet.state !== spriteState.idle) {
+        console.log("Attempting to heal");
+        animationFrame = requestAnimationFrame(loopHealing);
+        //healingSequence.update();
+        healingSequence.render();
+        healingSequence.update();
+    }
+    else
+        cancelAnimationFrame(animationFrame);
+}
+
 function loopBattleInitialisation() {
     if (!initialiseBattle.isAtEnd()) {
         animationFrame = requestAnimationFrame(loopBattleInitialisation);
@@ -600,13 +747,19 @@ function processKeyDown(event) {
                             break;
                         case 1: // care screen
                             if (pet.state === spriteState.hurt) {
-                                pet.state = spriteState.idle;
+                                pet.state = spriteState.healing;
                                 clearScreen();
-                                pet.render();
+                                loopHealing();
                             }
+                            //healingSequence.reset();
+                                /*
+                                pet.render();
+                                pet.state = spriteState.idle;
+                            }*/
+                                /*
                             menuScreen.reset();
                             clearScreen();
-                            loopPet();
+                            loopPet();*/
                             break;
                         case 2: // about screen
                             currentScreenState = screenState.about;
@@ -624,15 +777,6 @@ function processKeyDown(event) {
                     break;
                 case screenState.step:
                     break;
-                /*case screenState.care:
-                    if (pet.state === spriteState.hurt) {
-                        pet.state = spriteState.idle;
-                        pet.render();
-                    }
-                    menuScreen.reset();
-                    clearScreen();
-                    loopPet();
-                    break;*/
                 case screenState.battle:
                     battleScreen.menu.processKeyDown(ARROWS.down);
                     break;
@@ -649,7 +793,7 @@ function processKeyDown(event) {
 }
 
 function walk() {
-    if (currentScreenState !== screenState.battle) {
+    if (currentScreenState !== screenState.battle && pet.state === spriteState.idle) {
         stepScreen.update();
         document.getElementById("test").value = stepScreen.runningTotal.toString();
     }
