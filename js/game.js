@@ -7,7 +7,7 @@
 
 var canvas = document.getElementById("ctx");
 var context = canvas.getContext("2d");
-var petSprite, catSprite, statusSprite, menuScreenIMG, mapScreenIMG, aboutScreenIMG;
+var petSprite, catSprite, statusSprite, damageSprite, attackSprites, menuScreenIMG, mapScreenIMG, aboutScreenIMG;
 
 petSprite = new Image();
 petSprite.src = "sprites/duckling.png";
@@ -34,6 +34,12 @@ catSprite.src = "sprites/cat.png";
 
 statusSprite = new Image();
 statusSprite.src = "sprites/status-sprites.png";
+
+attackSprites = new Image();
+attackSprites.src = "sprites/attacks.png";
+
+damageSprite = new Image();
+damageSprite.src = "sprites/damage-sprite.png";
 
 var WIDTHOFSCREEN = 45;
 var HEIGHTOFSCREEN = 20;
@@ -69,70 +75,76 @@ var ARROWS = {
 
 function sprite(options) {
     var self = {};
-    var frameIndex = 0;
-    var tickCount = 0;
-    ticksPerFrame = options.ticksPerFrame || 0;
-    numberOfFrames = options.numberOfFrames || 1;
+    self.frameIndex = 0;
+    self.tickCount = 0;
+    self.ticksPerFrame = options.ticksPerFrame || 0;
+    self.numberOfFrames = options.numberOfFrames || 1;
 
     self.context = options.context;
     self.width = options.width;
     self.height = options.height;
     self.image = options.image;
     self.canvasPosition = options.canvasPosition;
-    self.state = spriteState.hurt;
+    self.state = spriteState.idle;
 
     self.stats = options.stats;
 
-    self.render = function() {
-        self.context.clearRect(self.canvasPosition.x, self.canvasPosition.y, self.width, self.height);
-        var framePosition = self.width;
-        switch (self.state) {
-            case spriteState.idle: {
-                framePosition = self.width * frameIndex; // alternating between first and second sprite
-                break;
+    //if (options.render === undefined) {
+        self.render = function () {
+            //console.log(self.canvasPosition);
+            self.context.clearRect(self.canvasPosition.x, self.canvasPosition.y, self.width, self.height);
+            var framePosition = self.width;
+            switch (self.state) {
+                case spriteState.idle: {
+                    framePosition = self.width * self.frameIndex; // alternating between first and second sprite
+                    break;
+                }
+                case spriteState.attack: {
+                    framePosition = self.width * 2; // 3rd sprite
+                    break;
+                }
+                case spriteState.hurt: {
+                    framePosition = self.width * 3; // 4th sprite
+                    self.context.drawImage(statusSprite, 8, 0, 8, 8, self.context.canvas.width - 8, 0, 8, 8);
+                    break;
+                }
+                case spriteState.healing: {
+                    framePosition = self.width * 4;
+                    self.context.drawImage(statusSprite, 0, 0, 8, 8, self.context.canvas.width - 8, 0, 8, 8);
+                    break;
+                }
+                case spriteState.running: {
+                    framePosition = self.width * (5 + self.frameIndex);
+                    break;
+                }
             }
-            case spriteState.attack: {
-                framePosition = self.width * 2; // 3rd sprite
-                break;
-            }
-            case spriteState.hurt: {
-                framePosition = self.width * 3; // 4th sprite
-                self.context.drawImage(statusSprite, 8, 0, 8, 8, self.context.canvas.width - 8, 0, 8, 8);
-                break;
-            }
-            case spriteState.healing: {
-                framePosition = self.width * 4;
-                self.context.drawImage(statusSprite, 0, 0, 8, 8, self.context.canvas.width - 8, 0, 8, 8);
-                break;
-            }
-            case spriteState.running: {
-                framePosition = self.width * (5 + frameIndex);
-                break;
-            }
-        }
-        self.context.drawImage(
-            self.image,
-            framePosition, // x position
-            0,
-            self.width, // width on spritesheet
-            self.height,// height on spritesheet
-            self.canvasPosition.x, // x position on canvas
-            self.canvasPosition.y,  // y position on canvas
-            self.width, // width on canvas
-            self.height// height on canvas
-        );
-    };
+            self.context.drawImage(
+                self.image,
+                framePosition, // x position
+                0,
+                self.width, // width on spritesheet
+                self.height,// height on spritesheet
+                self.canvasPosition.x, // x position on canvas
+                self.canvasPosition.y,  // y position on canvas
+                self.width, // width on canvas
+                self.height// height on canvas
+            );
+        };
+    /*}
+    else {
+        self.render = options.render;
+    }*/
 
     self.update = function() {
-        tickCount++;
+        self.tickCount++;
 
-        if (tickCount > ticksPerFrame) {
-            tickCount = 0;
-            if (frameIndex < numberOfFrames - 1) {
-                frameIndex++;
+        if (self.tickCount > self.ticksPerFrame) {
+            self.tickCount = 0;
+            if (self.frameIndex < self.numberOfFrames - 1) {
+                self.frameIndex++;
             }
             else {
-                frameIndex = 0;
+                self.frameIndex = 0;
             }
         }
     };
@@ -252,14 +264,11 @@ function animationSequence(options) {
                 self.tickCount = 0;
                 if (self.frameIndex < self.numberOfFrames - 1) {
                     self.frameIndex++;
-                    console.log("Animation sequence: ", self.frameIndex);
                 }
             }
         };
     else
         self.update = options.update;
-
-    console.log("update", self.update);
 
     if (options.render === undefined)
         self.render = function() {
@@ -273,9 +282,6 @@ function animationSequence(options) {
         };
     else
         self.render = options.render;
-
-
-    console.log("render", self.render);
 
     self.reset = function() {
         frameIndex = 0;
@@ -404,6 +410,13 @@ var battleMenuStates = {
     escape: 3
 };
 
+var attackingStates = {
+    attacking: 0,
+    won: 1,
+    lost: 2,
+    notInBattle: 3
+};
+
 var battleMenuIMG = new Image();
 battleMenuIMG.src = "sprites/battle-menu-screens.png";
 
@@ -413,6 +426,7 @@ var battleScreen = {
     setEnemy: {},
     currentPet: {},
     context: context,
+    currentBattleState: attackingStates.notInBattle,
     menu: {
         context: this.context,
         image: battleMenuIMG,
@@ -466,11 +480,17 @@ var battleScreen = {
                 case ARROWS.down:
                     switch(this.internalCounter) {
                         case battleMenuStates.fight:
+                            clearScreen();
+                            console.log("Trying to fight");
+                            battleScreen.currentBattleState = attackingStates.attacking;
+                            loopAttackSequence();
                             break;
                         case battleMenuStates.care:
                             break;
                         case battleMenuStates.escape:
                             currentScreenState = screenState.pet;
+                            pet.canvasPosition = {x: 15, y: 0};
+                            pet.state = spriteState.idle;
                             clearScreen();
                             loopPet();
                             break;
@@ -570,6 +590,62 @@ var initialiseBattle = {
     }
 };
 
+function loopAttackSequence() {
+    cancelAnimationFrame(animationFrame);
+    if (currentScreenState === screenState.battle &&
+        battleScreen.currentBattleState === attackingStates.attacking) {
+        animationFrame = requestAnimationFrame(loopAttackSequence);
+        battleSequence.render();
+        battleSequence.update();
+    }
+}
+/*
+var attackSpriteObj = {
+    image: attackSprites,
+    context: context,
+    width: 16,
+    height: 16,
+    spriteXPosition: 0,
+    frameIndex: 0,
+    storeAttack: function(value) {
+        if(value < 10)
+            this.spriteXPosition = 0;
+        else if (value < 20)
+            this.spriteXPosition = 1;
+        else if (value < 30)
+            this.spriteXPosition = 2;
+        else
+            this.spriteXPosition = 3;
+    },
+    render: function() {
+
+    },
+    update: function() {
+
+    }
+};*/
+
+
+var attackSpriteObj = sprite({
+    context:context,
+    width: 16,
+    height: 16,
+    image: attackSprites,
+    canvasPosition: {x: 0, y: 0},
+    ticksPerFrame: 20,
+    numberOfFrames: 4
+});
+
+var damageSpriteObj = sprite({
+    context: context,
+    width: 16,
+    height: 16,
+    image: damageSprite,
+    canvasPosition: {x: 0, y: 0},
+    ticksPerFrame: 20,
+    numberOfFrames: 2
+});
+
 var battleSequence = animationSequence({
     petSprite: pet,
     enemySprite: cat,
@@ -577,27 +653,40 @@ var battleSequence = animationSequence({
     tickCount: 0,
     frameIndex: 0,
     ticksPerFrame: 20,
-    numberOfFrames: 10,
-    /*update: function() {
-        this.tickCount++;
-
-        if (this.tickCount > this.ticksPerFrame) {
-            this.tickCount = 0;
-            if (this.frameIndex < this.numberOfFrames - 1) {
-                this.frameIndex++;
-            }
-        }
-    },*/
+    numberOfFrames: 16,
     render: function() {
+        //clearScreen();
         if (this.frameIndex < 4) {
             // display pet/enemy in attack sprite
+            console.log("attacking");
 
+            attackSpriteObj.canvasPosition = {x: 15 - this.frameIndex * 5, y: 3};
+            attackSpriteObj.render();
+
+            this.petSprite.canvasPosition = {x: this.context.canvas.width - this.petSprite.width, y: 0};
+            this.petSprite.state = spriteState.attack;
+            this.petSprite.render();
             // four frames of attack power moving out
+
+
         }
         else if (this.frameIndex < 12) {
             // display enemy/pet in idle sprite
-
+            console.log("receiving the attack");
             // (4 frames for attack to arrive)
+            attackSpriteObj.canvasPosition = {x: this.context.canvas.width - this.frameIndex * 5, y: 3};
+
+            if (this.context.canvas.width - this.frameIndex * 5 > 16) {
+                attackSpriteObj.render();
+                this.enemySprite.state = spriteState.idle;
+
+                this.enemySprite.render();
+            }
+            else {
+                context.clearRect(16, 0, 16, 16);
+                damageSpriteObj.render();
+                damageSpriteObj.update();
+            }
 
             // take damage/dodge (4 frames for damage, 2 frames for dodge)
 
@@ -607,9 +696,13 @@ var battleSequence = animationSequence({
 
         }
         else {
+            console.log("finishing the attack");
             // figure out if either pet or enemy is dead
             // if not dead, display battle menu
             // otherwise display win/lose screen
+            battleScreen.currentBattleState = attackingStates.notInBattle;
+            this.frameIndex = 0;
+            battleScreen.menu.render();
         }
     }
 });
@@ -622,7 +715,7 @@ var healingSequence = animationSequence({
     ticksPerFrame: 20,
     numberOfFrames: 8,
     render: function() {
-        console.log("frameIndex:", this.frameIndex);
+        //console.log("frameIndex:", this.frameIndex);
         if (this.frameIndex < 6) {
             if (this.frameIndex % 2 === 1) {
                 this.petSprite.state = spriteState.healing;
@@ -643,6 +736,7 @@ var healingSequence = animationSequence({
 });
 
 function loopHealing() {
+    cancelAnimationFrame(animationFrame);
     if (pet.state !== spriteState.idle) {
         animationFrame = requestAnimationFrame(loopHealing);
         healingSequence.render();
@@ -666,121 +760,124 @@ var currentScreenState = screenState.pet;
 
 // need onkeydown for arrow keys left:37, up:38, right:39, down:40
 function processKeyDown(event) {
-    cancelAnimationFrame(animationFrame);
-    //console.log("current screen state: ",currentScreenState);
-    switch(event.keyCode) {
-        case ARROWS.left: // left
-            switch (currentScreenState) {
-                case screenState.menu: // map screen
-                    menuScreen.previousFrame();
-                    menuScreen.render();
-                    break;
-                case screenState.map:
-                    break;
-                case screenState.step:
-                    break;
-                case screenState.battle:
-                    battleScreen.menu.processKeyDown(ARROWS.left);
-                    break;
-                case screenState.pet: // walking screen
-                default:
-                    menuScreen.reset();
-                    clearScreen();
-                    loopPet();
-                    break;
-            }
-            break;
-        case ARROWS.up: // up, cancel
-            switch (currentScreenState) {
-                case screenState.step:
-                    stepScreen.resetPreviousCount();
-                case screenState.map: // map screen
-                    currentScreenState = screenState.menu;
-                    menuScreen.render();
-                    break;
-                case screenState.battle:
-                    battleScreen.menu.processKeyDown(ARROWS.up);
-                    break;
-                case screenState.menu: // map screen
-                case screenState.pet: // walking screen
-                default:
-                    menuScreen.reset();
-                    clearScreen();
-                    loopPet();
-                    break;
-            }
-            break;
-        case ARROWS.right: // right
-            switch (currentScreenState) {
-                case screenState.menu: // map screen
-                    menuScreen.update();
-                    menuScreen.render();
-                    break;
-                case screenState.map: // map screen
-                    break;
-                case screenState.step:
-                    break;
-                case screenState.battle:
-                    battleScreen.menu.processKeyDown(ARROWS.right);
-                    break;
-                case screenState.pet: // walking screen
-                default:
-                    menuScreen.reset();
-                    clearScreen();
-                    loopPet();
-                    break;
-            }
-            break;
-        case ARROWS.down: // down - represents menu and item selection
-            switch (currentScreenState) {
-                case screenState.pet: // walking screen
-                    currentScreenState = screenState.menu;
-                    menuScreen.render();
-                    break;
-                case screenState.menu:
-                    switch(menuScreen.internalCounter) {
-                        case 0: // map screen
-                            currentScreenState = screenState.map;
-                            mapScreen.render();
-                            break;
-                        case 1: // care screen
-                            if (pet.state === spriteState.hurt) {
-                                healingSequence.reset();
-                                pet.state = spriteState.healing;
-                                clearScreen();
-                                loopHealing();
-                                menuScreen.reset();
-                            }
-                            break;
-                        case 2: // about screen
-                            currentScreenState = screenState.about;
-                            aboutScreen.render();
-                            break;
-                        case 3: // steps screen
-                            currentScreenState = screenState.step;
-                            stepScreen.render();
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                case screenState.map: // map screen
-                    break;
-                case screenState.step:
-                    break;
-                case screenState.battle:
-                    battleScreen.menu.processKeyDown(ARROWS.down);
-                    break;
-                default:
-                    menuScreen.reset();
-                    clearScreen();
-                    loopPet();
-                    break;
-            }
-            break;
-        default:
-            return false;
+    if (currentScreenState !== screenState.battle) { // prevent interruptions during battle
+        cancelAnimationFrame(animationFrame);
+        //console.log("current screen state: ",currentScreenState);
     }
+        switch (event.keyCode) {
+            case ARROWS.left: // left
+                switch (currentScreenState) {
+                    case screenState.menu: // map screen
+                        menuScreen.previousFrame();
+                        menuScreen.render();
+                        break;
+                    case screenState.map:
+                        break;
+                    case screenState.step:
+                        break;
+                    case screenState.battle:
+                        battleScreen.menu.processKeyDown(ARROWS.left);
+                        break;
+                    case screenState.pet: // walking screen
+                    default:
+                        menuScreen.reset();
+                        clearScreen();
+                        loopPet();
+                        break;
+                }
+                break;
+            case ARROWS.up: // up, cancel
+                switch (currentScreenState) {
+                    case screenState.step:
+                        stepScreen.resetPreviousCount();
+                    case screenState.map: // map screen
+                        currentScreenState = screenState.menu;
+                        menuScreen.render();
+                        break;
+                    case screenState.battle:
+                        battleScreen.menu.processKeyDown(ARROWS.up);
+                        break;
+                    case screenState.menu: // map screen
+                    case screenState.pet: // walking screen
+                    default:
+                        menuScreen.reset();
+                        clearScreen();
+                        loopPet();
+                        break;
+                }
+                break;
+            case ARROWS.right: // right
+                switch (currentScreenState) {
+                    case screenState.menu: // map screen
+                        menuScreen.update();
+                        menuScreen.render();
+                        break;
+                    case screenState.map: // map screen
+                        break;
+                    case screenState.step:
+                        break;
+                    case screenState.battle:
+                        battleScreen.menu.processKeyDown(ARROWS.right);
+                        break;
+                    case screenState.pet: // walking screen
+                    default:
+                        menuScreen.reset();
+                        clearScreen();
+                        loopPet();
+                        break;
+                }
+                break;
+            case ARROWS.down: // down - represents menu and item selection
+                switch (currentScreenState) {
+                    case screenState.pet: // walking screen
+                        currentScreenState = screenState.menu;
+                        menuScreen.render();
+                        break;
+                    case screenState.menu:
+                        switch (menuScreen.internalCounter) {
+                            case 0: // map screen
+                                currentScreenState = screenState.map;
+                                mapScreen.render();
+                                break;
+                            case 1: // care screen
+                                if (pet.state === spriteState.hurt) {
+                                    healingSequence.reset();
+                                    pet.state = spriteState.healing;
+                                    clearScreen();
+                                    loopHealing();
+                                    menuScreen.reset();
+                                }
+                                break;
+                            case 2: // about screen
+                                currentScreenState = screenState.about;
+                                aboutScreen.render();
+                                break;
+                            case 3: // steps screen
+                                currentScreenState = screenState.step;
+                                stepScreen.render();
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case screenState.map: // map screen
+                        break;
+                    case screenState.step:
+                        break;
+                    case screenState.battle:
+                        battleScreen.menu.processKeyDown(ARROWS.down);
+                        break;
+                    default:
+                        menuScreen.reset();
+                        clearScreen();
+                        loopPet();
+                        break;
+                }
+                break;
+            default:
+                return false;
+        }
+
 }
 
 function walk() {
