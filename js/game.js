@@ -134,8 +134,8 @@ function sprite(options) {
             }
             self.context.drawImage(
                 self.image,
-                framePosition, // x position
-                0,
+                framePosition, // x position on spritesheet
+                0, // y position on spritesheet
                 self.width, // width on spritesheet
                 self.height,// height on spritesheet
                 self.canvasPosition.x, // x position on canvas
@@ -494,6 +494,15 @@ var battleScreen = {
                             clearScreen();
                             console.log("Trying to fight");
                             battleScreen.currentBattleState = attackingStates.attacking;
+                            if (pet.stats.speed > cat.stats.speed) {
+                                battleSequence.fasterSprite = pet;
+                                battleSequence.slowerSprite = cat;
+                            }
+                            else {
+                                battleSequence.fasterSprite = cat;
+                                battleSequence.slowerSprite = pet;
+                            }
+                            //battleSequence.slowerSprite;
                             loopAttackSequence();
                             break;
                         case battleMenuStates.care:
@@ -746,8 +755,75 @@ var battleSequence = animationSequence({
 
 
         }
-    }//,
-    //attack: function(attackSprites, )
+    },
+    attack: function(attackSprites, fasterSprite, slowerSprite) {
+        if (this.frameIndex < 4) {
+            // display pet/enemy in attack sprite
+            attackSprites.frameIndex = Math.round(fasterSprite.stats.attack / 10, 0) - 1;
+
+            attackSprites.canvasPosition = {x: 15 - this.frameIndex * 5, y: 3};
+            attackSprites.render();
+
+            fasterSprite.canvasPosition = {x: this.context.canvas.width - fasterSprite.width, y: 0};
+            fasterSprite.state = spriteState.attack;
+            fasterSprite.render();
+            // four frames of attack power moving out
+        }
+        else if (this.frameIndex < 12) {
+            // display enemy/pet in idle sprite
+            //console.log("receiving the attack");
+            // (4 frames for attack to arrive)
+            attackSprites.canvasPosition = {x: this.context.canvas.width - this.frameIndex * 5, y: 3};
+
+            if (this.context.canvas.width - this.frameIndex * 5 > 16) {
+                attackSprites.render();
+                slowerSprite.canvasPosition.x = 0;
+                slowerSprite.state = spriteState.idle;
+
+                slowerSprite.render();
+            }
+            else {
+                this.context.clearRect(16, 0, 16 + 5, 16);
+                damageSpriteObj.render();
+                damageSpriteObj.update();
+            }
+
+            // take damage/dodge (4 frames for damage, 2 frames for dodge)
+
+        }
+        else if (this.frameIndex < 18) {
+            // display health (2 frames)
+            this.context.clearRect(0, 0, 16, 16);
+            slowerSprite.canvasPosition.x = 15;
+            slowerSprite.render();
+
+            this.context.drawImage(blackbar, 0, 0);
+            var hp = slowerSprite.stats.hp.toString();
+            if (this.frameIndex > 14) {
+                if ((slowerSprite.stats.hp - fasterSprite.stats.attack) > 0)
+                    hp = (slowerSprite.stats.hp - fasterSprite.stats.attack).toString();
+                else
+                    hp = "0";
+            }
+            for(var index = 0; index < hp.length; index++) {
+                console.log("index:", hp);
+                this.context.drawImage(
+                    stepScreenIMG,
+                    alphabet[parseInt(hp.charAt(index))],
+                    5, // y position on spritesheet
+                    4, // width
+                    5, // height
+                    this.context.canvas.width + (index - 3 - hp.length) * 4, // x position on canvas
+                    this.context.canvas.height - 6, // y position on canvas
+                    4, // width on canvas
+                    5 // height on canvas
+                );
+            }
+            // figure out how to display the remaining health
+            // get the stats
+        }
+        return (slowerSprite.stats.hp - fasterSprite.stats.attack) > 0;
+    }
 });
 
 var healingSequence = animationSequence({
