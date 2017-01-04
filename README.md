@@ -12,6 +12,19 @@ https://www.youtube.com/watch?v=Ev3NXnDSLKw
 - Screen button - turns it off
 - There is running animation as well - https://www.youtube.com/watch?v=KSYOaRzQ2XY - that might help breakdown the sprite up, birds tilt their bodies and their feet do the moving
 
+Architectural concerns:
+As I have slapped things onto this project, it has gotten quite hairy and is now quite fiddly to build upon, so I am going to refactor the code into something better that allows for the separation of logic and rendering.
+One of the suggestions made was look into game loops.
+A Javascript article on using game loops on browsers
+https://www.isaacsukin.com/news/2015/01/detailed-explanation-javascript-game-loops-and-timing
+A generic article on game loops
+http://gameprogrammingpatterns.com/game-loop.html
+Digging really deep into loops and tutorials on what people recommend, theres this article
+http://www.lostdecadegames.com/how-to-make-a-simple-html5-canvas-game/
+This is another article on their own experiences with game development on JS
+https://www.html5rocks.com/en/tutorials/casestudies/onslaught/#toc-the-game-loop
+
+
 Screen dimensions
 - One of the major things that I need to figure out, is how big exactly are the screens.
 - Someone on reddit has made a watchface built onto a digivice.
