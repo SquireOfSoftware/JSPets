@@ -346,7 +346,7 @@ var stepScreen = {
     width: WIDTHOFSCREEN,
     height: HEIGHTOFSCREEN,
 
-    runningTotal: bigInt(499),
+    runningTotal: bigInt("143289832058020432804"),
     previousCount: "0",
 
     meats: bigInt(0),
