@@ -38,3 +38,5 @@ var ARROW_KEYS = {
     RIGHT: 39,
     DOWN: 40
 };
+
+var DEBUG_KEY = 68; // the letter d

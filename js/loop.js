@@ -5,9 +5,10 @@
 var animationFrameId;
 
 function gameLoop () {
-    update();
-    draw();
+    //update();
+    //draw();
     animationFrameId = requestAnimationFrame(gameLoop);
+    addLine("Test");
 }
 
 requestAnimationFrame(gameLoop);
