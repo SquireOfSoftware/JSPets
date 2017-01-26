@@ -6,6 +6,34 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 27/1/2017 ==
+
+So after doing a lot of thinking, it might be appropriate to divide the work into several major sections:
+1. Game loop - the core and beating heart of the system
+2. Logic processing - the bit that records non-animated changes such as stats, walking distances and so forth
+3. Rendering processing - the bit that records animation changes such as sprite-changes, timings
+4. Input processing - the bit that records what buttons are pressed
+
+These components would force the architecture into one where the framerate is maintained regardless of what the states are at.
+
+What I need to figure out is how these pieces go together and what affects what.
+
+A potential challenge is trying to figure out what the timings are for each animation, as each "sprite" would have no understanding to the surrounding sprites which are also rendered on the screen.
+
+Milestones for now:
+1. Get a game loop going
+2. Record the framerate - Need a way to actually potential throttle stuff https://www.isaacsukin.com/news/2015/01/detailed-explanation-javascript-game-loops-and-timing#timing-problems
+3. Register button presses
+4. Show the idle sprite
+5. Show the running sprite
+6. Count steps
+7. Display menu
+8. Show battle animation
+9. Show battle menu
+10.Show attack animations
+
+== Before 27/1/2017 ==
+
 New Source:
 https://www.youtube.com/watch?v=Ev3NXnDSLKw
 - Theres a timeout function to reset back to the walking animation
@@ -23,7 +51,6 @@ Digging really deep into loops and tutorials on what people recommend, theres th
 http://www.lostdecadegames.com/how-to-make-a-simple-html5-canvas-game/
 This is another article on their own experiences with game development on JS
 https://www.html5rocks.com/en/tutorials/casestudies/onslaught/#toc-the-game-loop
-
 
 Screen dimensions
 - One of the major things that I need to figure out, is how big exactly are the screens.
