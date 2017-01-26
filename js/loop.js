@@ -5,7 +5,7 @@
 var animationFrameId;
 
 function gameLoop () {
-    //processKeyDown();
+    interpretKeys();
     update();
     draw();
     animationFrameId = requestAnimationFrame(gameLoop);
