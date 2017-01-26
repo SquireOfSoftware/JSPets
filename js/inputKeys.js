@@ -28,6 +28,12 @@ function processKeyDown(event) {
         case DEBUG_KEY:
             toggleDebug();
             break;
+        case S_KEY:
+            toggleDrawing();
+            break;
+        case ESCAPE_KEY:
+            toggleGameLoop();
+            break;
         default:
             console.log(event.keyCode);
     }

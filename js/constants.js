@@ -40,3 +40,7 @@ var ARROW_KEYS = {
 };
 
 var DEBUG_KEY = 68; // the letter d
+
+var ESCAPE_KEY = 27; // the escape key
+
+var S_KEY = 83; // the s key

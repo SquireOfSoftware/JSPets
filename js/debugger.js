@@ -14,14 +14,13 @@ function addLine(text) {
     }
 }
 
-function disableDebug() {
-    DEBUG = false;
-}
-
-function enableDebug() {
-    DEBUG = true;
-}
-
 function toggleDebug() {
     DEBUG = !DEBUG;
+    if (DEBUG === true)
+        addLine("Debugger has been enabled");
+    else {
+        DEBUG = true;
+        addLine("Debugger has been disabled");
+        DEBUG = false;
+    }
 }

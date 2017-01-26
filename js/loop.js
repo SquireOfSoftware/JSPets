@@ -5,10 +5,22 @@
 var animationFrameId;
 
 function gameLoop () {
-    //update();
-    //draw();
+    //processKeyDown();
+    update();
+    draw();
     animationFrameId = requestAnimationFrame(gameLoop);
-    addLine("Test");
+}
+
+function toggleGameLoop() {
+    if (animationFrameId === null) {
+        animationFrameId = requestAnimationFrame(gameLoop);
+        addLine("Game loop has been started")
+    }
+    else {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+        addLine("Game loop has been stopped");
+    }
 }
 
 requestAnimationFrame(gameLoop);

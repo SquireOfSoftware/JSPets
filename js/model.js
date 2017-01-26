@@ -6,3 +6,6 @@ var game = {
     state: GAME_STATES.PET_STATUS
 };
 
+function update() {
+
+}
