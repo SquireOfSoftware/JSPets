@@ -4,10 +4,23 @@
 
 var animationFrameId;
 
+var MAX_FPS = 2;
+var fpsInterval = 1000/MAX_FPS;
+var now = Date.now();
+var then = Date.now();
+var elapsed;
+
 function gameLoop () {
+
     interpretKeys();
     update();
-    draw();
+    now = Date.now();
+    elapsed = now - then;
+    if (elapsed > fpsInterval) {
+        draw();
+        then = now - (elapsed % fpsInterval);
+        updateFPS();
+    }
     animationFrameId = requestAnimationFrame(gameLoop);
 }
 
@@ -21,6 +34,10 @@ function toggleGameLoop() {
         animationFrameId = null;
         addLine("Game loop has been stopped");
     }
+}
+
+function updateFPS() {
+    document.getElementById("fps").value = elapsed/1000;
 }
 
 requestAnimationFrame(gameLoop);

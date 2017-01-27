@@ -6,12 +6,14 @@ var DRAW_TO_SCREEN = true;
 
 function draw() {
     if (DRAW_TO_SCREEN === true) {
-
+        addLine("Drawing now");
     }
-    else
-        addLine("Drawing disabled");
 }
 
 function toggleDrawing() {
     DRAW_TO_SCREEN = !DRAW_TO_SCREEN;
+    if (DRAW_TO_SCREEN === true)
+        addLine("Rendering has been enabled");
+    else
+        addLine("Rendering has been disabled");
 }

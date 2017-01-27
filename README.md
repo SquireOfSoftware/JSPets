@@ -39,6 +39,7 @@ https://www.youtube.com/watch?v=Ev3NXnDSLKw
 - Theres a timeout function to reset back to the walking animation
 - Screen button - turns it off
 - There is running animation as well - https://www.youtube.com/watch?v=KSYOaRzQ2XY - that might help breakdown the sprite up, birds tilt their bodies and their feet do the moving
+- http://www.tamatalk.com/pixelmood/digimon.htm - breakdown of the tamagotchi
 
 Architectural concerns:
 As I have slapped things onto this project, it has gotten quite hairy and is now quite fiddly to build upon, so I am going to refactor the code into something better that allows for the separation of logic and rendering.
