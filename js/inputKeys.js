@@ -3,7 +3,6 @@
  */
 
 var lastKeyPress = null;
-
 var keyPressBuffer = [];
 
 function Key (name) {
@@ -45,6 +44,7 @@ function processKeyDown(event) {
             break;
         default:
             console.log(event.keyCode);
+            lastKeyPress = null;
     }
 }
 

@@ -6,6 +6,22 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 30/1/2017 ==
+
+Milestones for now:
+1. Get a game loop going - done
+2. Record the framerate - done
+3. Register button presses - realised is this a concern? Do I need to register key presses and key holds?
+- Have done up to
+4. Show the idle sprite
+5. Show the running sprite
+6. Count steps
+7. Display menu
+8. Show battle animation
+9. Show battle menu
+10.Show attack animations
+
+
 == 27/1/2017 ==
 
 So after doing a lot of thinking, it might be appropriate to divide the work into several major sections:

@@ -2,6 +2,12 @@
  * Created by JarvisWalker on 6/1/17.
  */
 
+function State(options) {
+    this.name = options.name;
+    this.number = options.number;
+    this.response = options.response;
+}
+
 var GAME_STATES = {
     PET_STATUS: 0, // can be idle or walking
     MENU: 1, // status and battle menu - means limited
