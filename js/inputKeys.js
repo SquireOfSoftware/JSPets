@@ -54,3 +54,7 @@ function interpretKeys() {
         lastKeyPress = null;
     }
 }
+
+function walk() {
+    // this is triggered
+}

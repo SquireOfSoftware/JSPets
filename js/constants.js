@@ -2,11 +2,33 @@
  * Created by JarvisWalker on 6/1/17.
  */
 
-function State(options) {
+function LogicState(options) {
     this.name = options.name;
-    this.number = options.number;
-    this.response = options.response;
+    this.getName = function() { return this.name};
 }
+
+var ANIMAL_STATES = {
+    IDLE: new LogicState({
+        name: "IDLE"
+        // default state
+        // timeeout state as well
+        // if you win you land on this
+    }),
+    WALKING: new LogicState({
+        name: "WALKING"
+        // triggered by a step
+    }),
+    IN_BATTLE: new LogicState({
+        name: "IN_BATTLE"
+        // no steps allowed
+        // hp can be subtracted in this state
+    }),
+    SICK: new LogicState({
+        name: "SICK"
+        // no steps allowed
+        // land on this if you run (chance) or you lose a battle
+    })
+};
 
 var GAME_STATES = {
     PET_STATUS: 0, // can be idle or walking
@@ -50,3 +72,5 @@ var DEBUG_KEY = 68; // the letter d
 var ESCAPE_KEY = 27; // the escape key
 
 var S_KEY = 83; // the s key
+
+var DEFAULT_SPRITE_SIZE = 16;
