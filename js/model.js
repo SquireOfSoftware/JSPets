@@ -1,13 +1,6 @@
 /**
  * Created by JarvisWalker on 6/1/17.
  */
-/*
-function Game() {
-    this.state = GAME_STATES.PET_STATUS;
-    this.pet = null;
-
-    this.getPetState = function() {return this.pet.state;};
-}*/
 
 var game = {
     state: GAME_STATES.PET_STATUS,
@@ -35,17 +28,17 @@ function Animal(options) {
         this.state = ANIMAL_STATES.IDLE;
 
 }
-/*
-var game = new Game();
-game.pet = new Animal({
-    name: "PET",
-    stats: {
-        hp: 10,
-        attk: 5,
-        spd: 7
-    }
-});*/
 
 function update() {
+    if (steps.hasRecentlyStepped) {
+        game.pet.state = ANIMAL_STATES.WALKING;
 
+        steps.waitPeriod--;
+        console.log(steps.waitPeriod);
+        if (steps.waitPeriod < 0) {
+            steps.hasRecentlyStepped = false;
+            game.pet.state = ANIMAL_STATES.IDLE;
+            //steps.waitPeriod = 0;
+        }
+    }
 }

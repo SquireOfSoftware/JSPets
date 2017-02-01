@@ -117,7 +117,7 @@ var petSprite = new AnimalSprite({
         canvasY: 0
     }),
     walkingPosition:  new SpritePosition({
-        spriteSheetX: 0,
+        spriteSheetX: 80, // fifth position on the sprite sheet
         spriteSheetY: 0,
         maxFrame: 1,
         canvasX: 15,

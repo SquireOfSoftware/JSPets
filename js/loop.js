@@ -27,7 +27,7 @@ function gameLoop () {
 function toggleGameLoop() {
     if (animationFrameId === null) {
         animationFrameId = requestAnimationFrame(gameLoop);
-        addLine("Game loop has been started")
+        addLine("Game loop has been started");
     }
     else {
         cancelAnimationFrame(animationFrameId);

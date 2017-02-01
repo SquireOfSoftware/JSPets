@@ -6,6 +6,28 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 1/2/2017 ==
+
+Reading up on Shake.JS to see if it can register foot steps.
+https://github.com/alexgibson/shake.js
+
+Apparently theres new DOM events for stuff like this now.
+http://w3c.github.io/deviceorientation/spec-source-orientation.html
+
+From the looks of it, not all the browsers support this recommendation:
+http://caniuse.com/#search=deviceorientation
+
+So it seems third-party is the best way forward for now.
+
+I also got an walking sprite working and it sort of "timesout" when there isn't any more clicks being received.
+
+Though it runs on a timer like thing that decrements on every update (ideally ought to be fast) but if it is decremented below 0 it will stop and revert back to the idle animation.
+
+It is pretty cool.
+
+I can also count steps as well.
+
+
 == 30/1/2017 ==
 
 Milestones for now:
