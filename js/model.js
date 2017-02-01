@@ -29,7 +29,14 @@ function Animal(options) {
 
 }
 
+// How do you abstract out the screen that has all the links to
+// pet status state needs to link to a pet object
+function Screen(options) {
+    this.name = options.name;
+}
+
 function update() {
+    // Need to figure out how to link this to a screen
     if (steps.hasRecentlyStepped) {
         game.pet.state = ANIMAL_STATES.WALKING;
 
