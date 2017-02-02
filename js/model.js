@@ -33,15 +33,15 @@ function Animal(options) {
 // pet status state needs to link to a pet object
 function Screen(options) {
     this.name = options.name;
+    this.update = options.update;
+
 }
 
 function update() {
     // Need to figure out how to link this to a screen
     if (steps.hasRecentlyStepped) {
         game.pet.state = ANIMAL_STATES.WALKING;
-
         steps.waitPeriod--;
-        console.log(steps.waitPeriod);
         if (steps.waitPeriod < 0) {
             steps.hasRecentlyStepped = false;
             game.pet.state = ANIMAL_STATES.IDLE;

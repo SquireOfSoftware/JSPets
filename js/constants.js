@@ -31,33 +31,35 @@ var ANIMAL_STATES = {
 };
 
 var GAME_STATES = {
-    PET_STATUS: 0, // can be idle or walking
-    MENU: 1, // status and battle menu - means limited
-    IN_BATTLE: 2, // encountering a battle
-    getState: function(number) {
-        switch(number) {
-            case 0: return "PET_STATUS";
-            case 1: return "MENU";
-            case 2: return "IN_BATTLE";
-            default: return "UNDEFINED";
-        }
-    }
+    PET_STATUS: new LogicState({
+        name: "PET_STATUS"
+    }),
+    MENU: new LogicState({
+        name: "MENU"
+    }),
+    IN_BATTLE: new LogicState({
+        name: "IN_BATTLE"
+    })
+};
+
+var MENU_STATES = {
+    CARE: new LogicState({
+        name: "CARE"
+    }),
+    STEPS: new LogicState({
+        name: "STEPS"
+    }),
+    MAP: new LogicState({
+        name: "MAP"
+    })
 };
 
 var BATTLE_STATES = {
-    START_BATTLE: 0,
-    BATTLE_MENU: 1,
-    ATTACK_SEQUENCE: 2,
-    FINISH_BATTLE: 3,
-    getState: function(number) {
-        switch(number) {
-            case 0: return "START_BATTLE";
-            case 1: return "BATTLE_MENU";
-            case 2: return "ATTACK_SEQUENCE";
-            case 3: return "FINISH_BATTLE";
-            default: return "UNDEFINED";
-        }
-    }
+    START_BATTLE: new LogicState({name: "START_BATTLE"}),
+    BATTLE_MENU: new LogicState({name: "BATTLE_MENU"}),
+    FASTER_ATTACKS: new LogicState({name: "FASTER_ATTACKS"}),
+    SLOWER_ATTACKS: new LogicState({name: "SLOWER_ATTACKS"}),
+    FINISH_BATTLE: new LogicState({name: "FINISH_BATTLE"})
 };
 
 var ARROW_KEYS = {
