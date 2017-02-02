@@ -22,9 +22,6 @@ function gameLoop () {
         updateFPS();
     }
     animationFrameId = requestAnimationFrame(gameLoop);
-    // Set released and pressed to false;
-    //keys.up.pressed = false;
-    //keys.up.released = false;
 }
 
 function toggleGameLoop() {

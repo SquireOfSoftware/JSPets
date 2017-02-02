@@ -22,10 +22,7 @@ var keys = {
 function processKeyDown(event) {
     switch(event.keyCode) {
         case ARROW_KEYS.UP:
-            //keys.up.pressed = true;
-            //keys.up.hold = true;
-            lastKeyPress = keys.up.pressed;
-            //addLine("I pressed UP");
+            lastKeyPress = keys.up;
             break;
         case ARROW_KEYS.LEFT:
             lastKeyPress = keys.left;
@@ -54,11 +51,10 @@ function processKeyDown(event) {
 //function
 
 function interpretKeys() {
-    if (lastKeyPress !== null) {
-    //if (keys.up.pressed) {
+    //if (lastKeyPress !== null) {
+    if (keys.up.pressed) {
         addLine(lastKeyPress.name + " was pressed");
         lastKeyPress = null;
-        //addLine("I pressed UP");
     }
 }
 
