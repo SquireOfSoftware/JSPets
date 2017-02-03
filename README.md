@@ -6,6 +6,20 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 3/2/2017 ==
+
+Added code to get a menu appearing.
+
+This took me the longest to try and figure out how the screens would work.
+
+The simplest solution was to have a hybrid logic/render object that held both the logic of where it was up to in the rendering object but also had the logic "semi" separated out.
+
+See the Map screen.
+
+Still there are a lot more things that I need to figure out, like screen in a screen state. This is a little confusing and is quite hard with no pointers.
+
+
+
 == 1/2/2017 ==
 
 Reading up on Shake.JS to see if it can register foot steps.

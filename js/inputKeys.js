@@ -50,18 +50,31 @@ function processKeyDown(event) {
 }
 
 function interpretKeys() {
+    // process this on the screen
     if (lastKeyPress !== null) {
         addLine(lastKeyPress.name + " was pressed");
         switch(lastKeyPress.keyCode) {
             case ARROW_KEYS.DOWN:
                 if (game.state === GAME_STATES.PET_STATUS)
                     game.state = GAME_STATES.MENU;
+                console.log(currentScreen);
                 break;
             case ARROW_KEYS.UP:
                 if (game.state === GAME_STATES.MENU)
                     game.state = GAME_STATES.PET_STATUS;
                 break;
+            case ARROW_KEYS.LEFT:
+                if (game.state === GAME_STATES.MENU) {
+                    currentScreen.screenPosition.previous();
+                }
+                break;
+            case ARROW_KEYS.RIGHT:
+                if (game.state === GAME_STATES.MENU) {
+                    currentScreen.screenPosition.next();
+                }
+                break;
         }
+        updateScreens();
         lastKeyPress = null;
     }
 }

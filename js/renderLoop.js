@@ -47,11 +47,11 @@ function ScreenPosition(options) {
     else
         this.canvasY = 0;
 
-    var multipier;
+    var multiplier;
     if (options.multiplier !== undefined)
-        multipier = options.multiplier;
+        multiplier = options.multiplier;
     else
-        multipler = DEFAULT_SCREEN_SIZE.X;
+        multiplier = DEFAULT_SCREEN_SIZE.X;
 
     var maxScreens;
     if (options.maxScreens !== undefined)
@@ -70,24 +70,25 @@ function ScreenPosition(options) {
     };
 
     this.next = function() {
-
         screenCounter++;
         if (screenCounter > maxScreens) {
             screenCounter = 0;
             this.currentPosition.x = 0;
         }
         else
-            this.currentPosition.x += multipier;
+            this.currentPosition.x += multiplier;
+        console.log(screenCounter, this.currentPosition);
     };
 
     this.previous = function() {
         screenCounter--;
         if (screenCounter < 0) {
-            screenCounter = 0;
-            this.currentPosition.x = maxScreens * multipler;
+            screenCounter = maxScreens;
+            this.currentPosition.x = maxScreens * multiplier;
         }
         else
-            this.currentPosition.x -= multipier;
+            this.currentPosition.x -= multiplier;
+        console.log(screenCounter, this.currentPosition);
     }
 }
 
@@ -229,28 +230,32 @@ function ScreenSprite(options) {
         size = {width: DEFAULT_SCREEN_SIZE.X, height: DEFAULT_SCREEN_SIZE.Y};
     this.update = options.update;
 
+    if (options.screenPosition !== undefined)
+        this.screenPosition = options.screenPosition;
+    else
+        this.screenPosition = new ScreenPosition({
+            firstScreenX: 0,
+            firstScreenY: 0,
+            maxScreens: 0,
+            canvasX: 0,
+            canvasY: 0
+        }); // this is just a dummy frame
+
     if (options.draw !== undefined)
         this.draw = options.draw;
     else
         this.draw = function() {
-            var currentPosition = new ScreenPosition({
-                firstScreenX: 0,
-                firstScreenY: 0,
-                maxScreens: 0,
-                canvasX: 0,
-                canvasY: 0
-            }); // this is just a dummy frame
             // Need to figure out xy coordinates
-            context.clearRect(currentPosition.canvasX, currentPosition.canvasY, size.width, size.height);
+            context.clearRect(this.screenPosition.canvasX, this.screenPosition.canvasY, size.width, size.height);
 
             context.drawImage(
                 image,
-                currentPosition.currentPosition.x,
-                currentPosition.currentPosition.y,
+                this.screenPosition.currentPosition.x,
+                this.screenPosition.currentPosition.y,
                 size.width,
                 size.height,
-                currentPosition.canvasX,
-                currentPosition.canvasY,
+                this.screenPosition.canvasX,
+                this.screenPosition.canvasY,
                 size.width,
                 size.height
             );
@@ -303,8 +308,14 @@ var mapScreen = new ScreenSprite({
     image: generateImage("sprites/menu-screen.png"),
     context: drawingBoard,
     referenceState: GAME_STATES.MENU,
+    screenPosition: new ScreenPosition({
+        firstScreenX: 0,
+        firstScreenY: 0,
+        maxScreens: 3
+    }),
     update: function() {
         //addLine("MAP SCREEN HAS BEEN SELECTED");
+
     }
 });
 
@@ -334,11 +345,11 @@ function updateScreens() {
 
 function draw() {
     if (DRAW_TO_SCREEN === true) {
-        updateScreens();
+        //updateScreens();
         currentScreen.update();
         addLine(game.pet.state.getName());
         currentScreen.draw();
-        console.log(currentScreen);
+        //console.log(currentScreen);
     }
 }
 

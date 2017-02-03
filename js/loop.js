@@ -12,11 +12,13 @@ var elapsed;
 
 function gameLoop () {
 
-    interpretKeys();
+    //interpretKeys();
     update();
     now = Date.now();
     elapsed = now - then;
     if (elapsed > fpsInterval) {
+        interpretKeys();
+        updateScreens();
         draw();
         then = now - (elapsed % fpsInterval);
         updateFPS();
