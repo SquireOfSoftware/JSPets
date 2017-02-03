@@ -52,6 +52,16 @@ function processKeyDown(event) {
 function interpretKeys() {
     if (lastKeyPress !== null) {
         addLine(lastKeyPress.name + " was pressed");
+        switch(lastKeyPress.keyCode) {
+            case ARROW_KEYS.DOWN:
+                if (game.state === GAME_STATES.PET_STATUS)
+                    game.state = GAME_STATES.MENU;
+                break;
+            case ARROW_KEYS.UP:
+                if (game.state === GAME_STATES.MENU)
+                    game.state = GAME_STATES.PET_STATUS;
+                break;
+        }
         lastKeyPress = null;
     }
 }
@@ -73,6 +83,6 @@ function walk() {
         //steps.waitPeriod = 3;
         steps.resetWaitPeriod();
         document.getElementById("steps").value = steps.total.toString();
-        addLine("Step was taken");
+        //addLine("Step was taken");
     }
 }

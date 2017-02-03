@@ -97,7 +97,7 @@ function AnimalSprite(options) {
     if(options.context !== undefined)
         context = options.context;
     else
-        context = document.getElementById("ctx").getContext("2d");
+        context = drawingBoard;
 
     if(options.visible !== undefined)
         this.visible = options.visible;
@@ -212,13 +212,15 @@ function AnimalSprite(options) {
 }
 
 function ScreenSprite(options) {
+    this.name = options.name;
     var image = options.image;
-
     var context;
     if(options.context !== undefined)
         context = options.context;
     else
-        context = document.getElementById("ctx").getContext("2d");
+        context = drawingBoard;
+
+    this.referenceState = options.referenceState;
 
     var size;
     if (options.size !== undefined)
@@ -240,19 +242,18 @@ function ScreenSprite(options) {
             }); // this is just a dummy frame
             // Need to figure out xy coordinates
             context.clearRect(currentPosition.canvasX, currentPosition.canvasY, size.width, size.height);
-            if(this.visible) {
-                context.drawImage(
-                    image,
-                    currentPosition.updatedSpriteSheetX,
-                    currentPosition.spriteSheetY,
-                    size.width,
-                    size.height,
-                    currentPosition.canvasX,
-                    currentPosition.canvasY,
-                    size.width,
-                    size.height
-                );
-            }
+
+            context.drawImage(
+                image,
+                currentPosition.currentPosition.x,
+                currentPosition.currentPosition.y,
+                size.width,
+                size.height,
+                currentPosition.canvasX,
+                currentPosition.canvasY,
+                size.width,
+                size.height
+            );
         };
 }
 
@@ -264,7 +265,7 @@ function generateImage(source) {
 
 var petSprite = new AnimalSprite({
     image: generateImage("sprites/duckling.png"),
-    context: document.getElementById("ctx").getContext("2d"),
+    context: drawingBoard,
     visible: true,
     idlePosition: new SpritePosition({
         spriteSheetX: 0,
@@ -283,8 +284,10 @@ var petSprite = new AnimalSprite({
 });
 
 var petScreen = new ScreenSprite({
-    image: generateImage("sprites/menu-screen"),
-    context: document.getElementById("ctx").getContext("2d"),
+    name: "PET_SCREEN",
+    image: null,
+    context: null,
+    referenceState: GAME_STATES.PET_STATUS,
     update: function() {
         // check whether a button has been pressed
         // handle button press accordingly
@@ -295,13 +298,47 @@ var petScreen = new ScreenSprite({
     }
 });
 
+var mapScreen = new ScreenSprite({
+    name: "MAP_SCREEN",
+    image: generateImage("sprites/menu-screen.png"),
+    context: drawingBoard,
+    referenceState: GAME_STATES.MENU,
+    update: function() {
+        //addLine("MAP SCREEN HAS BEEN SELECTED");
+    }
+});
+
+function clearScreen() {
+    drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
+}
+
 var currentScreen = petScreen;
+
+function updateScreens() {
+    // check if game state has changed
+    if (currentScreen.referenceState !== game.state) {
+        // change screen
+        if(game.state === GAME_STATES.PET_STATUS)
+            currentScreen = petScreen;
+        else if (game.state === GAME_STATES.MENU)
+            currentScreen = mapScreen;
+        else if (game.state === GAME_STATES.IN_BATTLE)
+            currentScreen = null;
+        else {
+            currentScreen = petScreen;
+            addLine("Cannot locate screen: " + game.state);
+        }
+        clearScreen();
+    }
+}
 
 function draw() {
     if (DRAW_TO_SCREEN === true) {
+        updateScreens();
         currentScreen.update();
         addLine(game.pet.state.getName());
         currentScreen.draw();
+        console.log(currentScreen);
     }
 }
 

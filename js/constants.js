@@ -51,6 +51,9 @@ var MENU_STATES = {
     }),
     MAP: new LogicState({
         name: "MAP"
+    }),
+    STATS: new LogicState({
+        name: "STATS"
     })
 };
 
@@ -75,7 +78,9 @@ var ESCAPE_KEY = 27; // the escape key
 
 var S_KEY = 83; // the s key
 
-// === SPRITE CONSTANTS ===
+// === SPRITE CONSTANTS === //
+
+var drawingBoard = document.getElementById("ctx").getContext("2d");
 
 var DEFAULT_SPRITE_SIZE = 16;
 var DEFAULT_SCREEN_SIZE = {
