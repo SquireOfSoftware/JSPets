@@ -75,4 +75,20 @@ var ESCAPE_KEY = 27; // the escape key
 
 var S_KEY = 83; // the s key
 
+// === SPRITE CONSTANTS ===
+
 var DEFAULT_SPRITE_SIZE = 16;
+var DEFAULT_SCREEN_SIZE = {
+    X: 45,
+    Y: 20
+};
+
+var DEFAULT_SPRITE_POSITIONS = {
+    IDLE: 0,
+    IDLE2: 16,
+    ATTACK: 32,
+    SICK: 48,
+    HAPPY: 64,
+    WALKING: 80,
+    WALKING2: 96
+};

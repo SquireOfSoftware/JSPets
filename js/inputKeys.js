@@ -5,18 +5,19 @@
 var lastKeyPress = null;
 var keyPressBuffer = [];
 
-function Key (name) {
+function Key (name, keyCode) {
     this.pressed = false;
     this.hold = false;
     this.released = false;
     this.name = name;
+    this.keyCode = keyCode;
 }
 
 var keys = {
-    up: new Key("UP"),
-    down: new Key("DOWN"),
-    right: new Key("RIGHT"),
-    left: new Key("LEFT")
+    up: new Key("UP", ARROW_KEYS.UP),
+    down: new Key("DOWN", ARROW_KEYS.DOWN),
+    right: new Key("RIGHT", ARROW_KEYS.RIGHT),
+    left: new Key("LEFT", ARROW_KEYS.LEFT)
 };
 
 function processKeyDown(event) {
@@ -48,11 +49,8 @@ function processKeyDown(event) {
     }
 }
 
-//function
-
 function interpretKeys() {
-    //if (lastKeyPress !== null) {
-    if (keys.up.pressed) {
+    if (lastKeyPress !== null) {
         addLine(lastKeyPress.name + " was pressed");
         lastKeyPress = null;
     }

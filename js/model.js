@@ -29,13 +29,14 @@ function Animal(options) {
 
 }
 
+/*
 // How do you abstract out the screen that has all the links to
 // pet status state needs to link to a pet object
-function Screen(options) { // this is per screen
+function ScreenState(options) { // this is per screen
     this.name = options.name;
     this.update = options.update; // reads the last key press
     this.state = options.state; // this is to track what happens inside each screen
-}
+}*/
 
 function update() {
     // Need to figure out how to link this to a screen
