@@ -4,6 +4,7 @@
 
 function LogicState(options) {
     this.name = options.name;
+    this.substates = options.substates;
     this.getName = function() { return this.name};
 }
 
@@ -50,7 +51,18 @@ var MENU_STATES = {
         name: "STEPS"
     }),
     MAP: new LogicState({
-        name: "MAP"
+        name: "MAP",
+        substates: [
+            new LogicState({
+                name: "NT"
+            }),
+            new LogicState({
+                name: "QLD"
+            }),
+            new LogicState({
+                name: "NSW"
+            })
+        ]
     }),
     STATS: new LogicState({
         name: "STATS"

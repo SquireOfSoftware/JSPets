@@ -49,7 +49,7 @@ function processKeyDown(event) {
     }
 }
 
-var emergencyRender = false;
+var asyncRender = false;
 
 function interpretKeys() {
     // process this on the screen
@@ -57,33 +57,42 @@ function interpretKeys() {
         addLine(lastKeyPress.name + " was pressed");
         switch(lastKeyPress.keyCode) {
             case ARROW_KEYS.DOWN:
-                if (game.state === GAME_STATES.PET_STATUS) {
+                /*if (game.state === GAME_STATES.PET_STATUS) {
                     game.state = GAME_STATES.MENU;
-                    emergencyRender = true;
+                    asyncRender = true;
                 }
                 console.log(currentScreen);
+                */
+                currentScreenState.down();
                 break;
             case ARROW_KEYS.UP:
+                /*
                 if (game.state === GAME_STATES.MENU) {
                     game.state = GAME_STATES.PET_STATUS;
-                    emergencyRender = true;
-                }
+                    asyncRender = true;
+                }*/
+                currentScreenState.up();
                 break;
             case ARROW_KEYS.LEFT:
+                /*
                 if (game.state === GAME_STATES.MENU) {
                     currentScreen.screenPosition.previous();
-                    emergencyRender = true;
-                }
+                    asyncRender = true;
+                }*/
+                currentScreenState.left();
                 break;
             case ARROW_KEYS.RIGHT:
+                /*
                 if (game.state === GAME_STATES.MENU) {
                     currentScreen.screenPosition.next();
-                    emergencyRender = true;
-                }
+                    asyncRender = true;
+                }*/
+                currentScreenState.right();
                 break;
         }
         updateScreens();
 
+        console.log(currentScreenState.name);
         lastKeyPress = null;
     }
 }
