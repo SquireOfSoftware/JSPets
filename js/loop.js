@@ -16,12 +16,13 @@ function gameLoop () {
     update();
     now = Date.now();
     elapsed = now - then;
-    if (elapsed > fpsInterval) {
-        interpretKeys();
+    interpretKeys();
+    if (elapsed > fpsInterval || emergencyRender) {
         updateScreens();
         draw();
         then = now - (elapsed % fpsInterval);
         updateFPS();
+        emergencyRender = false;
     }
     animationFrameId = requestAnimationFrame(gameLoop);
 }

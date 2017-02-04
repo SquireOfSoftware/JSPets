@@ -49,32 +49,41 @@ function processKeyDown(event) {
     }
 }
 
+var emergencyRender = false;
+
 function interpretKeys() {
     // process this on the screen
     if (lastKeyPress !== null) {
         addLine(lastKeyPress.name + " was pressed");
         switch(lastKeyPress.keyCode) {
             case ARROW_KEYS.DOWN:
-                if (game.state === GAME_STATES.PET_STATUS)
+                if (game.state === GAME_STATES.PET_STATUS) {
                     game.state = GAME_STATES.MENU;
+                    emergencyRender = true;
+                }
                 console.log(currentScreen);
                 break;
             case ARROW_KEYS.UP:
-                if (game.state === GAME_STATES.MENU)
+                if (game.state === GAME_STATES.MENU) {
                     game.state = GAME_STATES.PET_STATUS;
+                    emergencyRender = true;
+                }
                 break;
             case ARROW_KEYS.LEFT:
                 if (game.state === GAME_STATES.MENU) {
                     currentScreen.screenPosition.previous();
+                    emergencyRender = true;
                 }
                 break;
             case ARROW_KEYS.RIGHT:
                 if (game.state === GAME_STATES.MENU) {
                     currentScreen.screenPosition.next();
+                    emergencyRender = true;
                 }
                 break;
         }
         updateScreens();
+
         lastKeyPress = null;
     }
 }
