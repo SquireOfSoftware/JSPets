@@ -38,6 +38,10 @@ Though I have worked around this via the introduction of the variable "newScreen
 
 Upon changing to the state, it is set to true, draws the whole screen up and then sets the variable to false. After which returns to the comparative check of only drawing what has been changed.
 
+Forgot to mention that I have been moving some of the "floating" variables such as the stepcounter and the screenlogicstate over into the game object.
+
+I think this would help reduce the amount of "floating" variables though it does mean that there is this growing magical object called "game". Not sure if this is best practice.
+
 Milestones for now:
 1. Get a game loop going - done
 2. Record the framerate - done

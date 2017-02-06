@@ -75,14 +75,6 @@ function interpretKeys() {
         lastKeyPress = null;
     }
 }
-/*
-var stepCounter = {
-    total: bigInt(999999999999999),
-    hasRecentlyStepped: false,
-    delay: 50,
-    waitPeriod: this.delay,
-    resetWaitPeriod: function() {this.waitPeriod = this.delay;}
-};*/
 
 function walk() {
     // this is triggered on click or on step
