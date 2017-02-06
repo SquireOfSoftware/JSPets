@@ -292,7 +292,7 @@ var petScreen = new ScreenSprite({
     name: "PET_SCREEN",
     image: null,
     context: null,
-    referenceState: GAME_STATES.PET_STATUS,
+    referenceState: SCREEN_STATES.PETS,
     update: function() {
         // check whether a button has been pressed
         // handle button press accordingly
@@ -303,21 +303,64 @@ var petScreen = new ScreenSprite({
     }
 });
 
-var mapScreen = new ScreenSprite({
-    name: "MAP_SCREEN",
-    image: generateImage("sprites/menu-screen.png"),
-    context: drawingBoard,
-    referenceState: GAME_STATES.MENU,
-    screenPosition: new ScreenPosition({
-        firstScreenX: 0,
-        firstScreenY: 0,
-        maxScreens: 3
-    }),
-    update: function() {
-        //addLine("MAP SCREEN HAS BEEN SELECTED");
+var menuScreen = [
+    new ScreenSprite({
+        name: "MAP_SCREEN",
+        image: generateImage("sprites/screens/map-menu.png"),
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.MAP,
+        screenPosition: new ScreenPosition({
+            firstScreenX: 0,
+            firstScreenY: 0,
+            maxScreens: 1
+        }),
+        update: function() {
 
-    }
-});
+        }
+    }),
+    new ScreenSprite({
+        name: "CARE_SCREEN",
+        image: generateImage("sprites/screens/care-menu.png"),
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.CARE,
+        screenPosition: new ScreenPosition({
+            firstScreenX: 0,
+            firstScreenY: 0,
+            maxScreens: 1
+        }),
+        update: function() {
+
+        }
+    }),
+    new ScreenSprite({
+        name: "STATS_SCREEN",
+        image: generateImage("sprites/screens/stats-menu.png"),
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.STATS,
+        screenPosition: new ScreenPosition({
+            firstScreenX: 0,
+            firstScreenY: 0,
+            maxScreens: 1
+        }),
+        update: function() {
+
+        }
+    }),
+    new ScreenSprite({
+        name: "CARE_SCREEN",
+        image: generateImage("sprites/screens/steps-menu.png"),
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.STEPS,
+        screenPosition: new ScreenPosition({
+            firstScreenX: 0,
+            firstScreenY: 0,
+            maxScreens: 1
+        }),
+        update: function() {
+
+        }
+    })
+];
 
 function clearScreen() {
     drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
@@ -327,14 +370,21 @@ var currentScreen = petScreen;
 
 function updateScreens() {
     // check if game state has changed
-    if (currentScreen.referenceState !== game.state) {
+    if (currentScreen.referenceState !== game.currentScreenState.state) {
         // change screen
-        if(game.state === GAME_STATES.PET_STATUS)
+        var currentScreenState = game.currentScreenState.state;
+        if(currentScreenState === SCREEN_STATES.PETS)
             currentScreen = petScreen;
-        else if (game.state === GAME_STATES.MENU)
-            currentScreen = mapScreen;
-        else if (game.state === GAME_STATES.IN_BATTLE)
-            currentScreen = null;
+        else if (currentScreenState === SCREEN_STATES.MAP)
+            currentScreen = menuScreen[0];
+        else if (currentScreenState === SCREEN_STATES.CARE)
+            currentScreen = menuScreen[1];
+        else if (currentScreenState === SCREEN_STATES.STATS)
+            currentScreen = menuScreen[2];
+        else if (currentScreenState === SCREEN_STATES.STEPS)
+            currentScreen = menuScreen[3];
+        /*else if (game.currentScreenState === )
+            currentScreen = null;*/
         else {
             currentScreen = petScreen;
             addLine("Cannot locate screen: " + game.state);
@@ -345,11 +395,9 @@ function updateScreens() {
 
 function draw() {
     if (DRAW_TO_SCREEN === true) {
-        //updateScreens();
         currentScreen.update();
         addLine(game.pet.state.getName());
         currentScreen.draw();
-        //console.log(currentScreen);
     }
 }
 

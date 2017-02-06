@@ -57,42 +57,21 @@ function interpretKeys() {
         addLine(lastKeyPress.name + " was pressed");
         switch(lastKeyPress.keyCode) {
             case ARROW_KEYS.DOWN:
-                /*if (game.state === GAME_STATES.PET_STATUS) {
-                    game.state = GAME_STATES.MENU;
-                    asyncRender = true;
-                }
-                console.log(currentScreen);
-                */
-                currentScreenState.down();
+                game.currentScreenState.down();
                 break;
             case ARROW_KEYS.UP:
-                /*
-                if (game.state === GAME_STATES.MENU) {
-                    game.state = GAME_STATES.PET_STATUS;
-                    asyncRender = true;
-                }*/
-                currentScreenState.up();
+                game.currentScreenState.up();
                 break;
             case ARROW_KEYS.LEFT:
-                /*
-                if (game.state === GAME_STATES.MENU) {
-                    currentScreen.screenPosition.previous();
-                    asyncRender = true;
-                }*/
-                currentScreenState.left();
+                game.currentScreenState.left();
                 break;
             case ARROW_KEYS.RIGHT:
-                /*
-                if (game.state === GAME_STATES.MENU) {
-                    currentScreen.screenPosition.next();
-                    asyncRender = true;
-                }*/
-                currentScreenState.right();
+                game.currentScreenState.right();
                 break;
         }
         updateScreens();
 
-        console.log(currentScreenState.name);
+        console.log(game.currentScreenState.state.name);
         lastKeyPress = null;
     }
 }
@@ -111,9 +90,7 @@ function walk() {
         game.pet.state === ANIMAL_STATES.WALKING) {
         steps.total = steps.total.add(1);
         steps.hasRecentlyStepped = true;
-        //steps.waitPeriod = 3;
         steps.resetWaitPeriod();
         document.getElementById("steps").value = steps.total.toString();
-        //addLine("Step was taken");
     }
 }

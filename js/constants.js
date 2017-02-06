@@ -4,7 +4,8 @@
 
 function LogicState(options) {
     this.name = options.name;
-    this.substates = options.substates;
+    if (options.substates !== undefined)
+        this.substates = options.substates;
     this.getName = function() { return this.name};
 }
 
@@ -43,12 +44,9 @@ var GAME_STATES = {
     })
 };
 
-var MENU_STATES = {
+var SCREEN_STATES = {
     CARE: new LogicState({
         name: "CARE"
-    }),
-    STEPS: new LogicState({
-        name: "STEPS"
     }),
     MAP: new LogicState({
         name: "MAP",
@@ -66,8 +64,18 @@ var MENU_STATES = {
     }),
     STATS: new LogicState({
         name: "STATS"
+    }),
+    STEPS: new LogicState({
+        name: "STEPS"
+    }),
+    PETS: new LogicState({
+        name: "PETS"
     })
 };
+
+var DISPLAY_STATES = {
+
+}
 
 var BATTLE_STATES = {
     START_BATTLE: new LogicState({name: "START_BATTLE"}),

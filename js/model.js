@@ -2,18 +2,6 @@
  * Created by JarvisWalker on 6/1/17.
  */
 
-var game = {
-    state: GAME_STATES.PET_STATUS,
-    pet: new Animal({
-        name: "PET",
-        stats: {
-            hp: 10,
-            attk: 5,
-            spd: 7
-        }
-    })
-};
-
 function Animal(options) {
     this.name = options.name;
     this.stats = {
@@ -26,11 +14,11 @@ function Animal(options) {
         this.state = options.state;
     else
         this.state = ANIMAL_STATES.IDLE;
-
 }
 
 function ScreenState(options) {
-    this.name = options.name;
+    //this.name = options.name;
+    this.state = options.state;
     if (options.right !== undefined)
         this.right = options.right;
     else
@@ -53,92 +41,90 @@ function ScreenState(options) {
 }
 
 var petState = new ScreenState({
-    name: "PET_STATE",
+    //name: "PET_STATE",
+    state: SCREEN_STATES.PETS,
     down: function() {
-        //game.state = GAME_STATES.MENU;
-        currentScreenState = mapState;
+        game.currentScreenState = mapState;
         asyncRender = true;
     }
 });
 
 // MENU
 var careState = new ScreenState({
-    name: "CARE_STATE",
+    state: SCREEN_STATES.CARE,
     up: function() {
-        currentScreenState = petState;
+        game.currentScreenState = petState;
         asyncRender = true;
     },
     down: function() {
 
     },
     left: function() {
-        currentScreenState = statsState;
+        game.currentScreenState = statsState;
         asyncRender = true;
     },
     right: function() {
-        currentScreenState = mapState;
+        game.currentScreenState = mapState;
         asyncRender = true;
     }
 });
 
 var statsState = new ScreenState({
-    name: "STATS_STATE",
+    state: SCREEN_STATES.STATS,
     up: function() {
-        currentScreenState = petState;
+        game.currentScreenState = petState;
         asyncRender = true;
     },
     down: function() {
 
     },
     left: function() {
-        currentScreenState = stepsState;
+        game.currentScreenState = stepsState;
         asyncRender = true;
     },
     right: function() {
-        currentScreenState = careState;
+        game.currentScreenState = careState;
         asyncRender = true;
     }
 });
 
 var stepsState = new ScreenState({
-    name: "STEP_STATE",
+    state: SCREEN_STATES.STEPS,
     up: function() {
-        currentScreenState = petState;
+        game.currentScreenState = petState;
         asyncRender = true;
     },
     down: function() {
 
     },
     left: function() {
-        currentScreenState = mapState;
+        game.currentScreenState = mapState;
         asyncRender = true;
     },
     right: function() {
-        currentScreenState = statsState;
+        game.currentScreenState = statsState;
         asyncRender = true;
     }
 });
 
 var mapState = new ScreenState({
-    name: "MAP_STATE",
+    state: SCREEN_STATES.MAP,
     up: function() {
-        currentScreenState = petState;
+        game.currentScreenState = petState;
         asyncRender = true;
     },
     down: function() {
 
     },
     left: function() {
-        currentScreenState = careState;
+        game.currentScreenState = careState;
         asyncRender = true;
     },
     right: function() {
-        currentScreenState = stepsState;
+        game.currentScreenState = stepsState;
         asyncRender = true;
     }
 });
-
-var currentScreenState = petState;
 
 function update() {
     // Need to figure out how to link this to a screen
@@ -148,7 +134,19 @@ function update() {
         if (steps.waitPeriod < 0) {
             steps.hasRecentlyStepped = false;
             game.pet.state = ANIMAL_STATES.IDLE;
-            //steps.waitPeriod = 0;
         }
     }
 }
+
+var game = {
+    state: GAME_STATES.PET_STATUS,
+    pet: new Animal({
+        name: "PET",
+        stats: {
+            hp: 10,
+            attk: 5,
+            spd: 7
+        }
+    }),
+    currentScreenState: petState
+};
