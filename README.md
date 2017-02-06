@@ -26,6 +26,18 @@ I think a generic update method is required, which will update the current scree
 
 The problem comes trying to keep the reference screen and the source screen intact, we could try and save a current screen over the source screen.
 
+Note that there is also a potential problem with the step screen.
+
+Basically I originally had it so that the screen was optimised to clear the last digit (if and only if it differed to what was previously recorded) and the redraw the digit.
+
+This had the benefit that it would draw the whole number once, then wait until a step was taken and only the digits that changed say in the number 103 to 104, only the 3rd digit would be redrawn, everything else is kept the same.
+
+The problem now is that because I have broken everything up into render loops, I can't exactly control it.
+
+Though I have worked around this via the introduction of the variable "newScreen". You can see it in the render loop.
+
+Upon changing to the state, it is set to true, draws the whole screen up and then sets the variable to false. After which returns to the comparative check of only drawing what has been changed.
+
 Milestones for now:
 1. Get a game loop going - done
 2. Record the framerate - done

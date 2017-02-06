@@ -168,8 +168,8 @@ var game = {
         }
     }),
     stepCounter: {
-        total: bigInt(0),
-        //bigInt("999999999999999999999999999999999"),
+        total: //bigInt(0),
+        bigInt("999999999999999999999999999999999"),
         hasRecentlyStepped: false,
         delay: 50, // number of update loops
         waitPeriod: this.delay,

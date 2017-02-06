@@ -371,8 +371,6 @@ var totalStepsScreen = new ScreenSprite({
 
     },
     draw: function() {
-        //if(this.previousStepsCounted === 0)
-        //    clearScreen();
         var digitPositionCounter = {
             column: 10,
             row: 2
@@ -381,8 +379,20 @@ var totalStepsScreen = new ScreenSprite({
             this.previousStepsCounted = "0";
 
         for(var index = this.totalSteps.length - 1; index > -1; index --) {
-            /*if (this.previousStepsCounted.charAt(index) === undefined ||
-                this.previousStepsCounted.charAt(index) !== this.totalSteps.charAt(index)) {*/
+            if (this.newScreen || this.newScreen === undefined) {
+                this.context.drawImage(
+                    this.image,
+                    NUMBER_POSITIONS[parseInt(this.totalSteps.charAt(index))], // x position
+                    0,
+                    NUMBER_PX_SIZE.WIDTH, // width on spritesheet
+                    NUMBER_PX_SIZE.HEIGHT, // height on spritesheet
+                    digitPositionCounter.column * 4,
+                    digitPositionCounter.row * 6,
+                    NUMBER_PX_SIZE.WIDTH, // width on canvas
+                    NUMBER_PX_SIZE.HEIGHT // height on canvas
+                );
+            }
+            else if (this.previousStepsCounted.charAt(index) !== this.totalSteps.charAt(index)) {
                 this.context.clearRect(
                     digitPositionCounter.column * 4,
                     digitPositionCounter.row * 6,
@@ -399,7 +409,7 @@ var totalStepsScreen = new ScreenSprite({
                     NUMBER_PX_SIZE.WIDTH, // width on canvas
                     NUMBER_PX_SIZE.HEIGHT // height on canvas
                 );
-            //}
+            }
             digitPositionCounter.column--;
             if (digitPositionCounter.column === -1) {
                 digitPositionCounter.column = 10;
@@ -407,6 +417,7 @@ var totalStepsScreen = new ScreenSprite({
                 // will still draw I believe even off screen
             }
         }
+        this.newScreen = false;
         this.previousStepsCounted = this.totalSteps;
     }
 });
