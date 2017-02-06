@@ -26,6 +26,19 @@ I think a generic update method is required, which will update the current scree
 
 The problem comes trying to keep the reference screen and the source screen intact, we could try and save a current screen over the source screen.
 
+Milestones for now:
+1. Get a game loop going - done
+2. Record the framerate - done
+3. Register button presses - sort of done - ignored for now
+4. Show the idle sprite - done - see petSprite and petState
+5. Show the running sprite - done - see petSprite and petState - may need to revisit since timeout is weird
+- done up to
+6. Count steps - not attempted
+7. Display menu - can display a basic 1st level menu - extravagent features don't exist - see screenState object
+8. Show battle animation
+9. Show battle menu
+10.Show attack animations
+
 == 3/2/2017 ==
 
 Added code to get a menu appearing.
