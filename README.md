@@ -43,16 +43,27 @@ Forgot to mention that I have been moving some of the "floating" variables such 
 I think this would help reduce the amount of "floating" variables though it does mean that there is this growing magical object called "game". Not sure if this is best practice.
 
 Milestones for now:
+
 1. Get a game loop going - done
+
 2. Record the framerate - done
+
 3. Register button presses - sort of done - ignored for now
+
 4. Show the idle sprite - done - see petSprite and petState
+
 5. Show the running sprite - done - see petSprite and petState - may need to revisit since timeout is weird
+
 6. Count steps - done
+
 7. Display menu - can display a basic 1st level menu - extravagent features don't exist - see screenState object
+
 - done up to
+
 8. Show battle animation
+
 9. Show battle menu
+
 10.Show attack animations
 
 == 3/2/2017 ==
@@ -94,16 +105,27 @@ I can also count steps as well.
 == 30/1/2017 ==
 
 Milestones for now:
+
 1. Get a game loop going - done
+
 2. Record the framerate - done
+
 3. Register button presses - realised is this a concern? Do I need to register key presses and key holds?
+
 - Have done up to
+
 4. Show the idle sprite
+
 5. Show the running sprite
+
 6. Count steps
+
 7. Display menu
+
 8. Show battle animation
+
 9. Show battle menu
+
 10.Show attack animations
 
 
@@ -122,15 +144,25 @@ What I need to figure out is how these pieces go together and what affects what.
 A potential challenge is trying to figure out what the timings are for each animation, as each "sprite" would have no understanding to the surrounding sprites which are also rendered on the screen.
 
 Milestones for now:
+
 1. Get a game loop going
+
 2. Record the framerate - Need a way to actually potential throttle stuff https://www.isaacsukin.com/news/2015/01/detailed-explanation-javascript-game-loops-and-timing#timing-problems
+
 3. Register button presses
+
 4. Show the idle sprite
+
 5. Show the running sprite
+
 6. Count steps
+
 7. Display menu
+
 8. Show battle animation
+
 9. Show battle menu
+
 10.Show attack animations
 
 == Before 27/1/2017 ==
