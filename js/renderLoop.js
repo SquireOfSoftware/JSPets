@@ -368,6 +368,7 @@ var totalStepsScreen = new ScreenSprite({
     referenceState: SCREEN_STATES.STEPS.substates[0],
     update: function() {
         this.totalSteps = game.stepCounter.total.toString();
+
     },
     draw: function() {
         //if(this.previousStepsCounted === 0)
@@ -380,8 +381,8 @@ var totalStepsScreen = new ScreenSprite({
             this.previousStepsCounted = "0";
 
         for(var index = this.totalSteps.length - 1; index > -1; index --) {
-            if (this.previousStepsCounted.charAt(index) === undefined ||
-                this.previousStepsCounted.charAt(index) !== this.totalSteps.charAt(index)) {
+            /*if (this.previousStepsCounted.charAt(index) === undefined ||
+                this.previousStepsCounted.charAt(index) !== this.totalSteps.charAt(index)) {*/
                 this.context.clearRect(
                     digitPositionCounter.column * 4,
                     digitPositionCounter.row * 6,
@@ -398,16 +399,15 @@ var totalStepsScreen = new ScreenSprite({
                     NUMBER_PX_SIZE.WIDTH, // width on canvas
                     NUMBER_PX_SIZE.HEIGHT // height on canvas
                 );
-            }
+            //}
             digitPositionCounter.column--;
             if (digitPositionCounter.column === -1) {
                 digitPositionCounter.column = 10;
                 digitPositionCounter.row--;
+                // will still draw I believe even off screen
             }
         }
-
         this.previousStepsCounted = this.totalSteps;
-
     }
 });
 
@@ -430,10 +430,13 @@ function updateScreens() {
             currentScreen = menuScreen[1];
         else if (currentScreenState === SCREEN_STATES.STATS)
             currentScreen = menuScreen[2];
-        else if (currentScreenState === SCREEN_STATES.STEPS)
+        else if (currentScreenState === SCREEN_STATES.STEPS) {
             currentScreen = menuScreen[3];
-        else if (currentScreenState === SCREEN_STATES.STEPS.substates[0])
+        }
+        else if (currentScreenState === SCREEN_STATES.STEPS.substates[0]) {
             currentScreen = totalStepsScreen;
+            currentScreen.newScreen = true;
+        }
         /*else if (game.currentScreenState === )
             currentScreen = null;*/
         else {

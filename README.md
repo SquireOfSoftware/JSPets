@@ -32,9 +32,9 @@ Milestones for now:
 3. Register button presses - sort of done - ignored for now
 4. Show the idle sprite - done - see petSprite and petState
 5. Show the running sprite - done - see petSprite and petState - may need to revisit since timeout is weird
-- done up to
-6. Count steps - not attempted
+6. Count steps - done
 7. Display menu - can display a basic 1st level menu - extravagent features don't exist - see screenState object
+- done up to
 8. Show battle animation
 9. Show battle menu
 10.Show attack animations
