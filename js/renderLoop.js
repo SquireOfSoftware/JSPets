@@ -214,12 +214,11 @@ function AnimalSprite(options) {
 
 function ScreenSprite(options) {
     this.name = options.name;
-    var image = options.image;
-    var context;
+    this.image = options.image;
     if(options.context !== undefined)
-        context = options.context;
+        this.context = options.context;
     else
-        context = drawingBoard;
+        this.context = drawingBoard;
 
     this.referenceState = options.referenceState;
 
@@ -246,10 +245,10 @@ function ScreenSprite(options) {
     else
         this.draw = function() {
             // Need to figure out xy coordinates
-            context.clearRect(this.screenPosition.canvasX, this.screenPosition.canvasY, size.width, size.height);
+            this.context.clearRect(this.screenPosition.canvasX, this.screenPosition.canvasY, size.width, size.height);
 
-            context.drawImage(
-                image,
+            this.context.drawImage(
+                this.image,
                 this.screenPosition.currentPosition.x,
                 this.screenPosition.currentPosition.y,
                 size.width,
@@ -305,7 +304,7 @@ var petScreen = new ScreenSprite({
 
 var menuScreen = [
     new ScreenSprite({
-        name: "MAP_SCREEN",
+        name: "MAP_MENU",
         image: generateImage("sprites/screens/map-menu.png"),
         context: drawingBoard,
         referenceState: SCREEN_STATES.MAP,
@@ -319,7 +318,7 @@ var menuScreen = [
         }
     }),
     new ScreenSprite({
-        name: "CARE_SCREEN",
+        name: "CARE_MENU",
         image: generateImage("sprites/screens/care-menu.png"),
         context: drawingBoard,
         referenceState: SCREEN_STATES.CARE,
@@ -333,7 +332,7 @@ var menuScreen = [
         }
     }),
     new ScreenSprite({
-        name: "STATS_SCREEN",
+        name: "STATS_MENU",
         image: generateImage("sprites/screens/stats-menu.png"),
         context: drawingBoard,
         referenceState: SCREEN_STATES.STATS,
@@ -347,7 +346,7 @@ var menuScreen = [
         }
     }),
     new ScreenSprite({
-        name: "CARE_SCREEN",
+        name: "STEPS_MENU",
         image: generateImage("sprites/screens/steps-menu.png"),
         context: drawingBoard,
         referenceState: SCREEN_STATES.STEPS,
@@ -361,6 +360,56 @@ var menuScreen = [
         }
     })
 ];
+
+var totalStepsScreen = new ScreenSprite({
+    name: "STEPS_SCREEN",
+    image: generateImage("sprites/step-alphabet.png"),
+    context: drawingBoard,
+    referenceState: SCREEN_STATES.STEPS.substates[0],
+    update: function() {
+        this.totalSteps = game.stepCounter.total.toString();
+    },
+    draw: function() {
+        //if(this.previousStepsCounted === 0)
+        //    clearScreen();
+        var digitPositionCounter = {
+            column: 10,
+            row: 2
+        };
+        if (this.previousStepsCounted === undefined)
+            this.previousStepsCounted = "0";
+
+        for(var index = this.totalSteps.length - 1; index > -1; index --) {
+            if (this.previousStepsCounted.charAt(index) === undefined ||
+                this.previousStepsCounted.charAt(index) !== this.totalSteps.charAt(index)) {
+                this.context.clearRect(
+                    digitPositionCounter.column * 4,
+                    digitPositionCounter.row * 6,
+                    NUMBER_PX_SIZE.WIDTH,
+                    NUMBER_PX_SIZE.HEIGHT);
+                this.context.drawImage(
+                    this.image,
+                    NUMBER_POSITIONS[parseInt(this.totalSteps.charAt(index))], // x position
+                    0,
+                    NUMBER_PX_SIZE.WIDTH, // width on spritesheet
+                    NUMBER_PX_SIZE.HEIGHT, // height on spritesheet
+                    digitPositionCounter.column * 4,
+                    digitPositionCounter.row * 6,
+                    NUMBER_PX_SIZE.WIDTH, // width on canvas
+                    NUMBER_PX_SIZE.HEIGHT // height on canvas
+                );
+            }
+            digitPositionCounter.column--;
+            if (digitPositionCounter.column === -1) {
+                digitPositionCounter.column = 10;
+                digitPositionCounter.row--;
+            }
+        }
+
+        this.previousStepsCounted = this.totalSteps;
+
+    }
+});
 
 function clearScreen() {
     drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
@@ -383,6 +432,8 @@ function updateScreens() {
             currentScreen = menuScreen[2];
         else if (currentScreenState === SCREEN_STATES.STEPS)
             currentScreen = menuScreen[3];
+        else if (currentScreenState === SCREEN_STATES.STEPS.substates[0])
+            currentScreen = totalStepsScreen;
         /*else if (game.currentScreenState === )
             currentScreen = null;*/
         else {

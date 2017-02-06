@@ -95,7 +95,7 @@ var stepsState = new ScreenState({
         asyncRender = true;
     },
     down: function() {
-
+        game.currentScreenState = totalStepsState;
     },
     left: function() {
         game.currentScreenState = mapState;
@@ -126,13 +126,32 @@ var mapState = new ScreenState({
     }
 });
 
+// STEPS
+
+var totalStepsState = new ScreenState({
+    state: SCREEN_STATES.STEPS.substates[0],
+    up: function() {
+        game.currentScreenState = stepsState;
+        asyncRender = true;
+    },
+    down: function() {
+
+    },
+    left: function() {
+
+    },
+    right: function() {
+
+    }
+});
+
 function update() {
     // Need to figure out how to link this to a screen
-    if (steps.hasRecentlyStepped) {
+    if (game.stepCounter.hasRecentlyStepped) {
         game.pet.state = ANIMAL_STATES.WALKING;
-        steps.waitPeriod--;
-        if (steps.waitPeriod < 0) {
-            steps.hasRecentlyStepped = false;
+        game.stepCounter.waitPeriod--;
+        if (game.stepCounter.waitPeriod < 0) {
+            game.stepCounter.hasRecentlyStepped = false;
             game.pet.state = ANIMAL_STATES.IDLE;
         }
     }
@@ -148,5 +167,12 @@ var game = {
             spd: 7
         }
     }),
-    currentScreenState: petState
+    stepCounter: {
+        total: bigInt(1),
+        hasRecentlyStepped: false,
+        delay: 50,
+        waitPeriod: this.delay,
+        resetWaitPeriod: function() {this.waitPeriod = this.delay;}
+    },
+    currentScreenState: stepsState//petState
 };

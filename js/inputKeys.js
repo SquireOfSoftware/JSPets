@@ -75,22 +75,22 @@ function interpretKeys() {
         lastKeyPress = null;
     }
 }
-
-var steps = {
-    total: bigInt(0),
+/*
+var stepCounter = {
+    total: bigInt(999999999999999),
     hasRecentlyStepped: false,
     delay: 50,
     waitPeriod: this.delay,
     resetWaitPeriod: function() {this.waitPeriod = this.delay;}
-};
+};*/
 
 function walk() {
     // this is triggered on click or on step
     if (game.pet.state === ANIMAL_STATES.IDLE ||
         game.pet.state === ANIMAL_STATES.WALKING) {
-        steps.total = steps.total.add(1);
-        steps.hasRecentlyStepped = true;
-        steps.resetWaitPeriod();
-        document.getElementById("steps").value = steps.total.toString();
+        game.stepCounter.total = game.stepCounter.total.add(1);
+        game.stepCounter.hasRecentlyStepped = true;
+        game.stepCounter.resetWaitPeriod();
+        document.getElementById("steps").value = game.stepCounter.total.toString();
     }
 }

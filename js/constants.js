@@ -66,16 +66,17 @@ var SCREEN_STATES = {
         name: "STATS"
     }),
     STEPS: new LogicState({
-        name: "STEPS"
+        name: "STEPS",
+        substates: [
+            new LogicState({
+                name: "TOTAL_STEPS"
+            })
+        ]
     }),
     PETS: new LogicState({
         name: "PETS"
     })
 };
-
-var DISPLAY_STATES = {
-
-}
 
 var BATTLE_STATES = {
     START_BATTLE: new LogicState({name: "START_BATTLE"}),
@@ -117,3 +118,10 @@ var DEFAULT_SPRITE_POSITIONS = {
     WALKING: 80,
     WALKING2: 96
 };
+
+var NUMBER_PX_SIZE = {
+    HEIGHT: 5,
+    WIDTH: 5
+};
+
+var NUMBER_POSITIONS = [0, 4, 8, 12, 16, 20, 24, 28, 32, 36];
