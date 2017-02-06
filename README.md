@@ -6,6 +6,26 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 6/2/2017 ==
+
+Trying to do some work on the map.
+
+http://gallivantingoz.com.au/wp-content/uploads/2015/09/Australian_map_all_Routes_2016.png
+
+Could use this as a rough guide to draw an 8 bit map of Australia with all the necessary routes in place with places of interest.
+
+Going to try and divide the map and all the other menus into separate images and try and paste them altogether.
+
+Then going to assign each logical screen state to an image and then trying to glue together a bunch of screens together.
+
+The difference that I need to make is that the pet screen is obviously different from a menu screen.
+
+Hence a menu screen will be static whilst a pet screen or even a battle animation screen or a digi-evolution screen will be different, so some sort of differentiation needs to be made.
+
+I think a generic update method is required, which will update the current screen to the appropriate logical screens.
+
+The problem comes trying to keep the reference screen and the source screen intact, we could try and save a current screen over the source screen.
+
 == 3/2/2017 ==
 
 Added code to get a menu appearing.
