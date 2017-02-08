@@ -78,12 +78,24 @@ function interpretKeys() {
 
 function walk() {
     // this is triggered on click or on step
+    console.log(game.pet.state.name);
     if (game.pet.state === ANIMAL_STATES.IDLE ||
         game.pet.state === ANIMAL_STATES.WALKING) {
+    //if (game.currentScreenState ===)
         game.stepCounter.total = game.stepCounter.total.add(1);
+        game.stepCounter.currentSteps++;
         game.stepCounter.hasRecentlyStepped = true;
         game.stepCounter.resetWaitPeriod();
         //petScreen.resetTickPeriod();
         document.getElementById("steps").value = game.stepCounter.total.toString();
+
     }
+    if (game.stepCounter.currentSteps > game.currentMap.stepCount) {
+        game.stepCounter.currentSteps = 0;
+        game.pet.state = ANIMAL_STATES.IN_BATTLE;
+        game.currentScreenState = SCREEN_STATES.START_BATTLE.substates.CRY;
+        addLine("Triggering battle");
+
+    }
+    console.log(game.pet.state, game.currentScreenState);
 }

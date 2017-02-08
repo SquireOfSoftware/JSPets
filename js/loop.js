@@ -11,14 +11,11 @@ var then = Date.now();
 var elapsed;
 
 function gameLoop () {
-
-    //interpretKeys();
     update();
     now = Date.now();
     elapsed = now - then;
     interpretKeys();
     if (elapsed > fpsInterval || asyncRender) {
-        //updateScreens();
         draw();
         then = now - (elapsed % fpsInterval);
         updateFPS();
@@ -40,6 +37,7 @@ function toggleGameLoop() {
 }
 
 function updateFPS() {
+    //addLine(fpsInterval);
     document.getElementById("fps").value = elapsed/1000;
 }
 

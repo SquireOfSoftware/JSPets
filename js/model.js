@@ -17,7 +17,6 @@ function Animal(options) {
 }
 
 function ScreenState(options) {
-    //this.name = options.name;
     this.state = options.state;
     if (options.right !== undefined)
         this.right = options.right;
@@ -38,29 +37,13 @@ function ScreenState(options) {
         this.up = options.up;
     else
         this.up = function() {};
-
-    /*if (options.tick !== undefined)
-        this.tick = options.tick;
-    else
-        this.tick = function() {}*/
 }
 
 var petState = new ScreenState({
-    //name: "PET_STATE",
     state: SCREEN_STATES.PETS,
     down: function() {
         game.currentScreenState = mapState;
         asyncRender = true;
-    /*},
-    tick: function() {
-        if (game.stepCounter.hasRecentlyStepped) {
-            game.pet.state = ANIMAL_STATES.WALKING;
-            game.stepCounter.waitPeriod--;
-            if (game.stepCounter.waitPeriod < 0) {
-                game.stepCounter.hasRecentlyStepped = false;
-                game.pet.state = ANIMAL_STATES.IDLE;
-            }
-        }*/
     }
 });
 
@@ -144,7 +127,7 @@ var mapState = new ScreenState({
 // STEPS
 
 var totalStepsState = new ScreenState({
-    state: SCREEN_STATES.STEPS.substates[0],
+    state: SCREEN_STATES.STEPS.substates.TOTAL_STEPS,
     up: function() {
         game.currentScreenState = stepsState;
         asyncRender = true;
@@ -160,6 +143,37 @@ var totalStepsState = new ScreenState({
     }
 });
 
+// Land
+// Each piece of land has a "state" and a set of cities
+// each city has a set of "land types" and a step count to reach the center of the city
+function State(options) {
+    this.name = options.name;
+    this.cities = options.cities;
+}
+
+function City(options){
+    this.name = options.name;
+    this.stepCount = options.stepCount;
+    this.referenceState = options.referenceState;
+}
+
+var australia = {
+    NSW: new State({
+        name: "NSW",
+        cities: {
+            SYDNEY: new City({
+                name: "Sydney",
+                stepCount: 300,
+                referenceState: MAP_STATES.NSW.substates.SYDNEY,
+                land: [
+                    LAND_TYPES.CITY,
+                    LAND_TYPES.GRASSLAND
+                ]
+            })
+        }
+    })
+};
+
 function update() {
     // Need to figure out how to link this to a screen
     //game.currentScreenState.tick();
@@ -173,9 +187,11 @@ var game = {
             hp: 10,
             attk: 5,
             spd: 7
-        }
+        },
+        evolution_state: EVOLUTION_STATES.BASIC
     }),
     stepCounter: {
+        currentSteps: 299,
         total: bigInt(0),
         //bigInt("999999999999999999999999999999999"),
         hasRecentlyStepped: false,
@@ -183,7 +199,9 @@ var game = {
         waitPeriod: this.delay,
         resetWaitPeriod: function() {this.waitPeriod = this.delay;},
         updateWalkingFrame: function() {
-            if (game.stepCounter.hasRecentlyStepped) {
+            if (game.stepCounter.hasRecentlyStepped &&
+                (game.pet.state === ANIMAL_STATES.WALKING ||
+                game.pet.state === ANIMAL_STATES.IDLE)) {
                 game.pet.state = ANIMAL_STATES.WALKING;
                 game.stepCounter.waitPeriod--;
                 if (game.stepCounter.waitPeriod < 0) {
@@ -193,5 +211,6 @@ var game = {
             }
         }
     },
-    currentScreenState: petState
+    currentScreenState: petState,
+    currentMap: australia.NSW.cities.SYDNEY
 };

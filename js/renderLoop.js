@@ -368,7 +368,7 @@ var totalStepsScreen = new ScreenSprite({
     name: "STEPS_SCREEN",
     image: generateImage("sprites/step-alphabet.png"),
     context: drawingBoard,
-    referenceState: SCREEN_STATES.STEPS.substates[0],
+    referenceState: SCREEN_STATES.STEPS.substates.TOTAL_STEPS,
     update: function() {
         game.stepCounter.updateWalkingFrame();
         this.totalSteps = game.stepCounter.total.toString();
@@ -425,6 +425,21 @@ var totalStepsScreen = new ScreenSprite({
     }
 });
 
+var battleScreens = {
+    CRY: new ScreenSprite({
+        name: "CRY_ANIMATION",
+        image: null,
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.START_BATTLE.substates.CRY,
+        update: function() {
+
+        },
+        draw: function() {
+
+        }
+    })
+};
+
 function clearScreen() {
     drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
 }
@@ -447,12 +462,12 @@ function updateScreens() {
         else if (currentScreenState === SCREEN_STATES.STEPS) {
             currentScreen = menuScreen[3];
         }
-        else if (currentScreenState === SCREEN_STATES.STEPS.substates[0]) {
+        else if (currentScreenState === SCREEN_STATES.STEPS.substates.TOTAL_STEPS) {
             currentScreen = totalStepsScreen;
             currentScreen.newScreen = true;
         }
-        /*else if (game.currentScreenState === )
-            currentScreen = null;*/
+        else if (game.currentScreenState === SCREEN_STATES.START_BATTLE.CRY)
+            currentScreen = null;
         else {
             currentScreen = petScreen;
             addLine("Cannot locate screen: " + game.state);
@@ -464,7 +479,7 @@ function updateScreens() {
 function draw() {
     if (DRAW_TO_SCREEN === true) {
         currentScreen.update();
-        addLine(game.pet.state.getName());
+        //addLine(game.pet.state.getName());
         currentScreen.draw();
     }
 }
