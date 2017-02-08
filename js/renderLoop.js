@@ -295,7 +295,20 @@ var petScreen = new ScreenSprite({
     update: function() {
         // check whether a button has been pressed
         // handle button press accordingly
+        /*if (this.tick === undefined)
+            this.tick = game.stepCounter.waitPeriod;
+            */
+        if (game.stepCounter.hasRecentlyStepped) {
+            game.pet.state = ANIMAL_STATES.WALKING;
+            game.stepCounter.waitPeriod--;
+            if (game.stepCounter.waitPeriod < 0) {
+                game.stepCounter.hasRecentlyStepped = false;
+                game.pet.state = ANIMAL_STATES.IDLE;
+            }
+        }
+
         petSprite.update();
+
     },
     draw: function() {
         petSprite.draw();

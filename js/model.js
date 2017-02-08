@@ -38,6 +38,11 @@ function ScreenState(options) {
         this.up = options.up;
     else
         this.up = function() {};
+
+    /*if (options.tick !== undefined)
+        this.tick = options.tick;
+    else
+        this.tick = function() {}*/
 }
 
 var petState = new ScreenState({
@@ -46,6 +51,16 @@ var petState = new ScreenState({
     down: function() {
         game.currentScreenState = mapState;
         asyncRender = true;
+    /*},
+    tick: function() {
+        if (game.stepCounter.hasRecentlyStepped) {
+            game.pet.state = ANIMAL_STATES.WALKING;
+            game.stepCounter.waitPeriod--;
+            if (game.stepCounter.waitPeriod < 0) {
+                game.stepCounter.hasRecentlyStepped = false;
+                game.pet.state = ANIMAL_STATES.IDLE;
+            }
+        }*/
     }
 });
 
@@ -147,14 +162,7 @@ var totalStepsState = new ScreenState({
 
 function update() {
     // Need to figure out how to link this to a screen
-    if (game.stepCounter.hasRecentlyStepped) {
-        game.pet.state = ANIMAL_STATES.WALKING;
-        game.stepCounter.waitPeriod--;
-        if (game.stepCounter.waitPeriod < 0) {
-            game.stepCounter.hasRecentlyStepped = false;
-            game.pet.state = ANIMAL_STATES.IDLE;
-        }
-    }
+    //game.currentScreenState.tick();
 }
 
 var game = {
@@ -171,9 +179,9 @@ var game = {
         total: bigInt(0),
         //bigInt("999999999999999999999999999999999"),
         hasRecentlyStepped: false,
-        delay: 50, // number of update loops
+        delay: 2, // number of update loops
         waitPeriod: this.delay,
         resetWaitPeriod: function() {this.waitPeriod = this.delay;}
     },
-    currentScreenState: stepsState//petState
+    currentScreenState: petState
 };

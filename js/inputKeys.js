@@ -83,6 +83,7 @@ function walk() {
         game.stepCounter.total = game.stepCounter.total.add(1);
         game.stepCounter.hasRecentlyStepped = true;
         game.stepCounter.resetWaitPeriod();
+        //petScreen.resetTickPeriod();
         document.getElementById("steps").value = game.stepCounter.total.toString();
     }
 }
