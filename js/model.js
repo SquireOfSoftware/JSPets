@@ -179,9 +179,19 @@ var game = {
         total: bigInt(0),
         //bigInt("999999999999999999999999999999999"),
         hasRecentlyStepped: false,
-        delay: 2, // number of update loops
+        delay: 2, // number of update frame render loops
         waitPeriod: this.delay,
-        resetWaitPeriod: function() {this.waitPeriod = this.delay;}
+        resetWaitPeriod: function() {this.waitPeriod = this.delay;},
+        updateWalkingFrame: function() {
+            if (game.stepCounter.hasRecentlyStepped) {
+                game.pet.state = ANIMAL_STATES.WALKING;
+                game.stepCounter.waitPeriod--;
+                if (game.stepCounter.waitPeriod < 0) {
+                    game.stepCounter.hasRecentlyStepped = false;
+                    game.pet.state = ANIMAL_STATES.IDLE;
+                }
+            }
+        }
     },
     currentScreenState: petState
 };

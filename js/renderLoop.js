@@ -295,17 +295,7 @@ var petScreen = new ScreenSprite({
     update: function() {
         // check whether a button has been pressed
         // handle button press accordingly
-        /*if (this.tick === undefined)
-            this.tick = game.stepCounter.waitPeriod;
-            */
-        if (game.stepCounter.hasRecentlyStepped) {
-            game.pet.state = ANIMAL_STATES.WALKING;
-            game.stepCounter.waitPeriod--;
-            if (game.stepCounter.waitPeriod < 0) {
-                game.stepCounter.hasRecentlyStepped = false;
-                game.pet.state = ANIMAL_STATES.IDLE;
-            }
-        }
+        game.stepCounter.updateWalkingFrame();
 
         petSprite.update();
 
@@ -327,7 +317,7 @@ var menuScreen = [
             maxScreens: 1
         }),
         update: function() {
-
+            game.stepCounter.updateWalkingFrame();
         }
     }),
     new ScreenSprite({
@@ -341,7 +331,7 @@ var menuScreen = [
             maxScreens: 1
         }),
         update: function() {
-
+            game.stepCounter.updateWalkingFrame();
         }
     }),
     new ScreenSprite({
@@ -355,7 +345,7 @@ var menuScreen = [
             maxScreens: 1
         }),
         update: function() {
-
+            game.stepCounter.updateWalkingFrame();
         }
     }),
     new ScreenSprite({
@@ -369,7 +359,7 @@ var menuScreen = [
             maxScreens: 1
         }),
         update: function() {
-
+            game.stepCounter.updateWalkingFrame();
         }
     })
 ];
@@ -380,8 +370,8 @@ var totalStepsScreen = new ScreenSprite({
     context: drawingBoard,
     referenceState: SCREEN_STATES.STEPS.substates[0],
     update: function() {
+        game.stepCounter.updateWalkingFrame();
         this.totalSteps = game.stepCounter.total.toString();
-
     },
     draw: function() {
         var digitPositionCounter = {
