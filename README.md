@@ -6,6 +6,30 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 8/2/2017 ==
+
+Got the screen states ticking over properly, its a bit of a hack as I am forced to disable key presses to prevent any unwanted keypresses from triggering the next time interpretKeypresses is called.
+
+In any case, I can flick between the battle menus as the infrastructure has been set up.
+
+It is just the finishing animation which is a bit of a worry for me, as the it does a screen update, which then switches the screen but then it draws the next state...not sure if that is worrying.
+
+I am lucky that it is just a menu straight after the animation otherwise that would be another worry added to me.
+
+I also worked a bit on the map structure as it's the map structure that determines the next enemy to fight and the amount of steps to the next enemy.
+
+So I need to begin to map out the different states and cities and this would form the basis of what enemies are called and ultimately how many steps it takes to reach said animal to fight.
+
+Though this does raise the question, how do I keep the person invested in the game?
+
+I could try RPG elements and have the pet grow...but then we run the risk of, end game monstrosities where little chicks and smash the end game boss depending on how I play this out.
+
+In the original digivice, it was set stats that never grew, it did make the game play a little stale, but also kept it challenging as every battle could mean that you died.
+
+The combat hence relied heavily on digivolving to the closest match (for efficiency's sake) and then battling it out there.
+
+So I need to figure this out as well.
+
 == 6/2/2017 ==
 
 Trying to do some work on the map.
