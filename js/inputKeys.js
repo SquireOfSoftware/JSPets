@@ -51,9 +51,20 @@ function processKeyDown(event) {
 
 var asyncRender = false;
 
+var blockKeyPress = false;
+
+function toggleKeyPress() {
+    blockKeyPress = !blockKeyPress;
+    lastKeyPress = null; // clear whatever was pressed if it was pressed
+    if(blockKeyPress)
+        addLine("Key presses disabled");
+    else
+        addLine("Key presses enabled");
+}
+
 function interpretKeys() {
     // process this on the screen
-    if (lastKeyPress !== null) {
+    if (lastKeyPress !== null && !blockKeyPress) {
         addLine(lastKeyPress.name + " was pressed");
         switch(lastKeyPress.keyCode) {
             case ARROW_KEYS.DOWN:
@@ -78,10 +89,8 @@ function interpretKeys() {
 
 function walk() {
     // this is triggered on click or on step
-    console.log(game.pet.state.name);
     if (game.pet.state === ANIMAL_STATES.IDLE ||
         game.pet.state === ANIMAL_STATES.WALKING) {
-    //if (game.currentScreenState ===)
         game.stepCounter.total = game.stepCounter.total.add(1);
         game.stepCounter.currentSteps++;
         game.stepCounter.hasRecentlyStepped = true;
@@ -91,11 +100,12 @@ function walk() {
 
     }
     if (game.stepCounter.currentSteps > game.currentMap.stepCount) {
+        toggleKeyPress();
         game.stepCounter.currentSteps = 0;
         game.pet.state = ANIMAL_STATES.IN_BATTLE;
-        game.currentScreenState = SCREEN_STATES.START_BATTLE.substates.CRY;
-        addLine("Triggering battle");
-
+        game.currentScreenState = cryState;//SCREEN_STATES.START_BATTLE.substates.CRY;
+        // generate the enemy here and store it in the game variable
+        updateScreens();
     }
-    console.log(game.pet.state, game.currentScreenState);
+    //console.log(game.pet.state, game.currentScreenState);
 }

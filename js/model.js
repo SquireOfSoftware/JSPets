@@ -143,6 +143,97 @@ var totalStepsState = new ScreenState({
     }
 });
 
+// BATTLE
+
+var cryState = new ScreenState({
+    state: SCREEN_STATES.START_BATTLE.substates.CRY,
+    up: function() {
+
+    },
+    down: function() {
+
+    },
+    left: function() {
+
+    },
+    right: function() {
+
+    }
+});
+
+var fightBattleState = new ScreenState({
+    state: SCREEN_STATES.FIGHT,
+    up: function() {
+
+    },
+    down: function() {
+        //game.currentScreenState = stepsState;
+        //asyncRender = true;
+    },
+    left: function() {
+        game.currentScreenState = runBattleState;
+        asyncRender = true;
+    },
+    right: function() {
+        game.currentScreenState = powerupBattleState;
+        asyncRender = true;
+    }
+});
+
+var powerupBattleState = new ScreenState({
+    state: SCREEN_STATES.POWER_UP,
+    up: function() {
+
+    },
+    down: function() {
+
+    },
+    left: function() {
+        game.currentScreenState = fightBattleState;
+        asyncRender = true;
+    },
+    right: function() {
+        game.currentScreenState = autoBattleState;
+        asyncRender = true;
+    }
+});
+
+var autoBattleState = new ScreenState({
+    state: SCREEN_STATES.AUTO,
+    up: function() {
+
+    },
+    down: function() {
+
+    },
+    left: function() {
+        game.currentScreenState = powerupBattleState;
+        asyncRender = true;
+    },
+    right: function() {
+        game.currentScreenState = runBattleState;
+        asyncRender = true;
+    }
+});
+
+var runBattleState = new ScreenState({
+    state: SCREEN_STATES.RUN,
+    up: function() {
+
+    },
+    down: function() {
+
+    },
+    left: function() {
+        game.currentScreenState = autoBattleState;
+        asyncRender = true;
+    },
+    right: function() {
+        game.currentScreenState = fightBattleState;
+        asyncRender = true;
+    }
+});
+
 // Land
 // Each piece of land has a "state" and a set of cities
 // each city has a set of "land types" and a step count to reach the center of the city

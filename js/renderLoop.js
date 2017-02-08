@@ -227,7 +227,11 @@ function ScreenSprite(options) {
         size = options.size;
     else
         size = {width: DEFAULT_SCREEN_SIZE.X, height: DEFAULT_SCREEN_SIZE.Y};
-    this.update = options.update;
+
+    if (options.update !== undefined)
+        this.update = options.update;
+    else
+        this.update = function() {};
 
     if (options.screenPosition !== undefined)
         this.screenPosition = options.screenPosition;
@@ -242,8 +246,9 @@ function ScreenSprite(options) {
 
     if (options.draw !== undefined)
         this.draw = options.draw;
-    else
-        this.draw = function() {
+    else {
+        console.log(this.name, " has no draw function");
+        this.draw = function () {
             // Need to figure out xy coordinates
             this.context.clearRect(this.screenPosition.canvasX, this.screenPosition.canvasY, size.width, size.height);
 
@@ -259,6 +264,7 @@ function ScreenSprite(options) {
                 size.height
             );
         };
+    }
 }
 
 function generateImage(source) {
@@ -432,11 +438,79 @@ var battleScreens = {
         context: drawingBoard,
         referenceState: SCREEN_STATES.START_BATTLE.substates.CRY,
         update: function() {
-
+            if (this.tick === undefined || this.tick < 0) // the zero is to reset the animation
+                this.tick = 4;
+            this.tick--;
+            if (this.tick < 0){
+                currentScreen = battleScreens.SLIDE;
+            }
+        },
+        draw: function() {
+            clearScreen();
+        }
+    }),
+    SLIDE: new ScreenSprite({
+        name: "SLIDE_ANIMATION",
+        image: null,
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.START_BATTLE.substates.SLIDE,
+        update: function() {
+            if (this.tick === undefined || this.tick < 0) // the zero is to reset the animation
+                this.tick = 4;
+            this.tick--;
+            if (this.tick < 0){
+                currentScreen = battleScreens.GROWL;
+            }
         },
         draw: function() {
 
         }
+    }),
+    GROWL: new ScreenSprite({
+        name: "GROWL_ANIMATION",
+        image: null,
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.START_BATTLE.substates.GROWL,
+        update: function() {
+            if (this.tick === undefined || this.tick < 0) // the zero is to reset the animation
+                this.tick = 4;
+            this.tick--;
+            if (this.tick < 0){
+                currentScreen = battleMenuScreen.FIGHT;
+                game.currentScreenState = fightBattleState;
+                toggleKeyPress();
+            }
+        },
+        draw: function() {
+
+        }
+    })
+};
+
+var battleMenuScreen = {
+    FIGHT: new ScreenSprite({
+        name: "FIGHT",
+        image: generateImage("sprites/screens/fight-battle-menu.png"),
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.FIGHT
+    }),
+    POWER_UP: new ScreenSprite({
+        name: "POWER_UP",
+        image: generateImage("sprites/screens/evolve-battle-menu.png"),
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.POWER_UP
+    }),
+    AUTO: new ScreenSprite({
+        name: "AUTO",
+        image: generateImage("sprites/screens/care-battle-menu.png"),
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.AUTO
+    }),
+    RUN: new ScreenSprite({
+        name: "RUN",
+        image: generateImage("sprites/screens/run-battle-menu.png"),
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.RUN
     })
 };
 
@@ -446,7 +520,7 @@ function clearScreen() {
 
 var currentScreen = petScreen;
 
-function updateScreens() {
+function updateScreens() { // only triggered when a button is pressed or when a walk has reached a checkpoint
     // check if game state has changed
     if (currentScreen.referenceState !== game.currentScreenState.state) {
         // change screen
@@ -466,10 +540,24 @@ function updateScreens() {
             currentScreen = totalStepsScreen;
             currentScreen.newScreen = true;
         }
-        else if (game.currentScreenState === SCREEN_STATES.START_BATTLE.CRY)
-            currentScreen = null;
+        else if (currentScreenState === SCREEN_STATES.START_BATTLE.substates.CRY) {
+            currentScreen = battleScreens.CRY;
+            addLine("Battle screen triggered");
+        }
+        else if (currentScreenState === SCREEN_STATES.FIGHT) {
+            currentScreen = battleMenuScreen.FIGHT;
+        }
+        else if (currentScreenState === SCREEN_STATES.POWER_UP) {
+            currentScreen = battleMenuScreen.POWER_UP;
+        }
+        else if (currentScreenState === SCREEN_STATES.AUTO) {
+            currentScreen = battleMenuScreen.AUTO;
+        }
+        else if (currentScreenState === SCREEN_STATES.RUN) {
+            currentScreen = battleMenuScreen.RUN;
+        }
         else {
-            currentScreen = petScreen;
+            //currentScreen = petScreen;
             addLine("Cannot locate screen: " + game.state);
         }
         clearScreen();
@@ -479,6 +567,7 @@ function updateScreens() {
 function draw() {
     if (DRAW_TO_SCREEN === true) {
         currentScreen.update();
+        //addLine(currentScreen.name);
         //addLine(game.pet.state.getName());
         currentScreen.draw();
     }
