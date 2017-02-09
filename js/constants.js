@@ -106,6 +106,9 @@ var SCREEN_STATES = {
         substates: {
             TOTAL_STEPS: new LogicState({
                 name: "TOTAL_STEPS"
+            }),
+            NEXT_BATTLE: new LogicState({
+                name: "NEXT_BATTLE"
             })
         }
     }),

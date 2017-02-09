@@ -55,7 +55,13 @@ var careState = new ScreenState({
         asyncRender = true;
     },
     down: function() {
-
+        // show healing animation, has happy then idle
+        console.log(game.pet.state, game.currentScreenState);
+        if (game.pet.state === ANIMAL_STATES.SICK) {
+            game.pet.state = ANIMAL_STATES.IDLE;
+            game.currentScreenState = petState;
+            asyncRender = true;
+        }
     },
     left: function() {
         game.currentScreenState = statsState;
@@ -222,6 +228,21 @@ var runBattleState = new ScreenState({
 
     },
     down: function() {
+        // should roll a chance of getting sick from running
+        // note that the step counter for the given city does not reset, it is only goes to the next city if you beat it
+        var roll = Math.round(Math.random() * 10, 0);
+        addLine("Rolled " + roll);
+        if (roll % 2 === 1)
+            game.pet.state = ANIMAL_STATES.SICK;
+        else
+            game.pet.state = ANIMAL_STATES.IDLE;
+
+        // remember that the trigger was that you took a step over the threshold
+        game.stepCounter.hasRecentlyStepped = false;
+        game.stepCounter.resetWaitPeriod();
+        game.currentScreenState = petState;
+        // need to show sick animation
+        console.log(game.currentScreenState, game.pet);
 
     },
     left: function() {

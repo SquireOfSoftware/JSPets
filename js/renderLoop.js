@@ -190,12 +190,18 @@ function AnimalSprite(options) {
                     referenceState = ANIMAL_STATES.WALKING;
                     currentPosition = walkingPosition;
                 }
+                else if (game.pet.state === ANIMAL_STATES.SICK) {
+                    referenceState = ANIMAL_STATES.SICK;
+                    currentPosition = sickPosition;
+                    console.log("screen state", referenceState);
+                }
             }
             currentPosition.update();
         };
 
     this.draw = function() {
         context.clearRect(currentPosition.canvasX, currentPosition.canvasY, size.width, size.height);
+        //console.log(referenceState);
         if(this.visible) {
             context.drawImage(
                 image,
@@ -247,7 +253,7 @@ function ScreenSprite(options) {
     if (options.draw !== undefined)
         this.draw = options.draw;
     else {
-        console.log(this.name, " has no draw function");
+        //console.log(this.name, " has no draw function");
         this.draw = function () {
             // Need to figure out xy coordinates
             this.context.clearRect(this.screenPosition.canvasX, this.screenPosition.canvasY, size.width, size.height);
@@ -288,6 +294,13 @@ var petSprite = new AnimalSprite({
         spriteSheetX: 80, // fifth position on the sprite sheet
         spriteSheetY: 0,
         maxFrame: 1,
+        canvasX: 15,
+        canvasY: 0
+    }),
+    sickPosition: new SpritePosition({
+        spriteSheetX: 48,
+        spriteSheetY: 0,
+        maxFrame: 0,
         canvasX: 15,
         canvasY: 0
     })
@@ -442,7 +455,10 @@ var battleScreens = {
                 this.tick = 4;
             this.tick--;
             if (this.tick < 0){
-                currentScreen = battleScreens.SLIDE;
+                //currentScreen = battleScreens.SLIDE;
+                currentScreen = battleMenuScreen.FIGHT;
+                game.currentScreenState = fightBattleState;
+                toggleKeyPress();
             }
         },
         draw: function() {
