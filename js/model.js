@@ -41,9 +41,18 @@ function ScreenState(options) {
 
 var petState = new ScreenState({
     state: SCREEN_STATES.PETS,
+    up: function() {
+        game.pet.state = ANIMAL_STATES.IN_BATTLE;
+    },
     down: function() {
         game.currentScreenState = mapState;
         asyncRender = true;
+    },
+    left: function() {
+
+    },
+    right: function() {
+
     }
 });
 
@@ -288,7 +297,6 @@ var australia = {
 
 function update() {
     // Need to figure out how to link this to a screen
-    //game.currentScreenState.tick();
 }
 
 var game = {

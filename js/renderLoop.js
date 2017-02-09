@@ -15,8 +15,8 @@ function SpritePosition(options) {
     var maxFrame = options.maxFrame;
 
     var multiplier;
-    if (options.multipler !== undefined)
-        multiplier = options.multipler;
+    if (options.multiplier !== undefined)
+        multiplier = options.multiplier;
     else
         multiplier = DEFAULT_SPRITE_SIZE;
 
@@ -26,7 +26,7 @@ function SpritePosition(options) {
         if (currentFrameCounter > maxFrame) {
             currentFrameCounter = 0;
         }
-        this.updatedSpriteSheetX = spriteSheetX + multiplier * currentFrameCounter;
+        this.updatedSpriteSheetX = spriteSheetX + this.multiplier * currentFrameCounter;
     };
 }
 
@@ -52,44 +52,6 @@ function ScreenPosition(options) {
         multiplier = options.multiplier;
     else
         multiplier = DEFAULT_SCREEN_SIZE.X;
-
-    var maxScreens;
-    if (options.maxScreens !== undefined)
-        maxScreens = options.maxScreens;
-    else
-        maxScreens = 1;
-
-    var screenCounter = 0;
-
-    this.reset = function() {
-        this.currentPosition = {
-            x: firstScreenX,
-            y: firstScreenY
-        };
-        screenCounter = 0;
-    };
-
-    this.next = function() {
-        screenCounter++;
-        if (screenCounter > maxScreens) {
-            screenCounter = 0;
-            this.currentPosition.x = 0;
-        }
-        else
-            this.currentPosition.x += multiplier;
-        console.log(screenCounter, this.currentPosition);
-    };
-
-    this.previous = function() {
-        screenCounter--;
-        if (screenCounter < 0) {
-            screenCounter = maxScreens;
-            this.currentPosition.x = maxScreens * multiplier;
-        }
-        else
-            this.currentPosition.x -= multiplier;
-        console.log(screenCounter, this.currentPosition);
-    }
 }
 
 function AnimalSprite(options) {
@@ -131,8 +93,9 @@ function AnimalSprite(options) {
             canvasY: 0
         });
 
-    if (options.attackPosition !== undefined)
+    if (options.attackPosition !== undefined) {
         attackPosition = options.attackPosition;
+    }
     else
         attackPosition = new SpritePosition({
             spriteSheetX: DEFAULT_SPRITE_POSITIONS.ATTACK, // third position on the sprite sheet
@@ -181,6 +144,7 @@ function AnimalSprite(options) {
         this.update = options.update;
     else // default to a pet object
         this.update = function() {
+            //console.log(game.pet.state, referenceState);
             if (game.pet.state !== referenceState) {
                 if (game.pet.state === ANIMAL_STATES.IDLE) {
                     referenceState = ANIMAL_STATES.IDLE;
@@ -193,7 +157,10 @@ function AnimalSprite(options) {
                 else if (game.pet.state === ANIMAL_STATES.SICK) {
                     referenceState = ANIMAL_STATES.SICK;
                     currentPosition = sickPosition;
-                    console.log("screen state", referenceState);
+                }
+                else if (game.pet.state === ANIMAL_STATES.IN_BATTLE) {
+                    referenceState = ANIMAL_STATES.IN_BATTLE;
+                    currentPosition = attackPosition;
                 }
             }
             currentPosition.update();
@@ -201,7 +168,6 @@ function AnimalSprite(options) {
 
     this.draw = function() {
         context.clearRect(currentPosition.canvasX, currentPosition.canvasY, size.width, size.height);
-        //console.log(referenceState);
         if(this.visible) {
             context.drawImage(
                 image,
@@ -253,7 +219,6 @@ function ScreenSprite(options) {
     if (options.draw !== undefined)
         this.draw = options.draw;
     else {
-        //console.log(this.name, " has no draw function");
         this.draw = function () {
             // Need to figure out xy coordinates
             this.context.clearRect(this.screenPosition.canvasX, this.screenPosition.canvasY, size.width, size.height);
@@ -303,6 +268,14 @@ var petSprite = new AnimalSprite({
         maxFrame: 0,
         canvasX: 15,
         canvasY: 0
+    }),
+    attackPosition: new SpritePosition({
+        spriteSheetX: 32,
+        spriteSheetY: 0,
+        maxFrame: 1,
+        multiplier: -32,
+        canvasX: 15,
+        canvasY: 0
     })
 });
 
@@ -315,7 +288,6 @@ var petScreen = new ScreenSprite({
         // check whether a button has been pressed
         // handle button press accordingly
         game.stepCounter.updateWalkingFrame();
-
         petSprite.update();
 
     },
@@ -454,15 +426,18 @@ var battleScreens = {
             if (this.tick === undefined || this.tick < 0) // the zero is to reset the animation
                 this.tick = 4;
             this.tick--;
+            petSprite.update();
             if (this.tick < 0){
-                //currentScreen = battleScreens.SLIDE;
+                currentScreen = battleScreens.SLIDE;
+                /* For testing purposes
                 currentScreen = battleMenuScreen.FIGHT;
                 game.currentScreenState = fightBattleState;
-                toggleKeyPress();
+                toggleKeyPress();*/
             }
         },
         draw: function() {
-            clearScreen();
+            //clearScreen();
+            petSprite.draw();
         }
     }),
     SLIDE: new ScreenSprite({
