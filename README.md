@@ -6,6 +6,14 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 9/2/2017 ==
+
+The pet may get "sick" or hurt, if the user opts to run from a battle, there is a 50% chance it might happen though since it is based on the default Math.Random library it might be predicted.
+
+Regardless, once the pet gets sick, the user will need to opt to go for the Care menu to "cure" or "heal" the pet
+
+Note that neither "getting hurt" or "getting better" animations have been developed and I would need to look into this sometime later.
+
 == 8/2/2017 ==
 
 Got the screen states ticking over properly, its a bit of a hack as I am forced to disable key presses to prevent any unwanted keypresses from triggering the next time interpretKeypresses is called.
