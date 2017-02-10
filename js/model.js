@@ -344,7 +344,7 @@ var game = {
         type: ANIMAL_TYPES.DUCK
     }),
     stepCounter: {
-        currentSteps: 299,
+        currentSteps: 0,
         total: bigInt(0),
         //bigInt("999999999999999999999999999999999"),
         hasRecentlyStepped: false,

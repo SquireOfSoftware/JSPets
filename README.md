@@ -6,6 +6,56 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 10/2/2017 ==
+
+In hopes of preserving much of the architecture already, I have done some interesting hard code hacks to get around some of the more difficult mechanisms to slide in animations and flick between different frames given the approrpriate knowledge of the spritesheet themselves.
+
+You will notice several changes, one is the fact that draw now has an "override"-able closure function and the appropriate screens have "ticks" that helps it "tick" over to the next screen.
+
+There was a slight bug in which the screen switched without fully changing its state, this was overridden by applying the screen update within itself before switching over.
+
+This provides a chance for the screen to update itself before drawing the screen.
+
+Since it is not critical for the stuff to be stored beyond the animation, I decided to keep "screen" logic with the screens rather than share it. After all model.js should only be things that exist beyond a screen.
+
+There is also a potential bug with the replay of the battle animation. If you set the stepCount for Sydney to 2, and walk 6 steps, you will notice that although the animations play, the positionings have not been reset which might prove to be a problem later. But I guess at this point, its too small of a bug to fix, given that it still animations appropriately.
+
+There was also a huge discussion (With Kevin) as to the direction in which I ought to take with the map.
+
+1. Have the user select which city they want to "walk" to - this has an interesting feature but then means I need to know what cities can go where which also creates havoc for the rendering loop as it needs to somehow read out what states it is up to.
+
+- This also has the sub-effect of having someway to get people to "move" to certain cities first, a user may want to go straight to a boss city which might shortcircuit a planned route, which means I need to introduce reasons for people to go to the towns
+
+2. As opposed to how it was originally developed, where the locations were linear and the player had no choice but to go to the next city which was decided by the game (though if I recall correctly, you could choose what region you wanted to do...not sure if I want to do multiple states)
+
+There also tied into Biomes and how it would work (you will notice BIOMES is a new set of constants that I have added)
+
+Note that I have also had a discussion with Kevin about stat growth.
+
+The original game had no stat growth and that you went back to your basic digimon after a battle.
+
+If you applied stat growth then it could be applied to the user selected cities idea as you could move the user to areas which challenged the appropriate level.
+
+However this has a downside for replayability as there will be areas that you will absolutely never visit due to the crap XP that you get from it.
+
+The original had the benefit of never growing beyond what you start. If anything you unlocked the abilities to digivolve higher.
+
+The aim of the battle was to be "just" strong enough to nick the battle over, as digivolving costs DP or digivolving points.
+
+I do not recall how you regain DP but yeah. It could be tied to the number of steps you take, every say 200 steps you regain 1 DP, each evolution costs a certain amount and you can only hold a certain amout of DP.
+
+This would mean people would need to treasure their digivolves and think carefully about their power up selection (I think anyways).
+
+At the end of the battle of the traditional digivice you would devolve back down into your normal state.
+
+My opinion is that since digivolving is so valuable, if you use it, my opinion is that you stay with it for a while after you digivolve (obviously the higher the evolution the shorter it is). Though I am not sure on whether I should put a timelimit on it or a step limit and then have the pet devolve back into their normal state.
+
+Kevin suggested perhaps offering "items" or achievements that could extend the usage of such actions, perhaps something that keeps you in ultimate form or something.
+
+Good ideas which I might implement later.
+
+For now I will continue with just implementing the basics.
+
 == 9/2/2017 ==
 
 The pet may get "sick" or hurt, if the user opts to run from a battle, there is a 50% chance it might happen though since it is based on the default Math.Random library it might be predicted.
