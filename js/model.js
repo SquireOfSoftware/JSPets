@@ -42,7 +42,7 @@ function ScreenState(options) {
 var petState = new ScreenState({
     state: SCREEN_STATES.PETS,
     up: function() {
-        game.pet.state = ANIMAL_STATES.IN_BATTLE;
+        //game.pet.state = ANIMAL_STATES.IN_BATTLE;
     },
     down: function() {
         game.currentScreenState = mapState;

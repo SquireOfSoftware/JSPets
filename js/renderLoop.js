@@ -26,7 +26,7 @@ function SpritePosition(options) {
         if (currentFrameCounter > maxFrame) {
             currentFrameCounter = 0;
         }
-        this.updatedSpriteSheetX = spriteSheetX + this.multiplier * currentFrameCounter;
+        this.updatedSpriteSheetX = spriteSheetX + multiplier * currentFrameCounter;
     };
 }
 
@@ -67,8 +67,9 @@ function AnimalSprite(options) {
     else
         this.visible = false;
 
-    var idlePosition, walkingPosition, attackPosition,
-        sickPosition, happyPosition, currentPosition;
+    var idlePosition, walkingPosition, cryingOutPosition,
+        sickPosition, happyPosition, currentPosition,
+        slidingPosition;
     if (options.idlePosition !== undefined)
         idlePosition = options.idlePosition;
     else
@@ -93,11 +94,11 @@ function AnimalSprite(options) {
             canvasY: 0
         });
 
-    if (options.attackPosition !== undefined) {
-        attackPosition = options.attackPosition;
+    if (options.cryingOutPosition !== undefined) {
+        cryingOutPosition = options.cryingOutPosition;
     }
     else
-        attackPosition = new SpritePosition({
+        cryingOutPosition = new SpritePosition({
             spriteSheetX: DEFAULT_SPRITE_POSITIONS.ATTACK, // third position on the sprite sheet
             spriteSheetY: 0,
             maxFrame: 0,
@@ -127,6 +128,17 @@ function AnimalSprite(options) {
             canvasY: 0
         });
 
+    if (options.slidingPosition !== undefined)
+        slidingPosition = options.slidingPosition;
+    else
+        slidingPosition = new SpritePosition({
+            spriteSheetX: DEFAULT_SPRITE_POSITIONS.IDLE, // fourth position on the sprite sheet
+            spriteSheetY: 0,
+            maxFrame: 0,
+            canvasX: context.width/2,
+            canvasY: 0
+        });
+
     var referenceState = ANIMAL_STATES.IDLE;
 
     if (options.flip !== undefined)
@@ -144,7 +156,6 @@ function AnimalSprite(options) {
         this.update = options.update;
     else // default to a pet object
         this.update = function() {
-            //console.log(game.pet.state, referenceState);
             if (game.pet.state !== referenceState) {
                 if (game.pet.state === ANIMAL_STATES.IDLE) {
                     referenceState = ANIMAL_STATES.IDLE;
@@ -160,7 +171,7 @@ function AnimalSprite(options) {
                 }
                 else if (game.pet.state === ANIMAL_STATES.IN_BATTLE) {
                     referenceState = ANIMAL_STATES.IN_BATTLE;
-                    currentPosition = attackPosition;
+                    currentPosition = cryingOutPosition;
                 }
             }
             currentPosition.update();
@@ -269,7 +280,7 @@ var petSprite = new AnimalSprite({
         canvasX: 15,
         canvasY: 0
     }),
-    attackPosition: new SpritePosition({
+    cryingOutPosition: new SpritePosition({
         spriteSheetX: 32,
         spriteSheetY: 0,
         maxFrame: 1,
@@ -277,6 +288,35 @@ var petSprite = new AnimalSprite({
         canvasX: 15,
         canvasY: 0
     })
+});
+
+var cryingOutSprite = new ScreenSprite({
+    name: "CRYING_OUT_SPRITE",
+    image: generateImage("sprites/battle-seq-circle.png"),
+    context: drawingBoard,
+    update: function() {
+        //console.log("UPDATE", this.tick, this.tick !== undefined || this.tick < 0);
+        if(this.tick === undefined || this.tick < 0)
+            this.tick = 6;
+        this.tick--;
+        //console.log("UPDATE", this.tick, typeof(this.tick));
+        //console.log("CRYING OUT", this.tick);
+    },
+    draw: function() {
+        //console.log("DRAWING", this.tick, typeof(this.tick));
+        if (this.tick % 2 === 0)
+            this.context.drawImage(
+                this.image,
+                0,
+                0,
+                45,
+                20,
+                0,
+                0,
+                45,
+                20
+            );
+    }
 });
 
 var petScreen = new ScreenSprite({
@@ -424,9 +464,10 @@ var battleScreens = {
         referenceState: SCREEN_STATES.START_BATTLE.substates.CRY,
         update: function() {
             if (this.tick === undefined || this.tick < 0) // the zero is to reset the animation
-                this.tick = 4;
+                this.tick = 6;
             this.tick--;
             petSprite.update();
+            cryingOutSprite.update();
             if (this.tick < 0){
                 currentScreen = battleScreens.SLIDE;
                 /* For testing purposes
@@ -436,8 +477,9 @@ var battleScreens = {
             }
         },
         draw: function() {
-            //clearScreen();
+            clearScreen();
             petSprite.draw();
+            cryingOutSprite.draw();
         }
     }),
     SLIDE: new ScreenSprite({
