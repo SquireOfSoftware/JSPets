@@ -10,6 +10,11 @@ function Animal(options) {
         spd: options.stats.spd
     };
 
+    if (options.isPet !== undefined)
+        this.isPet = options.isPet;
+    else
+        this.isPet = false;
+
     if (options.state !== undefined)
         this.state = options.state;
     else
@@ -266,7 +271,7 @@ var runBattleState = new ScreenState({
 
 // Land
 // Each piece of land has a "state" and a set of cities
-// each city has a set of "land types" and a step count to reach the center of the city
+// each city has a set of "biomes" and a step count to reach the center of the city
 function State(options) {
     this.name = options.name;
     this.cities = options.cities;
@@ -286,14 +291,42 @@ var australia = {
                 name: "Sydney",
                 stepCount: 300,
                 referenceState: MAP_STATES.NSW.substates.SYDNEY,
-                land: [
-                    LAND_TYPES.CITY,
-                    LAND_TYPES.GRASSLAND
+                biomes: [
+                    BIOMES.CITY,
+                    BIOMES.GRASSLAND
                 ]
             })
         }
     })
 };
+
+function generateAnimalStats(hp, attk, spd, state) {
+    return {
+        hp: hp,
+        attk: attk,
+        spd: spd,
+        state: state
+    };
+}
+
+var currentEnemy = {
+    name: "Enemy",
+    currentEnemy: undefined,
+    currentBiome: undefined,
+    generateEnemy: function() {
+        //game.currentMap.biomes
+        var biomes = game.currentMap.biomes;
+        this.currentBiome = biomes[Math.floor(Math.random() * (biomes.length + 1))];
+        //this.states =
+        // set up new stats
+    },
+    stats: generateAnimalStats(1, 1, 1, EVOLUTION_STATES.BASIC)
+};
+
+var cat = new Animal({
+    name: "CAT",
+    stats: generateAnimalStats(1, 1, 1, EVOLUTION_STATES.BASIC)
+});
 
 function update() {
     // Need to figure out how to link this to a screen
@@ -303,12 +336,8 @@ var game = {
     state: GAME_STATES.PET_STATUS,
     pet: new Animal({
         name: "PET",
-        stats: {
-            hp: 10,
-            attk: 5,
-            spd: 7
-        },
-        evolution_state: EVOLUTION_STATES.BASIC
+        isPet: true,
+        stats: generateAnimalStats(10, 5, 7, EVOLUTION_STATES.BASIC)
     }),
     stepCounter: {
         currentSteps: 299,
@@ -332,5 +361,6 @@ var game = {
         }
     },
     currentScreenState: petState,
-    currentMap: australia.NSW.cities.SYDNEY
+    currentMap: australia.NSW.cities.SYDNEY,
+    currentEnemy: cat
 };

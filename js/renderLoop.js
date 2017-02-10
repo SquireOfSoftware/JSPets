@@ -9,8 +9,9 @@ function SpritePosition(options) {
     this.spriteSheetY = options.spriteSheetY;
     this.updatedSpriteSheetX = spriteSheetX;
 
-    this.canvasX = options.canvasX;
+    var canvasX = options.canvasX;
     this.canvasY = options.canvasY;
+    this.updatedCanvasX = canvasX;
 
     var maxFrame = options.maxFrame;
 
@@ -27,6 +28,24 @@ function SpritePosition(options) {
             currentFrameCounter = 0;
         }
         this.updatedSpriteSheetX = spriteSheetX + multiplier * currentFrameCounter;
+    };
+
+    this.updateCanvas = function () {
+        currentFrameCounter++;
+        if (currentFrameCounter > maxFrame) {
+            currentFrameCounter = 0;
+        }
+        this.updatedCanvasX = canvasX + multiplier * currentFrameCounter;
+        //console.log(this.updatedCanvasX, this.canvasY);
+    };
+
+    this.getPosition = function () {
+        return {
+            spriteSheetX: this.updatedSpriteSheetX,
+            spriteSheetY: this.spriteSheetY,
+            canvasX: this.updatedCanvasX,
+            canvasY: this.canvasY
+        };
     };
 }
 
@@ -55,21 +74,22 @@ function ScreenPosition(options) {
 }
 
 function AnimalSprite(options) {
-    var image = options.image;
-    var context;
-    if(options.context !== undefined)
-        context = options.context;
-    else
-        context = drawingBoard;
+    this.image = options.image;
+    this.referenceObject = options.referenceObject;
 
+    //var context;
+    if(options.context !== undefined)
+        this.context = options.context;
+    else
+        this.context = drawingBoard;
+/*
     if(options.visible !== undefined)
         this.visible = options.visible;
     else
         this.visible = false;
-
+*/
     var idlePosition, walkingPosition, cryingOutPosition,
-        sickPosition, happyPosition, currentPosition,
-        slidingPosition;
+        sickPosition, happyPosition;
     if (options.idlePosition !== undefined)
         idlePosition = options.idlePosition;
     else
@@ -81,7 +101,7 @@ function AnimalSprite(options) {
             canvasY: 0
         });
 
-    currentPosition = idlePosition;
+    this.currentPosition = idlePosition;
 
     if (options.walkingPosition !== undefined)
         walkingPosition = options.walkingPosition;
@@ -90,7 +110,7 @@ function AnimalSprite(options) {
             spriteSheetX: DEFAULT_SPRITE_POSITIONS.WALKING,
             spriteSheetY: 0,
             maxFrame: 1,
-            canvasX: context.width/2,
+            canvasX: this.context.width/2,
             canvasY: 0
         });
 
@@ -102,7 +122,7 @@ function AnimalSprite(options) {
             spriteSheetX: DEFAULT_SPRITE_POSITIONS.ATTACK, // third position on the sprite sheet
             spriteSheetY: 0,
             maxFrame: 0,
-            canvasX: context.width/2,
+            canvasX: this.context.width/2,
             canvasY: 0
         });
 
@@ -113,7 +133,7 @@ function AnimalSprite(options) {
             spriteSheetX: DEFAULT_SPRITE_POSITIONS.SICK, // third position on the sprite sheet
             spriteSheetY: 0,
             maxFrame: 0,
-            canvasX: context.width/2,
+            canvasX: this.context.width/2,
             canvasY: 0
         });
 
@@ -124,18 +144,18 @@ function AnimalSprite(options) {
             spriteSheetX: DEFAULT_SPRITE_POSITIONS.HAPPY, // fourth position on the sprite sheet
             spriteSheetY: 0,
             maxFrame: 0,
-            canvasX: context.width/2,
+            canvasX: this.context.width/2,
             canvasY: 0
         });
 
     if (options.slidingPosition !== undefined)
-        slidingPosition = options.slidingPosition;
+        this.slidingPosition = options.slidingPosition;
     else
-        slidingPosition = new SpritePosition({
+        this.slidingPosition = new SpritePosition({
             spriteSheetX: DEFAULT_SPRITE_POSITIONS.IDLE, // fourth position on the sprite sheet
             spriteSheetY: 0,
             maxFrame: 0,
-            canvasX: context.width/2,
+            canvasX: this.context.width/2,
             canvasY: 0
         });
 
@@ -146,53 +166,63 @@ function AnimalSprite(options) {
     else
         this.flip = false; // facing left
 
-    var size;
+    //var size;
     if (options.size !== undefined)
-        size = options.size;
+        this.size = options.size;
     else
-        size = {width: DEFAULT_SPRITE_SIZE, height: DEFAULT_SPRITE_SIZE};
+        this.size = {width: DEFAULT_SPRITE_SIZE, height: DEFAULT_SPRITE_SIZE};
 
     if (options.update !== undefined)
         this.update = options.update;
     else // default to a pet object
         this.update = function() {
-            if (game.pet.state !== referenceState) {
-                if (game.pet.state === ANIMAL_STATES.IDLE) {
+            if (this.referenceObject.state !== referenceState) {
+                if (this.referenceObject.state === ANIMAL_STATES.IDLE) {
                     referenceState = ANIMAL_STATES.IDLE;
-                    currentPosition = idlePosition;
+                    this.currentPosition = idlePosition;
                 }
-                else if (game.pet.state === ANIMAL_STATES.WALKING) {
+                else if (this.referenceObject.state === ANIMAL_STATES.WALKING) {
                     referenceState = ANIMAL_STATES.WALKING;
-                    currentPosition = walkingPosition;
+                    this.currentPosition = walkingPosition;
                 }
-                else if (game.pet.state === ANIMAL_STATES.SICK) {
+                else if (this.referenceObject.state === ANIMAL_STATES.SICK) {
                     referenceState = ANIMAL_STATES.SICK;
-                    currentPosition = sickPosition;
+                    this.currentPosition = sickPosition;
                 }
-                else if (game.pet.state === ANIMAL_STATES.IN_BATTLE) {
+                else if (this.referenceObject.state === ANIMAL_STATES.IN_BATTLE) {
                     referenceState = ANIMAL_STATES.IN_BATTLE;
-                    currentPosition = cryingOutPosition;
+                    this.currentPosition = cryingOutPosition;
                 }
             }
-            currentPosition.update();
+            this.currentPosition.update();
         };
 
-    this.draw = function() {
-        context.clearRect(currentPosition.canvasX, currentPosition.canvasY, size.width, size.height);
-        if(this.visible) {
-            context.drawImage(
-                image,
-                currentPosition.updatedSpriteSheetX,
-                currentPosition.spriteSheetY,
-                size.width,
-                size.height,
-                currentPosition.canvasX,
-                currentPosition.canvasY,
-                size.width,
-                size.height
-            );
-        }
-    };
+    if (options.draw !== undefined)
+        this.draw = options.draw;
+    else
+        this.draw = function() {
+            var coordinates = this.currentPosition.getPosition();
+            this.context.clearRect(coordinates.canvasX, coordinates.canvasY, this.size.width, this.size.height);
+            //if(this.visible) {
+                //var coordinates = this.currentPosition.getPosition();
+                //console.log("Test", coordinates);
+                this.context.drawImage(
+                    this.image,
+                    //this.currentPosition.updatedSpriteSheetX,
+                    //this.currentPosition.spriteSheetY,
+                    coordinates.spriteSheetX,
+                    coordinates.spriteSheetY,
+                    this.size.width,
+                    this.size.height,
+                    //this.currentPosition.canvasX,
+                    //this.currentPosition.canvasY,
+                    coordinates.canvasX,
+                    coordinates.canvasY,
+                    this.size.width,
+                    this.size.height
+                );
+            //}
+        };
 }
 
 function ScreenSprite(options) {
@@ -258,7 +288,7 @@ function generateImage(source) {
 var petSprite = new AnimalSprite({
     image: generateImage("sprites/duckling.png"),
     context: drawingBoard,
-    visible: true,
+    referenceObject: game.pet,
     idlePosition: new SpritePosition({
         spriteSheetX: 0,
         spriteSheetY: 0,
@@ -290,20 +320,89 @@ var petSprite = new AnimalSprite({
     })
 });
 
+var catSprite = new AnimalSprite({
+    image: generateImage("sprites/cat.png"),
+    context: drawingBoard,
+    referenceObject: cat,
+    idlePosition: new SpritePosition({
+        spriteSheetX: 0,
+        spriteSheetY: 0,
+        maxFrame: 1,
+        canvasX: 15,
+        canvasY: 0
+    }),
+    cryingOutPosition: new SpritePosition({
+        spriteSheetX: 32,
+        spriteSheetY: 0,
+        maxFrame: 1,
+        multiplier: -32,
+        canvasX: 15,
+        canvasY: 0
+    }),
+    slidingPosition: new SpritePosition({
+        spriteSheetX: 0,
+        spriteSheetY: 0,
+        maxFrame: 4,
+        multiplier: -4,
+        canvasX: 45,
+        canvasY: 0
+    }),
+    barkingPosition: new SpritePosition({
+        spriteSheetX: 32,
+        spriteSheetY: 0,
+        maxFrame: 1,
+        multiplier: -32,
+        canvasX: DEFAULT_SCREEN_SIZE.X - DEFAULT_SPRITE_SIZE,
+        canvasY: 0
+    }),
+    update: function() {
+        //console.log("CAT SPRITE UPDATE", this.slide);
+        if(this.slide !== undefined && this.slide === true) {// && this.tick !== undefined) {
+            /*if (this.slidingX === undefined || this.slidingX > 16)
+                this.slidingX = 0;
+            else
+                this.slidingX += 5;*/
+            if (this.currentPosition !== this.slidingPosition)
+                this.currentPosition = this.slidingPosition;
+            this.currentPosition.updateCanvas();
+            console.log(this.currentPosition.getPosition());
+            // need to figure out how to shift a sprite over
+            // probably do it manually
+
+        }
+        else {
+            this.currentPosition.update();
+        }
+    }/*,
+    draw: function() {
+        //if (this.slide === true) {
+            //this.context.clearRect()
+        console.log(this.context, this.image);
+        this.context.drawImage(
+            this.image,
+            0,
+            0,
+            16,
+            16,
+            0,
+            0,
+            16,
+            16
+        );
+        //}
+    }*/
+});
+
 var cryingOutSprite = new ScreenSprite({
     name: "CRYING_OUT_SPRITE",
     image: generateImage("sprites/battle-seq-circle.png"),
     context: drawingBoard,
     update: function() {
-        //console.log("UPDATE", this.tick, this.tick !== undefined || this.tick < 0);
         if(this.tick === undefined || this.tick < 0)
             this.tick = 6;
         this.tick--;
-        //console.log("UPDATE", this.tick, typeof(this.tick));
-        //console.log("CRYING OUT", this.tick);
     },
     draw: function() {
-        //console.log("DRAWING", this.tick, typeof(this.tick));
         if (this.tick % 2 === 0)
             this.context.drawImage(
                 this.image,
@@ -464,12 +563,13 @@ var battleScreens = {
         referenceState: SCREEN_STATES.START_BATTLE.substates.CRY,
         update: function() {
             if (this.tick === undefined || this.tick < 0) // the zero is to reset the animation
-                this.tick = 6;
+                this.tick = -1;//6; // TEST
             this.tick--;
             petSprite.update();
             cryingOutSprite.update();
             if (this.tick < 0){
                 currentScreen = battleScreens.SLIDE;
+                currentScreen.update();
                 /* For testing purposes
                 currentScreen = battleMenuScreen.FIGHT;
                 game.currentScreenState = fightBattleState;
@@ -491,12 +591,18 @@ var battleScreens = {
             if (this.tick === undefined || this.tick < 0) // the zero is to reset the animation
                 this.tick = 4;
             this.tick--;
+            catSprite.slide = true;
+            catSprite.update();
+            //console.log(catSprite.currentPosition);
             if (this.tick < 0){
                 currentScreen = battleScreens.GROWL;
+                currentScreen.update();
+                catSprite.slide = false;
             }
         },
         draw: function() {
-
+            clearScreen();
+            catSprite.draw();
         }
     }),
     GROWL: new ScreenSprite({

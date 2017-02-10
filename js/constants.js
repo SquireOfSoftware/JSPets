@@ -14,7 +14,7 @@ var ANIMAL_STATES = {
         name: "IDLE"
         // default state
         // timeeout state as well
-        // if you win you land on this
+        // if you win you biomes on this
     }),
     WALKING: new LogicState({
         name: "WALKING"
@@ -28,7 +28,7 @@ var ANIMAL_STATES = {
     SICK: new LogicState({
         name: "SICK"
         // no steps allowed
-        // land on this if you run (chance) or you lose a battle
+        // biomes on this if you run (chance) or you lose a battle
     })
 };
 
@@ -157,7 +157,7 @@ var BATTLE_STATES = {
 // === MAP CONSTANTS === //
 
 // http://www.australia.gov.au/about-australia/australian-story/austn-weather-and-the-seasons
-var LAND_TYPES = {
+var BIOMES = {
     COASTAL: new LogicState({
         name: "COASTAL"
     }),
@@ -187,9 +187,9 @@ var LAND_TYPES = {
     })
 };
 
-function MapStates(name, themes) {
+function MapStates(name, biomes) {
     this.name = name;
-    this.themes = themes;
+    this.biomes = biomes;
 }
 
 var MAP_STATES = {

@@ -103,6 +103,7 @@ function walk() {
         toggleKeyPress();
         game.stepCounter.currentSteps = 0;
         game.pet.state = ANIMAL_STATES.IN_BATTLE;
+        game.currentEnemy.state = ANIMAL_STATES.IN_BATTLE;
         game.currentScreenState = cryState;//SCREEN_STATES.START_BATTLE.substates.CRY;
         // generate the enemy here and store it in the game variable
         updateScreens();
