@@ -47,6 +47,21 @@ var EVOLUTION_STATES = {
     })
 };
 
+var ANIMAL_TYPES = {
+    CAT: new LogicState({
+        name: "CAT"
+    }),
+    DOG: new LogicState({
+        name: "DOG"
+    }),
+    DUCK: new LogicState({
+        name: "DUCK"
+    }),
+    KANGAROO: new LogicState({
+        name: "KANGAROO"
+    })
+};
+
 var GAME_STATES = {
     PET_STATUS: new LogicState({
         name: "PET_STATUS"

@@ -19,6 +19,8 @@ function Animal(options) {
         this.state = options.state;
     else
         this.state = ANIMAL_STATES.IDLE;
+
+    this.type = options.type;
 }
 
 function ScreenState(options) {
@@ -325,7 +327,8 @@ var currentEnemy = {
 
 var cat = new Animal({
     name: "CAT",
-    stats: generateAnimalStats(1, 1, 1, EVOLUTION_STATES.BASIC)
+    stats: generateAnimalStats(1, 1, 1, EVOLUTION_STATES.BASIC),
+    type: ANIMAL_TYPES.CAT
 });
 
 function update() {
@@ -337,7 +340,8 @@ var game = {
     pet: new Animal({
         name: "PET",
         isPet: true,
-        stats: generateAnimalStats(10, 5, 7, EVOLUTION_STATES.BASIC)
+        stats: generateAnimalStats(10, 5, 7, EVOLUTION_STATES.BASIC),
+        type: ANIMAL_TYPES.DUCK
     }),
     stepCounter: {
         currentSteps: 299,
