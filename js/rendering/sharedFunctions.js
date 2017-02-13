@@ -45,6 +45,12 @@ function SpritePosition(options) {
             canvasY: this.canvasY
         };
     };
+
+    this.reset = function() {
+        this.updatedSpriteSheetX = spriteSheetX;
+        this.updatedCanvasX = canvasX;
+        currentFrameCounter = 0;
+    }
 }
 
 function generateImage(source) {

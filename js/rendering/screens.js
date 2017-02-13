@@ -250,18 +250,18 @@ var battleScreens = {
         referenceState: SCREEN_STATES.START_BATTLE.substates.CRY,
         update: function() {
             if (this.tick === undefined || this.tick < 0) // the zero is to reset the animation
-                this.tick = 6; // TEST
+                this.tick = -1; //6; // TEST
             this.tick--;
             petSprite.update();
             cryingOutSprite.update();
             if (this.tick < 0){
-                currentScreen = battleScreens.SLIDE;
+                /*currentScreen = battleScreens.SLIDE;
                 currentScreen.update();
-                this.context.flipHorizontally();
-                /* For testing purposes
+                this.context.flipHorizontally();*/
+                /* For testing purposes*/
                  currentScreen = battleMenuScreen.FIGHT;
                  game.currentScreenState = fightBattleState;
-                 toggleKeyPress();*/
+                 toggleKeyPress();
             }
         },
         draw: function() {
@@ -365,22 +365,39 @@ var attackSequenceScreen = {
         referenceState: SCREEN_STATES.ATTACK_SEQUENCE.substates.LAUNCHING_ATTACK,
         update: function() {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
-                this.tick = 4;
-                //this.context.flipHorizontally();
+                this.tick = 3;
+
+                if (game.currentEnemy.stats.spd > game.pet.stats.spd) {
+                    if (game.currentEnemy.type === ANIMAL_TYPES.CAT) {
+                        this.sprite = catSprite;
+                    }
+                    this.context.flipHorizontally();
+                }
+                else {
+                    this.sprite = petSprite;
+                }
+                fireball.currentPosition = fireball.positions.launchingPosition;
                 toggleKeyPress();
                 console.log("LAUNCHING ATTACK");
             }
             this.tick--;
             // need fireball
+
+            this.sprite.currentPosition = this.sprite.attackingPosition;
+            fireball.update();
+
+            console.log("screen tick:", this.tick);
             // need enemySprite to hold a position in one shot
             if (this.tick < 0){
                 currentScreen = attackSequenceScreen.ATTACK;
                 currentScreen.update();
+
             }
 
         },
         draw: function() {
-
+            this.sprite.draw();
+            fireball.draw();
         }
     }),
     ATTACK: new ScreenSprite({
@@ -392,22 +409,25 @@ var attackSequenceScreen = {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 4;
                 toggleKeyPress(); // allowed to press "combos"
-
+                //fireball.currentPosition = fireball.positions.fullAttackPosition;
                 console.log("ATTACKING");
             }
             this.tick--;
             // need fireball
+            fireball.update();
+
+            console.log("screen tick:", this.tick);
             // need enemySprite to hold a position in one shot
             if (this.tick < 0){
                 // need to calculate dodge value, based on speed
                 toggleKeyPress();
                 currentScreen = attackSequenceScreen.RECEIVING_DAMAGE;
                 currentScreen.update();
-
+                this.context.clearEntireScreen();
             }
         },
         draw: function() {
-
+            fireball.draw();
         }
     }),
     RECEIVING_DAMAGE: new ScreenSprite({
@@ -420,18 +440,22 @@ var attackSequenceScreen = {
                 this.tick = 4;
 
                 console.log("RECEIVING");
+                //fireball.currentPosition = fireball.positions.receivingPosition;
             }
             this.tick--;
+            console.log("screen tick:", this.tick);
             // need fireball
+            fireball.update();
             // need enemySprite to hold a position in one shot
             if (this.tick < 0){
                 // need to calculate dodge value, based on speed
                 currentScreen = attackSequenceScreen.CALCULATING_DAMAGE;
                 currentScreen.update();
+                this.context.clearEntireScreen();
             }
         },
         draw: function() {
-
+            fireball.draw();
         }
     }),
     CALCULATING_DAMAGE: new ScreenSprite({
@@ -456,7 +480,7 @@ var attackSequenceScreen = {
             }
         },
         draw: function() {
-            catSprite.draw();
+            //catSprite.draw();
         }
     })
 };

@@ -35,6 +35,9 @@ function AnimalSprite(options) {
     if (options.barkingPosition !== undefined)
         this.barkingPosition = options.barkingPosition;
 
+    if (options.attackingPosition !== undefined)
+        this.attackingPosition = options.attackingPosition;
+
     var referenceState = ANIMAL_STATES.IDLE;
 
     if (options.flip !== undefined)
@@ -68,6 +71,9 @@ function AnimalSprite(options) {
                     referenceState = ANIMAL_STATES.IN_BATTLE;
                     this.currentPosition = this.cryingOutPosition;
                 }
+            }
+            else if (game.currentScreenState === SCREEN_STATES.ATTACK_SEQUENCE) {
+                this.currentPosition = this.attackingPosition;
             }
             this.currentPosition.update();
         };
@@ -124,6 +130,14 @@ var petSprite = new AnimalSprite({
         multiplier: -32,
         canvasX: 15,
         canvasY: 0
+    }),
+    attackingPosition: new SpritePosition({
+        spriteSheetX: 32,
+        spriteSheetY: 0,
+        maxFrame: 1,
+        multiplier: -32,
+        canvasX: 45 - 16,
+        canvasY: 0
     })
 });
 
@@ -162,6 +176,14 @@ var catSprite = new AnimalSprite({
         canvasX: -DEFAULT_SPRITE_SIZE,//DEFAULT_SCREEN_SIZE.X - DEFAULT_SPRITE_SIZE,
         canvasY: 0
     }),
+    attackingPosition: new SpritePosition({
+        spriteSheetX: 32,
+        spriteSheetY: 0,
+        maxFrame: 1,
+        multiplier: -32,
+        canvasX: 45 - 16,
+        canvasY: 0
+    }),
     update: function() {
         if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
             if (this.currentPosition !== this.slidingPosition)
@@ -176,19 +198,80 @@ var catSprite = new AnimalSprite({
     }
 });
 
-var fireball = new AnimalSprite({
-    image: generateImage("sprites/attacks.png"),
-    context: drawingBoard,
-    slidingPosition: new SpritePosition({
-        spriteSheetX: 0,
-        spriteSheetY: 0,
-        maxFrame: 4,
-        multiplier: -4,
-        canvasX: 0,
-        canvasY: 0
-    }),
-    update: function() {
-        // figure out how power the attack is
-        this.currentPosition = this.slidingPosition;
-    }
+function AttackSprite(image, context, positions, size, update, draw) {
+    this.image = image;
+    this.context = context;
+    this.positions = positions;
+    this.size = size;
+    this.update = update;
+    this.draw = draw;
+}
+
+var fireball = new AttackSprite(
+    generateImage("sprites/fireball.png"),
+    drawingBoard,
+    {
+        launchingPosition: new SpritePosition({
+            spriteSheetX: 0,
+            spriteSheetY: 0,
+            maxFrame: 7,
+            multiplier: -5,
+            canvasX: 16,
+            canvasY: 2
+        }),
+        fullAttackPosition: new SpritePosition({
+            spriteSheetX: 0,
+            spriteSheetY: 0,
+            maxFrame: 5,
+            multiplier: -8,
+            canvasX: 39,
+            canvasY: 2
+        }),
+        receivingPosition: new SpritePosition({
+            spriteSheetX: 0,
+            spriteSheetY: 0,
+            maxFrame: 2,
+            multiplier: 0,
+            canvasX: 0,
+            canvasY: 2
+        })
+    },
+    {width: DEFAULT_SPRITE_SIZE, height: DEFAULT_SPRITE_SIZE},
+    function() {
+        if(this.tick === undefined || this.tick < 0) {
+            this.tick = 12;
+            this.currentPosition = this.positions.launchingPosition;
+            this.positions.launchingPosition.reset();
+            this.positions.fullAttackPosition.reset();
+            this.positions.receivingPosition.reset();
+        }
+        this.tick --;
+
+        if (this.tick < 9) {
+            this.currentPosition = this.positions.fullAttackPosition;
+        }
+        else if (this.tick < 3) {
+            this.currentPosition = this.positions.receivingPosition;
+        }
+
+        this.currentPosition.updateCanvas();
+
+        console.log("fireball tick", this.tick, this.currentPosition);
+    },
+    function() {
+        var coordinates = this.currentPosition.getPosition();
+        this.context.clearSection(coordinates.canvasX, coordinates.canvasY, this.size.width, this.size.height);
+        console.log(this.size);
+
+        this.context.drawImage(
+            this.image,
+            coordinates.spriteSheetX,
+            coordinates.spriteSheetY,
+            this.size.width,
+            this.size.height,
+            coordinates.canvasX,
+            coordinates.canvasY,
+            this.size.width,
+            this.size.height
+        );
 });
