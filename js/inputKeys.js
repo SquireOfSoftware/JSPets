@@ -91,7 +91,7 @@ function interpretKeys() {
         else {
             keyPressBuffer.buffer.push(lastKeyPress);
         }
-        console.log("GAME STATE: ", game.currentScreenState.state.name);
+        //console.log("GAME STATE: ", game.currentScreenState.state.name);
         lastKeyPress = null;
     }
 }
@@ -117,5 +117,4 @@ function walk() {
         // generate the enemy here and store it in the game variable
         updateScreens();
     }
-    //console.log(game.pet.state, game.currentScreenState);
 }

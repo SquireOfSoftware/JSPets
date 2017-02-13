@@ -19,6 +19,8 @@ function SpritePosition(options) {
     else
         multiplier = DEFAULT_SPRITE_SIZE;
 
+    var isFlipped = false;
+
     var currentFrameCounter = 0;
     this.update = function() {
         currentFrameCounter++;
@@ -34,7 +36,10 @@ function SpritePosition(options) {
             currentFrameCounter = 0;
         }
         this.updatedCanvasX = canvasX + multiplier * currentFrameCounter;
-        //console.log(this.updatedCanvasX, this.canvasY);
+    };
+
+    this.flip = function () {
+        isFlipped = !isFlipped;
     };
 
     this.getPosition = function () {

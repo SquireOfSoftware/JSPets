@@ -234,6 +234,18 @@ var MAP_STATES = {
         substates: {
             SYDNEY: new LogicState({
                 name: "SYDNEY"
+            }),
+            HUNTER_VALLEY: new LogicState({
+                name: "HUNTER_VALLEY"
+            }),
+            BROKEN_HILL: new LogicState({
+                name: "BROKEN_HILL"
+            }),
+            JINDABYNE: new LogicState({
+                name: "JINDABYNE"
+            }),
+            JERVIS_BAY: new LogicState({
+                name: "JERVIS_BAY"
             })
         }
     }),
@@ -250,6 +262,55 @@ var MAP_STATES = {
         name: "ACT"
     })
 };
+
+/*
+* Sydney
+* Moree
+* Byron Bay
+* Brisbane
+* Rockhampton
+* Longreach
+* Townsville
+* Cairns
+* Mapoon
+* Carpentaria
+*
+* Tablelands
+* Alice Springs
+* Tanami
+* Daly Waters
+* Limmen National Park
+* Darwin
+* Kununurra
+* Mitchell Plateau
+* Broome
+*
+* St George Ranges
+* Newman
+* Coral Bay
+* Carnarvon
+* Sir Samuel
+* Plumridge Lakes
+* Perth
+* Bridgetown
+* Ravensthorpe
+*
+* Madura
+* Nullarbor National Park
+* Coober Pedy
+* Roxby Downs
+* Port Lincoln
+* Adelaide
+* Mildura
+* Broken Hill
+* Griffith
+*
+* Canberra
+* Bendigo
+* Melbourne
+* Launceston
+* Hobar
+* */
 
 // === KEY CONSTANTS === //
 

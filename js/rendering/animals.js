@@ -245,6 +245,7 @@ var fireball = new AttackSprite(
             this.positions.fullAttackPosition.reset();
             this.positions.receivingPosition.reset();
         }
+
         this.tick --;
 
         if (this.tick < 9) {
@@ -256,22 +257,36 @@ var fireball = new AttackSprite(
 
         this.currentPosition.updateCanvas();
 
-        console.log("fireball tick", this.tick, this.currentPosition);
+        //console.log("fireball tick", this.tick, this.currentPosition);
     },
     function() {
         var coordinates = this.currentPosition.getPosition();
-        this.context.clearSection(coordinates.canvasX, coordinates.canvasY, this.size.width, this.size.height);
-        console.log(this.size);
-
-        this.context.drawImage(
-            this.image,
-            coordinates.spriteSheetX,
-            coordinates.spriteSheetY,
-            this.size.width,
-            this.size.height,
-            coordinates.canvasX,
-            coordinates.canvasY,
-            this.size.width,
-            this.size.height
-        );
+        if (this.flip) {
+            this.context.clearSection(coordinates.canvasX, coordinates.canvasY, this.size.width * 2, this.size.height);
+            this.context.drawImage(
+                this.image,
+                coordinates.spriteSheetX,
+                coordinates.spriteSheetY,
+                this.size.width,
+                this.size.height,
+                coordinates.canvasX,
+                coordinates.canvasY,
+                this.size.width,
+                this.size.height
+            );
+        }
+        else {
+            this.context.clearSection(coordinates.canvasX, coordinates.canvasY, this.size.width * 2, this.size.height);
+            this.context.drawImage(
+                this.image,
+                coordinates.spriteSheetX,
+                coordinates.spriteSheetY,
+                this.size.width,
+                this.size.height,
+                coordinates.canvasX,
+                coordinates.canvasY,
+                this.size.width,
+                this.size.height
+            );
+        }
 });

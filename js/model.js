@@ -317,8 +317,50 @@ var australia = {
                     BIOMES.CITY,
                     BIOMES.GRASSLAND
                 ]
+            }),
+            HUNTER_VALLEY: new City({
+                name: "Hunter Valley",
+                stepCount: 400,
+                referenceState: MAP_STATES.NSW.substates.HUNTER_VALLEY,
+                biomes: []
+            }),
+            BROKEN_HILL: new City({
+                name: "Broken Hill",
+                stepCount: 2000,
+                referenceState: MAP_STATES.NSW.substates.BROKEN_HILL,
+                biomes: []
+            }),
+            JINDABYNE: new City({
+                name: "Jindabyne",
+                stepCount: 850,
+                referenceState: MAP_STATES.NSW.substates.JINDABYNE,
+                biomes: []
+            }),
+            JERVIS_BAY: new City({
+                name: "Jervis Bay",
+                stepCount: 400,
+                referenceState: MAP_STATES.NSW.substates.JERVIS_BAY,
+                biomes: []
             })
         }
+    }),
+    QLD: new State({
+        name: "QLD"
+    }),
+    NT: new State({
+        name: "NT"
+    }),
+    WA: new State({
+        name: "WA"
+    }),
+    SA: new State({
+        name: "SA"
+    }),
+    VIC: new State({
+        name: "VIC"
+    }),
+    TAS: new State({
+        name: "TAS"
     })
 };
 
@@ -327,7 +369,13 @@ function generateAnimalStats(hp, attk, spd, state) {
         hp: hp,
         attk: attk,
         spd: spd,
-        state: state
+        state: state,
+        resetStats: function() {
+            this.hp = hp;
+            this.attk = attk;
+            this.spd = spd;
+            //this.state = state;
+        }
     };
 }
 
@@ -347,7 +395,7 @@ var currentEnemy = {
 
 var cat = new Animal({
     name: "CAT",
-    stats: generateAnimalStats(1, 1, 1, EVOLUTION_STATES.BASIC),
+    stats: generateAnimalStats(1, 3, 1, EVOLUTION_STATES.BASIC),
     type: ANIMAL_TYPES.CAT
 });
 
@@ -360,7 +408,7 @@ var game = {
     pet: new Animal({
         name: "PET",
         isPet: true,
-        stats: generateAnimalStats(10, 5, 7, EVOLUTION_STATES.BASIC),
+        stats: generateAnimalStats(5, 2, 7, EVOLUTION_STATES.BASIC),
         type: ANIMAL_TYPES.DUCK
     }),
     stepCounter: {
