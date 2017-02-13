@@ -63,8 +63,8 @@ function ScreenSprite(options) {
     else {
         this.draw = function () {
             // Need to figure out xy coordinates
-            this.context.clearRect(this.screenPosition.canvasX, this.screenPosition.canvasY, size.width, size.height);
-
+            //this.context.clearRect(this.screenPosition.canvasX, this.screenPosition.canvasY, size.width, size.height);
+            this.context.clearSection(this.screenPosition.canvasX, this.screenPosition.canvasY, size.width, size.height);
             this.context.drawImage(
                 this.image,
                 this.screenPosition.currentPosition.x,
@@ -188,7 +188,7 @@ var totalStepsScreen = new ScreenSprite({
                 );
             }
             else if (this.previousStepsCounted.charAt(index) !== this.totalSteps.charAt(index)) {
-                this.context.clearRect(
+                this.context.clearSection(
                     digitPositionCounter.column * 4,
                     digitPositionCounter.row * 6,
                     NUMBER_PX_SIZE.WIDTH,
@@ -239,7 +239,8 @@ var battleScreens = {
             }
         },
         draw: function() {
-            clearScreen();
+            //clearScreen();
+            this.context.clearEntireScreen();
             petSprite.draw();
             cryingOutSprite.draw();
         }
@@ -267,7 +268,8 @@ var battleScreens = {
             }
         },
         draw: function() {
-            clearScreen();
+            //clearScreen();
+            this.context.clearEntireScreen();
             this.enemySprite.draw();
         }
     }),
@@ -296,7 +298,8 @@ var battleScreens = {
             }
         },
         draw: function() {
-            clearScreen();
+            //clearScreen();
+            this.context.clearEntireScreen();
             this.enemySprite.draw();
         }
     })
@@ -353,3 +356,17 @@ var cryingOutSprite = new ScreenSprite({
             );
     }
 });
+
+var attackSequenceScreen = {
+    LAUNCHING_ATTACK: new ScreenSprite({
+        name: "LAUNCHING_ATTACK",
+        image: null,
+        context: drawingBoard,
+        update: function() {
+
+        },
+        draw: function() {
+
+        }
+    })
+};

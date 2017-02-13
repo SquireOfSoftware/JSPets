@@ -117,7 +117,7 @@ function AnimalSprite(options) {
     else
         this.draw = function() {
             var coordinates = this.currentPosition.getPosition();
-            this.context.clearRect(coordinates.canvasX, coordinates.canvasY, this.size.width, this.size.height);
+            this.context.clearSection(coordinates.canvasX, coordinates.canvasY, this.size.width, this.size.height);
             this.context.drawImage(
                 this.image,
                 coordinates.spriteSheetX,

@@ -158,6 +158,23 @@ var SCREEN_STATES = {
     }),
     RUN: new LogicState({
         name: "RUN"
+    }),
+    ATTACK_SEQUENCE: new LogicState({
+        name: "ATTACK_SEQUENCE",
+        substates: {
+            LAUNCHING_ATTACK: new LogicState({
+                name: "LAUNCHING_ATTACK"
+            }),
+            ATTACK: new LogicState({
+                name: "ATTACK"
+            }),
+            RECEIVING_ATTACK: new LogicState({
+                name: "RECEIVING_ATTACK"
+            }),
+            CALCULATING_DAMAGE: new LogicState({
+                name: "CALCULATING_DAMAGE"
+            })
+        }
     })
 };
 
@@ -250,8 +267,6 @@ var ESCAPE_KEY = 27; // the escape key
 var S_KEY = 83; // the s key
 
 // === SPRITE CONSTANTS === //
-
-var drawingBoard = document.getElementById("ctx").getContext("2d");
 
 var DEFAULT_SPRITE_SIZE = 16;
 var DEFAULT_SCREEN_SIZE = {

@@ -181,6 +181,8 @@ var cryState = new ScreenState({
     }
 });
 
+// BATTLE MENU
+
 var fightBattleState = new ScreenState({
     state: SCREEN_STATES.FIGHT,
     up: function() {
@@ -266,6 +268,24 @@ var runBattleState = new ScreenState({
     right: function() {
         game.currentScreenState = fightBattleState;
         asyncRender = true;
+    }
+});
+
+// ATTACKING SEQUENCE
+
+var attackSequenceState = new ScreenState({
+    state: SCREEN_STATES.ATTACK_SEQUENCE.substates.LAUNCHING_ATTACK,
+    up: function() {
+
+    },
+    down: function() {
+
+    },
+    left: function() {
+
+    },
+    right: function() {
+
     }
 });
 

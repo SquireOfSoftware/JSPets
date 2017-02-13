@@ -56,3 +56,54 @@ function generateImage(source) {
 function clearScreen() {
     drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
 }
+
+function DrawingBoard() {
+    var drawingBoard = document.getElementById("ctx").getContext("2d");
+
+    this.flipHorizontally = function () {
+        drawingBoard.save();
+        drawingBoard.scale(-1, 1);
+    };
+
+    this.restore = function() {
+        drawingBoard.restore();
+    };
+
+    this.clearSection = function(x, y, width, height) {
+        drawingBoard.clearRect(x, y, width, height);
+    };
+
+    this.clearEntireScreen = function() {
+        drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
+    };
+
+    this.drawImage = function(image,
+                              spriteDetailsX,
+                              spriteDetailsY,
+                              spriteDetailsWidth,
+                              spriteDetailsHeight,
+                              canvasDetailsX,
+                              canvasDetailsY,
+                              canvasDetailsWidth,
+                              canvasDetailsHeight) {
+        drawingBoard.drawImage(
+            image,
+            spriteDetailsX,
+            spriteDetailsY,
+            spriteDetailsWidth,
+            spriteDetailsHeight,
+            canvasDetailsX,
+            canvasDetailsY,
+            canvasDetailsWidth,
+            canvasDetailsHeight
+        );
+    };
+
+    this.getDrawingBoard = function() {
+        return drawingBoard;
+    };
+}
+
+//var drawingBoard = document.getElementById("ctx").getContext("2d");
+var drawingBoard = new DrawingBoard();
+
