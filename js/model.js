@@ -4,11 +4,7 @@
 
 function Animal(options) {
     this.name = options.name;
-    this.stats = {
-        hp: options.stats.hp,
-        attk: options.stats.attk,
-        spd: options.stats.spd
-    };
+    this.stats = options.stats;
 
     if (options.isPet !== undefined)
         this.isPet = options.isPet;
@@ -21,6 +17,8 @@ function Animal(options) {
         this.state = ANIMAL_STATES.IDLE;
 
     this.type = options.type;
+
+    this.resetStats = options.resetStats;
 }
 
 function ScreenState(options) {
