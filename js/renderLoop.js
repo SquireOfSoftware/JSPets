@@ -27,7 +27,7 @@ function updateScreens() {
             currentScreen = totalStepsScreen;
             currentScreen.newScreen = true;
         }
-        else if (currentScreenState === SCREEN_STATES.START_BATTLE.substates.CRY) {
+        else if (currentScreenState === SCREEN_STATES.START_BATTLE) {
             currentScreen = battleScreens.CRY;
             addLine("Battle screen triggered");
         }
@@ -42,6 +42,9 @@ function updateScreens() {
         }
         else if (currentScreenState === SCREEN_STATES.RUN) {
             currentScreen = battleMenuScreen.RUN;
+        }
+        else if (currentScreenState === SCREEN_STATES.ATTACK_SEQUENCE) {
+            currentScreen = attackSequenceScreen.LAUNCHING_ATTACK;
         }
         else {
             //currentScreen = petScreen;

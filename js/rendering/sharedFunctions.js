@@ -59,15 +59,17 @@ function clearScreen() {
 
 function DrawingBoard() {
     var drawingBoard = document.getElementById("ctx").getContext("2d");
+    var isFlipped = false;
 
     this.flipHorizontally = function () {
         drawingBoard.save();
         drawingBoard.scale(-1, 1);
+        isFlipped = true;
     };
 
     this.restore = function() {
-        //console.log("Restoring screen");
         drawingBoard.restore();
+        isFlipped = false;
     };
 
     this.clearSection = function(x, y, width, height) {
@@ -75,8 +77,10 @@ function DrawingBoard() {
     };
 
     this.clearEntireScreen = function() {
-        //console.log("Clearing screen");
-        drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
+        if(isFlipped)
+            drawingBoard.clearRect(0, 0, -DEFAULT_SCREEN_SIZE.X, -DEFAULT_SCREEN_SIZE.Y);
+        else
+            drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
     };
 
     this.drawImage = function(image,

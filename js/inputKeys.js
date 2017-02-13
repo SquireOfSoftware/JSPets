@@ -3,7 +3,12 @@
  */
 
 var lastKeyPress = null;
-var keyPressBuffer = [];
+var keyPressBuffer = {
+    buffer: [],
+    reset: function() {
+        this.buffer = [];
+    }
+};
 
 function Key (name, keyCode) {
     this.pressed = false;
@@ -66,22 +71,26 @@ function interpretKeys() {
     // process this on the screen
     if (lastKeyPress !== null && !blockKeyPress) {
         addLine(lastKeyPress.name + " was pressed");
-        switch(lastKeyPress.keyCode) {
-            case ARROW_KEYS.DOWN:
-                game.currentScreenState.down();
-                break;
-            case ARROW_KEYS.UP:
-                game.currentScreenState.up();
-                break;
-            case ARROW_KEYS.LEFT:
-                game.currentScreenState.left();
-                break;
-            case ARROW_KEYS.RIGHT:
-                game.currentScreenState.right();
-                break;
+        if(game.currentScreenState.state !== SCREEN_STATES.ATTACK_SEQUENCE) {
+            switch (lastKeyPress.keyCode) {
+                case ARROW_KEYS.DOWN:
+                    game.currentScreenState.down();
+                    break;
+                case ARROW_KEYS.UP:
+                    game.currentScreenState.up();
+                    break;
+                case ARROW_KEYS.LEFT:
+                    game.currentScreenState.left();
+                    break;
+                case ARROW_KEYS.RIGHT:
+                    game.currentScreenState.right();
+                    break;
+            }
+            updateScreens();
         }
-        updateScreens();
-
+        else {
+            keyPressBuffer.buffer.push(lastKeyPress);
+        }
         console.log(game.currentScreenState.state.name);
         lastKeyPress = null;
     }

@@ -6,6 +6,86 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 13/2/2017 ==
+
+I managed to flip the attacks around which is pretty good I think, so that the cat sprite now loads in the correct position.
+
+But I think there might be some issues relating to the flipped canvas, I think when you flip it, the coordinate system I think gets a bit messed up, especially when you try and target the coordinate system of the canvas.
+
+I believe the issue is that the coordinate system that you draw on (is the same) but the canvas system then needs to programmed in such a way that it accepts this new coordinate system.
+
+My previous scaling if you look at the sharedFunctions code, scales the X axis by -1 which is flipping the canvas horizontally, but it means that I need to clear sections of the canvas using the same unchanged coordinate system, whilst the drawing uses the old coordinate system.
+
+To illustrate this, imagine, I drew a picture on the far right of a canvas, this position is like 45x, 20y.
+
+The canvas is then flipped, so the picture is now on the far left of the canvas, but anything else I draw say 0x, 20y will also similarly be flipped (and will appear on the far right post flip).
+
+The clearing however occurs a little differently since its referring to the pixels of the canvas rather than the flipped drawing, hence what I would have cleared with 45x, 20y if I was doing animations, I would then need to clear 0x, 20y, since the coordinates have been flipped but the canvas itself hasnt.
+
+At least that is what I believe is happening...correct me if I am indeed incorrect...
+
+The other thing that I have been working on is the attack sequence. And this is where it gets really big.
+
+I am caught between several things:
+
+1. Making the battles enjoyable - that is, simple, little to no effort to participate in, has some chance of failing
+
+2. Adhering to the original digivice logic as much as possible
+
+These two main ideas or requirements I guess, are starting to conflict with each other as the battle sequence takes shape.
+
+Why?
+
+To understand why, the original battle system has several pieces. (Referring to my knowledge of the D-Ark)
+
+1. You can counter battles by pressing the right buttons at the right times
+
+2. If you digimon is faster you can dodge/block attacks (or at least it has a higher chance of doing so)
+
+3. You can apply "power-ups" which gave you a slight to OP boost in the power/speed of your attack
+
+4. The enemy may choose to digivolve...though that is slightly outside the scope of simplified battle system
+
+One thing that I want to stress in this project is simplicity but also provide some sort of mechanism to allow for this later on down the track.
+
+For now, its making sure the basics are there. This means:
+
+1. No dodging combos, it will make it less fun but I think its a whole lot of complexity removed if I did remove this, note that random dodging probably will be implemented, given that it sort of doesn't impact screen states too much
+
+2. Stats will be restored to normal per battle, there wont need to be any "healing" items or anything, just for simplicity's sake. Though I am unsure on whether this is to later be reimplemented as a "running health" like pokemon, how you need to regularly heal or you wont be able to battle...or that the hp carries over from previous battles.
+
+3. No complex AI for the enemy, they simply attack, they will not power up or digivolve, they simply will attack, but they can dodge/block if their speed is high enough.
+
+This means though that out of these simplicities that I will be implementing, I need to implement a dodge mechanic, which will be interesting.
+
+For now I will implement a battle sequence in which you just trade attacks until you die.
+
+Thinking about the battle sequence will take me a bit of time to map this out.
+
+1. Faster pet initiates the attack - 2 frame attack motion, rest of frames are the attack
+
+2. The attack goes from left to right or right to left
+
+3. The attack is received/dodged
+
+- If received, change the sprite to damage flickering
+
+- If dodged, flip the sprite
+
+4. Show hp remaining
+
+5. If slower pet is still alive, initiates its attack - 2 frame attack motion, rest of frames are the attack (note that this is flipped as well)
+
+6. The attack goes from right to left or left to right (depending on who is counter attacking)
+
+7. The attack is received/dodged
+
+8. Show hp remaining
+
+9. If both are still alive show the menu
+
+10. Otherwise, show win/lose screen for the user's pet - either the pet lost or won the battle
+
 == 10/2/2017 ==
 
 In hopes of preserving much of the architecture already, I have done some interesting hard code hacks to get around some of the more difficult mechanisms to slide in animations and flick between different frames given the approrpriate knowledge of the spritesheet themselves.

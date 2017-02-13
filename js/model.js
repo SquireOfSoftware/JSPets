@@ -166,7 +166,7 @@ var totalStepsState = new ScreenState({
 // BATTLE
 
 var cryState = new ScreenState({
-    state: SCREEN_STATES.START_BATTLE.substates.CRY,
+    state: SCREEN_STATES.START_BATTLE,
     up: function() {
 
     },
@@ -191,6 +191,8 @@ var fightBattleState = new ScreenState({
     down: function() {
         //game.currentScreenState = stepsState;
         //asyncRender = true;
+        game.currentScreenState = attackSequenceState;
+        asyncRender = true;
     },
     left: function() {
         game.currentScreenState = runBattleState;
@@ -274,7 +276,7 @@ var runBattleState = new ScreenState({
 // ATTACKING SEQUENCE
 
 var attackSequenceState = new ScreenState({
-    state: SCREEN_STATES.ATTACK_SEQUENCE.substates.LAUNCHING_ATTACK,
+    state: SCREEN_STATES.ATTACK_SEQUENCE,
     up: function() {
 
     },

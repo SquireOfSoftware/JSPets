@@ -217,6 +217,31 @@ var totalStepsScreen = new ScreenSprite({
     }
 });
 
+var cryingOutSprite = new ScreenSprite({
+    name: "CRYING_OUT_SPRITE",
+    image: generateImage("sprites/battle-seq-circle.png"),
+    context: drawingBoard,
+    update: function() {
+        if(this.tick === undefined || this.tick < 0)
+            this.tick = 6;
+        this.tick--;
+    },
+    draw: function() {
+        if (this.tick % 2 === 0)
+            this.context.drawImage(
+                this.image,
+                0,
+                0,
+                45,
+                20,
+                0,
+                0,
+                45,
+                20
+            );
+    }
+});
+
 var battleScreens = {
     CRY: new ScreenSprite({
         name: "CRY_ANIMATION",
@@ -332,37 +357,86 @@ var battleMenuScreen = {
     })
 };
 
-var cryingOutSprite = new ScreenSprite({
-    name: "CRYING_OUT_SPRITE",
-    image: generateImage("sprites/battle-seq-circle.png"),
-    context: drawingBoard,
-    update: function() {
-        if(this.tick === undefined || this.tick < 0)
-            this.tick = 6;
-        this.tick--;
-    },
-    draw: function() {
-        if (this.tick % 2 === 0)
-            this.context.drawImage(
-                this.image,
-                0,
-                0,
-                45,
-                20,
-                0,
-                0,
-                45,
-                20
-            );
-    }
-});
-
 var attackSequenceScreen = {
     LAUNCHING_ATTACK: new ScreenSprite({
         name: "LAUNCHING_ATTACK",
         image: null,
         context: drawingBoard,
+        referenceState: SCREEN_STATES.ATTACK_SEQUENCE.substates.LAUNCHING_ATTACK,
         update: function() {
+            if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
+                this.tick = 4;
+                this.context.flipHorizontally();
+                toggleKeyPress();
+            }
+            this.tick--;
+            // need fireball
+            // need enemySprite to hold a position in one shot
+            if (this.tick < 0){
+                currentScreen = attackSequenceScreen.ATTACK;
+                currentScreen.update();
+            }
+
+        },
+        draw: function() {
+
+        }
+    }),
+    ATTACK: new ScreenSprite({
+        name: "ATTACK",
+        image: null,
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.ATTACK_SEQUENCE.substates.ATTACK,
+        update: function() {
+            if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
+                this.tick = 4;
+                toggleKeyPress(); // allowed to press "combos"
+            }
+            this.tick--;
+            // need fireball
+            // need enemySprite to hold a position in one shot
+            if (this.tick < 0){
+                // need to calculate dodge value, based on speed
+                toggleKeyPress();
+                currentScreen = attackSequenceScreen.RECEIVING_DAMAGE;
+                currentScreen.update();
+
+            }
+        },
+        draw: function() {
+
+        }
+    }),
+    RECEIVING_DAMAGE: new ScreenSprite({
+        name: "RECEIVING_DAMAGE",
+        image: null,
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.ATTACK_SEQUENCE.substates.RECEIVING_DAMAGE,
+        update: function() {
+            if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
+                this.tick = 4;
+
+            }
+            this.tick--;
+            // need fireball
+            // need enemySprite to hold a position in one shot
+            if (this.tick < 0){
+                // need to calculate dodge value, based on speed
+                currentScreen = attackSequenceScreen.ATTACK;
+                currentScreen.update();
+            }
+        },
+        draw: function() {
+
+        }
+    }),
+    CALCULATING_DAMAGE: new ScreenSprite({
+        name: "CALCULATING_DAMAGE",
+        image: null,
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.ATTACK_SEQUENCE.substates.CALCULATING_DAMAGE,
+        update: function() {
+            // this state is to be entered upon if the pet has received damage and has not dodged it
 
         },
         draw: function() {
