@@ -309,7 +309,7 @@ var australia = {
         cities: {
             SYDNEY: new City({
                 name: "Sydney",
-                stepCount: 300,
+                stepCount: 1,//300,
                 referenceState: MAP_STATES.NSW.substates.SYDNEY,
                 biomes: [
                     BIOMES.CITY,

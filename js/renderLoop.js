@@ -47,7 +47,8 @@ function updateScreens() {
             //currentScreen = petScreen;
             addLine("Cannot locate screen: " + game.state);
         }
-        clearScreen();
+        //clearScreen();
+        drawingBoard.clearEntireScreen();
     }
 }
 

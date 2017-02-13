@@ -225,13 +225,14 @@ var battleScreens = {
         referenceState: SCREEN_STATES.START_BATTLE.substates.CRY,
         update: function() {
             if (this.tick === undefined || this.tick < 0) // the zero is to reset the animation
-                this.tick = -1;//6; // TEST
+                this.tick = 6; // TEST
             this.tick--;
             petSprite.update();
             cryingOutSprite.update();
             if (this.tick < 0){
                 currentScreen = battleScreens.SLIDE;
                 currentScreen.update();
+                this.context.flipHorizontally();
                 /* For testing purposes
                  currentScreen = battleMenuScreen.FIGHT;
                  game.currentScreenState = fightBattleState;
@@ -251,8 +252,10 @@ var battleScreens = {
         context: drawingBoard,
         referenceState: SCREEN_STATES.START_BATTLE.substates.SLIDE,
         update: function() {
-            if (this.tick === undefined || this.tick < 0) // the zero is to reset the animation
-                this.tick = 4;
+            if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
+                this.tick = 3;
+                this.context.clearEntireScreen(); // for some odd reason the screen isnt cleared properly
+            }
             this.tick--;
             if (this.enemySprite === undefined ||
                 this.enemySprite.referenceObject !== game.currentEnemy) {
@@ -268,8 +271,6 @@ var battleScreens = {
             }
         },
         draw: function() {
-            //clearScreen();
-            this.context.clearEntireScreen();
             this.enemySprite.draw();
         }
     }),
@@ -280,7 +281,7 @@ var battleScreens = {
         referenceState: SCREEN_STATES.START_BATTLE.substates.GROWL,
         update: function() {
             if (this.tick === undefined || this.tick < 0) // the zero is to reset the animation
-                this.tick = 4;
+                this.tick = 6;
             this.tick--;
 
             if (this.enemySprite === undefined ||
@@ -294,12 +295,11 @@ var battleScreens = {
             if (this.tick < 0){
                 currentScreen = battleMenuScreen.FIGHT;
                 game.currentScreenState = fightBattleState;
+                this.context.restore();
                 toggleKeyPress();
             }
         },
         draw: function() {
-            //clearScreen();
-            this.context.clearEntireScreen();
             this.enemySprite.draw();
         }
     })

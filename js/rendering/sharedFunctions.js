@@ -66,6 +66,7 @@ function DrawingBoard() {
     };
 
     this.restore = function() {
+        //console.log("Restoring screen");
         drawingBoard.restore();
     };
 
@@ -74,6 +75,7 @@ function DrawingBoard() {
     };
 
     this.clearEntireScreen = function() {
+        //console.log("Clearing screen");
         drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
     };
 

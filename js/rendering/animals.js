@@ -191,7 +191,7 @@ var catSprite = new AnimalSprite({
         spriteSheetY: 0,
         maxFrame: 4,
         multiplier: -4,
-        canvasX: 45,
+        canvasX: 0,
         canvasY: 0
     }),
     barkingPosition: new SpritePosition({
@@ -199,11 +199,10 @@ var catSprite = new AnimalSprite({
         spriteSheetY: 0,
         maxFrame: 1,
         multiplier: -32,
-        canvasX: DEFAULT_SCREEN_SIZE.X - DEFAULT_SPRITE_SIZE,
+        canvasX: -DEFAULT_SPRITE_SIZE,//DEFAULT_SCREEN_SIZE.X - DEFAULT_SPRITE_SIZE,
         canvasY: 0
     }),
     update: function() {
-        //if(this.slide !== undefined && this.slide === true) {
         if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
             if (this.currentPosition !== this.slidingPosition)
                 this.currentPosition = this.slidingPosition;
