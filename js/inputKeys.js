@@ -91,7 +91,7 @@ function interpretKeys() {
         else {
             keyPressBuffer.buffer.push(lastKeyPress);
         }
-        console.log(game.currentScreenState.state.name);
+        console.log("GAME STATE: ", game.currentScreenState.state.name);
         lastKeyPress = null;
     }
 }

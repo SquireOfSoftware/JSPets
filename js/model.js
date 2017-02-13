@@ -70,7 +70,7 @@ var careState = new ScreenState({
     },
     down: function() {
         // show healing animation, has happy then idle
-        console.log(game.pet.state, game.currentScreenState);
+        //console.log(game.pet.state, game.currentScreenState);
         if (game.pet.state === ANIMAL_STATES.SICK) {
             game.pet.state = ANIMAL_STATES.IDLE;
             game.currentScreenState = petState;

@@ -13,61 +13,21 @@ function AnimalSprite(options) {
 
     if (options.idlePosition !== undefined)
         this.idlePosition = options.idlePosition;
-    else
-        this.idlePosition = new SpritePosition({
-            spriteSheetX: DEFAULT_SPRITE_POSITIONS.IDLE,
-            spriteSheetY: 0,
-            maxFrame: 0,
-            canvasX: context.width/2,
-            canvasY: 0
-        });
 
     this.currentPosition = this.idlePosition;
 
     if (options.walkingPosition !== undefined)
         this.walkingPosition = options.walkingPosition;
-    else
-        this.walkingPosition = new SpritePosition({
-            spriteSheetX: DEFAULT_SPRITE_POSITIONS.WALKING,
-            spriteSheetY: 0,
-            maxFrame: 1,
-            canvasX: this.context.width/2,
-            canvasY: 0
-        });
 
     if (options.cryingOutPosition !== undefined) {
         this.cryingOutPosition = options.cryingOutPosition;
     }
-    else
-        this.cryingOutPosition = new SpritePosition({
-            spriteSheetX: DEFAULT_SPRITE_POSITIONS.ATTACK, // third position on the sprite sheet
-            spriteSheetY: 0,
-            maxFrame: 0,
-            canvasX: this.context.width/2,
-            canvasY: 0
-        });
 
     if (options.sickPosition !== undefined)
         this.sickPosition = options.sickPosition;
-    else
-        this.sickPosition = new SpritePosition({
-            spriteSheetX: DEFAULT_SPRITE_POSITIONS.SICK, // third position on the sprite sheet
-            spriteSheetY: 0,
-            maxFrame: 0,
-            canvasX: this.context.width/2,
-            canvasY: 0
-        });
 
     if (options.happyPosition !== undefined)
         this.happyPosition = options.happyPosition;
-    else
-        this.happyPosition = new SpritePosition({
-            spriteSheetX: DEFAULT_SPRITE_POSITIONS.HAPPY, // fourth position on the sprite sheet
-            spriteSheetY: 0,
-            maxFrame: 0,
-            canvasX: this.context.width/2,
-            canvasY: 0
-        });
 
     if (options.slidingPosition !== undefined)
         this.slidingPosition = options.slidingPosition;
@@ -213,5 +173,22 @@ var catSprite = new AnimalSprite({
                 this.currentPosition = this.barkingPosition;
             this.currentPosition.update();
         }
+    }
+});
+
+var fireball = new AnimalSprite({
+    image: generateImage("sprites/attacks.png"),
+    context: drawingBoard,
+    slidingPosition: new SpritePosition({
+        spriteSheetX: 0,
+        spriteSheetY: 0,
+        maxFrame: 4,
+        multiplier: -4,
+        canvasX: 0,
+        canvasY: 0
+    }),
+    update: function() {
+        // figure out how power the attack is
+        this.currentPosition = this.slidingPosition;
     }
 });

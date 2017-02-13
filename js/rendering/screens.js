@@ -366,8 +366,9 @@ var attackSequenceScreen = {
         update: function() {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 4;
-                this.context.flipHorizontally();
+                //this.context.flipHorizontally();
                 toggleKeyPress();
+                console.log("LAUNCHING ATTACK");
             }
             this.tick--;
             // need fireball
@@ -391,6 +392,8 @@ var attackSequenceScreen = {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 4;
                 toggleKeyPress(); // allowed to press "combos"
+
+                console.log("ATTACKING");
             }
             this.tick--;
             // need fireball
@@ -416,13 +419,14 @@ var attackSequenceScreen = {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 4;
 
+                console.log("RECEIVING");
             }
             this.tick--;
             // need fireball
             // need enemySprite to hold a position in one shot
             if (this.tick < 0){
                 // need to calculate dodge value, based on speed
-                currentScreen = attackSequenceScreen.ATTACK;
+                currentScreen = attackSequenceScreen.CALCULATING_DAMAGE;
                 currentScreen.update();
             }
         },
@@ -437,10 +441,22 @@ var attackSequenceScreen = {
         referenceState: SCREEN_STATES.ATTACK_SEQUENCE.substates.CALCULATING_DAMAGE,
         update: function() {
             // this state is to be entered upon if the pet has received damage and has not dodged it
+            if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
+                this.tick = 4;
 
+                console.log("CALCULATING");
+            }
+            this.tick--;
+
+            if (this.tick < 0){
+                currentScreen = battleMenuScreen.FIGHT;
+                game.currentScreenState = fightBattleState;
+                toggleKeyPress();
+                //console.log(game.currentScreenState, currentScreen);
+            }
         },
         draw: function() {
-
+            catSprite.draw();
         }
     })
 };
