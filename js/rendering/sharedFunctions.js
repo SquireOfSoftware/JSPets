@@ -93,7 +93,7 @@ function DrawingBoard(id) {
 
     this.clearEntireScreen = function() {
         if(isFlipped)
-            drawingBoard.clearRect(0, 0, -DEFAULT_SCREEN_SIZE.X, -DEFAULT_SCREEN_SIZE.Y);
+            drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
         else
             drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
     };

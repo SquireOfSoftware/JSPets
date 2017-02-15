@@ -264,13 +264,14 @@ var battleScreens = {
             petSprite.update();
             cryingOutSprite.update();
             if (this.tick < 0){
-                /*currentScreen = battleScreens.SLIDE;
+                currentScreen = battleScreens.SLIDE;
                 currentScreen.update();
-                this.context.flipHorizontally();*/
+                this.context.flipHorizontally();
                 /* For testing purposes*/
+                /*
                  currentScreen = battleMenuScreen.FIGHT;
                  game.currentScreenState = fightBattleState;
-                 toggleKeyPress();
+                 toggleKeyPress();*/
             }
         },
         draw: function() {
@@ -389,15 +390,14 @@ var attackSequenceScreen = {
                 if (this.rounds === 0 ) {
                     if (game.currentEnemy.stats.spd > game.pet.stats.spd) {
                         if (game.currentEnemy.type === ANIMAL_TYPES.CAT) {
-                            //this.sprite = catSprite;
                             petSpriteStates.faster = catSprite;
                         }
                         this.context.flipHorizontally();
+                        foregroundBoard.flipHorizontally();
 
                         petSpriteStates.slower = petSprite;
                     }
                     else {
-                        //this.sprite = petSprite;
                         petSpriteStates.faster = petSprite;
                         petSpriteStates.slower = catSprite;
                     }
@@ -411,11 +411,6 @@ var attackSequenceScreen = {
                     // figure out whether to flip the canvas or not
                     //console.log("Swapping the sprites", this.rounds, petSpriteStates);
                     addLine("Swapping the sprites");
-/*
-                    if (petSpriteStates.faster.referenceObject.isPet) {
-                        // flip the canvas
-                        this.context.restore();
-                    }*/
                 }
 
                 fireball.currentPosition = fireball.positions.launchingPosition;
@@ -473,6 +468,7 @@ var attackSequenceScreen = {
                 currentScreen = attackSequenceScreen.RECEIVING_DAMAGE;
                 currentScreen.update();
                 this.context.clearEntireScreen();
+                foregroundBoard.clearEntireScreen();
                 this.rounds++; // for the second round
             }
         },
@@ -520,6 +516,8 @@ var attackSequenceScreen = {
                 currentScreen = attackSequenceScreen.CALCULATING_DAMAGE;
                 currentScreen.update();
                 this.context.clearEntireScreen();
+                foregroundBoard.restore();
+                foregroundBoard.clearEntireScreen();
                 this.rounds++;
             }
         },

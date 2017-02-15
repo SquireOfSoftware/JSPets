@@ -83,7 +83,8 @@ function AnimalSprite(options) {
     else
         this.draw = function() {
             var coordinates = this.currentPosition.getPosition();
-            this.context.clearSection(coordinates.canvasX, coordinates.canvasY, this.size.width, this.size.height);
+            this.context.clearEntireScreen();
+            //this.context.clearSection(coordinates.canvasX, coordinates.canvasY, this.size.width, this.size.height);
             this.context.drawImage(
                 this.image,
                 coordinates.spriteSheetX,
@@ -164,8 +165,8 @@ var catSprite = new AnimalSprite({
         spriteSheetX: 0,
         spriteSheetY: 0,
         maxFrame: 4,
-        multiplier: -4,
-        canvasX: 0,
+        multiplier: -8,
+        canvasX: DEFAULT_SCREEN_SIZE.X,
         canvasY: 0
     }),
     barkingPosition: new SpritePosition({
@@ -173,7 +174,7 @@ var catSprite = new AnimalSprite({
         spriteSheetY: 0,
         maxFrame: 1,
         multiplier: -32,
-        canvasX: -DEFAULT_SPRITE_SIZE,//DEFAULT_SCREEN_SIZE.X - DEFAULT_SPRITE_SIZE,
+        canvasX: DEFAULT_SPRITE_SIZE,//DEFAULT_SCREEN_SIZE.X - DEFAULT_SPRITE_SIZE,
         canvasY: 0
     }),
     attackingPosition: new SpritePosition({
@@ -263,46 +264,16 @@ var fireball = new GenericSprite(
     },
     function() {
         var coordinates = this.currentPosition.getPosition();
-        if (this.flip) {
-            this.context.clearSection(coordinates.canvasX, coordinates.canvasY, this.size.width * 2, this.size.height);
-            this.context.drawImage(
-                this.image,
-                coordinates.spriteSheetX,
-                coordinates.spriteSheetY,
-                this.size.width,
-                this.size.height,
-                coordinates.canvasX,
-                coordinates.canvasY,
-                this.size.width,
-                this.size.height
-            );
-        }
-        else {
-            this.context.clearSection(coordinates.canvasX, coordinates.canvasY, this.size.width * 2, this.size.height);
-            this.context.drawImage(
-                this.image,
-                coordinates.spriteSheetX,
-                coordinates.spriteSheetY,
-                this.size.width,
-                this.size.height,
-                coordinates.canvasX,
-                coordinates.canvasY,
-                this.size.width,
-                this.size.height
-            );
-        }
+        this.context.clearSection(coordinates.canvasX, coordinates.canvasY, this.size.width * 2, this.size.height);
+        this.context.drawImage(
+            this.image,
+            coordinates.spriteSheetX,
+            coordinates.spriteSheetY,
+            this.size.width,
+            this.size.height,
+            coordinates.canvasX,
+            coordinates.canvasY,
+            this.size.width,
+            this.size.height
+        );
 });
-
-/*
-var blackBar = new GenericSprite(
-    generateImage("sprites/black-bar.png"),
-    foregroundBoard,
-    [],
-    {width: DEFAULT_SPRITE_SIZE, height: DEFAULT_SPRITE_SIZE},
-    function() {
-
-    },
-    function() {
-
-    }
-);*/
