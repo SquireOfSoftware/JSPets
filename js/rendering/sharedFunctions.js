@@ -73,8 +73,12 @@ function DrawingBoard() {
     var isFlipped = false;
 
     this.flipHorizontally = function () {
+        addLine("Flipping the board");
         drawingBoard.save();
+
+        drawingBoard.translate(45, 0);
         drawingBoard.scale(-1, 1);
+        //drawingBoard.transform(0, 0, 0, 0, 300, 0);
         isFlipped = true;
     };
 
@@ -123,4 +127,3 @@ function DrawingBoard() {
 
 //var drawingBoard = document.getElementById("ctx").getContext("2d");
 var drawingBoard = new DrawingBoard();
-

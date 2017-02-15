@@ -383,7 +383,7 @@ var attackSequenceScreen = {
                             //this.sprite = catSprite;
                             petSpriteStates.faster = catSprite;
                         }
-                        //this.context.flipHorizontally();
+                        this.context.flipHorizontally();
 
                         petSpriteStates.slower = petSprite;
                     }
@@ -400,7 +400,6 @@ var attackSequenceScreen = {
                     petSpriteStates.slower = tempSprite;
 
                     // figure out whether to flip the canvas or not
-
                     //console.log("Swapping the sprites", this.rounds, petSpriteStates);
                     addLine("Swapping the sprites");
                 }
