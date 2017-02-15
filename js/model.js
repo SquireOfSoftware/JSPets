@@ -390,12 +390,12 @@ var currentEnemy = {
         //this.states =
         // set up new stats
     },
-    stats: generateAnimalStats(1, 1, 1, EVOLUTION_STATES.BASIC)
+    stats: generateAnimalStats(5, 1, 1, EVOLUTION_STATES.BASIC)
 };
 
 var cat = new Animal({
     name: "CAT",
-    stats: generateAnimalStats(1, 3, 1, EVOLUTION_STATES.BASIC),
+    stats: generateAnimalStats(3, 3, 2, EVOLUTION_STATES.BASIC),
     type: ANIMAL_TYPES.CAT
 });
 
@@ -408,7 +408,7 @@ var game = {
     pet: new Animal({
         name: "PET",
         isPet: true,
-        stats: generateAnimalStats(5, 2, 7, EVOLUTION_STATES.BASIC),
+        stats: generateAnimalStats(5, 2, 1, EVOLUTION_STATES.BASIC),
         type: ANIMAL_TYPES.DUCK
     }),
     stepCounter: {

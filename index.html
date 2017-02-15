@@ -8,12 +8,15 @@
 </head>
 <body onclick="walk()" onkeydown="processKeyDown(event)">
     <canvas id="ctx" height="20" width="45"></canvas>
-    <label><input id="fps" type="text" /> fps</label>
-    <label><input id="steps" type="text" /> steps</label>
-    <textarea id="debugger"> </textarea>
-    <p>
-        D is debug, Esc is game loop, s is the render loop. Press any of them to disable or enable any of the loops.
-    </p>
+    <canvas id="foreground" height="20" width="45"></canvas>
+    <div id="debug-box">
+        <label><input id="fps" type="text" /> fps</label>
+        <label><input id="steps" type="text" /> steps</label>
+        <textarea id="debugger"> </textarea>
+        <p>
+            D is debug, Esc is game loop, s is the render loop. Press any of them to disable or enable any of the loops.
+        </p>
+    </div>
 </body>
 <script src="js/debugger.js" ></script>
 <script src="js/BigInteger.min.js" ></script>

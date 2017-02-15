@@ -68,8 +68,8 @@ function clearScreen() {
     drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
 }
 
-function DrawingBoard() {
-    var drawingBoard = document.getElementById("ctx").getContext("2d");
+function DrawingBoard(id) {
+    var drawingBoard = document.getElementById(id).getContext("2d");
     var isFlipped = false;
 
     this.flipHorizontally = function () {
@@ -126,4 +126,6 @@ function DrawingBoard() {
 }
 
 //var drawingBoard = document.getElementById("ctx").getContext("2d");
-var drawingBoard = new DrawingBoard();
+var drawingBoard = new DrawingBoard("ctx");
+
+var foregroundBoard = new DrawingBoard("foreground");

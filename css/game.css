@@ -1,15 +1,31 @@
 /* Tags */
+body {
+    margin: 0;
+}
+
 canvas {
     width: 100%;
     min-height: auto;
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
+    position: absolute;
 }
 
 /* Classes */
 
 /* IDs */
+#debug-box {
+    position: absolute;
+    bottom: 0;
+}
+
 #debugger {
     width: 100%;
     max-height: auto;
+}
+
+#foreground {
+    /*position: absolute;
+    margin: 8px;*/
+    z-index: 3;
 }

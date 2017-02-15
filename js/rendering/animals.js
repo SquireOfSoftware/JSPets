@@ -198,7 +198,7 @@ var catSprite = new AnimalSprite({
     }
 });
 
-function AttackSprite(image, context, positions, size, update, draw) {
+function GenericSprite(image, context, positions, size, update, draw) {
     this.image = image;
     this.context = context;
     this.positions = positions;
@@ -207,14 +207,14 @@ function AttackSprite(image, context, positions, size, update, draw) {
     this.draw = draw;
 }
 
-var fireball = new AttackSprite(
+var fireball = new GenericSprite(
     generateImage("sprites/fireball.png"),
-    drawingBoard,
+    foregroundBoard,
     {
         launchingPosition: new SpritePosition({
             spriteSheetX: 0,
             spriteSheetY: 0,
-            maxFrame: 7,
+            maxFrame: 5,
             multiplier: -5,
             canvasX: 16,
             canvasY: 2
@@ -230,7 +230,7 @@ var fireball = new AttackSprite(
         receivingPosition: new SpritePosition({
             spriteSheetX: 0,
             spriteSheetY: 0,
-            maxFrame: 2,
+            maxFrame: 1,
             multiplier: 0,
             canvasX: 0,
             canvasY: 2
@@ -239,7 +239,7 @@ var fireball = new AttackSprite(
     {width: DEFAULT_SPRITE_SIZE, height: DEFAULT_SPRITE_SIZE},
     function() {
         if(this.tick === undefined || this.tick < 0) {
-            this.tick = 12;
+            this.tick = 13;
             this.currentPosition = this.positions.launchingPosition;
             this.positions.launchingPosition.reset();
             this.positions.fullAttackPosition.reset();
@@ -249,9 +249,11 @@ var fireball = new AttackSprite(
         this.tick --;
 
         if (this.tick < 9) {
+            this.context.clearEntireScreen();
             this.currentPosition = this.positions.fullAttackPosition;
         }
         else if (this.tick < 3) {
+            this.context.clearEntireScreen();
             this.currentPosition = this.positions.receivingPosition;
         }
 
@@ -290,3 +292,17 @@ var fireball = new AttackSprite(
             );
         }
 });
+
+/*
+var blackBar = new GenericSprite(
+    generateImage("sprites/black-bar.png"),
+    foregroundBoard,
+    [],
+    {width: DEFAULT_SPRITE_SIZE, height: DEFAULT_SPRITE_SIZE},
+    function() {
+
+    },
+    function() {
+
+    }
+);*/

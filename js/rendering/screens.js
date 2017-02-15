@@ -80,6 +80,15 @@ function ScreenSprite(options) {
     }
 }
 
+var blackBar = new ScreenSprite({
+    name: "BLACK_BAR",
+    image: generateImage("sprites/black-bar.png"),
+    context: foregroundBoard,
+    update: function() {
+
+    }
+});
+
 var petScreen = new ScreenSprite({
     name: "PET_SCREEN",
     image: null,
@@ -402,6 +411,11 @@ var attackSequenceScreen = {
                     // figure out whether to flip the canvas or not
                     //console.log("Swapping the sprites", this.rounds, petSpriteStates);
                     addLine("Swapping the sprites");
+/*
+                    if (petSpriteStates.faster.referenceObject.isPet) {
+                        // flip the canvas
+                        this.context.restore();
+                    }*/
                 }
 
                 fireball.currentPosition = fireball.positions.launchingPosition;
@@ -442,12 +456,11 @@ var attackSequenceScreen = {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 4;
                 console.log("ATTACKING");
+                this.context.clearEntireScreen();
                 addLine("ATTACKING");
 
                 // figure out which bit to flip, using this.rounds variable to flip the fireball
-                if (!petSpriteStates.faster.referenceObject.isPet) {
-                    // flip the canvas
-                }
+
             }
             this.tick--;
             // need fireball
@@ -480,9 +493,22 @@ var attackSequenceScreen = {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 4;
 
+                this.context.clearEntireScreen();
                 console.log("RECEIVING");
 
+                if (petSpriteStates.faster.referenceObject.isPet) {
+                    // flip the canvas
+                    this.context.flipHorizontally();
+                    addLine("Flipping the canvas");
+                }
+                else {
+
+                    addLine("Restoring the canvas");
+                    this.context.restore();
+                }
+
                 petSpriteStates.slower.currentPosition = petSpriteStates.slower.idlePosition;
+
             }
             this.tick--;
 
@@ -515,7 +541,7 @@ var attackSequenceScreen = {
             // this state is to be entered upon if the pet has received damage and has not dodged it
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 4;
-
+                foregroundBoard.clearEntireScreen();
                 console.log("CALCULATING");
             }
             this.tick--;
@@ -530,8 +556,11 @@ var attackSequenceScreen = {
                 case 2:
                     //leftoverHp -= petSpriteStates.faster.stats.attk;
                     petSpriteStates.slower.referenceObject.stats.hp -= petSpriteStates.faster.referenceObject.stats.attk;
-                    if (petSpriteStates.slower.referenceObject.stats.hp < 1)
+                    if (petSpriteStates.slower.referenceObject.stats.hp < 1) {
                         petSpriteStates.hasDeath = true;
+                        console.log("Someone has died");
+                    }
+                    addLine(petSpriteStates.slower.referenceObject.stats.hp + " hp left");
                     break;
                 case 1:
                     break;
@@ -542,13 +571,18 @@ var attackSequenceScreen = {
             }
 
             if (this.tick < 0) {
-                if (this.rounds === 0) {
+                foregroundBoard.clearEntireScreen();
+                if (this.rounds === 0 && !petSpriteStates.hasDeath) {
                     this.rounds++;
                     currentScreen = attackSequenceScreen.LAUNCHING_ATTACK;
                     currentScreen.update();
+                    this.context.restore();
                     console.log("rounds", this.rounds);
                 }
                 else if (!petSpriteStates.hasDeath) { // the second round has been done, jump out and switch to fight menu
+                    foregroundBoard.restore();
+                    this.context.restore();
+                    //currentScreen.update();
                     currentScreen = battleMenuScreen.FIGHT;
                     game.currentScreenState = fightBattleState;
                     toggleKeyPress();
@@ -560,12 +594,18 @@ var attackSequenceScreen = {
                     // if your pet died, change state to sick, switch to petScreen
                     if (petSprite.referenceObject.stats.hp < 1) {
                         game.pet.state = ANIMAL_STATES.SICK;
-                        console.log("LOST");
+                        game.pet.stats.resetStats();
+                        this.context.restore();
+                        foregroundBoard.restore();
+                        console.log("LOST", game.pet.stats);
                     }
                     // if your pet won, change state to happy, switch to petScreen
                     else {
                         game.pet.state = ANIMAL_STATES.IDLE;
-                        console.log("WIN!");
+                        game.pet.stats.resetStats();
+                        this.context.restore();
+                        foregroundBoard.restore();
+                        console.log("WIN!",game.pet.stats);
                         // select next city
                     }
                     petSprite.update();
@@ -575,11 +615,14 @@ var attackSequenceScreen = {
                     toggleKeyPress();
                     addLine("Battle is over");
                     //toggleKeyPress();
+
                 }
             }
         },
         draw: function() {
             //catSprite.draw();
+            petSpriteStates.slower.draw();
+            blackBar.draw();
         }
     })
 };
