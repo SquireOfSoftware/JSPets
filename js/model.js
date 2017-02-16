@@ -291,6 +291,40 @@ var attackSequenceState = new ScreenState({
     }
 });
 
+// GENERAL SEQUENCES
+
+var happySequenceState = new ScreenState({
+    state: SCREEN_STATES.HAPPY_PET,
+    up: function() {
+
+    },
+    down: function() {
+
+    },
+    left: function() {
+
+    },
+    right: function() {
+
+    }
+});
+
+var sadSequenceState = new ScreenState({
+    state: SCREEN_STATES.SADDENED_PET,
+    up: function() {
+
+    },
+    down: function() {
+
+    },
+    left: function() {
+
+    },
+    right: function() {
+
+    }
+});
+
 // Land
 // Each piece of land has a "state" and a set of cities
 // each city has a set of "biomes" and a step count to reach the center of the city
@@ -407,7 +441,7 @@ var game = {
     pet: new Animal({
         name: "PET",
         isPet: true,
-        stats: generateAnimalStats(10, 12, 1, EVOLUTION_STATES.BASIC),
+        stats: generateAnimalStats(10, 12, 3, EVOLUTION_STATES.BASIC),
         type: ANIMAL_TYPES.DUCK
     }),
     stepCounter: {

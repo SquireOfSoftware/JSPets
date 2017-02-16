@@ -180,15 +180,14 @@ var SCREEN_STATES = {
                 name: "CALCULATING_DAMAGE"
             })
         }
+    }),
+    // == GENERAL == //
+    HAPPY_PET: new LogicState({
+        name: "HAPPY_PET"
+    }),
+    SADDENED_PET: new LogicState({
+        name: "SADDENED_PET"
     })
-};
-
-var BATTLE_STATES = {
-    START_BATTLE: new LogicState({name: "START_BATTLE"}),
-    BATTLE_MENU: new LogicState({name: "BATTLE_MENU"}),
-    FASTER_ATTACKS: new LogicState({name: "FASTER_ATTACKS"}),
-    SLOWER_ATTACKS: new LogicState({name: "SLOWER_ATTACKS"}),
-    FINISH_BATTLE: new LogicState({name: "FINISH_BATTLE"})
 };
 
 // === MAP CONSTANTS === //

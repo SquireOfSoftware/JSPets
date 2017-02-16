@@ -269,20 +269,20 @@ var battleScreens = {
         referenceState: SCREEN_STATES.START_BATTLE.substates.CRY,
         update: function() {
             if (this.tick === undefined || this.tick < 0) // the zero is to reset the animation
-                this.tick = 6; // -1; // TEST
+                this.tick = -1;//6; // -1; // TEST
             this.tick--;
             petSprite.update();
             cryingOutSprite.update();
             if (this.tick < 0){
-                petSprite.currentPosition.reset();
+                /*petSprite.currentPosition.reset();
                 currentScreen = battleScreens.SLIDE;
                 currentScreen.update();
-                this.context.flipHorizontally();
+                this.context.flipHorizontally();*/
                 /* For testing purposes*/
-/*
+
                  currentScreen = battleMenuScreen.FIGHT;
                  game.currentScreenState = fightBattleState;
-                 toggleKeyPress();*/
+                 toggleKeyPress();
             }
         },
         draw: function() {
@@ -436,6 +436,7 @@ var attackSequenceScreen = {
             // need enemySprite to hold a position in one shot
             if (this.tick < 0){
                 currentScreen = attackSequenceScreen.ATTACK;
+                //currentScreen = attackSequenceScreen.CALCULATING_DAMAGE; // TEST
                 currentScreen.update();
                 this.rounds++;
             }
@@ -631,6 +632,7 @@ var attackSequenceScreen = {
                 }
                 else if (petSpriteStates.hasDeath) {
                     this.rounds++;
+                    disableKeyPress();
                     // figure out who died
                     // if your pet died, change state to sick, switch to petScreen
                     if (petSprite.referenceObject.stats.hp < 1) {
@@ -640,8 +642,9 @@ var attackSequenceScreen = {
                     }
                     // if your pet won, change state to happy, switch to petScreen
                     else {
-                        game.pet.state = ANIMAL_STATES.IDLE;
-
+                        //game.pet.state = ANIMAL_STATES.IDLE;
+                        currentScreen = statusScreens.HAPPY_ANIMATION;
+                        game.currentScreenState = happySequenceState;
                         console.log("WIN!");
                         // select next city
                     }
@@ -653,11 +656,13 @@ var attackSequenceScreen = {
 
                     petSprite.update();
                     game.stepCounter.hasRecentlyStepped = false;
-                    game.currentScreenState = petState;
-                    currentScreen = petScreen;
+                    //game.currentScreenState = petState;
+                    //currentScreen = petScreen;
                     petSpriteStates.hasDeath = false;
-                    enableKeyPress();
+                    //enableKeyPress();
                     addLine("Battle is over");
+
+                    currentScreen.update();
                 }
             }
         },
@@ -667,6 +672,60 @@ var attackSequenceScreen = {
                 blackBar.draw(); // note that this is 7 pixels high from the bottom
                 healthRemainingSprite.draw();
             }
+        }
+    })
+};
+
+var statusScreens = {
+    HAPPY_ANIMATION: new ScreenSprite({
+        name: "HAPPY_ANIMATION",
+        image: null,
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.HAPPY_PET,
+        update: function () {
+            if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
+                this.tick = 6;
+                console.log("HAPPY-ing?");
+                petSprite.currentPosition = petSprite.rejoicingPosition;
+                this.context.restore();
+                foregroundBoard.restore();
+                //game.currentScreenState = ;
+            }
+            this.tick--;
+
+            petSprite.update();
+
+            if (this.tick < 0) {
+                game.pet.state = ANIMAL_STATES.IDLE;
+                game.currentScreenState = petState;
+                currentScreen = petScreen;
+                petSprite.update();
+            }
+        },
+        draw: function() {
+            petSprite.draw();
+        }
+    }),
+    SADDENED_ANIMATION: new ScreenSprite({
+        name: "SADDENED_ANIMATION",
+        image: null,
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.SADDENED_PET,
+        update: function () {
+            if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
+                this.tick = 6;
+                console.log("SADDENING");
+            }
+            this.tick--;
+            if (this.tick < 0) {
+                game.currentScreenState = petState;
+                game.pet.state = ANIMAL_STATES.SICK;
+                currentScreen = petScreen;
+                petSprite.update();
+            }
+        },
+        draw: function() {
+
         }
     })
 };

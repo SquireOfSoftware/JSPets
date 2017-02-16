@@ -41,6 +41,12 @@ function AnimalSprite(options) {
     if (options.receivingPosition !== undefined)
         this.receivingPosition = options.receivingPosition;
 
+    if (options.rejoicingPosition !== undefined)
+        this.rejoicingPosition = options.rejoicingPosition;
+
+    if (options.saddenedPosition !== undefined)
+        this.saddenedPosition = options.saddenedPosition;
+
     var referenceState = ANIMAL_STATES.IDLE;
 
     if (options.flip !== undefined)
@@ -75,8 +81,14 @@ function AnimalSprite(options) {
                     this.currentPosition = this.cryingOutPosition;
                 }
             }
-            else if (game.currentScreenState === SCREEN_STATES.ATTACK_SEQUENCE) {
+            else if (game.currentScreenState.state === SCREEN_STATES.ATTACK_SEQUENCE) {
                 this.currentPosition = this.attackingPosition;
+            }
+            else if (game.currentScreenState.state === SCREEN_STATES.HAPPY_PET) {
+                this.currentPosition = this.rejoicingPosition;
+            }
+            else if (game.currentScreenState.state === SCREEN_STATES.SADDENED_PET) {
+                this.currentPosition = this.saddenedPosition;
             }
             this.currentPosition.update();
         };
@@ -150,6 +162,14 @@ var petSprite = new AnimalSprite({
         multiplier: 0,
         canvasX: 29,
         canvasY: 0
+    }),
+    rejoicingPosition: new SpritePosition({
+        spriteSheetX: 0,
+        spriteSheetY: 0,
+        maxFrame: 1,
+        multiplier: 64,
+        canvasX: 15,
+        canvasY: 0
     })
 });
 
@@ -185,7 +205,7 @@ var catSprite = new AnimalSprite({
         spriteSheetY: 0,
         maxFrame: 1,
         multiplier: -32,
-        canvasX: DEFAULT_SPRITE_SIZE,//DEFAULT_SCREEN_SIZE.X - DEFAULT_SPRITE_SIZE,
+        canvasX: DEFAULT_SCREEN_SIZE.X,//DEFAULT_SCREEN_SIZE.X - DEFAULT_SPRITE_SIZE,
         canvasY: 0
     }),
     attackingPosition: new SpritePosition({
@@ -202,6 +222,14 @@ var catSprite = new AnimalSprite({
         maxFrame: 0,
         multiplier: 0,
         canvasX: 29,
+        canvasY: 0
+    }),
+    rejoicingPosition: new SpritePosition({
+        spriteSheetX: 64,
+        spriteSheetY: 0,
+        maxFrame: 1,
+        multiplier: -64,
+        canvasX: 15,
         canvasY: 0
     }),
     update: function() {
