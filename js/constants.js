@@ -6,7 +6,6 @@ function LogicState(options) {
     this.name = options.name;
     if (options.substates !== undefined)
         this.substates = options.substates;
-    this.getName = function() { return this.name};
 }
 
 var ANIMAL_STATES = {
@@ -339,16 +338,6 @@ var DEFAULT_SPRITE_SIZE = 16;
 var DEFAULT_SCREEN_SIZE = {
     X: 45,
     Y: 20
-};
-
-var DEFAULT_SPRITE_POSITIONS = {
-    IDLE: 0,
-    IDLE2: 16,
-    ATTACK: 32,
-    SICK: 48,
-    HAPPY: 64,
-    WALKING: 80,
-    WALKING2: 96
 };
 
 var NUMBER_PX_SIZE = {

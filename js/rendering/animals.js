@@ -279,8 +279,6 @@ var fireball = new GenericSprite(
         }
 
         this.currentPosition.updateCanvas();
-
-        //console.log("fireball tick", this.tick, this.currentPosition);
     },
     function() {
         var coordinates = this.currentPosition.getPosition();

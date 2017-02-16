@@ -69,12 +69,12 @@ function toggleKeyPress() {
 
 function enableKeyPress() {
     blockKeyPress = false;
-    addLine("Key presses disabled");
+    addLine("Key presses enabled");
 }
 
 function disableKeyPress() {
     blockKeyPress = true;
-    addLine("Key presses enabled");
+    addLine("Key presses disabled");
 }
 
 function interpretKeys() {
@@ -101,7 +101,6 @@ function interpretKeys() {
         else {
             keyPressBuffer.buffer.push(lastKeyPress);
         }
-        //console.log("GAME STATE: ", game.currentScreenState.state.name);
         lastKeyPress = null;
     }
 }
@@ -114,12 +113,11 @@ function walk() {
         game.stepCounter.currentSteps++;
         game.stepCounter.hasRecentlyStepped = true;
         game.stepCounter.resetWaitPeriod();
-        //petScreen.resetTickPeriod();
         document.getElementById("steps").value = game.stepCounter.total.toString();
 
     }
     if (game.stepCounter.currentSteps > game.currentMap.stepCount) {
-        toggleKeyPress();
+        disableKeyPress();
         game.stepCounter.currentSteps = 0;
         game.pet.state = ANIMAL_STATES.IN_BATTLE;
         game.currentEnemy.state = ANIMAL_STATES.IN_BATTLE;

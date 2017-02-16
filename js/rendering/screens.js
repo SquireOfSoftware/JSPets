@@ -63,7 +63,6 @@ function ScreenSprite(options) {
     else {
         this.draw = function () {
             // Need to figure out xy coordinates
-            //this.context.clearRect(this.screenPosition.canvasX, this.screenPosition.canvasY, size.width, size.height);
             this.context.clearSection(this.screenPosition.canvasX, this.screenPosition.canvasY, size.width, size.height);
             this.context.drawImage(
                 this.image,
@@ -270,11 +269,12 @@ var battleScreens = {
         referenceState: SCREEN_STATES.START_BATTLE.substates.CRY,
         update: function() {
             if (this.tick === undefined || this.tick < 0) // the zero is to reset the animation
-                this.tick = -1; //6; // TEST
+                this.tick = 6; // -1; // TEST
             this.tick--;
             petSprite.update();
             cryingOutSprite.update();
             if (this.tick < 0){
+                petSprite.currentPosition.reset();
                 currentScreen = battleScreens.SLIDE;
                 currentScreen.update();
                 this.context.flipHorizontally();
@@ -286,7 +286,6 @@ var battleScreens = {
             }
         },
         draw: function() {
-            //clearScreen();
             this.context.clearEntireScreen();
             petSprite.draw();
             cryingOutSprite.draw();
@@ -341,10 +340,11 @@ var battleScreens = {
             this.enemySprite.update();
 
             if (this.tick < 0){
+                this.enemySprite.currentPosition.reset();
                 currentScreen = battleMenuScreen.FIGHT;
                 game.currentScreenState = fightBattleState;
                 this.context.restore();
-                toggleKeyPress();
+                enableKeyPress();
             }
         },
         draw: function() {
@@ -421,10 +421,6 @@ var attackSequenceScreen = {
 
                     petSpriteStates.faster = petSpriteStates.slower;
                     petSpriteStates.slower = tempSprite;
-
-                    // figure out whether to flip the canvas or not
-                    //console.log("Swapping the sprites", this.rounds, petSpriteStates);
-                    addLine("Swapping the sprites");
                 }
 
                 fireball.currentPosition = fireball.positions.launchingPosition;
@@ -437,7 +433,6 @@ var attackSequenceScreen = {
             petSpriteStates.faster.currentPosition = petSpriteStates.faster.attackingPosition;
             fireball.update();
 
-            //console.log("screen tick:", this.tick);
             // need enemySprite to hold a position in one shot
             if (this.tick < 0){
                 currentScreen = attackSequenceScreen.ATTACK;
@@ -629,12 +624,10 @@ var attackSequenceScreen = {
                 else if (!petSpriteStates.hasDeath) { // the second round has been done, jump out and switch to fight menu
                     foregroundBoard.restore();
                     this.context.restore();
-                    //currentScreen.update();
                     currentScreen = battleMenuScreen.FIGHT;
                     game.currentScreenState = fightBattleState;
                     enableKeyPress();
                     this.rounds++;
-                    //console.log(game.currentScreenState, currentScreen);
                 }
                 else if (petSpriteStates.hasDeath) {
                     this.rounds++;
@@ -665,7 +658,6 @@ var attackSequenceScreen = {
                     petSpriteStates.hasDeath = false;
                     enableKeyPress();
                     addLine("Battle is over");
-                    //toggleKeyPress();
                 }
             }
         },
