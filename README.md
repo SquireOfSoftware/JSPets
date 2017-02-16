@@ -14,6 +14,18 @@ I believe some sort of "sprite player" might be needed for testing purposes as a
 
 There needs to be a cleaner way I believe of changing animation sprites.
 
+So just to update on what has happened.
+
+I have added in a secondary canvas called foregroundBoard which is used to draw the fireballs and the health. The blackbar that goes across the screen when calculating the remaining health is dependent on the petSpriteStates which is just a reference to the respective pets that are current engaged in battle.
+
+Note that the secondary canvas can be flipped independently as well.
+
+The disabling and enabling of key presses during the animations has been tidied up as well with specific methods that relate to the respective enabling and disabling of the keypresses as noted by "enableKeyPresses".
+
+I have also tightened up the animations and added in a "Getting damaged" screen which just holds the damage, this separates the timing from the fireballs (which was hell to try and figure out the timings for).
+
+Note that I have added in a dodge mechanism for future extensions on the battle system.
+
 == 13/2/2017 ==
 
 I managed to flip the attacks around which is pretty good I think, so that the cat sprite now loads in the correct position.
