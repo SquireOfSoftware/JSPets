@@ -6,6 +6,14 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 16/2/2017 ==
+
+Something that I have realised that I need is a sprite editor or something that plays animations on the screen without reaching the given position.
+
+I believe some sort of "sprite player" might be needed for testing purposes as at the moment I can only really play it out via acting out the actual sequence of animations.
+
+There needs to be a cleaner way I believe of changing animation sprites.
+
 == 13/2/2017 ==
 
 I managed to flip the attacks around which is pretty good I think, so that the cat sprite now loads in the correct position.

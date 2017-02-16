@@ -264,14 +264,14 @@ var battleScreens = {
             petSprite.update();
             cryingOutSprite.update();
             if (this.tick < 0){
-                currentScreen = battleScreens.SLIDE;
+                /*currentScreen = battleScreens.SLIDE;
                 currentScreen.update();
-                this.context.flipHorizontally();
+                this.context.flipHorizontally();*/
                 /* For testing purposes*/
-                /*
+
                  currentScreen = battleMenuScreen.FIGHT;
                  game.currentScreenState = fightBattleState;
-                 toggleKeyPress();*/
+                 toggleKeyPress();
             }
         },
         draw: function() {
@@ -498,18 +498,25 @@ var attackSequenceScreen = {
                     addLine("Flipping the canvas");
                 }
                 else {
-
                     addLine("Restoring the canvas");
                     this.context.restore();
                 }
 
-                petSpriteStates.slower.currentPosition = petSpriteStates.slower.idlePosition;
-
+                //petSpriteStates.slower.currentPosition = petSpriteStates.slower.idlePosition;
+                petSpriteStates.slower.currentPosition = petSpriteStates.slower.receivingPosition;
             }
             this.tick--;
 
             // need fireball
             fireball.update();
+            /*
+            if (this.tick > 0)
+                fireball.update();
+            else {
+                // you want to display the damage sprite
+                damageSprite.update();
+            }*/
+
             // need enemySprite to hold a position in one shot
             if (this.tick < 0){
                 // need to calculate dodge value, based on speed
@@ -522,9 +529,20 @@ var attackSequenceScreen = {
             }
         },
         draw: function() {
-            fireball.draw();
-            petSpriteStates.slower.draw();
+            //if (this.tick > 1) {
+                fireball.draw();
+                petSpriteStates.slower.draw();
+            //}
+            /*else {
+                damageSprite.draw();
+            }*/
         }
+    }),
+    GETTING_HIT: new ScreenSprite({
+
+    }),
+    DODGING: new ScreenSprite({
+
     }),
     CALCULATING_DAMAGE: new ScreenSprite({
         name: "CALCULATING_DAMAGE",
@@ -541,6 +559,7 @@ var attackSequenceScreen = {
                 this.tick = 4;
                 foregroundBoard.clearEntireScreen();
                 console.log("CALCULATING");
+                petSpriteStates.slower.currentPosition = petSpriteStates.slower.idlePosition;
             }
             this.tick--;
 
@@ -618,7 +637,6 @@ var attackSequenceScreen = {
             }
         },
         draw: function() {
-            //catSprite.draw();
             petSpriteStates.slower.draw();
             blackBar.draw();
         }

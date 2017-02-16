@@ -38,6 +38,9 @@ function AnimalSprite(options) {
     if (options.attackingPosition !== undefined)
         this.attackingPosition = options.attackingPosition;
 
+    if (options.receivingPosition !== undefined)
+        this.receivingPosition = options.receivingPosition;
+
     var referenceState = ANIMAL_STATES.IDLE;
 
     if (options.flip !== undefined)
@@ -139,6 +142,14 @@ var petSprite = new AnimalSprite({
         multiplier: -32,
         canvasX: 45 - 16,
         canvasY: 0
+    }),
+    receivingPosition: new SpritePosition({
+        spriteSheetX: 0,
+        spriteSheetY: 0,
+        maxFrame: 0,
+        multiplier: 0,
+        canvasX: 29,
+        canvasY: 0
     })
 });
 
@@ -183,6 +194,14 @@ var catSprite = new AnimalSprite({
         maxFrame: 1,
         multiplier: -32,
         canvasX: 45 - 16,
+        canvasY: 0
+    }),
+    receivingPosition: new SpritePosition({
+        spriteSheetX: 0,
+        spriteSheetY: 0,
+        maxFrame: 0,
+        multiplier: 0,
+        canvasX: 29,
         canvasY: 0
     }),
     update: function() {
@@ -277,3 +296,41 @@ var fireball = new GenericSprite(
             this.size.height
         );
 });
+
+var damageSprite = new GenericSprite(
+    generateImage("sprites/damage-sprite.png"),
+    drawingBoard,
+    {
+        receivingPosition: new SpritePosition({
+            spriteSheetX: 0,
+            spriteSheetY: 0,
+            maxFrame: 1,
+            multiplier: 16,
+            canvasX: 29,
+            canvasY: 2
+        })
+    },
+    {width: DEFAULT_SPRITE_SIZE, height: DEFAULT_SPRITE_SIZE},
+    function() {
+        // update
+        if (this.currentPosition !== undefined)
+            this.currentPosition = this.positions.receivingPosition;
+        this.currentPosition.update();
+    },
+    function () {
+        // draw
+        var coordinates = this.currentPosition.getPosition();
+        this.context.clearSection(coordinates.canvasX, coordinates.canvasY, this.size.width * 2, this.size.height);
+        this.context.drawImage(
+            this.image,
+            coordinates.spriteSheetX,
+            coordinates.spriteSheetY,
+            this.size.width,
+            this.size.height,
+            coordinates.canvasX,
+            coordinates.canvasY,
+            this.size.width,
+            this.size.height
+        );
+    }
+);
