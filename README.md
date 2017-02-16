@@ -26,6 +26,12 @@ I have also tightened up the animations and added in a "Getting damaged" screen 
 
 Note that I have added in a dodge mechanism for future extensions on the battle system.
 
+A happy and sad animation have been added in.
+
+Sadly the sad animation doesn't seem to be playing very well as it requires additional things to be put in place to make it run properly.
+
+I suspect this might be due to the poor architecture I have, but I made it work though. Refactor later I guess, another smell tucked under the rug.
+
 == 13/2/2017 ==
 
 I managed to flip the attacks around which is pretty good I think, so that the cat sprite now loads in the correct position.
