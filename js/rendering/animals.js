@@ -170,7 +170,15 @@ var petSprite = new AnimalSprite({
         multiplier: 64,
         canvasX: 15,
         canvasY: 0
-    })
+    }),
+    saddenedPosition: new SpritePosition({
+        spriteSheetX: 0,
+        spriteSheetY: 0,
+        maxFrame: 1,
+        multiplier: 48,
+        canvasX: 15,
+        canvasY: 0
+    }),
 });
 
 var catSprite = new AnimalSprite({
@@ -229,6 +237,14 @@ var catSprite = new AnimalSprite({
         spriteSheetY: 0,
         maxFrame: 1,
         multiplier: -64,
+        canvasX: 15,
+        canvasY: 0
+    }),
+    saddenedPosition: new SpritePosition({
+        spriteSheetX: 0,
+        spriteSheetY: 0,
+        maxFrame: 1,
+        multiplier: 48,
         canvasX: 15,
         canvasY: 0
     }),
@@ -381,8 +397,6 @@ var healthRemainingSprite = new GenericSprite(
             this.spriteHeight = this.positions.normal;
     },
     function() {
-        // clear previous numbers?
-
         // draw numbers 1px up from bottom, 10px from the right
         var screenColumnPosition = 0;
         this.context.clearEntireScreen();
@@ -403,3 +417,67 @@ var healthRemainingSprite = new GenericSprite(
         }
     }
 );
+
+
+var statusSprites = {
+    image: generateImage("sprites/status-sprites.png"),
+    SUN: new GenericSprite(
+        generateImage("sprites/status-sprites.png"),
+        drawingBoard,
+        [],
+        {
+            width: 8,
+            height: 8
+        },
+        function() {
+            if (this.tick === undefined || this.tick > 1) {
+                this.tick = 0;
+            }
+            this.tick++;
+        },
+        function() {
+            // you want to draw the item on the left
+
+            this.context.drawImage(
+                this.image,
+                0, // x position
+                0, // y position
+                this.size.width, // width on spritesheet
+                this.size.height, // height on spritesheet
+                45 - 8, // x position
+                0, // y position
+                8, // width on canvas
+                8 // height on canvas
+            );
+        }
+    ),
+    BANDAID: new GenericSprite(
+        generateImage("sprites/status-sprites.png"),
+        drawingBoard,
+        [],
+        {
+            width: 8,
+            height: 8
+        },
+        function() {
+            if (this.tick === undefined || this.tick > 1) {
+                this.tick = 0;
+            }
+            this.tick++;
+        },
+        function() {
+            // you want to draw the item on the right
+            this.context.drawImage(
+                this.image,
+                8, // x position
+                0,
+                this.size.width, // width on spritesheet
+                this.size.height, // height on spritesheet
+                45 - 8,
+                0,
+                8, // width on canvas
+                8 // height on canvas
+            );
+        }
+    )
+};

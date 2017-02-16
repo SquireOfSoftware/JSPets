@@ -636,7 +636,8 @@ var attackSequenceScreen = {
                     // figure out who died
                     // if your pet died, change state to sick, switch to petScreen
                     if (petSprite.referenceObject.stats.hp < 1) {
-                        game.pet.state = ANIMAL_STATES.SICK;
+                        currentScreen = statusScreens.SADDENED_ANIMATION;
+                        game.currentScreenState = sadSequenceState;
 
                         console.log("LOST");
                     }
@@ -656,10 +657,7 @@ var attackSequenceScreen = {
 
                     petSprite.update();
                     game.stepCounter.hasRecentlyStepped = false;
-                    //game.currentScreenState = petState;
-                    //currentScreen = petScreen;
                     petSpriteStates.hasDeath = false;
-                    //enableKeyPress();
                     addLine("Battle is over");
 
                     currentScreen.update();
@@ -689,21 +687,23 @@ var statusScreens = {
                 petSprite.currentPosition = petSprite.rejoicingPosition;
                 this.context.restore();
                 foregroundBoard.restore();
-                //game.currentScreenState = ;
             }
             this.tick--;
 
             petSprite.update();
+            statusSprites.SUN.update();
 
             if (this.tick < 0) {
                 game.pet.state = ANIMAL_STATES.IDLE;
                 game.currentScreenState = petState;
                 currentScreen = petScreen;
                 petSprite.update();
+                enableKeyPress();
             }
         },
         draw: function() {
             petSprite.draw();
+            statusSprites.SUN.draw();
         }
     }),
     SADDENED_ANIMATION: new ScreenSprite({
@@ -715,17 +715,26 @@ var statusScreens = {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
                 console.log("SADDENING");
+                petSprite.currentPosition = petSprite.saddenedPosition;
             }
             this.tick--;
+
+            petSprite.update();
+            statusSprites.BANDAID.update();
+
             if (this.tick < 0) {
-                game.currentScreenState = petState;
                 game.pet.state = ANIMAL_STATES.SICK;
+                game.currentScreenState = petState;
                 currentScreen = petScreen;
+                petSprite.currentPosition = petSprite.sickPosition;
                 petSprite.update();
+                enableKeyPress();
+                console.log(game.pet.state);
             }
         },
         draw: function() {
-
+            petSprite.draw();
+            statusSprites.BANDAID.draw();
         }
     })
 };

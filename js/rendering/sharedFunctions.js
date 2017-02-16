@@ -79,23 +79,26 @@ function DrawingBoard(id) {
         drawingBoard.translate(45, 0);
         drawingBoard.scale(-1, 1);
         //drawingBoard.transform(0, 0, 0, 0, 300, 0);
-        isFlipped = true;
+        //isFlipped = true;
     };
 
     this.restore = function() {
         drawingBoard.restore();
-        isFlipped = false;
+        //isFlipped = false;
     };
 
     this.clearSection = function(x, y, width, height) {
+        //console.log("Trying to clear area", x, y, width, height);
         drawingBoard.clearRect(x, y, width, height);
     };
 
     this.clearEntireScreen = function() {
+        /*
         if(isFlipped)
             drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
-        else
-            drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
+        else*/
+
+        drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
     };
 
     this.drawImage = function(image,

@@ -70,10 +70,8 @@ var careState = new ScreenState({
     },
     down: function() {
         // show healing animation, has happy then idle
-        //console.log(game.pet.state, game.currentScreenState);
         if (game.pet.state === ANIMAL_STATES.SICK) {
-            game.pet.state = ANIMAL_STATES.IDLE;
-            game.currentScreenState = petState;
+            game.currentScreenState = happySequenceState;
             asyncRender = true;
         }
     },
@@ -250,15 +248,20 @@ var runBattleState = new ScreenState({
         // note that the step counter for the given city does not reset, it is only goes to the next city if you beat it
         var roll = Math.round(Math.random() * 10, 0);
         addLine("Rolled " + roll);
-        if (roll % 2 === 1)
+        if (roll % 2 === 1) {
             game.pet.state = ANIMAL_STATES.SICK;
-        else
+            currentScreen = statusScreens.SADDENED_ANIMATION;
+            game.currentScreenState = sadSequenceState;
+        }
+        else {
             game.pet.state = ANIMAL_STATES.IDLE;
+            game.currentScreenState = petState;
+        }
 
         // remember that the trigger was that you took a step over the threshold
         game.stepCounter.hasRecentlyStepped = false;
         game.stepCounter.resetWaitPeriod();
-        game.currentScreenState = petState;
+
         // need to show sick animation
         console.log(game.currentScreenState, game.pet);
 
@@ -428,7 +431,7 @@ var currentEnemy = {
 
 var cat = new Animal({
     name: "CAT",
-    stats: generateAnimalStats(10, 1, 2, EVOLUTION_STATES.BASIC),
+    stats: generateAnimalStats(10, 10, 2, EVOLUTION_STATES.BASIC),
     type: ANIMAL_TYPES.CAT
 });
 
@@ -441,7 +444,7 @@ var game = {
     pet: new Animal({
         name: "PET",
         isPet: true,
-        stats: generateAnimalStats(10, 12, 3, EVOLUTION_STATES.BASIC),
+        stats: generateAnimalStats(10, 12, 1, EVOLUTION_STATES.BASIC),
         type: ANIMAL_TYPES.DUCK
     }),
     stepCounter: {

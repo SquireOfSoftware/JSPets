@@ -46,6 +46,12 @@ function updateScreens() {
         else if (currentScreenState === SCREEN_STATES.ATTACK_SEQUENCE) {
             currentScreen = attackSequenceScreen.LAUNCHING_ATTACK;
         }
+        else if (currentScreenState === SCREEN_STATES.HAPPY_PET) {
+            currentScreen = statusScreens.HAPPY_ANIMATION;
+        }
+        else if (currentScreenState === SCREEN_STATES.SADDENED_PET) {
+            currentScreen = statusScreens.SADDENED_ANIMATION;
+        }
         else {
             //currentScreen = petScreen;
             addLine("Cannot locate screen: " + game.state);
