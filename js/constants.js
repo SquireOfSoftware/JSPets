@@ -171,6 +171,12 @@ var SCREEN_STATES = {
             RECEIVING_ATTACK: new LogicState({
                 name: "RECEIVING_ATTACK"
             }),
+            GETTING_HIT: new LogicState({
+                name: "GETTING_HIT"
+            }),
+            DODGING: new LogicState({
+                name: "DODGING"
+            }),
             CALCULATING_DAMAGE: new LogicState({
                 name: "CALCULATING_DAMAGE"
             })
@@ -351,3 +357,9 @@ var NUMBER_PX_SIZE = {
 };
 
 var NUMBER_POSITIONS = [0, 4, 8, 12, 16, 20, 24, 28, 32, 36];
+
+var HP_BOUNDARIES = {
+    STARTING_HEIGHT: DEFAULT_SCREEN_SIZE.Y - NUMBER_PX_SIZE.HEIGHT - 1,
+    STARTING_X_COORD: DEFAULT_SCREEN_SIZE.X - NUMBER_PX_SIZE.WIDTH * 2,
+    INCREMENT: NUMBER_PX_SIZE
+};

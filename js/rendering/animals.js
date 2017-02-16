@@ -266,6 +266,7 @@ var fireball = new GenericSprite(
             this.positions.receivingPosition.reset();
         }
 
+        this.attackPower = petSpriteStates.faster.referenceObject.stats.attk;
         this.tick --;
 
         if (this.tick < 9) {
@@ -286,7 +287,7 @@ var fireball = new GenericSprite(
         this.context.clearSection(coordinates.canvasX, coordinates.canvasY, this.size.width * 2, this.size.height);
         this.context.drawImage(
             this.image,
-            coordinates.spriteSheetX,
+            coordinates.spriteSheetX + DEFAULT_SPRITE_SIZE * (Math.round(this.attackPower / 10)),
             coordinates.spriteSheetY,
             this.size.width,
             this.size.height,
@@ -313,7 +314,8 @@ var damageSprite = new GenericSprite(
     {width: DEFAULT_SPRITE_SIZE, height: DEFAULT_SPRITE_SIZE},
     function() {
         // update
-        if (this.currentPosition !== undefined)
+
+        if (this.currentPosition === undefined)
             this.currentPosition = this.positions.receivingPosition;
         this.currentPosition.update();
     },
@@ -332,5 +334,46 @@ var damageSprite = new GenericSprite(
             this.size.width,
             this.size.height
         );
+    }
+);
+
+var healthRemainingSprite = new GenericSprite(
+    generateImage("sprites/step-alphabet.png"),
+    foregroundBoard,
+    {
+        inverted: 5,
+        normal: 0
+    }, // its a number set it doesn't really have "next number"
+    // x coordinates are with the constant NUMBER_POSITIONS
+    {width: NUMBER_PX_SIZE.WIDTH, height: NUMBER_PX_SIZE.HEIGHT},
+    function() {
+        // constantly pull in the leftover health
+        this.health = (petSpriteStates.slower.referenceObject.stats.hp).toString();
+        if (currentScreen.referenceState === SCREEN_STATES.ATTACK_SEQUENCE.substates.CALCULATING_DAMAGE)
+            this.spriteHeight = this.positions.inverted;
+        else
+            this.spriteHeight = this.positions.normal;
+    },
+    function() {
+        // clear previous numbers?
+
+        // draw numbers 1px up from bottom, 10px from the right
+        var screenColumnPosition = 0;
+        this.context.clearEntireScreen();
+        for (var index = this.health.length - 1; index > -1; index--) {
+            // need to track positions
+            this.context.drawImage(
+                this.image,
+                NUMBER_POSITIONS[parseInt(this.health.charAt(index))], // x position
+                this.spriteHeight,
+                NUMBER_PX_SIZE.WIDTH, // width on spritesheet
+                NUMBER_PX_SIZE.HEIGHT, // height on spritesheet
+                HP_BOUNDARIES.STARTING_X_COORD - NUMBER_PX_SIZE.WIDTH * screenColumnPosition,
+                HP_BOUNDARIES.STARTING_HEIGHT,
+                NUMBER_PX_SIZE.WIDTH, // width on canvas
+                NUMBER_PX_SIZE.HEIGHT // height on canvas
+            );
+            screenColumnPosition++;
+        }
     }
 );

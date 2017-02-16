@@ -387,7 +387,6 @@ var currentEnemy = {
         //game.currentMap.biomes
         var biomes = game.currentMap.biomes;
         this.currentBiome = biomes[Math.floor(Math.random() * (biomes.length + 1))];
-        //this.states =
         // set up new stats
     },
     stats: generateAnimalStats(5, 1, 1, EVOLUTION_STATES.BASIC)
@@ -395,7 +394,7 @@ var currentEnemy = {
 
 var cat = new Animal({
     name: "CAT",
-    stats: generateAnimalStats(3, 3, 2, EVOLUTION_STATES.BASIC),
+    stats: generateAnimalStats(10, 1, 2, EVOLUTION_STATES.BASIC),
     type: ANIMAL_TYPES.CAT
 });
 
@@ -408,7 +407,7 @@ var game = {
     pet: new Animal({
         name: "PET",
         isPet: true,
-        stats: generateAnimalStats(5, 2, 1, EVOLUTION_STATES.BASIC),
+        stats: generateAnimalStats(10, 12, 1, EVOLUTION_STATES.BASIC),
         type: ANIMAL_TYPES.DUCK
     }),
     stepCounter: {
