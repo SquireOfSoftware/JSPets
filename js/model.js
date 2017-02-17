@@ -226,7 +226,17 @@ var autoBattleState = new ScreenState({
 
     },
     down: function() {
-
+		var roll = Math.round(Math.random() * 10, 0);
+        addLine("Auto battle rolled " + roll);
+        if (roll % 2 === 1) {
+            game.pet.state = ANIMAL_STATES.SICK;
+            currentScreen = statusScreens.SADDENED_ANIMATION;
+            game.currentScreenState = sadSequenceState;
+        }
+        else {
+            currentScreen = statusScreens.HAPPY_ANIMATION;
+            game.currentScreenState = happySequenceState;
+        }
     },
     left: function() {
         game.currentScreenState = powerupBattleState;
