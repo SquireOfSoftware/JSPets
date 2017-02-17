@@ -338,7 +338,7 @@ var battleScreens = {
                 }
             }
             this.enemySprite.update();
-
+			
             if (this.tick < 0){
                 this.enemySprite.currentPosition.reset();
                 currentScreen = battleMenuScreen.FIGHT;

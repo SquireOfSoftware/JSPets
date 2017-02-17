@@ -213,7 +213,7 @@ var catSprite = new AnimalSprite({
         spriteSheetY: 0,
         maxFrame: 1,
         multiplier: -32,
-        canvasX: DEFAULT_SCREEN_SIZE.X,//DEFAULT_SCREEN_SIZE.X - DEFAULT_SPRITE_SIZE,
+        canvasX: 15, //DEFAULT_SCREEN_SIZE.X,//DEFAULT_SCREEN_SIZE.X - DEFAULT_SPRITE_SIZE,
         canvasY: 0
     }),
     attackingPosition: new SpritePosition({
