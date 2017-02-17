@@ -32,9 +32,9 @@ Things to be done:
 
 2. Mapping out the stat changes between evolutions
 
-- Auto Screen - implement the same way as the Escape screen (have it based on some sort of chance of winning) - this has been completed in the auto-screen branch
+~~- Auto Screen - implement the same way as the Escape screen (have it based on some sort of chance of winning) - this has been completed in the auto-screen branch~~
 
-- Sprite update - things like Escape and Auto, this has been done in the screen-cleanup branch
+~~- Sprite update - things like Escape and Auto, this has been done in the screen-cleanup branch~~
 
 - Evolution system (semi related to the stat system)
 
