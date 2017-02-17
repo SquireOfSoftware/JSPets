@@ -6,6 +6,62 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 17/2/2017 ==
+
+Things to be done:
+
+- Map System
+
+1. Figure out how to move on to different cities
+
+2. Implementing the cities
+
+3. Drawing up the map sprites
+
+4. Figuring out how to store the cities and how to see what is next
+
+5. (sort of related) Figure out how bosses work
+
+6. Generic enemy generator (Most likely pre-scripted)
+
+7. Incorporate biomes
+
+- Stat System
+
+1. Checking out your stats
+
+2. Mapping out the stat changes between evolutions
+
+- Auto Screen - implement the same way as the Escape screen (have it based on some sort of chance of winning)
+
+- Sprite update - things like Escape and Auto, this has been done in this commit
+
+- Evolution system (semi related to the stat system)
+
+1. Sprite drawings
+
+2. Figure out how the existing architecture will support evolutions
+
+3. Implement the evolution
+
+4. Do some planning post battle on how evolutions will work
+
+5. Implement the evolution screen
+
+- Countering System (really low on the to do list)
+
+1. Accepting certain button combinations to increase dodge or damage
+
+- Sort out how dodge - based on speed, perhaps this can work with attack / speed, need to work out the implications of this
+
+- Power up system
+
+1. Figure out how temporary stat boosters will work (Should it be for a short amount of turns? Or time based?)
+
+2. Figure out how to "regen" the items to encourage play, but reduce item abuse
+
+- Sprite editor or viewer (this might tie together nicely with stat modifier if this works) - could place in the about screen
+
 == 16/2/2017 ==
 
 Something that I have realised that I need is a sprite editor or something that plays animations on the screen without reaching the given position.

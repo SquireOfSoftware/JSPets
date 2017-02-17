@@ -362,13 +362,13 @@ var battleMenuScreen = {
     }),
     POWER_UP: new ScreenSprite({
         name: "POWER_UP",
-        image: generateImage("sprites/screens/evolve-battle-menu.png"),
+        image: generateImage("sprites/screens/power-up-battle-menu.png"),
         context: drawingBoard,
         referenceState: SCREEN_STATES.POWER_UP
     }),
     AUTO: new ScreenSprite({
         name: "AUTO",
-        image: generateImage("sprites/screens/care-battle-menu.png"),
+        image: generateImage("sprites/screens/auto-battle-menu.png"),
         context: drawingBoard,
         referenceState: SCREEN_STATES.AUTO
     }),
