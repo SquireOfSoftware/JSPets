@@ -274,15 +274,15 @@ var battleScreens = {
             petSprite.update();
             cryingOutSprite.update();
             if (this.tick < 0){
-                /*petSprite.currentPosition.reset();
+                petSprite.currentPosition.reset();
                 currentScreen = battleScreens.SLIDE;
                 currentScreen.update();
-                this.context.flipHorizontally();*/
+                this.context.flipHorizontally();
                 /* For testing purposes*/
-
+/*
                  currentScreen = battleMenuScreen.FIGHT;
                  game.currentScreenState = fightBattleState;
-                 toggleKeyPress();
+                 toggleKeyPress();*/
             }
         },
         draw: function() {
