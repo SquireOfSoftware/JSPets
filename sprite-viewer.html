@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSPets</title>
+    <link rel="shortcut icon" href="egg.png" />
+    <link rel="stylesheet" href="css/game.css" />
+</head>
+<body onclick="walk()" onkeydown="processKeyDown(event)">
+    <canvas id="ctx" height="20" width="45"></canvas>
+    <canvas id="foreground" height="20" width="45"></canvas>
+    <div id="debug-box">
+        <label><input id="fps" type="text" /> fps</label>
+        <label><input id="steps" type="text" /> steps</label>
+        <textarea id="debugger"> </textarea>
+        <p>
+            D is debug, Esc is game loop, s is the render loop. Press any of them to disable or enable any of the loops.
+        </p>
+    </div>
+</body>
+<script src="js/debugger.js" ></script>
+<script src="js/BigInteger.min.js" ></script>
+<script src="js/constants.js" ></script>
+<script src="js/model.js" ></script>
+<script src="js/rendering/sharedFunctions.js" ></script>
+<script src="js/rendering/animals.js" ></script>
+<script src="js/rendering/screens.js" ></script>
+<script src="js/renderLoop.js" ></script>
+<script src="js/loop.js" ></script>
+<script src="js/inputKeys.js" ></script>
+</html>
