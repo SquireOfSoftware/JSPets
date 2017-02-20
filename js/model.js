@@ -311,6 +311,22 @@ var idleDevolvingAnimationstate = new ScreenState({
     }
 });
 
+var happyDevolvingAnimationstate = new ScreenState({
+	state: SCREEN_STATES.DEVOLVING.substates.HAPPY,
+    up: function() {
+
+    },
+    down: function() {
+
+    },
+    left: function() {
+
+    },
+    right: function() {
+
+    }
+});
+
 var autoBattleState = new ScreenState({
     state: SCREEN_STATES.AUTO,
     up: function() {
@@ -319,6 +335,7 @@ var autoBattleState = new ScreenState({
     down: function() {
 		var roll = Math.round(Math.random() * 10, 0);
         addLine("Auto battle rolled " + roll);
+		/*
         if (roll % 2 === 1) {
             game.pet.state = ANIMAL_STATES.SICK;
             currentScreen = statusScreens.SADDENED_ANIMATION;
@@ -327,6 +344,25 @@ var autoBattleState = new ScreenState({
         else {
             currentScreen = statusScreens.HAPPY_ANIMATION;
             game.currentScreenState = happySequenceState;
+        }*/
+		
+		if (roll % 2 === 1) {
+            game.pet.state = ANIMAL_STATES.SICK;
+            //currentScreen = statusScreens.SADDENED_DEVOLVE_ANIMATION;
+			if (game.pet.stats.state === EVOLUTION_STATES.BASIC)
+				game.currentScreenState = sadSequenceState;
+			else
+				game.currentScreenState = sadDevolvingAnimationstate;
+        }
+        else {
+			if (game.pet.stats.state === EVOLUTION_STATES.BASIC) {
+				currentScreen = statusScreens.HAPPY_ANIMATION;
+				game.currentScreenState = happySequenceState;
+			}
+			else {
+				game.currentScreenState = happyDevolvingAnimationstate;
+				currentScreen = statusScreens.HAPPY_DEVOLVE_ANIMATION;
+			}
         }
     },
     left: function() {
@@ -349,6 +385,7 @@ var runBattleState = new ScreenState({
         // note that the step counter for the given city does not reset, it is only goes to the next city if you beat it
         var roll = Math.round(Math.random() * 10, 0);
         addLine("Rolled " + roll);
+		
         if (roll % 2 === 1) {
             game.pet.state = ANIMAL_STATES.SICK;
             //currentScreen = statusScreens.SADDENED_DEVOLVE_ANIMATION;
@@ -358,27 +395,15 @@ var runBattleState = new ScreenState({
 				game.currentScreenState = sadDevolvingAnimationstate;
         }
         else {
+			game.pet.state = ANIMAL_STATES.IDLE;
 			if (game.pet.stats.state === EVOLUTION_STATES.BASIC) {
-				game.pet.state = ANIMAL_STATES.IDLE;
 				game.currentScreenState = petState;
 			}
 			else 
 				game.currentScreenState = idleDevolvingAnimationstate;
-			
-            
         }
-		
-		resetStats();
-		
+	
         game.stepCounter.resetWaitPeriod();
-		/*
-		if (petSprite.isEvolved > 0) {
-			currentScreen = statusScreens.IDLE_DEVOLVE_ANIMATION;
-			currentScreen.update();
-		}
-		else
-			performEndingAnimation();*/
-
     },
     left: function() {
         game.currentScreenState = autoBattleState;

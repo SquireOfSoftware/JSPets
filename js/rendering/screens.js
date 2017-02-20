@@ -841,7 +841,7 @@ var statusScreens = {
 		name: "SAD_DEVOLVE_ANIMATION",
 		image: null,
 		context: null,
-		referenceState: SCREEN_STATES.DEVOLVING,
+		referenceState: SCREEN_STATES.DEVOLVING.substates.SAD,
 		update: function () {
 			if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
@@ -877,7 +877,7 @@ var statusScreens = {
 		name: "IDLE_DEVOLVE_ANIMATION",
 		image: null,
 		context: null,
-		referenceState: SCREEN_STATES.DEVOLVING,
+		referenceState: SCREEN_STATES.DEVOLVING.substates.IDLE,
 		update: function () {
 			if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
@@ -887,8 +887,8 @@ var statusScreens = {
 				petSprite.currentPosition = petSprite.idlePosition;
 				petSprite.currentPosition.reset();
 				
-				currentScreen = petScreen;
-				game.currentScreenState = petState;
+				//currentScreen = petScreen;
+				//game.currentScreenState = petState;
 				
             }
             this.tick--;
@@ -902,6 +902,50 @@ var statusScreens = {
             if (this.tick < 0) {
 				resetStats();
 				resetAttackSequence();
+				currentScreen = petScreen;
+				game.currentScreenState = petState;
+            }
+		},
+		draw: function () {
+			petSprite.draw();
+			evolutionSprites.DEVOLVE.draw();
+			
+		}
+	}),
+	HAPPY_DEVOLVE_ANIMATION: new ScreenSprite({
+		name: "HAPPY_DEVOLVE_ANIMATION",
+		image: null,
+		context: null,
+		referenceState: SCREEN_STATES.DEVOLVING.substates.HAPPY,
+		update: function () {
+			if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
+                this.tick = 6;
+                
+				// evolve the petSprite
+				
+				petSprite.currentPosition = petSprite.idlePosition;
+				petSprite.currentPosition.reset();
+				
+				//currentScreen = petScreen;
+				//game.currentScreenState = petState;
+				
+            }
+            this.tick--;
+			
+			console.log("DEVOLVING happily", this.tick);
+			
+			evolutionSprites.DEVOLVE.update();
+
+			if (this.tick == 3) {
+				petSprite.devolve();
+			}
+
+            if (this.tick < 0) {
+				console.log("DEVOLVED?");
+				resetStats();
+				resetAttackSequence();
+				currentScreen = statusScreens.HAPPY_ANIMATION;
+				game.currentScreenState = happySequenceState;
             }
 		},
 		draw: function () {

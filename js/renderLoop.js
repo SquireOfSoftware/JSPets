@@ -64,7 +64,11 @@ function updateScreens() {
 			currentScreen = statusScreens.SADDENED_DEVOLVE_ANIMATION;
 		}
 		else if (currentScreenState === SCREEN_STATES.DEVOLVING.substates.IDLE) {
-			currentScreen = statusScreens.IDLE_DEVOLVING_ANIMATION;
+			currentScreen = statusScreens.IDLE_DEVOLVE_ANIMATION;
+		}
+		else if (currentScreenState === SCREEN_STATES.DEVOLVING.substates.HAPPY) {
+			currentScreen = statusScreens.HAPPY_DEVOLVE_ANIMATION;
+			console.log(currentScreen);
 		}
         else {
             //currentScreen = petScreen;

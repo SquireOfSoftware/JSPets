@@ -207,6 +207,9 @@ var SCREEN_STATES = {
 			}),
 			IDLE: new LogicState({
 				name: "IDLE"
+			}),
+			HAPPY: new LogicState({
+				name: "HAPPY"
 			})
 		}
 	})
