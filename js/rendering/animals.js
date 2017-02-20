@@ -510,15 +510,8 @@ var evolutionSprites = {
 			if (this.tick === undefined || this.tick < 0) {
                 this.tick = -1;
 				this.invert = false;
-				console.log("Resetting");
             }
 			
-			/*
-            if (this.tick < 6)
-				this.tick++;
-			else
-				this.tick--;
-			*/
 			if (this.tick >= 5) {
 				this.invert = true;
 			}

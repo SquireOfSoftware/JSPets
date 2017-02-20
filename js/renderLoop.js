@@ -57,7 +57,7 @@ function updateScreens() {
 		}
 		else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.EVOLVING) {
 			currentScreen = statusScreens.EVOLVE_ANIMATION;
-			game.currentScreenState.state = SCREEN_STATES.ATTACK_SEQUENCE;
+			//game.currentScreenState.state = SCREEN_STATES.ATTACK_SEQUENCE;
 			//console.log(currentScreenState);
 		}
         else {
@@ -68,6 +68,8 @@ function updateScreens() {
         //clearScreen();
         drawingBoard.clearEntireScreen();
     }
+	else
+		console.log("current screen state", game.currentScreenState);
 }
 
 function draw() {

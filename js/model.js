@@ -236,6 +236,7 @@ var evolveBattleState = new ScreenState({
 		// disable key presses
 		// evolution screen - this updates the pet sprite
 		disableKeyPress();
+		//addLine("EVOLVING", game.pet.stats.state);
 		if (game.pet.stats.state === EVOLUTION_STATES.BASIC) {
 			game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.CHAMPION.value];
 		}
@@ -243,6 +244,8 @@ var evolveBattleState = new ScreenState({
 			game.pet.stats =  game.pet.evolvedStats[EVOLUTION_STATES.ULTIMATE.value];
 		}
 		
+		// I think there is a bug here
+		console.log(game.pet.stats.state);
 		//currentScreen = statusScreens.EVOLVE_ANIMATION;
 		game.currentScreenState = evolvingAnimationState;
 		
@@ -507,7 +510,7 @@ var duck = new Animal({
     //stats: generateAnimalStats(10, 12, 1, EVOLUTION_STATES.BASIC),
 	evolvedStats: [
 		generateAnimalStats(10, 12, 1, EVOLUTION_STATES.BASIC),
-		generateAnimalStats(18, 15, 6, EVOLUTION_STATES.CHAMPION),
+		generateAnimalStats(18, 2, 6, EVOLUTION_STATES.CHAMPION),
 		generateAnimalStats(27, 22, 9, EVOLUTION_STATES.ULTIMATE)
 	],
 	type: ANIMAL_TYPES.DUCK

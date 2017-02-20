@@ -81,7 +81,8 @@ function interpretKeys() {
     // process this on the screen
     if (lastKeyPress !== null && !blockKeyPress) {
         addLine(lastKeyPress.name + " was pressed");
-        if(game.currentScreenState.state !== SCREEN_STATES.ATTACK_SEQUENCE) {
+		var currentScreenState = game.currentScreenState.state;
+        if(currentScreenState !== SCREEN_STATES.ATTACK_SEQUENCE) {
             switch (lastKeyPress.keyCode) {
                 case ARROW_KEYS.DOWN:
                     game.currentScreenState.down();
@@ -96,12 +97,14 @@ function interpretKeys() {
                     game.currentScreenState.right();
                     break;
             }
+			console.log(game.currentScreenState, lastKeyPress);
             updateScreens();
         }
         else {
             keyPressBuffer.buffer.push(lastKeyPress);
         }
         lastKeyPress = null;
+		console.log("key has been cleared");
     }
 }
 

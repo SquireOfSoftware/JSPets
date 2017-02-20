@@ -406,7 +406,7 @@ var attackSequenceScreen = {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 3;
                 disableKeyPress();
-
+				
                 if (this.rounds === 0 ) {
                     if (game.currentEnemy.stats.spd > game.pet.stats.spd) {
                         if (game.currentEnemy.type === ANIMAL_TYPES.CAT) {
@@ -427,6 +427,11 @@ var attackSequenceScreen = {
 
                     petSpriteStates.faster = petSpriteStates.slower;
                     petSpriteStates.slower = tempSprite;
+					
+					if (petSpriteStates.faster.referenceObject.isPet === false) {
+						this.context.flipHorizontally();
+                        foregroundBoard.flipHorizontally();
+					}
                 }
 
                 fireball.currentPosition = fireball.positions.launchingPosition;
@@ -758,11 +763,15 @@ var statusScreens = {
 		referenceState: SCREEN_STATES.POWER_UP.substates.EVOLVING,
 		update: function () {
 			if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
-                this.tick = 16;
+                this.tick = //-1;
+				16;
+				//petSprite.evolve(); // TEST
                 console.log("EVOLVING");
+				//game.currentScreenState.state = SCREEN_STATES.ATTACK_SEQUENCE;
 				// evolve the petSprite
             }
             this.tick--;
+			//console.log("Evolving", this.tick);
 			
 			if (this.tick > 3 && this.tick !== 16)
 				evolutionSprites.EVOLVE.update();
@@ -772,6 +781,8 @@ var statusScreens = {
 			}
 
             if (this.tick < 0) {
+				console.log("attacking now");
+				game.currentScreenState = attackSequenceState;
 				currentScreen = attackSequenceScreen.LAUNCHING_ATTACK;
 				currentScreen.update();
             }
