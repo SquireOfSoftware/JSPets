@@ -97,14 +97,12 @@ function interpretKeys() {
                     game.currentScreenState.right();
                     break;
             }
-			console.log(game.currentScreenState, lastKeyPress);
             updateScreens();
         }
         else {
             keyPressBuffer.buffer.push(lastKeyPress);
         }
         lastKeyPress = null;
-		console.log("key has been cleared");
     }
 }
 

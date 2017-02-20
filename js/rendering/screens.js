@@ -682,9 +682,11 @@ function performEndingAnimation() {
 		console.log("WIN!");
 		// select next city
 	}
+	//game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.BASIC.value];
+	//game.pet.stats.resetAllStats();
 	game.pet.stats.resetStats();
 	game.currentEnemy.stats.resetStats();
-
+	game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.BASIC.value];
 	petSprite.update();
 	game.stepCounter.hasRecentlyStepped = false;
 	petSpriteStates.hasDeath = false;
@@ -763,15 +765,13 @@ var statusScreens = {
 		referenceState: SCREEN_STATES.POWER_UP.substates.EVOLVING,
 		update: function () {
 			if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
-                this.tick = //-1;
-				16;
+                this.tick = 16;
 				//petSprite.evolve(); // TEST
+				petSprite.currentPosition = petSprite.idlePosition;
                 console.log("EVOLVING");
-				//game.currentScreenState.state = SCREEN_STATES.ATTACK_SEQUENCE;
 				// evolve the petSprite
             }
             this.tick--;
-			//console.log("Evolving", this.tick);
 			
 			if (this.tick > 3 && this.tick !== 16)
 				evolutionSprites.EVOLVE.update();
@@ -781,7 +781,6 @@ var statusScreens = {
 			}
 
             if (this.tick < 0) {
-				console.log("attacking now");
 				game.currentScreenState = attackSequenceState;
 				currentScreen = attackSequenceScreen.LAUNCHING_ATTACK;
 				currentScreen.update();
@@ -791,8 +790,8 @@ var statusScreens = {
 			petSprite.draw();
 			if (this.tick > 3 && this.tick !== 16)
 				evolutionSprites.EVOLVE.draw();
-			else if (this.tick === 16)
-				foregroundBoard.clearEntireScreen();
+			/*else if (this.tick === 16)
+				foregroundBoard.clearEntireScreen();*/
 		}
 	}),
 	DEVOLVE_ANIMATION: new ScreenSprite({

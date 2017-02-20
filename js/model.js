@@ -22,6 +22,8 @@ function Animal(options) {
     this.type = options.type;
 
     this.resetStats = options.resetStats;
+	
+	this.resetAllStats = options.resetAllStats;
 }
 
 function ScreenState(options) {
@@ -236,16 +238,18 @@ var evolveBattleState = new ScreenState({
 		// disable key presses
 		// evolution screen - this updates the pet sprite
 		disableKeyPress();
-		//addLine("EVOLVING", game.pet.stats.state);
+		//console.log(game.pet.stats);
+		
 		if (game.pet.stats.state === EVOLUTION_STATES.BASIC) {
+			game.pet.stats.resetStats();
 			game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.CHAMPION.value];
 		}
 		else if (game.pet.stats.state === EVOLUTION_STATES.CHAMPION) {
-			game.pet.stats =  game.pet.evolvedStats[EVOLUTION_STATES.ULTIMATE.value];
+			game.pet.stats.resetStats();
+			game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.ULTIMATE.value];
 		}
+		//console.log(game.pet.stats);
 		
-		// I think there is a bug here
-		console.log(game.pet.stats.state);
 		//currentScreen = statusScreens.EVOLVE_ANIMATION;
 		game.currentScreenState = evolvingAnimationState;
 		
@@ -326,9 +330,6 @@ var runBattleState = new ScreenState({
         // remember that the trigger was that you took a step over the threshold
         game.stepCounter.hasRecentlyStepped = false;
         game.stepCounter.resetWaitPeriod();
-
-        // need to show sick animation
-        console.log(game.currentScreenState, game.pet);
 
     },
     left: function() {
@@ -477,6 +478,7 @@ function generateAnimalStats(hp, attk, spd, state) {
             this.attk = attk;
             this.spd = spd;
             this.state = state;
+			//console.log(this);
         }
     };
 }
@@ -513,7 +515,13 @@ var duck = new Animal({
 		generateAnimalStats(18, 2, 6, EVOLUTION_STATES.CHAMPION),
 		generateAnimalStats(27, 22, 9, EVOLUTION_STATES.ULTIMATE)
 	],
-	type: ANIMAL_TYPES.DUCK
+	type: ANIMAL_TYPES.DUCK,
+	resetAllStats: function() {
+		for(var i = 0; i < this.evolvedStats.length; i++) {
+			this.evolvedStats[i].resetStats();
+			console.log("Resetting", this.evolvedStats[i]);
+		}
+	}
 });
 
 function update() {
