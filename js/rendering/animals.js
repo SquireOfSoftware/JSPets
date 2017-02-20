@@ -188,8 +188,8 @@ var petSprite = new AnimalSprite({
     }),
 	evolve: function() {
 		this.isEvolved ++;
-		if (this.isEvolved > EVOLUTION_STATES.ULTIMATE.value)
-			this.isEvolved = EVOLUTION_STATES.ULTIMATE.value;
+		if (this.isEvolved >= this.referenceObject.evolvedStats.length)
+			this.isEvolved = this.referenceObject.evolvedStats.length - 1;
 	},
 	devolve: function() {
 		this.isEvolved = 0;
@@ -496,3 +496,53 @@ var statusSprites = {
         }
     )
 };
+
+var evolutionSprites = {
+	EVOLVE: new GenericSprite(
+		generateImage("sprites/evolution-screens.png"),
+		foregroundBoard,
+		[],
+		{
+			width: 45,
+			height: 20,
+		},
+		function() {
+			if (this.tick === undefined || this.tick < 0) {
+                this.tick = -1;
+				this.invert = false;
+				console.log("Resetting");
+            }
+			
+			/*
+            if (this.tick < 6)
+				this.tick++;
+			else
+				this.tick--;
+			*/
+			if (this.tick >= 5) {
+				this.invert = true;
+			}
+			
+			if (this.invert) {
+				this.tick--;
+			}
+			else {
+				this.tick++;
+			}
+		},
+		function() {
+			this.context.clearEntireScreen();
+			this.context.drawImage(
+				this.image,
+				this.tick * 45,
+				0,
+				this.size.width,
+				this.size.height,
+				0,
+				0,
+				this.size.width,
+				this.size.height
+			)
+		}
+	)
+}

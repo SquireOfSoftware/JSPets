@@ -758,14 +758,16 @@ var statusScreens = {
 		referenceState: SCREEN_STATES.POWER_UP.substates.EVOLVING,
 		update: function () {
 			if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
-                this.tick = 8;
+                this.tick = 16;
                 console.log("EVOLVING");
 				// evolve the petSprite
-				
             }
             this.tick--;
+			
+			if (this.tick > 3 && this.tick !== 16)
+				evolutionSprites.EVOLVE.update();
 
-			if (this.tick == 3) {
+			if (this.tick == 7) {
 				petSprite.evolve();
 			}
 
@@ -776,6 +778,10 @@ var statusScreens = {
 		},
 		draw: function () {
 			petSprite.draw();
+			if (this.tick > 3 && this.tick !== 16)
+				evolutionSprites.EVOLVE.draw();
+			else if (this.tick === 16)
+				foregroundBoard.clearEntireScreen();
 		}
 	}),
 	DEVOLVE_ANIMATION: new ScreenSprite({
