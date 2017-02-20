@@ -4,7 +4,10 @@
 
 function Animal(options) {
     this.name = options.name;
-    this.stats = options.stats;
+	
+	this.evolvedStats = options.evolvedStats;
+	
+    this.stats = this.evolvedStats[0];
 
     if (options.isPet !== undefined)
         this.isPet = options.isPet;
@@ -208,7 +211,10 @@ var powerupBattleState = new ScreenState({
 
     },
     down: function() {
-
+		if (game.pet.stats.state !== EVOLUTION_STATES.ULTIMATE) {
+			game.currentScreenState = evolveBattleState;
+			asyncRender = true;
+		}
     },
     left: function() {
         game.currentScreenState = fightBattleState;
@@ -219,6 +225,52 @@ var powerupBattleState = new ScreenState({
         asyncRender = true;
     }
 });
+
+var evolveBattleState = new ScreenState({
+	state: SCREEN_STATES.POWER_UP.substates.EVOLVE,
+	up: function() {
+		game.currentScreenState = powerupBattleState;
+        asyncRender = true;
+    },
+    down: function() {
+		// disable key presses
+		// evolution screen - this updates the pet sprite
+		disableKeyPress();
+		if (game.pet.stats.state === EVOLUTION_STATES.BASIC) {
+			game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.CHAMPION.value];
+		}
+		else if (game.pet.stats.state === EVOLUTION_STATES.CHAMPION) {
+			game.pet.stats =  game.pet.evolvedStats[EVOLUTION_STATES.ULTIMATE.value];
+		}
+		
+		//currentScreen = statusScreens.EVOLVE_ANIMATION;
+		game.currentScreenState = evolvingAnimationState;
+		
+		asyncRender = true;
+    },
+    left: function() {
+		
+    },
+    right: function() {
+		
+    }
+})
+
+var evolvingAnimationState = new ScreenState({
+	state: SCREEN_STATES.POWER_UP.substates.EVOLVING,
+    up: function() {
+
+    },
+    down: function() {
+
+    },
+    left: function() {
+
+    },
+    right: function() {
+
+    }
+})
 
 var autoBattleState = new ScreenState({
     state: SCREEN_STATES.AUTO,
@@ -421,11 +473,11 @@ function generateAnimalStats(hp, attk, spd, state) {
             this.hp = hp;
             this.attk = attk;
             this.spd = spd;
-            //this.state = state;
+            this.state = state;
         }
     };
 }
-
+/*
 var currentEnemy = {
     name: "Enemy",
     currentEnemy: undefined,
@@ -437,12 +489,28 @@ var currentEnemy = {
         // set up new stats
     },
     stats: generateAnimalStats(5, 1, 1, EVOLUTION_STATES.BASIC)
-};
+};*/
 
 var cat = new Animal({
     name: "CAT",
-    stats: generateAnimalStats(10, 10, 2, EVOLUTION_STATES.BASIC),
+    //stats: generateAnimalStats(10, 10, 2, EVOLUTION_STATES.BASIC),
+	evolvedStats: [
+		generateAnimalStats(10, 10, 2, EVOLUTION_STATES.BASIC),
+		generateAnimalStats(20, 15, 5, EVOLUTION_STATES.CHAMPION),
+		generateAnimalStats(35, 20, 10, EVOLUTION_STATES.ULTIMATE)
+	],
     type: ANIMAL_TYPES.CAT
+});
+
+var duck = new Animal({
+    name: "DUCK",
+    //stats: generateAnimalStats(10, 12, 1, EVOLUTION_STATES.BASIC),
+	evolvedStats: [
+		generateAnimalStats(10, 12, 1, EVOLUTION_STATES.BASIC),
+		generateAnimalStats(18, 15, 6, EVOLUTION_STATES.CHAMPION),
+		generateAnimalStats(27, 22, 9, EVOLUTION_STATES.ULTIMATE)
+	],
+	type: ANIMAL_TYPES.DUCK
 });
 
 function update() {
@@ -451,12 +519,7 @@ function update() {
 
 var game = {
     state: GAME_STATES.PET_STATUS,
-    pet: new Animal({
-        name: "PET",
-        isPet: true,
-        stats: generateAnimalStats(10, 12, 1, EVOLUTION_STATES.BASIC),
-        type: ANIMAL_TYPES.DUCK
-    }),
+    pet: duck,
     stepCounter: {
         currentSteps: 0,
         total: bigInt(0),
@@ -482,3 +545,5 @@ var game = {
     currentMap: australia.NSW.cities.SYDNEY,
     currentEnemy: cat
 };
+
+game.pet.isPet = true;

@@ -6,6 +6,27 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 20/2/2017 ==
+
+Started work on the implementation of the evolution system.
+
+- Evolution system (semi related to the stat system)
+
+-1. Sprite drawings- MVP duck drawings have been added
+
+-2. Figure out how the existing architecture will support evolutions- Short term, use the "isEvolved" variable to store the "stage" that it is up to.
+
+3. Implement the evolution
+
+-4. Do some planning post battle on how evolutions will work- for MVP no "post battle evolutions will work" all evolutions will devolve at the end of the battle
+
+5. Implement the evolution screen
+
+I have updated the duckling picture to contain the bare minimums of an idle sprite and an attack sprite.
+
+For MVP, I will have to cut back on the evolution and have evolutions purely for the battle only and devolving back to the basic for walking around.
+
+
 == 17/2/2017 ==
 
 Things to be done:

@@ -6,6 +6,9 @@ function LogicState(options) {
     this.name = options.name;
     if (options.substates !== undefined)
         this.substates = options.substates;
+	
+	if (options.value !== undefined)
+		this.value = options.value;
 }
 
 var ANIMAL_STATES = {
@@ -31,18 +34,23 @@ var ANIMAL_STATES = {
     })
 };
 
+// use this as a multiplier for stats as well
 var EVOLUTION_STATES = {
     BABY: new LogicState({
-        name: "BABY"
+        name: "BABY",
+		value: 3
     }),
     BASIC: new LogicState({
-        name: "BASIC"
+        name: "BASIC",
+		value: 0
     }),
     CHAMPION: new LogicState({
-        name: "CHAMPION"
+        name: "CHAMPION",
+		value: 1
     }),
     ULTIMATE: new LogicState({
-        name: "ULTIMATE"
+        name: "ULTIMATE",
+		value: 2
     })
 };
 
@@ -149,7 +157,10 @@ var SCREEN_STATES = {
         substates: {
             EVOLVE: new LogicState({
                 name: "EVOLVE"
-            })
+            }),
+			EVOLVING: new LogicState({
+				name: "EVOLVING"
+			})
         }
     }),
     AUTO: new LogicState({
@@ -187,7 +198,10 @@ var SCREEN_STATES = {
     }),
     SADDENED_PET: new LogicState({
         name: "SADDENED_PET"
-    })
+    }),
+	DEVOLVING: new LogicState({
+		name: "DEVOLVING"
+	})
 };
 
 // === MAP CONSTANTS === //

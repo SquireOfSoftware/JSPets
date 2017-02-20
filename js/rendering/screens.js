@@ -274,15 +274,15 @@ var battleScreens = {
             petSprite.update();
             cryingOutSprite.update();
             if (this.tick < 0){
-                petSprite.currentPosition.reset();
+                /*petSprite.currentPosition.reset();
                 currentScreen = battleScreens.SLIDE;
-                currentScreen.update();
-                this.context.flipHorizontally();
+                currentScreen.update();*/
+                //this.context.flipHorizontally();
                 /* For testing purposes*/
-/*
+
                  currentScreen = battleMenuScreen.FIGHT;
                  game.currentScreenState = fightBattleState;
-                 toggleKeyPress();*/
+                 toggleKeyPress();
             }
         },
         draw: function() {
@@ -377,6 +377,12 @@ var battleMenuScreen = {
         image: generateImage("sprites/screens/run-battle-menu.png"),
         context: drawingBoard,
         referenceState: SCREEN_STATES.RUN
+    }),
+	EVOLVE: new ScreenSprite({
+        name: "EVOLVE",
+        image: generateImage("sprites/screens/evolve-battle-menu.png"),
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.POWER_UP.substates.EVOLVE
     })
 };
 
@@ -632,35 +638,14 @@ var attackSequenceScreen = {
                 }
                 else if (petSpriteStates.hasDeath) {
                     this.rounds++;
-                    disableKeyPress();
-                    // figure out who died
-                    // if your pet died, change state to sick, switch to petScreen
-                    if (petSprite.referenceObject.stats.hp < 1) {
-                        currentScreen = statusScreens.SADDENED_ANIMATION;
-                        game.currentScreenState = sadSequenceState;
-
-                        console.log("LOST");
-                    }
-                    // if your pet won, change state to happy, switch to petScreen
-                    else {
-                        //game.pet.state = ANIMAL_STATES.IDLE;
-                        currentScreen = statusScreens.HAPPY_ANIMATION;
-                        game.currentScreenState = happySequenceState;
-                        console.log("WIN!");
-                        // select next city
-                    }
-                    game.pet.stats.resetStats();
-                    game.currentEnemy.stats.resetStats();
-
-                    this.context.restore();
-                    foregroundBoard.restore();
-
-                    petSprite.update();
-                    game.stepCounter.hasRecentlyStepped = false;
-                    petSpriteStates.hasDeath = false;
-                    addLine("Battle is over");
-
-                    currentScreen.update();
+					drawingBoard.restore();
+					foregroundBoard.restore();
+					if (petSprite.isEvolved > 0) {
+						currentScreen = statusScreens.DEVOLVE_ANIMATION;
+						currentScreen.update();
+					}
+					else
+						performEndingAnimation();
                 }
             }
         },
@@ -673,6 +658,35 @@ var attackSequenceScreen = {
         }
     })
 };
+
+function performEndingAnimation() {
+	disableKeyPress();
+	// figure out who died
+	// if your pet died, change state to sick, switch to petScreen
+	if (petSprite.referenceObject.stats.hp < 1) {
+		currentScreen = statusScreens.SADDENED_ANIMATION;
+		game.currentScreenState = sadSequenceState;
+
+		console.log("LOST");
+	}
+	// if your pet won, change state to happy, switch to petScreen
+	else {
+		//game.pet.state = ANIMAL_STATES.IDLE;
+		currentScreen = statusScreens.HAPPY_ANIMATION;
+		game.currentScreenState = happySequenceState;
+		console.log("WIN!");
+		// select next city
+	}
+	game.pet.stats.resetStats();
+	game.currentEnemy.stats.resetStats();
+
+	petSprite.update();
+	game.stepCounter.hasRecentlyStepped = false;
+	petSpriteStates.hasDeath = false;
+	addLine("Battle is over");
+
+	currentScreen.update();
+}
 
 var statusScreens = {
     HAPPY_ANIMATION: new ScreenSprite({
@@ -736,5 +750,61 @@ var statusScreens = {
             petSprite.draw();
             statusSprites.BANDAID.draw();
         }
-    })
+    }),
+	EVOLVE_ANIMATION: new ScreenSprite({
+		name: "EVOLVE_ANIMATION",
+		image: null,
+		context: null,
+		referenceState: SCREEN_STATES.POWER_UP.substates.EVOLVING,
+		update: function () {
+			if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
+                this.tick = 8;
+                console.log("EVOLVING");
+				// evolve the petSprite
+				
+            }
+            this.tick--;
+
+			if (this.tick == 3) {
+				petSprite.evolve();
+			}
+
+            if (this.tick < 0) {
+				currentScreen = attackSequenceScreen.LAUNCHING_ATTACK;
+				currentScreen.update();
+            }
+		},
+		draw: function () {
+			petSprite.draw();
+		}
+	}),
+	DEVOLVE_ANIMATION: new ScreenSprite({
+		name: "DEVOLVE_ANIMATION",
+		image: null,
+		context: null,
+		referenceState: SCREEN_STATES.DEVOLVING,
+		update: function () {
+			if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
+                this.tick = 6;
+                console.log("DEVOLVING");
+				// evolve the petSprite
+				
+				petSprite.currentPosition = petSprite.idlePosition;
+				petSprite.currentPosition.reset();
+				
+            }
+            this.tick--;
+
+			if (this.tick == 3) {
+				petSprite.devolve();
+			}
+
+            if (this.tick < 0) {
+				performEndingAnimation();
+            }
+		},
+		draw: function () {
+			petSprite.draw();
+		}
+	})
 };

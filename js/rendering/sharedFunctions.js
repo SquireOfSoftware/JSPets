@@ -10,7 +10,7 @@ function SpritePosition(options) {
     var canvasX = options.canvasX;
     this.canvasY = options.canvasY;
     this.updatedCanvasX = canvasX;
-
+	
     var maxFrame = options.maxFrame;
 
     var multiplier;
@@ -36,10 +36,6 @@ function SpritePosition(options) {
             currentFrameCounter = 0;
         }
         this.updatedCanvasX = canvasX + multiplier * currentFrameCounter;
-    };
-
-    this.flip = function () {
-        isFlipped = !isFlipped;
     };
 
     this.getPosition = function () {

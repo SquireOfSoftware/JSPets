@@ -52,9 +52,18 @@ function updateScreens() {
         else if (currentScreenState === SCREEN_STATES.SADDENED_PET) {
             currentScreen = statusScreens.SADDENED_ANIMATION;
         }
+		else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.EVOLVE) {
+			currentScreen = battleMenuScreen.EVOLVE;
+		}
+		else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.EVOLVING) {
+			currentScreen = statusScreens.EVOLVE_ANIMATION;
+			game.currentScreenState.state = SCREEN_STATES.ATTACK_SEQUENCE;
+			//console.log(currentScreenState);
+		}
         else {
             //currentScreen = petScreen;
-            addLine("Cannot locate screen: " + game.state);
+            addLine("Cannot locate screen: " + game.currentScreenState.state.name);
+			//console.log(game.currentScreenState);
         }
         //clearScreen();
         drawingBoard.clearEntireScreen();

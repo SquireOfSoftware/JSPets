@@ -46,13 +46,13 @@ function AnimalSprite(options) {
 
     if (options.saddenedPosition !== undefined)
         this.saddenedPosition = options.saddenedPosition;
+	
+	if (options.isEvolved !== undefined)
+		this.isEvolved = options.isEvolved;
+	else
+		this.isEvolved = 0;
 
     var referenceState = ANIMAL_STATES.IDLE;
-
-    if (options.flip !== undefined)
-        this.flip = options.flip;
-    else
-        this.flip = false; // facing left
 
     if (options.size !== undefined)
         this.size = options.size;
@@ -103,7 +103,7 @@ function AnimalSprite(options) {
             this.context.drawImage(
                 this.image,
                 coordinates.spriteSheetX,
-                coordinates.spriteSheetY,
+                coordinates.spriteSheetY + this.isEvolved * DEFAULT_SPRITE_SIZE,
                 this.size.width,
                 this.size.height,
                 coordinates.canvasX,
@@ -112,12 +112,19 @@ function AnimalSprite(options) {
                 this.size.height
             );
         };
+		
+	if (options.evolve !== undefined)
+		this.evolve = options.evolve;
+	
+	if (options.devolve !== undefined)
+		this.devolve = options.devolve;
 }
 
 var petSprite = new AnimalSprite({
     image: generateImage("sprites/animals/duckling.png"),
     context: drawingBoard,
     referenceObject: game.pet,
+	isEvolved: 0,
     idlePosition: new SpritePosition({
         spriteSheetX: 0,
         spriteSheetY: 0,
@@ -179,6 +186,14 @@ var petSprite = new AnimalSprite({
         canvasX: 15,
         canvasY: 0
     }),
+	evolve: function() {
+		this.isEvolved ++;
+		if (this.isEvolved > EVOLUTION_STATES.ULTIMATE.value)
+			this.isEvolved = EVOLUTION_STATES.ULTIMATE.value;
+	},
+	devolve: function() {
+		this.isEvolved = 0;
+	}
 });
 
 var catSprite = new AnimalSprite({
