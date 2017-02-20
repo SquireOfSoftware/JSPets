@@ -537,5 +537,39 @@ var evolutionSprites = {
 				this.size.height
 			)
 		}
+	),
+	DEVOLVE: new GenericSprite(
+		generateImage("sprites/devolving-cross-hatching.png"),
+		foregroundBoard,
+		[],
+		{
+			width: 45,
+			height: 20
+		},
+		function() {
+			if (this.tick === undefined || this.tick > 1) {
+                this.tick = -1;
+            }
+			
+			this.tick++;
+		},
+		function() {
+			
+			if (this.tick % 2 === 1) {
+				this.context.drawImage(
+					this.image,
+					0,
+					0,
+					this.size.width,
+					this.size.height,
+					0,
+					0,
+					this.size.width,
+					this.size.height
+				)
+			}
+			else
+				this.context.clearEntireScreen();
+		}
 	)
 }

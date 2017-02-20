@@ -683,22 +683,23 @@ function performEndingAnimation() {
 		console.log("WIN!");
 		// select next city
 	}
-	//game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.BASIC.value];
-	//game.pet.stats.resetAllStats();
-	game.pet.stats.resetStats();
-	game.currentEnemy.stats.resetStats();
-	game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.BASIC.value];
-	petSprite.update();
-	game.stepCounter.hasRecentlyStepped = false;
-	petSpriteStates.hasDeath = false;
-	addLine("Battle is over");
 	
+	resetStats();
+	resetAttackSequence();
+	
+	petSpriteStates.hasDeath = false;
+	
+	addLine("Battle is over");
+	petSprite.update();
+
+	currentScreen.update();
+}
+
+function resetAttackSequence() {
 	attackSequenceScreen.LAUNCHING_ATTACK.rounds = 0;
 	attackSequenceScreen.ATTACK.rounds = 0;
 	attackSequenceScreen.RECEIVING_DAMAGE.rounds = 0;
 	attackSequenceScreen.CALCULATING_DAMAGE.rounds = 0;
-
-	currentScreen.update();
 }
 
 var statusScreens = {
@@ -819,6 +820,8 @@ var statusScreens = {
 				
             }
             this.tick--;
+			
+			evolutionSprites.DEVOLVE.update();
 
 			if (this.tick == 3) {
 				petSprite.devolve();
@@ -830,6 +833,80 @@ var statusScreens = {
 		},
 		draw: function () {
 			petSprite.draw();
+			evolutionSprites.DEVOLVE.draw();
+		}
+	}),
+	// triggered by a run
+	SADDENED_DEVOLVE_ANIMATION: new ScreenSprite({
+		name: "SAD_DEVOLVE_ANIMATION",
+		image: null,
+		context: null,
+		referenceState: SCREEN_STATES.DEVOLVING,
+		update: function () {
+			if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
+                this.tick = 6;
+                console.log("DEVOLVING");
+				// evolve the petSprite
+				
+				petSprite.currentPosition = petSprite.idlePosition;
+				petSprite.currentPosition.reset();
+				
+            }
+            this.tick--;
+			
+			evolutionSprites.DEVOLVE.update();
+
+			if (this.tick == 3) {
+				petSprite.devolve();
+			}
+
+            if (this.tick < 0) {
+				resetStats();
+				resetAttackSequence();
+				currentScreen = statusScreens.SADDENED_ANIMATION;
+				game.currentScreenState = sadSequenceState;
+            }
+		},
+		draw: function () {
+			petSprite.draw();
+			evolutionSprites.DEVOLVE.draw();
+		}
+	}),
+	// triggered by a run
+	IDLE_DEVOLVE_ANIMATION: new ScreenSprite({
+		name: "IDLE_DEVOLVE_ANIMATION",
+		image: null,
+		context: null,
+		referenceState: SCREEN_STATES.DEVOLVING,
+		update: function () {
+			if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
+                this.tick = 6;
+                console.log("DEVOLVING");
+				// evolve the petSprite
+				
+				petSprite.currentPosition = petSprite.idlePosition;
+				petSprite.currentPosition.reset();
+				
+				currentScreen = petScreen;
+				game.currentScreenState = petState;
+				
+            }
+            this.tick--;
+			
+			evolutionSprites.DEVOLVE.update();
+
+			if (this.tick == 3) {
+				petSprite.devolve();
+			}
+
+            if (this.tick < 0) {
+				resetStats();
+				resetAttackSequence();
+            }
+		},
+		draw: function () {
+			petSprite.draw();
+			evolutionSprites.DEVOLVE.draw();
 		}
 	})
 };

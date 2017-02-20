@@ -200,7 +200,15 @@ var SCREEN_STATES = {
         name: "SADDENED_PET"
     }),
 	DEVOLVING: new LogicState({
-		name: "DEVOLVING"
+		name: "DEVOLVING",
+		substates: {
+			SAD: new LogicState({
+				name: "SAD"
+			}),
+			IDLE: new LogicState({
+				name: "IDLE"
+			})
+		}
 	})
 };
 

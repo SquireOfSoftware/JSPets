@@ -277,7 +277,39 @@ var evolvingAnimationState = new ScreenState({
     right: function() {
 
     }
-})
+});
+
+var sadDevolvingAnimationstate = new ScreenState({
+	state: SCREEN_STATES.DEVOLVING.substates.SAD,
+    up: function() {
+
+    },
+    down: function() {
+
+    },
+    left: function() {
+
+    },
+    right: function() {
+
+    }
+});
+
+var idleDevolvingAnimationstate = new ScreenState({
+	state: SCREEN_STATES.DEVOLVING.substates.IDLE,
+    up: function() {
+
+    },
+    down: function() {
+
+    },
+    left: function() {
+
+    },
+    right: function() {
+
+    }
+});
 
 var autoBattleState = new ScreenState({
     state: SCREEN_STATES.AUTO,
@@ -319,17 +351,33 @@ var runBattleState = new ScreenState({
         addLine("Rolled " + roll);
         if (roll % 2 === 1) {
             game.pet.state = ANIMAL_STATES.SICK;
-            currentScreen = statusScreens.SADDENED_ANIMATION;
-            game.currentScreenState = sadSequenceState;
+            //currentScreen = statusScreens.SADDENED_DEVOLVE_ANIMATION;
+			if (game.pet.stats.state === EVOLUTION_STATES.BASIC)
+				game.currentScreenState = sadSequenceState;
+			else
+				game.currentScreenState = sadDevolvingAnimationstate;
         }
         else {
-            game.pet.state = ANIMAL_STATES.IDLE;
-            game.currentScreenState = petState;
+			if (game.pet.stats.state === EVOLUTION_STATES.BASIC) {
+				game.pet.state = ANIMAL_STATES.IDLE;
+				game.currentScreenState = petState;
+			}
+			else 
+				game.currentScreenState = idleDevolvingAnimationstate;
+			
+            
         }
-
-        // remember that the trigger was that you took a step over the threshold
-        game.stepCounter.hasRecentlyStepped = false;
+		
+		resetStats();
+		
         game.stepCounter.resetWaitPeriod();
+		/*
+		if (petSprite.isEvolved > 0) {
+			currentScreen = statusScreens.IDLE_DEVOLVE_ANIMATION;
+			currentScreen.update();
+		}
+		else
+			performEndingAnimation();*/
 
     },
     left: function() {
@@ -523,6 +571,14 @@ var duck = new Animal({
 		}
 	}
 });
+
+function resetStats() {
+	game.pet.stats.resetStats();
+	game.currentEnemy.stats.resetStats();
+	game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.BASIC.value];
+	
+	game.stepCounter.hasRecentlyStepped = false;
+}
 
 function update() {
     // Need to figure out how to link this to a screen

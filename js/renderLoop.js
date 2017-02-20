@@ -60,6 +60,12 @@ function updateScreens() {
 			//game.currentScreenState.state = SCREEN_STATES.ATTACK_SEQUENCE;
 			//console.log(currentScreenState);
 		}
+		else if (currentScreenState === SCREEN_STATES.DEVOLVING.substates.SAD) {
+			currentScreen = statusScreens.SADDENED_DEVOLVE_ANIMATION;
+		}
+		else if (currentScreenState === SCREEN_STATES.DEVOLVING.substates.IDLE) {
+			currentScreen = statusScreens.IDLE_DEVOLVING_ANIMATION;
+		}
         else {
             //currentScreen = petScreen;
             addLine("Cannot locate screen: " + game.currentScreenState.state.name);
