@@ -26,6 +26,11 @@ I have updated the duckling picture to contain the bare minimums of an idle spri
 
 For MVP, I will have to cut back on the evolution and have evolutions purely for the battle only and devolving back to the basic for walking around.
 
+Evolutions has been hacked together to make it work, it will need further optimisations later down the track, but I probably won't get around to it, the major optimisations would be around how "devolving" works, as you can "devolve" off into multiple different states based on your current evolution state.
+
+Take note that auto, run and normal win conditions trigger supposed different animation states. Due to the poor infrastructure of the code, it inevitably led to some quick clutches which unfortunately has led to less than optimal code.
+
+I would like to optimise, but I would also like to get this project over and done with as well. So optimisation isn't a high priority at the moment.
 
 == 17/2/2017 ==
 

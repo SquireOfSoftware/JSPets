@@ -4,7 +4,7 @@
 
 var animationFrameId;
 
-var MAX_FPS = 5;
+var MAX_FPS = 2; // 5 // 20
 var fpsInterval = 1000/MAX_FPS;
 var now = Date.now();
 var then = Date.now();
