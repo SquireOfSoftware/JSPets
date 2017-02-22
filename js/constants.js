@@ -285,7 +285,63 @@ var MAP_STATES = {
         name: "WA"
     }),
     TAS: new LogicState({
-        name: "TAS"
+        name: "TAS",
+		substats: {
+			REDPA: new LogicState({
+				name: "Redpa"
+			}),
+			SMITHTON: new LogicState({
+				name: "Smithton"
+			}),
+			BURNIE_SOMERSET: new LogicState({
+				name: "Burnie-Somerset"
+			}),
+			CRADLE_MOUNTAIN: new LogicState({
+				name: "Cradle Mountain"
+			}),
+			DELORAINE: new LogicState({
+				name: "Deloraine"
+			}),
+			GEORGE_TOWN: new LogicState({
+				name: "George Town"
+			}),
+			MUSSELROE_BAY: new LogicState({
+				name: "Musselroe Bay"
+			}),
+			SCAMANDER: new LogicState({
+				name: "Scamander"
+			}),
+			LAUNCESTON: new LogicState({
+				name: "Launceston"
+			}),
+			CAMPBELL_TOWN: new LogicState({
+				name: "Campbell Town"
+			}),
+			DERWENT_BRIDGE: new LogicState({
+				name: "Derwent Bridge"
+			}),
+			QUEENSTOWN: new LogicState({
+				name: "Queenstown"
+			}),
+			STRAHAN: new LogicState({
+				name: "Strahan"
+			}),
+			STRATHGORDON: new LogicState({
+				name: "Strathgordon"
+			}),
+			BOTHWELL: new LogicState({
+				name: "Bothwell"
+			}),
+			TRIABURINA: new LogicState({
+				name: "Triaburina"
+			}),
+			HOBART: new LogicState({
+				name: "Hobart"
+			}),
+			PORT_ARTHUR: new LogicState({
+				name: "Port Arthur"
+			})
+		}
     }),
     ACT: new LogicState({
         name: "ACT"
