@@ -6,6 +6,63 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 22/2/2017 ==
+
+Forgot to mention that I had implemented the evolution system before and that I have hacked together some extra animations which are just copy and pasted animations with different "transition" scenes out to the appropriate locations.
+
+Today I have been trying to figure out how the map system will work.
+
+I think for the sake of simplicity, I will use Tasmania hence the introduction of Tasmanian geographical, climate and temperature maps.
+
+I have mapped out a track though I am unsure on how this whole map would work.
+
+It is a picture of Tasmania with pixels overlayed on top.
+
+I also observed a bit of some of the battle sequences on youtube as well as looking into some of the various sprites that I may need when introducing maps.
+
+What is interesting is the use of different sprites that are surprisingly subtle. I had no idea so much effort had gone into the sprites and animations.
+
+I will stick to my MVP for now.
+
+The cities I will use are:
+
+1. Redpa
+
+2. Smithton
+
+3. Burnie-Somerset
+
+4. Cradle Mountain - Snowy
+
+5. Deloraine - Snowy
+
+6. George Town
+
+7. Musselroe Bay
+
+8. Scamander
+
+9. Launceston
+
+10. Campbell Town - Plains
+
+11. Derwent Bridge
+
+12. Queenstown
+
+13. Strahan
+
+14. Strathgordon - Forest
+
+15. Bothwell - Valley
+
+16. Triaburina
+
+17. Hobart
+
+18. Port Arthur
+
+
 == 20/2/2017 ==
 
 Started work on the implementation of the evolution system.
