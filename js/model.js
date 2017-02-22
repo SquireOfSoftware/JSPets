@@ -475,70 +475,138 @@ function State(options) {
     this.cities = options.cities;
 }
 
-function City(options){
-    this.name = options.name;
-    this.stepCount = options.stepCount;
-    this.referenceState = options.referenceState;
+function City(referenceState, coordinates, stepCount, isCurrentCity){
+    
+	this.coordinates = coordinates;
+    this.stepCount = stepCount;
+	this.isCurrentCity = isCurrentCity
+    this.referenceState = referenceState;
+	
+	this.name = this.referenceState.name;
+}
+
+function getCoordinates(x, y) {
+	return {x: x, y: y}; // need to figure out how to display stuff on to the next map
 }
 
 var australia = {
-    NSW: new State({
-        name: "NSW",
-        cities: {
-            SYDNEY: new City({
-                name: "Sydney",
-                stepCount: 1,//300,
-                referenceState: MAP_STATES.NSW.substates.SYDNEY,
-                biomes: [
-                    BIOMES.CITY,
-                    BIOMES.GRASSLAND
-                ]
-            }),
-            HUNTER_VALLEY: new City({
-                name: "Hunter Valley",
-                stepCount: 400,
-                referenceState: MAP_STATES.NSW.substates.HUNTER_VALLEY,
-                biomes: []
-            }),
-            BROKEN_HILL: new City({
-                name: "Broken Hill",
-                stepCount: 2000,
-                referenceState: MAP_STATES.NSW.substates.BROKEN_HILL,
-                biomes: []
-            }),
-            JINDABYNE: new City({
-                name: "Jindabyne",
-                stepCount: 850,
-                referenceState: MAP_STATES.NSW.substates.JINDABYNE,
-                biomes: []
-            }),
-            JERVIS_BAY: new City({
-                name: "Jervis Bay",
-                stepCount: 400,
-                referenceState: MAP_STATES.NSW.substates.JERVIS_BAY,
-                biomes: []
-            })
-        }
-    }),
-    QLD: new State({
-        name: "QLD"
-    }),
-    NT: new State({
-        name: "NT"
-    }),
-    WA: new State({
-        name: "WA"
-    }),
-    SA: new State({
-        name: "SA"
-    }),
-    VIC: new State({
-        name: "VIC"
-    }),
     TAS: new State({
-        name: "TAS"
+        name: "TAS",
+		cities: [
+			new City(
+				MAP_STATES.TAS.substates.REDPA,
+				getCoordinates(4, 3),
+				3,
+				true
+			),
+			new City(
+				MAP_STATES.TAS.substates.SMITHTON,
+				getCoordinates(8, 2),
+				3,
+				false
+			),
+			new City(
+				MAP_STATES.TAS.substates.BURNIE_SOMERSET,
+				getCoordinates(17, 6),
+				3,
+				false
+			),
+			new City(
+				MAP_STATES.TAS.substates.CRADLE_MOUNTAIN,
+				getCoordinates(17, 12),
+				3,
+				false
+			),
+			new City(
+				MAP_STATES.TAS.substates.DELORAINE,
+				getCoordinates(25, 11),
+				3,
+				false
+			),
+			new City(
+				MAP_STATES.TAS.substates.GEORGE_TOWN,
+				getCoordinates(27, 6),
+				3,
+				false
+			),
+			new City(
+				MAP_STATES.TAS.substates.MUSSELROE_BAY,
+				getCoordinates(41, 3),
+				3,
+				false
+			),
+			new City(
+				MAP_STATES.TAS.substates.SCAMANDER,
+				getCoordinates(42, 12),
+				3,
+				false
+			),
+			new City(
+				MAP_STATES.TAS.substates.LAUNCESTON,
+				getCoordinates(30, 10),
+				3,
+				false
+			),
+			new City(
+				MAP_STATES.TAS.substates.CAMPBELL_TOWN,
+				getCoordinates(34, 17),
+				3,
+				false
+			),
+			new City(
+				MAP_STATES.TAS.substates.DERWENT_BRIDGE,
+				getCoordinates(21, 19),
+				3,
+				false
+			),
+			new City(
+				MAP_STATES.TAS.substates.QUEENSTOWN,
+				getCoordinates(13, 19),
+				3,
+				false
+			),
+			new City(
+				MAP_STATES.TAS.substates.STRAHAN,
+				getCoordinates(19, 22), // next map
+				3,
+				false
+			),
+			new City(
+				MAP_STATES.TAS.substates.STRATHGORDON,
+				getCoordinates(19, 30),
+				3,
+				false
+			),
+			
+			new City(
+				MAP_STATES.TAS.substates.BOTHWELL,
+				getCoordinates(29, 25),
+				3,
+				false
+			),
+			new City(
+				MAP_STATES.TAS.substates.TRIABUNNA,
+				getCoordinates(39, 27),
+				3,
+				false
+			),
+			new City(
+				MAP_STATES.TAS.substates.HOBART,
+				getCoordinates(32, 31),
+				3,
+				false
+			),
+			new City(
+				MAP_STATES.TAS.substates.PORT_ARTHUR,
+				getCoordinates(38, 36),
+				3,
+				false
+			),
+		]
     })
 };
+
+console.log(australia.TAS.cities[0]);
 
 function generateAnimalStats(hp, attk, spd, state) {
     return {
@@ -634,7 +702,7 @@ var game = {
         }
     },
     currentScreenState: petState,
-    currentMap: australia.NSW.cities.SYDNEY,
+    currentMap: australia.TAS.cities[0],
     currentEnemy: cat
 };
 

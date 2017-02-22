@@ -254,39 +254,9 @@ function MapStates(name, biomes) {
 }
 
 var MAP_STATES = {
-    NT: new MapStates("NT", []),
-    QLD: new LogicState({
-        name: "QLD"
-    }),
-    NSW: new LogicState({
-        name: "NSW",
-        substates: {
-            SYDNEY: new LogicState({
-                name: "SYDNEY"
-            }),
-            HUNTER_VALLEY: new LogicState({
-                name: "HUNTER_VALLEY"
-            }),
-            BROKEN_HILL: new LogicState({
-                name: "BROKEN_HILL"
-            }),
-            JINDABYNE: new LogicState({
-                name: "JINDABYNE"
-            }),
-            JERVIS_BAY: new LogicState({
-                name: "JERVIS_BAY"
-            })
-        }
-    }),
-    VIC: new LogicState({
-        name: "VIC"
-    }),
-    WA: new LogicState({
-        name: "WA"
-    }),
     TAS: new LogicState({
         name: "TAS",
-		substats: {
+		substates: {
 			REDPA: new LogicState({
 				name: "Redpa"
 			}),
@@ -332,8 +302,8 @@ var MAP_STATES = {
 			BOTHWELL: new LogicState({
 				name: "Bothwell"
 			}),
-			TRIABURINA: new LogicState({
-				name: "Triaburina"
+			TRIABUNNA: new LogicState({
+				name: "Triabunna"
 			}),
 			HOBART: new LogicState({
 				name: "Hobart"
@@ -342,9 +312,6 @@ var MAP_STATES = {
 				name: "Port Arthur"
 			})
 		}
-    }),
-    ACT: new LogicState({
-        name: "ACT"
     })
 };
 

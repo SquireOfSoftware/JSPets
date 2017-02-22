@@ -26,41 +26,45 @@ I will stick to my MVP for now.
 
 The cities I will use are:
 
-1. Redpa
+1. Redpa - 4,3
 
-2. Smithton
+2. Smithton - 8,2
 
-3. Burnie-Somerset
+3. Burnie-Somerset - 17,6
 
-4. Cradle Mountain - Snowy
+4. Cradle Mountain - Snowy - 17,12
 
-5. Deloraine - Snowy
+5. Deloraine - Snowy - 25,11 
 
-6. George Town
+6. George Town - 27,6 
 
-7. Musselroe Bay
+7. Musselroe Bay - 41,3
 
-8. Scamander
+8. Scamander - 42,12
 
-9. Launceston
+9. Launceston - 30,10
 
-10. Campbell Town - Plains
+10. Campbell Town - Plains - 34,17
 
-11. Derwent Bridge
+11. Derwent Bridge - 21,19
 
-12. Queenstown
+12. Queenstown  - 13,19
 
-13. Strahan
+13. Strahan - 10,22 (10,2)
 
-14. Strathgordon - Forest
+14. Strathgordon - Forest - 19,30 (19,10)
 
-15. Bothwell - Valley
+15. Bothwell - Valley - 29,25 (29,5)
 
-16. Triaburina
+16. Triabunna - 39,27 (39,7)
 
-17. Hobart
+17. Hobart - 32,31 (32,11)
 
-18. Port Arthur
+18. Port Arthur - 38,36 (32,16)
+
+I have listed a list of coordinates which roughly map to Google maps and then I will try and map this further to a screen.
+
+The main problem that I have is reading through the whole array but then somehow skipping the cities which are not on the map, so I will need to figure this out.
 
 
 == 20/2/2017 ==
