@@ -135,7 +135,8 @@ var mapState = new ScreenState({
         asyncRender = true;
     },
     down: function() {
-
+        game.currentScreenState = mapScreenState.NORTH;
+        asyncRender = true;
     },
     left: function() {
         game.currentScreenState = careState;
@@ -192,8 +193,6 @@ var fightBattleState = new ScreenState({
 
     },
     down: function() {
-        //game.currentScreenState = stepsState;
-        //asyncRender = true;
         game.currentScreenState = attackSequenceState;
         asyncRender = true;
     },
@@ -238,7 +237,6 @@ var evolveBattleState = new ScreenState({
 		// disable key presses
 		// evolution screen - this updates the pet sprite
 		disableKeyPress();
-		//console.log(game.pet.stats);
 		
 		if (game.pet.stats.state === EVOLUTION_STATES.BASIC) {
 			game.pet.stats.resetStats();
@@ -248,9 +246,7 @@ var evolveBattleState = new ScreenState({
 			game.pet.stats.resetStats();
 			game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.ULTIMATE.value];
 		}
-		//console.log(game.pet.stats);
-		
-		//currentScreen = statusScreens.EVOLVE_ANIMATION;
+
 		game.currentScreenState = evolvingAnimationState;
 		
 		asyncRender = true;
@@ -261,7 +257,7 @@ var evolveBattleState = new ScreenState({
     right: function() {
 		
     }
-})
+});
 
 var evolvingAnimationState = new ScreenState({
 	state: SCREEN_STATES.POWER_UP.substates.EVOLVING,
@@ -335,16 +331,6 @@ var autoBattleState = new ScreenState({
     down: function() {
 		var roll = Math.round(Math.random() * 10, 0);
         addLine("Auto battle rolled " + roll);
-		/*
-        if (roll % 2 === 1) {
-            game.pet.state = ANIMAL_STATES.SICK;
-            currentScreen = statusScreens.SADDENED_ANIMATION;
-            game.currentScreenState = sadSequenceState;
-        }
-        else {
-            currentScreen = statusScreens.HAPPY_ANIMATION;
-            game.currentScreenState = happySequenceState;
-        }*/
 		
 		if (roll % 2 === 1) {
             game.pet.state = ANIMAL_STATES.SICK;
@@ -467,6 +453,47 @@ var sadSequenceState = new ScreenState({
     }
 });
 
+// MAP
+
+var mapScreenState = {
+    NORTH: new ScreenState({
+        state: SCREEN_STATES.MAP.substates.TAS.substates.NORTH,
+        up: function() {
+            game.currentScreenState = mapState;
+            asyncRender = true;
+        },
+        down: function() {
+
+        },
+        left: function() {
+            game.currentScreenState = mapScreenState.SOUTH;
+            asyncRender = true;
+        },
+        right: function() {
+            game.currentScreenState = mapScreenState.SOUTH;
+            asyncRender = true;
+        }
+    }),
+    SOUTH: new ScreenState({
+        state: SCREEN_STATES.MAP.substates.TAS.substates.SOUTH,
+        up: function() {
+            game.currentScreenState = mapState;
+            asyncRender = true;
+        },
+        down: function() {
+
+        },
+        left: function() {
+            game.currentScreenState = mapScreenState.NORTH;
+            asyncRender = true;
+        },
+        right: function() {
+            game.currentScreenState = mapScreenState.NORTH;
+            asyncRender = true;
+        }
+    })
+};
+
 // Land
 // Each piece of land has a "state" and a set of cities
 // each city has a set of "biomes" and a step count to reach the center of the city
@@ -479,7 +506,7 @@ function City(referenceState, coordinates, stepCount, isCurrentCity){
     
 	this.coordinates = coordinates;
     this.stepCount = stepCount;
-	this.isCurrentCity = isCurrentCity
+	this.isCurrentCity = isCurrentCity;
     this.referenceState = referenceState;
 	
 	this.name = this.referenceState.name;
@@ -492,79 +519,84 @@ function getCoordinates(x, y) {
 var australia = {
     TAS: new State({
         name: "TAS",
-		cities: [
-			new City(
-				MAP_STATES.TAS.substates.REDPA,
-				getCoordinates(4, 3),
-				3,
-				true
-			),
-			new City(
-				MAP_STATES.TAS.substates.SMITHTON,
-				getCoordinates(8, 2),
-				3,
-				false
-			),
-			new City(
-				MAP_STATES.TAS.substates.BURNIE_SOMERSET,
-				getCoordinates(17, 6),
-				3,
-				false
-			),
-			new City(
-				MAP_STATES.TAS.substates.CRADLE_MOUNTAIN,
-				getCoordinates(17, 12),
-				3,
-				false
-			),
-			new City(
-				MAP_STATES.TAS.substates.DELORAINE,
-				getCoordinates(25, 11),
-				3,
-				false
-			),
-			new City(
-				MAP_STATES.TAS.substates.GEORGE_TOWN,
-				getCoordinates(27, 6),
-				3,
-				false
-			),
-			new City(
-				MAP_STATES.TAS.substates.MUSSELROE_BAY,
-				getCoordinates(41, 3),
-				3,
-				false
-			),
-			new City(
-				MAP_STATES.TAS.substates.SCAMANDER,
-				getCoordinates(42, 12),
-				3,
-				false
-			),
-			new City(
-				MAP_STATES.TAS.substates.LAUNCESTON,
-				getCoordinates(30, 10),
-				3,
-				false
-			),
-			new City(
-				MAP_STATES.TAS.substates.CAMPBELL_TOWN,
-				getCoordinates(34, 17),
-				3,
-				false
-			),
-			new City(
-				MAP_STATES.TAS.substates.DERWENT_BRIDGE,
-				getCoordinates(21, 19),
-				3,
-				false
-			),
-			new City(
-				MAP_STATES.TAS.substates.QUEENSTOWN,
-				getCoordinates(13, 19),
-				3,
-				false
-			),
+		cities: {
+            NORTH:[
+                // NORTH
+                new City(
+                    MAP_STATES.TAS.substates.REDPA,
+                    getCoordinates(4, 3),
+                    3,
+                    true
+                ),
+                new City(
+                    MAP_STATES.TAS.substates.SMITHTON,
+                    getCoordinates(8, 2),
+                    3,
+                    false
+                ),
+                new City(
+                    MAP_STATES.TAS.substates.BURNIE_SOMERSET,
+                    getCoordinates(17, 6),
+                    3,
+                    false
+                ),
+                new City(
+                    MAP_STATES.TAS.substates.CRADLE_MOUNTAIN,
+                    getCoordinates(17, 12),
+                    3,
+                    false
+                ),
+                new City(
+                    MAP_STATES.TAS.substates.DELORAINE,
+                    getCoordinates(25, 11),
+                    3,
+                    false
+                ),
+                new City(
+                    MAP_STATES.TAS.substates.GEORGE_TOWN,
+                    getCoordinates(27, 6),
+                    3,
+                    false
+                ),
+                new City(
+                    MAP_STATES.TAS.substates.MUSSELROE_BAY,
+                    getCoordinates(41, 3),
+                    3,
+                    false
+                ),
+                new City(
+                    MAP_STATES.TAS.substates.SCAMANDER,
+                    getCoordinates(42, 12),
+                    3,
+                    false
+                ),
+                new City(
+                    MAP_STATES.TAS.substates.LAUNCESTON,
+                    getCoordinates(30, 10),
+                    3,
+                    false
+                ),
+                new City(
+                    MAP_STATES.TAS.substates.CAMPBELL_TOWN,
+                    getCoordinates(34, 17),
+                    3,
+                    false
+                ),
+                new City(
+                    MAP_STATES.TAS.substates.DERWENT_BRIDGE,
+                    getCoordinates(21, 19),
+                    3,
+                    false
+                ),
+                new City(
+                    MAP_STATES.TAS.substates.QUEENSTOWN,
+                    getCoordinates(13, 19),
+                    3,
+                    false
+                )]
+        },
+        SOUTH: [
+            // SOUTH
 			new City(
 				MAP_STATES.TAS.substates.STRAHAN,
 				getCoordinates(19, 22), // next map
@@ -601,12 +633,12 @@ var australia = {
 				getCoordinates(38, 36),
 				3,
 				false
-			),
+			)
 		]
     })
 };
 
-console.log(australia.TAS.cities[0]);
+// ANIMALS
 
 function generateAnimalStats(hp, attk, spd, state) {
     return {
@@ -702,7 +734,7 @@ var game = {
         }
     },
     currentScreenState: petState,
-    currentMap: australia.TAS.cities[0],
+    currentMap: australia.TAS.cities.NORTH[0],
     currentEnemy: cat
 };
 

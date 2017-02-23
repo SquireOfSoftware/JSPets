@@ -93,26 +93,16 @@ var SCREEN_STATES = {
     MAP: new LogicState({
         name: "MAP",
         substates: {
-            NT: new LogicState({
-                name: "NT"
-            }),
-            QLD: new LogicState({
-                name: "QLD"
-            }),
-            NSW: new LogicState({
-                name: "NSW"
-            }),
-            VIC: new LogicState({
-                name: "VIC"
-            }),
-            WA: new LogicState({
-                name: "WA"
-            }),
             TAS: new LogicState({
-                name: "TAS"
-            }),
-            ACT: new LogicState({
-                name: "ACT"
+                name: "TAS",
+                substates: {
+                    NORTH: new LogicState({
+                        name: "NORTH"
+                    }),
+                    SOUTH: new LogicState({
+                        name: "SOUTH"
+                    })
+                }
             })
         }
     }),
@@ -314,55 +304,6 @@ var MAP_STATES = {
 		}
     })
 };
-
-/*
-* Sydney
-* Moree
-* Byron Bay
-* Brisbane
-* Rockhampton
-* Longreach
-* Townsville
-* Cairns
-* Mapoon
-* Carpentaria
-*
-* Tablelands
-* Alice Springs
-* Tanami
-* Daly Waters
-* Limmen National Park
-* Darwin
-* Kununurra
-* Mitchell Plateau
-* Broome
-*
-* St George Ranges
-* Newman
-* Coral Bay
-* Carnarvon
-* Sir Samuel
-* Plumridge Lakes
-* Perth
-* Bridgetown
-* Ravensthorpe
-*
-* Madura
-* Nullarbor National Park
-* Coober Pedy
-* Roxby Downs
-* Port Lincoln
-* Adelaide
-* Mildura
-* Broken Hill
-* Griffith
-*
-* Canberra
-* Bendigo
-* Melbourne
-* Launceston
-* Hobar
-* */
 
 // === KEY CONSTANTS === //
 

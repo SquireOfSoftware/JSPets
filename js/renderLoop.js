@@ -70,6 +70,12 @@ function updateScreens() {
 			currentScreen = statusScreens.HAPPY_DEVOLVE_ANIMATION;
 			console.log(currentScreen);
 		}
+        else if (currentScreenState === SCREEN_STATES.MAP.substates.TAS.substates.NORTH) {
+            currentScreen = mapScreens.NORTH;
+        }
+        else if (currentScreenState === SCREEN_STATES.MAP.substates.TAS.substates.SOUTH) {
+            currentScreen = mapScreens.SOUTH;
+        }
         else {
             //currentScreen = petScreen;
             addLine("Cannot locate screen: " + game.currentScreenState.state.name);
