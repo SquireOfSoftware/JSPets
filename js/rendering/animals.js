@@ -504,7 +504,7 @@ var evolutionSprites = {
 		[],
 		{
 			width: 45,
-			height: 20,
+			height: 20
 		},
 		function() {
 			if (this.tick === undefined || this.tick < 0) {
@@ -572,4 +572,82 @@ var evolutionSprites = {
 				this.context.clearEntireScreen();
 		}
 	)
+};
+
+function CitySprite(position, context) {
+    var citySprite = new GenericSprite(
+        generateImage("sprites/location-indicators.png"),
+        context,
+        position,
+        {
+            width: 3,
+            height: 3
+        },
+        function () {
+            if (this.tick === undefined || this.tick > 1) {
+                this.tick = 0;
+            }
+            this.tick++;
+
+
+        },
+        function () {
+            this.context.clearSection(this.x, this.y, this.size.width, this.size.height);
+        }
+    );
+
+    citySprite.setCoordinates = function(x, y) {
+        this.x = x;
+        this.y = y;
+    };
+
+    return citySprite;
 }
+
+var citySprite = {
+    CURRENT: new GenericSprite(
+        generateImage("sprites/location-indicators.png"),
+        foregroundBoard,
+        {
+            currentPosition: new SpritePosition({
+                spriteSheetX: 1,
+                spriteSheetY: 1,
+                maxFrame: 0,
+                multiplier: 7,
+                canvasX: 0, // This is not used at all
+                canvasY: 0  // this is not use at all
+            }),
+            defeatedPosition: new SpritePosition({
+                spriteSheetX: 1,
+                spriteSheetY: 8,
+                maxFrame: 1,
+                multiplier: 7,
+                canvasX: 0, // This is not used at all
+                canvasY: 0  // this is not use at all
+            }),
+            toBeVisitedPosition: new SpritePosition({
+                spriteSheetX: 1,
+                spriteSheetY: 1,
+                maxFrame: 1,
+                multiplier: 7,
+                canvasX: 0, // This is not used at all
+                canvasY: 0  // this is not use at all
+            })
+        },
+        {
+            width: 3,
+            height: 3
+        },
+        function () {
+            if (this.tick === undefined || this.tick > 1) {
+                this.tick = 0;
+            }
+            this.tick++;
+
+
+        },
+        function () {
+            this.clear
+        }
+    )
+};

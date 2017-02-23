@@ -584,13 +584,13 @@ var australia = {
                 ),
                 new City(
                     MAP_STATES.TAS.substates.DERWENT_BRIDGE,
-                    getCoordinates(21, 19),
+                    getCoordinates(21, 18),
                     3,
                     false
                 ),
                 new City(
                     MAP_STATES.TAS.substates.QUEENSTOWN,
-                    getCoordinates(13, 19),
+                    getCoordinates(13, 18),
                     3,
                     false
                 )]

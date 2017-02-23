@@ -66,6 +66,23 @@ I have listed a list of coordinates which roughly map to Google maps and then I 
 
 The main problem that I have is reading through the whole array but then somehow skipping the cities which are not on the map, so I will need to figure this out.
 
+== 23/2/2017 ==
+
+Evolution scales the HP out based on current/max and de-evolution scales the HP back down.
+
+Each mob should have escapability, autoability, blockability and conversion resistance.
+
+Escaping is either perfect escape with no damage or taking damage and not escaping.
+
+Blocking is either perfect block (give on a particular tick of the game) and lose no health or block which means you just halve the damage.
+
+For the enemy they too can block but no perfect block, this should be based on the blockability status.
+
+Remove auto since it is the same as escaping.
+
+The future feature is conversion to convert enemies to your side.
+
+Extending out the evolutions to last beyond a battle.
 
 == 20/2/2017 ==
 

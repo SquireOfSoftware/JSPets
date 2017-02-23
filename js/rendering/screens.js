@@ -269,20 +269,21 @@ var battleScreens = {
         referenceState: SCREEN_STATES.START_BATTLE.substates.CRY,
         update: function() {
             if (this.tick === undefined || this.tick < 0) // the zero is to reset the animation
-                this.tick = -1;//6; // -1; // TEST
+                this.tick = 6; // -1; // TEST
             this.tick--;
             petSprite.update();
             cryingOutSprite.update();
             if (this.tick < 0){
-                /*petSprite.currentPosition.reset();
+                petSprite.currentPosition.reset();
                 currentScreen = battleScreens.SLIDE;
-                currentScreen.update();*/
-                //this.context.flipHorizontally();
+                currentScreen.update();
+                this.context.flipHorizontally();
                 /* For testing purposes*/
-
+/*
                  currentScreen = battleMenuScreen.FIGHT;
                  game.currentScreenState = fightBattleState;
                  toggleKeyPress();
+                //*/
             }
         },
         draw: function() {
