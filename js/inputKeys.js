@@ -117,7 +117,7 @@ function walk() {
         document.getElementById("steps").value = game.stepCounter.total.toString();
 
     }
-    if (game.stepCounter.currentSteps >= game.currentRegion[game.currentMap].stepCount) {
+    if (game.stepCounter.currentSteps >= australia.TAS.regions[game.currentRegion][game.currentCity].stepCount) {
         disableKeyPress();
         game.stepCounter.currentSteps = 0;
         game.pet.state = ANIMAL_STATES.IN_BATTLE;

@@ -460,6 +460,7 @@ var mapScreenState = {
         state: SCREEN_STATES.MAP.substates.TAS.substates.NORTH,
         up: function() {
             game.currentScreenState = mapState;
+            game.currentViewableRegion = 0;
             asyncRender = true;
         },
         down: function() {
@@ -467,10 +468,16 @@ var mapScreenState = {
         },
         left: function() {
             game.currentScreenState = mapScreenState.SOUTH;
+            game.currentViewableRegion--;
+            if(game.currentViewableRegion < 0)
+                game.currentViewableRegion = australia.TAS.regions.length - 1;
             asyncRender = true;
         },
         right: function() {
             game.currentScreenState = mapScreenState.SOUTH;
+            game.currentViewableRegion++;
+            if(game.currentViewableRegion >= australia.TAS.regions)
+                game.currentViewableRegion = 0;
             asyncRender = true;
         }
     }),
@@ -478,6 +485,7 @@ var mapScreenState = {
         state: SCREEN_STATES.MAP.substates.TAS.substates.SOUTH,
         up: function() {
             game.currentScreenState = mapState;
+            game.currentViewableRegion = 0;
             asyncRender = true;
         },
         down: function() {
@@ -485,10 +493,16 @@ var mapScreenState = {
         },
         left: function() {
             game.currentScreenState = mapScreenState.NORTH;
+            game.currentViewableRegion--;
+            if(game.currentViewableRegion < 0)
+                game.currentViewableRegion = australia.TAS.regions.length - 1;
             asyncRender = true;
         },
         right: function() {
             game.currentScreenState = mapScreenState.NORTH;
+            game.currentViewableRegion++;
+            if(game.currentViewableRegion >= australia.TAS.regions)
+                game.currentViewableRegion = 0;
             asyncRender = true;
         }
     })
@@ -497,9 +511,9 @@ var mapScreenState = {
 // Land
 // Each piece of land has a "state" and a set of cities
 // each city has a set of "biomes" and a step count to reach the center of the city
-function State(options) {
-    this.name = options.name;
-    this.cities = options.cities;
+function State(name, regions) {
+    this.name = name;
+    this.regions = regions;
 }
 
 function City(referenceState, coordinates, stepCount, isCurrentCity){
@@ -513,14 +527,18 @@ function City(referenceState, coordinates, stepCount, isCurrentCity){
 }
 
 function getCoordinates(x, y) {
+    if (x > 45)
+        x -= 45;
+    if (y > 20)
+        y -= 20;
 	return {x: x - 1, y: y - 1}; // need to figure out how to display stuff on to the next map
 }
 
 var australia = {
-    TAS: new State({
-        name: "TAS",
-		cities: {
-            NORTH:[
+    TAS: new State(
+        "TAS",
+		[
+		    [
                 // NORTH
                 new City(
                     MAP_STATES.TAS.substates.REDPA,
@@ -594,8 +612,8 @@ var australia = {
                     3,
                     false
                 )]
-        },
-        SOUTH: [
+        ,
+        [
             // SOUTH
 			new City(
 				MAP_STATES.TAS.substates.STRAHAN,
@@ -635,7 +653,8 @@ var australia = {
 				false
 			)
 		]
-    })
+        ]
+    )
 };
 
 // ANIMALS
@@ -661,8 +680,8 @@ var currentEnemy = {
     currentEnemy: undefined,
     currentBiome: undefined,
     generateEnemy: function() {
-        //game.currentMap.biomes
-        var biomes = game.currentMap.biomes;
+        //game.currentCity.biomes
+        var biomes = game.currentCity.biomes;
         this.currentBiome = biomes[Math.floor(Math.random() * (biomes.length + 1))];
         // set up new stats
     },
@@ -734,8 +753,9 @@ var game = {
         }
     },
     currentScreenState: petState,
-    currentRegion: australia.TAS.cities.NORTH,
-    currentMap: 5,
+    currentRegion: 0,
+    currentViewableRegion: 0,
+    currentCity: 5,
     currentEnemy: cat
 };
 

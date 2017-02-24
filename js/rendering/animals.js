@@ -643,21 +643,27 @@ var citySprite = new GenericSprite(
         }
         this.tick++;
 
-        this.positions.defeatedPosition.update();
+        //this.positions.defeatedPosition.update();
 
         this.positions.toBeVisitedPosition.update();
     },
     function () {
         this.context.clearEntireScreen();
-        for(var city = 0; city < game.currentRegion.length; city++) {
-            if (city === game.currentMap)
+
+        var region = australia.TAS.regions[game.currentViewableRegion];
+
+        for(var city = 0; city < region.length; city++) {
+            if (city === game.currentCity && game.currentViewableRegion === game.currentRegion)
                 this.currentPosition = this.positions.currentPosition;
-            else if (city < game.currentMap)
+            else if (game.currentViewableRegion < game.currentRegion ||
+                game.currentViewableRegion === game.currentRegion && city < game.currentCity)
                 this.currentPosition = this.positions.defeatedPosition;
+            //else if (game.currentViewableRegion === game.currentRegion && city < game.currentCity)
+            //    this.currentPosition = this.positions.defeatedPosition;
             else
                 this.currentPosition = this.positions.toBeVisitedPosition;
 
-            //if (game.currentMap)
+            //if (game.currentCity)
 
             var spriteCoordinates = this.currentPosition.getPosition();
 
@@ -667,8 +673,8 @@ var citySprite = new GenericSprite(
                 spriteCoordinates.spriteSheetY,
                 3,
                 3,
-                game.currentRegion[city].coordinates.x,
-                game.currentRegion[city].coordinates.y,
+                region[city].coordinates.x,
+                region[city].coordinates.y,
                 3,
                 3
             );
