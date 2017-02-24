@@ -6,6 +6,112 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 24/2/2017 ==
+
+If you look at the list below I have updated the biomes that are in each of the cities.
+
+It is mainly derived from googling the areas up and guessing what they have in terms of agriculture, landscape and environments.
+
+The groupings summarised here are:
+
+1. Beach
+
+2. Coast
+
+3. Forest
+
+4. Ghost
+
+5. Lakes
+
+6. Plains
+
+8. Rocks
+
+8. Snowy
+
+9. Urban
+
+10. Valley
+
+11. Wetlands
+
+The "Floods", "Bushfires" and a few of the other ones are more around unique little quirks that may occur in the city.
+
+Of course it may not happen, but just as a running total of aspects of the city that I can use, if need be. I doubt I will use it but its part of the whole research process.
+
+Animal locations:
+
+SOURCE: http://www.parks.tas.gov.au/indeX.aspX?base=427
+
+Mammals:
+
+- Tasmanian Devil - (they are like dogs but more viscious) For the most part, they appear to be on the entire island? state? Everywhere basically.
+
+- Tasmanian Tiger (these guys are extinct) - they can appear anywhere except the South West of Tasmania, I am planning that they will appear only at Port Arthur as the last stage.
+
+- Whales - used to be hunted on the South East side of Tasmania, so Hobart is only area which I have "registered" in the game for this - Humpback, Blue, Killer are a few on the list
+
+- Kangaroos (Eastern Grey Kangaroos) - seem to live on the north East of Tasmania, hence the name "Eastern", probably looking at Launceston, Musselroe Bay and Scamander as they are near that area.
+
+- House hold dogs and cats - are probably only around urban areas (hence human pets)
+
+- Platypus - seem to live near wetlands, coasts or lakes, apparently they are in Burnie as well
+
+- Echidnas - found in plains or forests, "open country"
+
+- Wombats - can be seen in national parks like Cradle Mountain
+
+- Bats - are in Tasmania, they generally live in hollowed out trees, some are also urbanised as well
+
+- Rodents - Rats and mice - there are natives (like water rats) and then there are pets which are found in urban areas
+
+- Seals - Tasmania has Seals but they mainly appear on the islands surrounding Tasmania, so I am not sure if its accurate to include them as well. If anything that may pop up on Georgetown but it would have to be quite rare. Strahan has ONE record of an Elephant seal giving birth at Strahan...so yeah not common.
+
+- Rabbits - invasive pests - generally found everywhere, prefer low vegetation or sandy soils so they can burrow into it for their burrow
+
+- Feral pigs - considered to be pests as well, found in wetlands or anywhere where it is wetlands
+
+- Foxes - considered to be pests, they exist but are small in number
+
+- Feral dogs and cats - these are pests, note dingos do not exist on Tasmania
+
+Birds:
+
+- Penguins (Fairy penguins are quite popular) - they appear to occur mainly around the coast lines, noticable cities that have penguins are: Burnie-Somerset, 
+SOURCE: https://think-tasmania.com/little-penguins/
+
+- Pelicans - found on Coastlines, Wetlands
+
+- Ducks - also exist, around wetlands or damns
+
+- Geese - live around isolated areas and/or farming lands where they can get food easily
+
+- Pigeons and doves - they are common, pigeons can be found everywhere except for rainforests or "treeless" areas
+
+- Lorikeets - seen in areas where there are a lot of trees or the area isn't too urbanised like suburbia
+
+- Cockatoos - found in urban areas or farmlands with water, non-yellow head cockatoos can be found in forests
+
+- Owls - found in parks or gardens or forests
+
+- Kookaburras - generally any areas where owls and 
+
+Frogs:
+
+- Tree frog - literally only found in the park lands west of Tasmania
+
+Reptiles:
+
+- Crocodiles - Don't live naturally it seems on Tasmania, but are sold as pets, could be used in urban areas, but super rare, it seems the temperatures are not that great for them.
+SOURCE: http://www.themercury.com.au/news/tasmania/a-freshwater-croc-seized-during-police-raids-is-on-its-way-north-to-the-tropics/news-story/2140761efae3d04ddb1c1fd731f8d784
+
+- Turtles - are apparently a pest - found mainly in lakes or rivers
+
+Invertebrates:
+
+- Butterflies - enjoy the eastern side of Tasmania as it is warmer than the west
+
 == 23/2/2017 ==
 
 Evolution scales the HP out based on current/max and de-evolution scales the HP back down.
@@ -48,41 +154,41 @@ I will stick to my MVP for now.
 
 The cities I will use are:
 
-1. Redpa - 4,3
+1. Redpa - Plains, Coast - 4,3
 
-2. Smithton - 8,2
+2. Smithton - Coast, Plains, Urban - 8,2
 
-3. Burnie-Somerset - 17,6
+3. Burnie-Somerset - Coast, Urban - 17,6 - Penguins
 
-4. Cradle Mountain - Snowy - 17,12
+4. Cradle Mountain - Snowy, Rocks, Lake, Wetlands - 17,12
 
-5. Deloraine - Snowy - 25,11 
+5. Deloraine - Riverside, Valley, Snowy, Wetlands, Floods - 25,11 
 
-6. George Town - 27,6 
+6. George Town - Coast, Wetlands - 27,6 
 
-7. Musselroe Bay - 41,3
+7. Musselroe Bay - Beach, Coast, Plains - 41,3
 
-8. Scamander - 42,12
+8. Scamander - Beach - 42,12
 
-9. Launceston - 30,10
+9. Launceston - Urban, Rocks, Plains, Floods - 30,10
 
-10. Campbell Town - Plains - 34,17
+10. Campbell Town - Wetlands, Plains, Drought - 34,17
 
-11. Derwent Bridge - 21,19
+11. Derwent Bridge - Lake, Wetlands, Rainforest - 21,19
 
-12. Queenstown  - 13,19
+12. Queenstown - Rocks, Valley, Snow, Underground - 13,19
 
-13. Strahan - 10,22 (10,2)
+13. Strahan - Coast, Urban - 10,22 (10,2)
 
-14. Strathgordon - Forest - 19,30 (19,10)
+14. Strathgordon - Forest, Lake, Wetlands, Earthquake - 19,30 (19,10) - Ravens
 
-15. Bothwell - Valley - 29,25 (29,5)
+15. Bothwell - Valley, Plains - 29,25 (29,5)
 
-16. Triabunna - 39,27 (39,7)
+16. Triabunna - Coast, Wetlands - 39,27 (39,7)
 
-17. Hobart - 32,31 (32,11)
+17. Hobart - Coast, Urban - Bushfire - 32,31 (32,11)
 
-18. Port Arthur - 38,36 (32,16)
+18. Port Arthur - Coast, Plains, Wetlands, Ghost - Bushfire - 38,36 (32,16)
 
 I have listed a list of coordinates which roughly map to Google maps and then I will try and map this further to a screen.
 

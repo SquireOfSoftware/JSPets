@@ -530,7 +530,6 @@ function City(referenceState, coordinates, stepCount, isCurrentCity){
     
 	this.coordinates = coordinates;
     this.stepCount = stepCount;
-	this.isCurrentCity = isCurrentCity;
     this.referenceState = referenceState;
 	
 	this.name = this.referenceState.name;
@@ -553,74 +552,62 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.REDPA,
                     getCoordinates(4, 3),
-                    3,
-                    true
+                    3
                 ),
                 new City(
                     MAP_STATES.TAS.substates.SMITHTON,
                     getCoordinates(8, 2),
-                    3,
-                    false
+                    3
                 ),
                 new City(
                     MAP_STATES.TAS.substates.BURNIE_SOMERSET,
                     getCoordinates(17, 6),
-                    3,
-                    false
+                    3
                 ),
                 new City(
                     MAP_STATES.TAS.substates.CRADLE_MOUNTAIN,
                     getCoordinates(17, 12),
-                    3,
-                    false
+                    3
                 ),
                 new City(
                     MAP_STATES.TAS.substates.DELORAINE,
                     getCoordinates(25, 11),
-                    3,
-                    false
+                    3
                 ),
                 new City(
                     MAP_STATES.TAS.substates.GEORGE_TOWN,
                     getCoordinates(27, 6),
-                    3,
-                    false
+                    3
                 ),
                 new City(
                     MAP_STATES.TAS.substates.MUSSELROE_BAY,
                     getCoordinates(41, 3),
-                    3,
-                    false
+                    3
                 ),
                 new City(
                     MAP_STATES.TAS.substates.SCAMANDER,
                     getCoordinates(42, 12),
-                    3,
-                    false
+                    3
                 ),
                 new City(
                     MAP_STATES.TAS.substates.LAUNCESTON,
                     getCoordinates(30, 10),
-                    3,
-                    false
+                    3
                 ),
                 new City(
                     MAP_STATES.TAS.substates.CAMPBELL_TOWN,
                     getCoordinates(34, 17),
-                    3,
-                    false
+                    3
                 ),
                 new City(
                     MAP_STATES.TAS.substates.DERWENT_BRIDGE,
                     getCoordinates(21, 18),
-                    3,
-                    false
+                    3
                 ),
                 new City(
                     MAP_STATES.TAS.substates.QUEENSTOWN,
                     getCoordinates(13, 18),
-                    3,
-                    false
+                    3
                 )]
         ,
         [
@@ -628,39 +615,33 @@ var australia = {
 			new City(
 				MAP_STATES.TAS.substates.STRAHAN,
 				getCoordinates(19, 22), // next map
-				3,
-				false
+				3
 			),
 			new City(
 				MAP_STATES.TAS.substates.STRATHGORDON,
 				getCoordinates(19, 30),
-				3,
-				false
+				3
 			),
 			
 			new City(
 				MAP_STATES.TAS.substates.BOTHWELL,
 				getCoordinates(29, 25),
-				3,
-				false
+				3
 			),
 			new City(
 				MAP_STATES.TAS.substates.TRIABUNNA,
 				getCoordinates(39, 27),
-				3,
-				false
+				3
 			),
 			new City(
 				MAP_STATES.TAS.substates.HOBART,
 				getCoordinates(32, 31),
-				3,
-				false
+				3
 			),
 			new City(
 				MAP_STATES.TAS.substates.PORT_ARTHUR,
 				getCoordinates(38, 36),
-				3,
-				false
+				3
 			)
 		]
         ]
