@@ -604,50 +604,75 @@ function CitySprite(position, context) {
     return citySprite;
 }
 
-var citySprite = {
-    CURRENT: new GenericSprite(
-        generateImage("sprites/location-indicators.png"),
-        foregroundBoard,
-        {
-            currentPosition: new SpritePosition({
-                spriteSheetX: 1,
-                spriteSheetY: 1,
-                maxFrame: 0,
-                multiplier: 7,
-                canvasX: 0, // This is not used at all
-                canvasY: 0  // this is not use at all
-            }),
-            defeatedPosition: new SpritePosition({
-                spriteSheetX: 1,
-                spriteSheetY: 8,
-                maxFrame: 1,
-                multiplier: 7,
-                canvasX: 0, // This is not used at all
-                canvasY: 0  // this is not use at all
-            }),
-            toBeVisitedPosition: new SpritePosition({
-                spriteSheetX: 1,
-                spriteSheetY: 1,
-                maxFrame: 1,
-                multiplier: 7,
-                canvasX: 0, // This is not used at all
-                canvasY: 0  // this is not use at all
-            })
-        },
-        {
-            width: 3,
-            height: 3
-        },
-        function () {
-            if (this.tick === undefined || this.tick > 1) {
-                this.tick = 0;
-            }
-            this.tick++;
-
-
-        },
-        function () {
-            this.clear
+var citySprite = new GenericSprite(
+    generateImage("sprites/location-indicators.png"),
+    foregroundBoard,
+    {
+        currentPosition: new SpritePosition({
+            spriteSheetX: 14,
+            spriteSheetY: 1,
+            maxFrame: 0,
+            multiplier: 0,
+            canvasX: 0, // This is not used at all
+            canvasY: 0  // this is not use at all
+        }),
+        defeatedPosition: new SpritePosition({
+            spriteSheetX: 1,
+            spriteSheetY: 7,
+            maxFrame: 1,
+            multiplier: 6,
+            canvasX: 0, // This is not used at all
+            canvasY: 0  // this is not use at all
+        }),
+        toBeVisitedPosition: new SpritePosition({
+            spriteSheetX: 1,
+            spriteSheetY: 1,
+            maxFrame: 1,
+            multiplier: 6,
+            canvasX: 0, // This is not used at all
+            canvasY: 0  // this is not use at all
+        })
+    },
+    {
+        width: 3,
+        height: 3
+    },
+    function () {
+        if (this.tick === undefined || this.tick > 1) {
+            this.tick = 0;
         }
-    )
-};
+        this.tick++;
+
+        this.positions.defeatedPosition.update();
+
+        this.positions.toBeVisitedPosition.update();
+    },
+    function () {
+        this.context.clearEntireScreen();
+        for(var city = 0; city < game.currentRegion.length; city++) {
+            if (city === game.currentMap)
+                this.currentPosition = this.positions.currentPosition;
+            else if (city < game.currentMap)
+                this.currentPosition = this.positions.defeatedPosition;
+            else
+                this.currentPosition = this.positions.toBeVisitedPosition;
+
+            //if (game.currentMap)
+
+            var spriteCoordinates = this.currentPosition.getPosition();
+
+            this.context.drawImage(
+                this.image,
+                spriteCoordinates.spriteSheetX,
+                spriteCoordinates.spriteSheetY,
+                3,
+                3,
+                game.currentRegion[city].coordinates.x,
+                game.currentRegion[city].coordinates.y,
+                3,
+                3
+            );
+
+        }
+    }
+);

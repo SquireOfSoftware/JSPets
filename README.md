@@ -6,6 +6,28 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 23/2/2017 ==
+
+Evolution scales the HP out based on current/max and de-evolution scales the HP back down.
+
+Each mob should have escapability, autoability, blockability and conversion resistance.
+
+Escaping is either perfect escape with no damage or taking damage and not escaping.
+
+Blocking is either perfect block (give on a particular tick of the game) and lose no health or block which means you just halve the damage.
+
+For the enemy they too can block but no perfect block, this should be based on the blockability status.
+
+Remove auto since it is the same as escaping.
+
+The future feature is conversion to convert enemies to your side.
+
+Extending out the evolutions to last beyond a battle.
+
+Restoring 1 HP per 100 steps and have HP last beyond a battle.
+
+Care should just be "revive".
+
 == 22/2/2017 ==
 
 Forgot to mention that I had implemented the evolution system before and that I have hacked together some extra animations which are just copy and pasted animations with different "transition" scenes out to the appropriate locations.
@@ -65,24 +87,6 @@ The cities I will use are:
 I have listed a list of coordinates which roughly map to Google maps and then I will try and map this further to a screen.
 
 The main problem that I have is reading through the whole array but then somehow skipping the cities which are not on the map, so I will need to figure this out.
-
-== 23/2/2017 ==
-
-Evolution scales the HP out based on current/max and de-evolution scales the HP back down.
-
-Each mob should have escapability, autoability, blockability and conversion resistance.
-
-Escaping is either perfect escape with no damage or taking damage and not escaping.
-
-Blocking is either perfect block (give on a particular tick of the game) and lose no health or block which means you just halve the damage.
-
-For the enemy they too can block but no perfect block, this should be based on the blockability status.
-
-Remove auto since it is the same as escaping.
-
-The future feature is conversion to convert enemies to your side.
-
-Extending out the evolutions to last beyond a battle.
 
 == 20/2/2017 ==
 

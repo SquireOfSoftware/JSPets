@@ -13,11 +13,11 @@ function MapPiece(image, context, referenceObject, update, draw) {
 
 var mapScreens = {
     NORTH: new MapPiece(
-        generateImage("sprites/maps/tasmania-45by40 with cities.png"),
+        generateImage("sprites/maps/tasmania-45by40.png"),
         drawingBoard,
         mapScreenState.NORTH,
         function() {
-
+            citySprite.update();
         },
         function() {
             this.context.clearEntireScreen();
@@ -32,14 +32,15 @@ var mapScreens = {
                 45,
                 20
             );
+            citySprite.draw();
         }
     ),
     SOUTH: new MapPiece(
-        generateImage("sprites/maps/tasmania-45by40 with cities.png"),
+        generateImage("sprites/maps/tasmania-45by40.png"),
         drawingBoard,
         mapScreenState.NORTH,
         function() {
-
+            citySprite.update();
         },
         function() {
             this.context.clearEntireScreen();
@@ -54,6 +55,7 @@ var mapScreens = {
                 45,
                 20
             );
+            citySprite.draw();
         }
     )
 };

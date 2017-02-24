@@ -513,7 +513,7 @@ function City(referenceState, coordinates, stepCount, isCurrentCity){
 }
 
 function getCoordinates(x, y) {
-	return {x: x, y: y}; // need to figure out how to display stuff on to the next map
+	return {x: x - 1, y: y - 1}; // need to figure out how to display stuff on to the next map
 }
 
 var australia = {
@@ -734,7 +734,8 @@ var game = {
         }
     },
     currentScreenState: petState,
-    currentMap: australia.TAS.cities.NORTH[0],
+    currentRegion: australia.TAS.cities.NORTH,
+    currentMap: 5,
     currentEnemy: cat
 };
 
