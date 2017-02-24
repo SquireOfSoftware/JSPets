@@ -108,6 +108,9 @@ SOURCE: http://www.themercury.com.au/news/tasmania/a-freshwater-croc-seized-duri
 
 - Turtles - are apparently a pest - found mainly in lakes or rivers
 
+- Snakes - generally found in wetlands, generally where frogs are, also rocky areas, places with trees, inactive in winter, avoid urban areas
+SOURCE: http://dpipwe.tas.gov.au/wildlife-management/animals-of-tasmania/reptiles-and-frogs/snakes-of-tasmania
+
 Invertebrates:
 
 - Butterflies - enjoy the eastern side of Tasmania as it is warmer than the west
