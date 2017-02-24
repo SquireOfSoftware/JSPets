@@ -2,10 +2,10 @@
  * Created by JarvisWalker on 23/2/17.
  */
 
-function MapPiece(image, context, referenceObject, update, draw) {
+function MapPiece(image, context, referenceState, update, draw) {
     this.image = image;
     this.context = context;
-    this.referenceObject = referenceObject;
+    this.referenceState = referenceState;
 
     this.update = update;
     this.draw = draw;
@@ -15,7 +15,7 @@ var mapScreens = {
     NORTH: new MapPiece(
         generateImage("sprites/maps/tasmania-45by40.png"),
         drawingBoard,
-        mapScreenState.NORTH,
+        SCREEN_STATES.MAP.substates.TAS.substates.NORTH,
         function() {
             citySprite.update();
         },
@@ -38,7 +38,7 @@ var mapScreens = {
     SOUTH: new MapPiece(
         generateImage("sprites/maps/tasmania-45by40.png"),
         drawingBoard,
-        mapScreenState.NORTH,
+        SCREEN_STATES.MAP.substates.TAS.substates.SOUTH,
         function() {
             citySprite.update();
         },

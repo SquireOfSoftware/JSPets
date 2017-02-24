@@ -135,7 +135,15 @@ var mapState = new ScreenState({
         asyncRender = true;
     },
     down: function() {
-        game.currentScreenState = mapScreenState.NORTH;
+        switch (game.currentRegion) {
+            case 0:
+                game.currentScreenState = mapScreenState.NORTH;
+                break;
+            case 1:
+                game.currentScreenState = mapScreenState.SOUTH;
+                break;
+
+        }
         asyncRender = true;
     },
     left: function() {
@@ -460,7 +468,8 @@ var mapScreenState = {
         state: SCREEN_STATES.MAP.substates.TAS.substates.NORTH,
         up: function() {
             game.currentScreenState = mapState;
-            game.currentViewableRegion = 0;
+            game.currentViewableRegion = game.currentRegion;
+            foregroundBoard.clearEntireScreen();
             asyncRender = true;
         },
         down: function() {
@@ -485,7 +494,8 @@ var mapScreenState = {
         state: SCREEN_STATES.MAP.substates.TAS.substates.SOUTH,
         up: function() {
             game.currentScreenState = mapState;
-            game.currentViewableRegion = 0;
+            game.currentViewableRegion = game.currentRegion;
+            foregroundBoard.clearEntireScreen();
             asyncRender = true;
         },
         down: function() {
@@ -657,6 +667,19 @@ var australia = {
     )
 };
 
+function moveToNextCity() {
+    if(game.currentCity === australia.TAS.regions[game.currentRegion].length -1) {
+        game.currentCity = 0;
+        game.currentRegion++;
+        if (game.currentRegion > australia.TAS.regions.length - 1) {
+            game.currentRegion = 0;
+        }
+        game.currentViewableRegion = game.currentRegion;
+    }
+    else
+        game.currentCity++;
+}
+
 // ANIMALS
 
 function generateAnimalStats(hp, attk, spd, state) {
@@ -755,7 +778,7 @@ var game = {
     currentScreenState: petState,
     currentRegion: 0,
     currentViewableRegion: 0,
-    currentCity: 5,
+    currentCity: 11,
     currentEnemy: cat
 };
 

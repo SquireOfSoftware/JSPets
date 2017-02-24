@@ -18,7 +18,7 @@ Blocking is either perfect block (give on a particular tick of the game) and los
 
 For the enemy they too can block but no perfect block, this should be based on the blockability status.
 
-Remove auto since it is the same as escaping.
+Remove auto since it is the same as escaping. One day this might get brought back.
 
 The future feature is conversion to convert enemies to your side.
 

@@ -681,6 +681,7 @@ function performEndingAnimation() {
 		game.currentScreenState = happySequenceState;
 		console.log("WIN!");
 		// select next city
+        moveToNextCity();
 	}
 	
 	resetStats();

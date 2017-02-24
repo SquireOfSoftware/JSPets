@@ -638,13 +638,6 @@ var citySprite = new GenericSprite(
         height: 3
     },
     function () {
-        if (this.tick === undefined || this.tick > 1) {
-            this.tick = 0;
-        }
-        this.tick++;
-
-        //this.positions.defeatedPosition.update();
-
         this.positions.toBeVisitedPosition.update();
     },
     function () {
@@ -658,12 +651,8 @@ var citySprite = new GenericSprite(
             else if (game.currentViewableRegion < game.currentRegion ||
                 game.currentViewableRegion === game.currentRegion && city < game.currentCity)
                 this.currentPosition = this.positions.defeatedPosition;
-            //else if (game.currentViewableRegion === game.currentRegion && city < game.currentCity)
-            //    this.currentPosition = this.positions.defeatedPosition;
             else
                 this.currentPosition = this.positions.toBeVisitedPosition;
-
-            //if (game.currentCity)
 
             var spriteCoordinates = this.currentPosition.getPosition();
 

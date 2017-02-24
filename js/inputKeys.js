@@ -119,6 +119,7 @@ function walk() {
     }
     if (game.stepCounter.currentSteps >= australia.TAS.regions[game.currentRegion][game.currentCity].stepCount) {
         disableKeyPress();
+        foregroundBoard.clearEntireScreen();
         game.stepCounter.currentSteps = 0;
         game.pet.state = ANIMAL_STATES.IN_BATTLE;
         game.currentEnemy.state = ANIMAL_STATES.IN_BATTLE;
