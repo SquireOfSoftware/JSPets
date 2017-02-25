@@ -552,7 +552,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.REDPA,
                     getCoordinates(4, 3),
-                    3
+                    300
                 ),
                 new City(
                     MAP_STATES.TAS.substates.SMITHTON,
@@ -759,7 +759,7 @@ var game = {
     currentScreenState: petState,
     currentRegion: 0,
     currentViewableRegion: 0,
-    currentCity: 11,
+    currentCity: 0,
     currentEnemy: cat
 };
 
