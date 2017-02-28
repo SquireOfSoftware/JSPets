@@ -209,32 +209,38 @@ var SCREEN_STATES = {
 
 // http://www.australia.gov.au/about-australia/australian-story/austn-weather-and-the-seasons
 var BIOMES = {
+	ALPINE: new LogicState({ // snow
+        name: "ALPINE"
+    }),
+	BEACH: new LogicState({
+        name: "BEACH"
+    }),
     COASTAL: new LogicState({
         name: "COASTAL"
+    }),
+	CRAGS: new LogicState({ // rocks
+        name: "CRAGS"
+    }),
+    GRASSLANDS: new LogicState({ // plains
+        name: "GRASSLANDS"
+    }),
+    MARINE: new LogicState({ // lakes
+        name: "MARINE"
+    }),
+	PLAINS: new LogicState({ // valley
+        name: "PLAINS"
     }),
     RAINFOREST: new LogicState({
         name: "RAINFOREST"
     }),
-    GRASSLAND: new LogicState({
-        name: "GRASSLAND"
+	SUPER_NATURAL: new LogicState({ // ghosts
+        name: "SUPER NATURAL"
     }),
-    DESERT: new LogicState({
-        name: "DESERT"
+    URBAN: new LogicState({
+        name: "URBAN"
     }),
-    SNOW: new LogicState({
-        name: "SNOW"
-    }),
-    SWAMP: new LogicState({
-        name: "SWAMP"
-    }),
-    FLOODLAND: new LogicState({
-        name: "FLOODLAND"
-    }),
-    CITY: new LogicState({
-        name: "CITY"
-    }),
-    UNDERGROUND: new LogicState({
-        name: "UNDERGROUND"
+    WETLANDS: new LogicState({
+        name: "WETLANDS"
     })
 };
 
