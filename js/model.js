@@ -504,6 +504,14 @@ function update() {
     // Need to figure out how to link this to a screen
 }
 
+function resetStats() {
+	game.pet.stats.resetStats();
+	game.currentEnemy.stats.resetStats();
+	game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.BASIC.value];
+	
+	game.stepCounter.hasRecentlyStepped = false;
+}
+
 var game = {
     state: GAME_STATES.PET_STATUS,
     pet: duck,

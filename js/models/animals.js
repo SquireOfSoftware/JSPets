@@ -22,6 +22,35 @@ function Animal(options) {
 	this.resetAllStats = options.resetAllStats;
 }
 
+function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, blockBonus, escapeBonus) {
+	this.hp = hp;
+	this.attack = attack;
+	this.speed = speed;
+	
+	this.hpBuff = hpBuff;
+	this.attackBuff = attackBuff;
+	this.speedBuff = speedBuff;
+	
+	this.currentLevel = 0;
+	this.maxLevel = maxLevel;
+	
+	this.blockBonus = blockBonus;
+	this.escapeBonus = escapeBonus;
+	
+	this.evolveStats = function() {
+		// buff the stats in accordance with the level and buffs
+	}
+	
+	this.devolveStats = function() {
+		// be sure to round evenly off when devolving
+		// goal is that you "take less damage" whilst evolved
+	}
+	
+	this.walkingHeal = function() {
+		// heal whilst walking
+	}
+}
+
 function generateAnimalStats(hp, attk, spd, state) {
     return {
         hp: hp,
@@ -37,19 +66,6 @@ function generateAnimalStats(hp, attk, spd, state) {
         }
     };
 }
-/*
-var currentEnemy = {
-    name: "Enemy",
-    currentEnemy: undefined,
-    currentBiome: undefined,
-    generateEnemy: function() {
-        //game.currentCity.biomes
-        var biomes = game.currentCity.biomes;
-        this.currentBiome = biomes[Math.floor(Math.random() * (biomes.length + 1))];
-        // set up new stats
-    },
-    stats: generateAnimalStats(5, 1, 1, EVOLUTION_STATES.BASIC)
-};*/
 
 var cat = new Animal({
     name: "CAT",
@@ -79,10 +95,8 @@ var duck = new Animal({
 	}
 });
 
-function resetStats() {
-	game.pet.stats.resetStats();
-	game.currentEnemy.stats.resetStats();
-	game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.BASIC.value];
+/*
+function BiomeState(state, animals) {
+	this.state = state;
 	
-	game.stepCounter.hasRecentlyStepped = false;
-}
+}*/

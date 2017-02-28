@@ -6,7 +6,7 @@ function State(name, regions) {
     this.regions = regions;
 }
 
-function City(referenceState, coordinates, stepCount, biomes){
+function City(referenceState, coordinates, stepCount/*, difficulty*/, biomes){
     
 	this.coordinates = coordinates;
     this.stepCount = stepCount;

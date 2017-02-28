@@ -55,8 +55,20 @@ var EVOLUTION_STATES = {
 };
 
 var ANIMAL_TYPES = {
+	BAT: new LogicState({
+        name: "BAT"
+    }),
+	BUTTERFLY: new LogicState({
+        name: "BUTTERFLY"
+    }),
     CAT: new LogicState({
         name: "CAT"
+    }),
+	COCKATOO: new LogicState({
+        name: "COCKATOO"
+    }),
+	CROCODILE: new LogicState({
+        name: "CROCODILE"
     }),
     DOG: new LogicState({
         name: "DOG"
@@ -64,9 +76,72 @@ var ANIMAL_TYPES = {
     DUCK: new LogicState({
         name: "DUCK"
     }),
+	ECHIDNA: new LogicState({
+        name: "ECHIDNA"
+    }),
+	FOX: new LogicState({
+        name: "FOX"
+    }),
+	FRIDGE: new LogicState({
+        name: "FRIDGE"
+    }),
+	FROG: new LogicState({
+        name: "FROG"
+    }),
     KANGAROO: new LogicState({
         name: "KANGAROO"
-    })
+    }),
+	KOOKABURRA: new LogicState({
+        name: "KOOKABURRA"
+    }),
+	LORIKEET: new LogicState({
+        name: "LORIKEET"
+    }),
+	OWL: new LogicState({
+        name: "OWL"
+    }),
+	PELICAN: new LogicState({
+        name: "PELICAN"
+    }),
+	PENGUIN: new LogicState({
+        name: "PENGUIN"
+    }),
+	PIG: new LogicState({
+        name: "PIG"
+    }),
+	PLATYPUS: new LogicState({
+        name: "PLATYPUS"
+    }),
+	RABBIT: new LogicState({
+        name: "RABBIT"
+    }),
+	SANDCASTLE: new LogicState({
+        name: "SANDCASTLE"
+    }),
+	SEAL: new LogicState({
+        name: "SEAL"
+    }),
+	SNAKE: new LogicState({
+        name: "SNAKE"
+    }),
+	SNOWMAN: new LogicState({
+        name: "SNOWMAN"
+    }),
+	TURTLE: new LogicState({
+        name: "TURTLE"
+    }),
+	TASMANIAN_DEVIL: new LogicState({
+        name: "TASMANIAN_DEVIL"
+    }),
+	TASMANIAN_TIGER: new LogicState({
+        name: "TASMANIAN_TIGER"
+    }),
+	WHALE: new LogicState({
+        name: "WHALE"
+    }),
+	WOMBAT: new LogicState({
+        name: "WOMBAT"
+    }),
 };
 
 var GAME_STATES = {

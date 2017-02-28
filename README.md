@@ -6,6 +6,34 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 28/2/2017 ==
+
+I have filled in the biomes for each city, as noted in maps.js.
+
+The problem now is trying to figure out how to link animals to a biome so that when you look up a biome you can then generate an animal.
+
+However the problem that I have is that once you figure out what animal to spawn in, how do you control what level it is at?
+
+I have been poking around and I would like to follow a normal distribution that shifts itself the closer you get to the last stage.
+
+Each value then would correspond to a level in which would reflect what level the animal will be placed into for the given battle.
+
+Unfortunately there isn't a lot of notes on fast normal distributions.
+
+Upon further investigation, I did find one:
+
+https://github.com/bramp/prob.js
+
+This one requires random.min.js which is apparently an independent random library file designed to remove your dependency on the many implementations of Math.random.
+
+I thought I could use a difficulty value but this got quickly complicated.
+
+https://github.com/RichieAHB/normal-distribution
+
+The above seems to be in C++ I think or some other language. Not sure why it is in a JS file.
+
+
+
 == 24/2/2017 ==
 
 If you look at the list below I have updated the biomes that are in each of the cities.
