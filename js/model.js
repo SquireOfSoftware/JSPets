@@ -362,16 +362,15 @@ var runBattleState = new ScreenState({
         if (roll % 2 === 1) {
             game.pet.state = ANIMAL_STATES.SICK;
             //currentScreen = statusScreens.SADDENED_DEVOLVE_ANIMATION;
-			if (game.pet.stats.state === EVOLUTION_STATES.BASIC)
+			if (game.pet.stats.currentLevel < 2)
 				game.currentScreenState = sadSequenceState;
 			else
 				game.currentScreenState = sadDevolvingAnimationstate;
         }
         else {
 			game.pet.state = ANIMAL_STATES.IDLE;
-			if (game.pet.stats.state === EVOLUTION_STATES.BASIC) {
+            if (game.pet.stats.currentLevel < 2)
 				game.currentScreenState = petState;
-			}
 			else 
 				game.currentScreenState = idleDevolvingAnimationstate;
         }
@@ -496,10 +495,6 @@ var mapScreenState = {
         }
     })
 };
-
-// ANIMALS
-
-
 
 function update() {
     // Need to figure out how to link this to a screen

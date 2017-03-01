@@ -115,7 +115,7 @@ function walk() {
         game.stepCounter.hasRecentlyStepped = true;
         game.stepCounter.resetWaitPeriod();
         document.getElementById("steps").value = game.stepCounter.total.toString();
-        if (game.stepCounter.currentSteps % 100 === 1)
+        if (game.stepCounter.currentSteps % 100 === 0)
             game.pet.stats.walkingHeal();
 
     }
