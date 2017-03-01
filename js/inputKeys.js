@@ -115,6 +115,8 @@ function walk() {
         game.stepCounter.hasRecentlyStepped = true;
         game.stepCounter.resetWaitPeriod();
         document.getElementById("steps").value = game.stepCounter.total.toString();
+        if (game.stepCounter.currentSteps % 100 === 1)
+            game.pet.stats.walkingHeal();
 
     }
     if (game.stepCounter.currentSteps >= australia.TAS.regions[game.currentRegion][game.currentCity].stepCount) {

@@ -63,9 +63,6 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
         // be sure to round evenly off when devolving
         // goal is that you "take less damage" whilst evolved
         if (this.currentLevel > 1) {
-            // 10, 30, 90
-            // 9, 27-29, 81-89
-
             var remainderHp = this.currentStats.hp % Math.pow(this.buffs.hp, this.currentLevel - 1);
             if (remainderHp > 0) {
                 console.log(remainderHp);
@@ -94,52 +91,18 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
             this.currentStats.hp++;
     };
 }
-/*
-function generateAnimalStats(hp, attk, spd, state) {
-    return {
-        hp: hp,
-        attk: attk,
-        spd: spd,
-        state: state,
-        resetStats: function() {
-            this.hp = hp;
-            this.attk = attk;
-            this.spd = spd;
-            this.state = state;
-            //console.log(this);
-        }
-    };
-}*/
 
 var cat = new Animal({
     name: "CAT",
-    //stats: generateAnimalStats(10, 10, 2, EVOLUTION_STATES.BASIC),
-    stats: new Stats(10, 12, 1, 2, 8, 1, 3, 0, 0),/*
-    evolvedStats: [
-        generateAnimalStats(10, 10, 2, EVOLUTION_STATES.BASIC),
-        generateAnimalStats(20, 15, 5, EVOLUTION_STATES.CHAMPION),
-        generateAnimalStats(35, 20, 10, EVOLUTION_STATES.ULTIMATE)
-    ],*/
+    stats: new Stats(10, 12, 1, 2, 8, 1, 3, 0, 0),
     type: ANIMAL_TYPES.CAT
 });
 
 
 var duck = new Animal({
     name: "DUCK",
-    //stats: generateAnimalStats(10, 12, 1, EVOLUTION_STATES.BASIC),
-    stats: new Stats(10, 12, 1, 2, 8, 1, 3, 0, 0),/*
-    evolvedStats: [
-        generateAnimalStats(10, 12, 1, EVOLUTION_STATES.BASIC),
-        generateAnimalStats(18, 2, 6, EVOLUTION_STATES.CHAMPION),
-        generateAnimalStats(27, 22, 9, EVOLUTION_STATES.ULTIMATE)
-    ],*/
-    type: ANIMAL_TYPES.DUCK/*,
-    resetAllStats: function() {
-        for(var i = 0; i < this.evolvedStats.length; i++) {
-            this.evolvedStats[i].resetStats();
-            console.log("Resetting", this.evolvedStats[i]);
-        }
-    }*/
+    stats: new Stats(10, 12, 1, 2, 8, 1, 3, 0, 0),
+    type: ANIMAL_TYPES.DUCK
 });
 
 //var duck = new Animal()

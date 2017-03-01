@@ -506,11 +506,6 @@ function update() {
 }
 
 function resetStats() {
-	/*game.pet.stats.resetStats();
-	game.currentEnemy.stats.resetStats();
-	game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.BASIC.value];
-	*/
-
 	game.stepCounter.hasRecentlyStepped = false;
     game.pet.stats.devolveStats();
     game.currentEnemy.stats.fullyRestoreStats();

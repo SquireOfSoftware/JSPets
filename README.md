@@ -6,6 +6,22 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 1/3/2017 ==
+
+Worked on updating the stat data structures. It operates on a "live" stat structure and it updates itself accordingly.
+
+Note that the stats can now be abstractly reset as well with "devolve" and "evolve" working in accordance.
+
+Note also that devolve will scale the health back down to the original scale. Meaning you "lose" less hp in high evolution stages.
+
+Started also figuring out where all the animals to each biome belong.
+
+These scenarios have been roughly tested in a live battle, though further investigation and testing will need to reveal issues with these changes.
+
+A good change nonetheless for the stats used to be manipulated from all over the system.
+
+A walking heal has also been implemented in which every 100 steps will heal you 1 hp.
+
 == 28/2/2017 ==
 
 I have filled in the biomes for each city, as noted in maps.js.
@@ -31,8 +47,6 @@ I thought I could use a difficulty value but this got quickly complicated.
 https://github.com/RichieAHB/normal-distribution
 
 The above seems to be in C++ I think or some other language. Not sure why it is in a JS file.
-
-
 
 == 24/2/2017 ==
 
