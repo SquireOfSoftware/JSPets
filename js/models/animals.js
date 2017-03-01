@@ -61,18 +61,23 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
     this.devolveStats = function() {
         // be sure to round evenly off when devolving
         // goal is that you "take less damage" whilst evolved
-        if (this.currentLevel > 0) {
-            var remainderHp = this.currentStats.hp % this.originalStats.hp;
+        if (this.currentLevel > 1) {
+            // 10, 30, 90
+            // 9, 27-29, 81-89
+
+            var remainderHp = this.currentStats.hp % ((this.buffs.hp) * this.currentLevel);
+            //var remainderHp = Math.pow((this.buffs.hp * this.originalStats.hp), this.currentLevel) - this.currentStats.hp;
             if (remainderHp > 0) {
+                console.log(remainderHp);
                 this.currentStats.hp -= remainderHp;
             }
 
-            this.currentStats.hp /= ((this.currentLevel) * this.buffs.hp);
-            console.log(this.currentStats);
+            this.currentStats.hp /= Math.pow(this.buffs.hp, this.currentLevel - 1);
+            console.log(this.currentStats, this.buffs.hp, this.currentLevel);
             this.currentStats.attack = this.originalStats.attack;
             this.currentStats.speed = this.originalStats.speed;
 
-            this.currentLevel = 0;
+            this.currentLevel = 1;
         }
 
         // aim to reset back to original state, but hp drops to whatever the equivalent is
