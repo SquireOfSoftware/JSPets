@@ -410,7 +410,7 @@ var attackSequenceScreen = {
                 disableKeyPress();
 				
                 if (this.rounds === 0) {
-                    if (game.currentEnemy.stats.spd > game.pet.stats.spd) {
+                    if (game.currentEnemy.stats.currentStats.speed > game.pet.stats.currentStats.speed) {
                         if (game.currentEnemy.type === ANIMAL_TYPES.CAT) {
                             petSpriteStates.faster = catSprite;
                         }
@@ -607,13 +607,13 @@ var attackSequenceScreen = {
                 case 4:
                     break;
                 case 3:
-                    petSpriteStates.slower.referenceObject.stats.hp -= petSpriteStates.faster.referenceObject.stats.attk;
-                    if (petSpriteStates.slower.referenceObject.stats.hp < 1) {
+                    petSpriteStates.slower.referenceObject.stats.currentStats.hp -= petSpriteStates.faster.referenceObject.stats.currentStats.attack;
+                    if (petSpriteStates.slower.referenceObject.stats.currentStats.hp < 1) {
                         petSpriteStates.hasDeath = true;
-                        petSpriteStates.slower.referenceObject.stats.hp = 0;
+                        petSpriteStates.slower.referenceObject.stats.currentStats.hp = 0;
                         console.log("Someone has died");
                     }
-                    addLine(petSpriteStates.slower.referenceObject.stats.hp + " hp left");
+                    addLine(petSpriteStates.slower.referenceObject.stats.currentStats.hp + " hp left");
                     break;
                 case 2:
                     break;
@@ -669,7 +669,7 @@ function performEndingAnimation() {
 	disableKeyPress();
 	// figure out who died
 	// if your pet died, change state to sick, switch to petScreen
-	if (petSprite.referenceObject.stats.hp < 1) {
+	if (petSprite.referenceObject.stats.currentStats.hp < 1) {
 		currentScreen = statusScreens.SADDENED_ANIMATION;
 		game.currentScreenState = sadSequenceState;
 
@@ -790,7 +790,6 @@ var statusScreens = {
             if (this.tick < 0) {
 				game.currentScreenState = attackSequenceState;
 				currentScreen = attackSequenceScreen.LAUNCHING_ATTACK;
-				console.log(currentScreen.rounds);
 				currentScreen.update();
 				console.log(currentScreen.rounds);
             }

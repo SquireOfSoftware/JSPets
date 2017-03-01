@@ -188,8 +188,8 @@ var petSprite = new AnimalSprite({
     }),
 	evolve: function() {
 		this.isEvolved ++;
-		if (this.isEvolved >= this.referenceObject.evolvedStats.length)
-			this.isEvolved = this.referenceObject.evolvedStats.length - 1;
+		if (this.isEvolved >= this.referenceObject.stats.maxLevel)
+			this.isEvolved = this.referenceObject.stats.maxLevel - 1;
 	},
 	devolve: function() {
 		this.isEvolved = 0;
@@ -325,7 +325,7 @@ var fireball = new GenericSprite(
             this.positions.receivingPosition.reset();
         }
 
-        this.attackPower = petSpriteStates.faster.referenceObject.stats.attk;
+        this.attackPower = petSpriteStates.faster.referenceObject.stats.currentStats.attack;
         this.tick --;
 
         if (this.tick < 9) {
@@ -405,7 +405,7 @@ var healthRemainingSprite = new GenericSprite(
     {width: NUMBER_PX_SIZE.WIDTH, height: NUMBER_PX_SIZE.HEIGHT},
     function() {
         // constantly pull in the leftover health
-        this.health = (petSpriteStates.slower.referenceObject.stats.hp).toString();
+        this.health = (petSpriteStates.slower.referenceObject.stats.currentStats.hp).toString();
         if (currentScreen.referenceState === SCREEN_STATES.ATTACK_SEQUENCE.substates.CALCULATING_DAMAGE)
             this.spriteHeight = this.positions.inverted;
         else

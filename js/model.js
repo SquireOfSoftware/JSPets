@@ -223,15 +223,16 @@ var evolveBattleState = new ScreenState({
 		// disable key presses
 		// evolution screen - this updates the pet sprite
 		disableKeyPress();
-		
+		/*
 		if (game.pet.stats.state === EVOLUTION_STATES.BASIC) {
-			game.pet.stats.resetStats();
-			game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.CHAMPION.value];
+			//game.pet.stats.resetStats();
+			//game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.CHAMPION.value];
 		}
 		else if (game.pet.stats.state === EVOLUTION_STATES.CHAMPION) {
 			game.pet.stats.resetStats();
 			game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.ULTIMATE.value];
-		}
+		}*/
+		game.pet.stats.evolveStats();
 
 		game.currentScreenState = evolvingAnimationState;
 		
@@ -505,11 +506,14 @@ function update() {
 }
 
 function resetStats() {
-	game.pet.stats.resetStats();
+	/*game.pet.stats.resetStats();
 	game.currentEnemy.stats.resetStats();
 	game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.BASIC.value];
-	
+	*/
+
 	game.stepCounter.hasRecentlyStepped = false;
+    game.pet.stats.devolveStats();
+    game.currentEnemy.stats.fullyRestoreStats();
 }
 
 var game = {

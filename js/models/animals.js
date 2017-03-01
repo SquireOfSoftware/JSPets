@@ -1,9 +1,10 @@
 function Animal(options) {
     this.name = options.name;
     
-    this.evolvedStats = options.evolvedStats;
+    //this.evolvedStats = options.evolvedStats;
     
-    this.stats = this.evolvedStats[0];
+    //this.stats = this.evolvedStats[0];
+    this.stats = options.stats;
 
     if (options.isPet !== undefined)
         this.isPet = options.isPet;
@@ -66,14 +67,12 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
             // 9, 27-29, 81-89
 
             var remainderHp = this.currentStats.hp % Math.pow(this.buffs.hp, this.currentLevel - 1);
-            //var remainderHp = Math.pow((this.buffs.hp * this.originalStats.hp), this.currentLevel) - this.currentStats.hp;
             if (remainderHp > 0) {
                 console.log(remainderHp);
                 this.currentStats.hp -= remainderHp;
             }
 
             this.currentStats.hp /= Math.pow(this.buffs.hp, this.currentLevel - 1);
-            //console.log(this.currentStats, this.buffs.hp, this.currentLevel);
             this.currentStats.attack = this.originalStats.attack;
             this.currentStats.speed = this.originalStats.speed;
 
@@ -82,6 +81,12 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
 
         // aim to reset back to original state, but hp drops to whatever the equivalent is
     };
+
+    this.fullyRestoreStats = function() {
+        this.currentStats.hp = this.originalStats.hp;
+        this.currentStats.attack = this.originalStats.attack;
+        this.currentStats.speed = this.originalStats.speed;
+    };
     
     this.walkingHeal = function() {
         // heal whilst walking
@@ -89,7 +94,7 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
             this.currentStats.hp++;
     };
 }
-
+/*
 function generateAnimalStats(hp, attk, spd, state) {
     return {
         hp: hp,
@@ -104,37 +109,42 @@ function generateAnimalStats(hp, attk, spd, state) {
             //console.log(this);
         }
     };
-}
+}*/
 
 var cat = new Animal({
     name: "CAT",
     //stats: generateAnimalStats(10, 10, 2, EVOLUTION_STATES.BASIC),
+    stats: new Stats(10, 12, 1, 2, 8, 1, 3, 0, 0),/*
     evolvedStats: [
         generateAnimalStats(10, 10, 2, EVOLUTION_STATES.BASIC),
         generateAnimalStats(20, 15, 5, EVOLUTION_STATES.CHAMPION),
         generateAnimalStats(35, 20, 10, EVOLUTION_STATES.ULTIMATE)
-    ],
+    ],*/
     type: ANIMAL_TYPES.CAT
 });
+
 
 var duck = new Animal({
     name: "DUCK",
     //stats: generateAnimalStats(10, 12, 1, EVOLUTION_STATES.BASIC),
+    stats: new Stats(10, 12, 1, 2, 8, 1, 3, 0, 0),/*
     evolvedStats: [
         generateAnimalStats(10, 12, 1, EVOLUTION_STATES.BASIC),
         generateAnimalStats(18, 2, 6, EVOLUTION_STATES.CHAMPION),
         generateAnimalStats(27, 22, 9, EVOLUTION_STATES.ULTIMATE)
-    ],
-    type: ANIMAL_TYPES.DUCK,
+    ],*/
+    type: ANIMAL_TYPES.DUCK/*,
     resetAllStats: function() {
         for(var i = 0; i < this.evolvedStats.length; i++) {
             this.evolvedStats[i].resetStats();
             console.log("Resetting", this.evolvedStats[i]);
         }
-    }
+    }*/
 });
+
+//var duck = new Animal()
 
 function BiomeState(state, animals) {
     this.state = state;
-    
+    // add animals here, also need to test out if battle broke
 }
