@@ -65,7 +65,7 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
             // 10, 30, 90
             // 9, 27-29, 81-89
 
-            var remainderHp = this.currentStats.hp % ((this.buffs.hp) * this.currentLevel);
+            var remainderHp = this.currentStats.hp % Math.pow(this.buffs.hp, this.currentLevel - 1);
             //var remainderHp = Math.pow((this.buffs.hp * this.originalStats.hp), this.currentLevel) - this.currentStats.hp;
             if (remainderHp > 0) {
                 console.log(remainderHp);
@@ -73,7 +73,7 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
             }
 
             this.currentStats.hp /= Math.pow(this.buffs.hp, this.currentLevel - 1);
-            console.log(this.currentStats, this.buffs.hp, this.currentLevel);
+            //console.log(this.currentStats, this.buffs.hp, this.currentLevel);
             this.currentStats.attack = this.originalStats.attack;
             this.currentStats.speed = this.originalStats.speed;
 
