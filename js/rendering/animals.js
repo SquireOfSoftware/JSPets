@@ -219,15 +219,7 @@ var duckSprite = new AnimalSprite({
     image: generateImage("sprites/animals/duck.png"),
     context: drawingBoard,
     referenceObject: game.pet,
-	isEvolved: 0/*,
-	evolve: function() {
-		this.isEvolved ++;
-		if (this.isEvolved >= this.referenceObject.stats.maxLevel)
-			this.isEvolved = this.referenceObject.stats.maxLevel - 1;
-	},
-	devolve: function() {
-		this.isEvolved = 0;
-	}*/
+	isEvolved: 0
 });
 
 var petSprite = duckSprite;
@@ -235,7 +227,7 @@ var petSprite = duckSprite;
 var catSprite = new AnimalSprite({
     image: generateImage("sprites/animals/cat.png"),
     context: drawingBoard,
-    referenceObject: cat,
+    referenceObject: cat,/*
     idlePosition: new SpritePosition({
         spriteSheetX: 0,
         spriteSheetY: 0,
@@ -298,7 +290,7 @@ var catSprite = new AnimalSprite({
         multiplier: 48,
         canvasX: 15,
         canvasY: 0
-    }),
+    }),*/
     update: function() {
         if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
             if (this.currentPosition !== this.slidingPosition)
