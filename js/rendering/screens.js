@@ -305,9 +305,7 @@ var battleScreens = {
             this.tick--;
             if (this.enemySprite === undefined ||
                 this.enemySprite.referenceObject !== game.currentEnemy) {
-                if (game.currentEnemy.type === ANIMAL_TYPES.CAT) {
-                    this.enemySprite = catSprite;
-                }
+                this.enemySprite = getCurrentEnemySprite();
             }
             this.enemySprite.update();
 
@@ -334,9 +332,7 @@ var battleScreens = {
 
             if (this.enemySprite === undefined ||
                 this.enemySprite.referenceObject !== game.currentEnemy) {
-                if (game.currentEnemy.type === ANIMAL_TYPES.CAT) {
-                    this.enemySprite = catSprite;
-                }
+                this.enemySprite = getCurrentEnemySprite();
             }
             this.enemySprite.update();
 			
@@ -410,10 +406,12 @@ var attackSequenceScreen = {
                 disableKeyPress();
 				
                 if (this.rounds === 0) {
+                    var enemySprite = getCurrentEnemySprite();
                     if (game.currentEnemy.stats.currentStats.speed > game.pet.stats.currentStats.speed) {
-                        if (game.currentEnemy.type === ANIMAL_TYPES.CAT) {
+                        /*if (game.currentEnemy.type === ANIMAL_TYPES.CAT) {
                             petSpriteStates.faster = catSprite;
-                        }
+                        }*/
+                        petSpriteStates.faster = enemySprite;
                         this.context.flipHorizontally();
                         foregroundBoard.flipHorizontally();
 
@@ -421,7 +419,7 @@ var attackSequenceScreen = {
                     }
                     else {
                         petSpriteStates.faster = petSprite;
-                        petSpriteStates.slower = catSprite;
+                        petSpriteStates.slower = enemySprite;
                     }
                 }
                 else {
@@ -757,7 +755,7 @@ var statusScreens = {
                 petSprite.currentPosition = petSprite.sickPosition;
                 petSprite.update();
                 enableKeyPress();
-                console.log(game.pet.state);
+                //console.log(game.pet.state);
             }
         },
         draw: function() {

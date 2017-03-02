@@ -6,7 +6,7 @@ function State(name, regions) {
     this.regions = regions;
 }
 
-function City(referenceState, coordinates, stepCount/*, difficulty*/, biomes){
+function City(referenceState, coordinates, stepCount, biomes){
     
     this.coordinates = coordinates;
     this.stepCount = stepCount;
@@ -23,7 +23,7 @@ function City(referenceState, coordinates, stepCount/*, difficulty*/, biomes){
     
     this.getRandomBiome = function() {
         var biomeValue = Math.round(Math.random() * (this.biomes.length - 1), 0);
-        
+        console.log("biome:", biomeValue);
         return this.biomes[biomeValue];
     };
 }

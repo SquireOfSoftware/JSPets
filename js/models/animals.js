@@ -164,12 +164,24 @@ function BiomeState(state, animals) {
     this.state = state;
     // add animals here, also need to test out if battle broke
     this.maxEncounter = 0;
-    this.encounters = [];
+    this.animals = animals;
 
     for(var counter = 0; counter < animals.length; counter++) {
         this.maxEncounter += animals[counter].percentage;
-        this.encounters.push(animals[counter]);
     }
+
+    this.getRandomEnemy = function() {
+        var randomIndex = Math.floor(Math.random() * (this.maxEncounter));
+
+        for(var counter = 0; counter < this.animals.length; counter++) {
+            console.log("randomIndex:", randomIndex, this.animals[counter].animal.name);
+            if ((randomIndex - this.animals[counter].percentage) > 0)
+                randomIndex -= this.animals[counter].percentage;
+            else
+                return this.animals[counter].animal;
+        }
+
+    };
 }
 
 function AnimalChance(animal, percentage) {
@@ -195,3 +207,39 @@ var biomes = [
         ]
     )
 ];
+
+function generateEnemy(biomeState) {
+    // locate the biome
+    var biome = null;
+
+    for (var biomeCounter = 0; biomeCounter < biomes.length; biomeCounter++) {
+        if (biomes[biomeCounter].state === biomeState) {
+            //biome =
+            return biomes[biomeCounter].getRandomEnemy();
+        }
+    }
+    return undefined; // need to return enemy
+}
+function getCurrentEnemySprite() {
+    var enemyType = game.currentEnemy.type;
+    if (enemyType === ANIMAL_TYPES.CAT) {
+        return catSprite;
+    }
+    else if (enemyType === ANIMAL_TYPES.SEAL) {
+        return sealSprite;
+    }
+    else if (enemyType === ANIMAL_TYPES.PENGUIN) {
+        return penguinSprite;
+    }
+    else if (enemyType === ANIMAL_TYPES.PELICAN) {
+        return pelicanSprite;
+    }
+    else if (enemyType === ANIMAL_TYPES.SANDCASTLE) {
+        return sandcastleSprite;
+    }
+    else if (enemyType === ANIMAL_TYPES.DUCK) {
+        return duckSprite;
+    }
+    else
+        console.log("Unrecognisable animal type: ", enemyType);
+}
