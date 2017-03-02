@@ -121,7 +121,7 @@ function AnimalSprite(options) {
 }
 
 var petSprite = new AnimalSprite({
-    image: generateImage("sprites/animals/cat.png"),
+    image: generateImage("sprites/animals/duck.png"),
     context: drawingBoard,
     referenceObject: game.pet,
 	isEvolved: 0,

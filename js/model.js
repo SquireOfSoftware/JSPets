@@ -533,8 +533,8 @@ var game = {
     currentScreenState: petState,
     currentRegion: 0,
     currentViewableRegion: 0,
-    currentCity: 0,
-    currentEnemy: cat
+    currentCity: 0
+    //currentEnemy: cat
 };
 
 game.pet.isPet = true;

@@ -6,6 +6,32 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 2/3/2017 ==
+
+Some ideas that came out from today:
+
+- Faster/Multiple attacks
+
+- An attack sequence that the user must memorise and block when receiving damage
+
+- Stats will have to be static or roughly the same to add some sort of "fair" element into the game
+
+- Could use a sliding scale for mobs, have a huge mob table and then have a sliding scale for each "biome" or theme for the respective town that it is at, this would be quite efficient as it would mean you are interacting with the numbers rather than the table
+
+- Another thought was abstracting out the biomes, cities and mobs out into separate json files, though it would sound good to load things as need be, but the downside is that javascript accessing files outside of the browser is a CORS security issue and will be blocked by firefox and chrome
+
+- Also another idea was to split up the rolls into: Biomes then species for that biome and then the animal that belows to that species
+
+Some immediate milestones that need to be completed are:
+
+1. Fill in the rest of the stats
+
+2. Implement the rest of the stats
+
+3. Add in the animals into the game
+
+4. Draw up the sprites for each of the animals
+
 == 1/3/2017 ==
 
 Worked on updating the stat data structures. It operates on a "live" stat structure and it updates itself accordingly.

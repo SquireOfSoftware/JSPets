@@ -1,26 +1,19 @@
-function Animal(options) {
-    this.name = options.name;
-    
-    //this.evolvedStats = options.evolvedStats;
-    
-    //this.stats = this.evolvedStats[0];
-    this.stats = options.stats;
+function Animal(name, isPet, stats, walkingStatus, animalType) {
+    this.name = name;
 
-    if (options.isPet !== undefined)
-        this.isPet = options.isPet;
+    this.stats = stats;
+
+    if (isPet !== undefined)
+        this.isPet = isPet;
     else
         this.isPet = false;
 
-    if (options.state !== undefined)
-        this.state = options.state;
+    if (walkingStatus !== undefined)
+        this.state = walkingStatus;
     else
         this.state = ANIMAL_STATES.IDLE;
 
-    this.type = options.type;
-
-    this.resetStats = options.resetStats;
-    
-    this.resetAllStats = options.resetAllStats;
+    this.type = animalType;
 }
 
 function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, blockBonus, escapeBonus) {
@@ -52,7 +45,7 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
         if (this.currentLevel < this.maxLevel) {
             this.currentLevel++;
             this.currentStats.hp *= this.buffs.hp;
-
+            this.currentStats.attack += this.buffs.attack;
             this.currentStats.speed += this.buffs.speed;
 
             console.log(this.currentStats);
@@ -79,6 +72,15 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
         // aim to reset back to original state, but hp drops to whatever the equivalent is
     };
 
+    this.setupLevel = function(level) {
+        // this is used by the biome set up enemy function
+        if (level > this.maxLevel)
+            level = this.maxLevel; // prevent overflows
+        for(var counter = 0; counter < level; counter++){
+            this.evolveStats();
+        }
+    };
+
     this.fullyRestoreStats = function() {
         this.currentStats.hp = this.originalStats.hp;
         this.currentStats.attack = this.originalStats.attack;
@@ -92,22 +94,104 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
     };
 }
 
-var cat = new Animal({
-    name: "CAT",
-    stats: new Stats(10, 12, 1, 2, 8, 1, 3, 0, 0),
-    type: ANIMAL_TYPES.CAT
-});
+var cat = new Animal(
+    "CAT",
+    false,
+    new Stats(
+        9, 4, 1, // hp, attack, speed
+        2, 8, 1, // hpBuff, attackBuff, speedBuff
+        2, 3, 6),// maxLvl, blockability, escapability
+    ANIMAL_STATES.IDLE,
+    ANIMAL_TYPES.CAT
+);
 
+var duck = new Animal(
+    "DUCK",
+    true,
+    new Stats(
+        8, 4, 1,
+        3, 4, 1,
+        3, 0, 0),
+    ANIMAL_STATES.IDLE,
+    ANIMAL_TYPES.DUCK
+);
 
-var duck = new Animal({
-    name: "DUCK",
-    stats: new Stats(10, 12, 1, 2, 8, 1, 3, 0, 0),
-    type: ANIMAL_TYPES.DUCK
-});
+var penguin = new Animal(
+    "PENGUIN",
+    false,
+    new Stats(
+        8, 4, 1,
+        3, 4, 2,
+        3, 0, 0),
+    ANIMAL_STATES.IDLE,
+    ANIMAL_TYPES.PENGUIN
+);
 
-//var duck = new Animal()
+var pelican = new Animal(
+    "PELICAN",
+    false,
+    new Stats(
+        12, 3, 1,
+        3, 3, 1,
+        3, 0, 0),
+    ANIMAL_STATES.IDLE,
+    ANIMAL_TYPES.PELICAN
+);
+
+var seal = new Animal(
+    "SEAL",
+    false,
+    new Stats(
+        12, 5, 1,
+        3, 2, 0,
+        3, 0, 0),
+    ANIMAL_STATES.IDLE,
+    ANIMAL_TYPES.SEAL
+);
+
+var sandcastle = new Animal(
+    "SANDCASTLE",
+    false,
+    new Stats(
+        20, 4, 1,
+        3, 3, 0,
+        3, 0, 0),
+    ANIMAL_STATES.IDLE,
+    ANIMAL_TYPES.SANDCASTLE
+);
 
 function BiomeState(state, animals) {
     this.state = state;
     // add animals here, also need to test out if battle broke
+    this.maxEncounter = 0;
+    this.encounters = [];
+
+    for(var counter = 0; counter < animals.length; counter++) {
+        this.maxEncounter += animals[counter].percentage;
+        this.encounters.push(animals[counter]);
+    }
 }
+
+function AnimalChance(animal, percentage) {
+    this.animal = animal;
+    this.percentage = percentage;
+}
+
+var biomes = [
+    new BiomeState(
+        BIOMES.BEACH,
+        [
+            new AnimalChance(seal, 8),
+            new AnimalChance(penguin, 4),
+            new AnimalChance(pelican, 10),
+            new AnimalChance(duck, 5),
+            new AnimalChance(sandcastle, 1)
+        ]
+    ),
+    new BiomeState(
+        BIOMES.COASTAL,
+        [
+
+        ]
+    )
+];
