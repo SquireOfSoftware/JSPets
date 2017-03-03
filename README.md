@@ -18,6 +18,26 @@ So if you spawn two ducks...then one duck will override the other duck.
 
 I think I need to create throw-away factory objects.
 
+--
+
+A few hours later I did create those objects.
+
+Problem now is several things:
+
+1. The sprite doesnt evolve even though the stats have evolved - created an enemy object to force the stat linkage
+
+2. The sliding animation doesn't play properly, not sure why this is
+
+So the last thing is to test that this works and then this branch can be merged with develop.
+
+The test I need to make is the following:
+
+1. Randomised levelling stats work
+
+2. The sprite matches what the stats reflect
+
+3. The sprite can be generated on a whim and have stats to link to.
+
 == 2/3/2017 ==
 
 Some ideas that came out from today:

@@ -135,6 +135,7 @@ function walk() {
         
         enemySprite = getSprite(game.currentEnemy.type);
         enemySprite.referenceObject = game.currentEnemy;
+        enemySprite.isEvolved = game.currentEnemy.stats.currentLevel - 1;
         
         game.currentScreenState = cryState;//SCREEN_STATES.START_BATTLE.substates.CRY;
         // generate the enemy here and store it in the game variable

@@ -73,7 +73,7 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
     };
 
     this.setupDifficulty = function(difficulty) {
-        if (this.maxLevel > 1) {
+        if (this.maxLevel > 1){// && this.currentLevel > 1) {
             // generate a random number - scale this value according to maxLevel
             //var randomLevel = Math.ceil(Math.random() * (this.maxLevel));
             // this is equally distributed 
@@ -84,8 +84,6 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
             var randomLevel = this.maxLevel * Math.exp(-((Math.pow(randomRoll - difficulty,2))/(this.maxLevel * 10)))
             
             // ceiling the value to closest integer
-            
-            console.log(randomLevel, Math.ceil(randomLevel));
             
             randomLevel = Math.ceil(randomLevel);
             
@@ -98,6 +96,8 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
             for(var counter = 0; counter < randomLevel; counter++){
                 this.evolveStats();
             }
+            //this.currentLevel = randomLevel;
+            console.log(randomLevel, this.currentLevel, Math.ceil(randomLevel));
         }
     };
 
@@ -184,72 +184,6 @@ function getAnimalState(state) {
     else
         console.log("Unrecognised state for animal state creation: ", state);
 }
-/*
-var cat = new AnimalState(
-    "CAT",
-    false,
-    new Stats(
-        9, 4, 1, // hp, attack, speed
-        2, 8, 1, // hpBuff, attackBuff, speedBuff
-        2, 3, 6),// maxLvl, blockability, escapability
-    ANIMAL_STATES.IDLE,
-    ANIMAL_TYPES.CAT
-);
-
-var duck = new AnimalState(
-    "DUCK",
-    true,
-    new Stats(
-        8, 4, 1,
-        3, 4, 1,
-        3, 0, 0),
-    ANIMAL_STATES.IDLE,
-    ANIMAL_TYPES.DUCK
-);
-
-var penguin = new AnimalState(
-    "PENGUIN",
-    false,
-    new Stats(
-        8, 4, 1,
-        3, 4, 2,
-        3, 0, 0),
-    ANIMAL_STATES.IDLE,
-    ANIMAL_TYPES.PENGUIN
-);
-
-var pelican = new AnimalState(
-    "PELICAN",
-    false,
-    new Stats(
-        12, 3, 1,
-        3, 3, 1,
-        3, 0, 0),
-    ANIMAL_STATES.IDLE,
-    ANIMAL_TYPES.PELICAN
-);
-
-var seal = new AnimalState(
-    "SEAL",
-    false,
-    new Stats(
-        12, 5, 1,
-        3, 2, 0,
-        3, 0, 0),
-    ANIMAL_STATES.IDLE,
-    ANIMAL_TYPES.SEAL
-);
-
-var sandcastle = new AnimalState(
-    "SANDCASTLE",
-    false,
-    new Stats(
-        20, 4, 1,
-        3, 3, 0,
-        3, 0, 0),
-    ANIMAL_STATES.IDLE,
-    ANIMAL_TYPES.SANDCASTLE
-);*/
 
 function BiomeState(state, animalStates) {
     this.state = state;

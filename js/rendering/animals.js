@@ -160,13 +160,6 @@ function AnimalSprite(options) {
         this.update = options.update;
     else // default to a pet object
         this.update = function() {
-            /*
-            if (this.isEvolved !== this.referenceObject.stats.currentLevel - 1) {
-                console.log(this.isEvolved, this.referenceObject.stats.currentLevel);
-                this.isEvolved = this.referenceObject.stats.currentLevel - 1;
-                console.log(this.isEvolved);
-            }*/
-            
             if (this.referenceObject.state !== referenceState) {
                 if (this.referenceObject.state === ANIMAL_STATES.IDLE) {
                     referenceState = ANIMAL_STATES.IDLE;
@@ -195,7 +188,6 @@ function AnimalSprite(options) {
             else if (game.currentScreenState.state === SCREEN_STATES.SADDENED_PET) {
                 this.currentPosition = this.saddenedPosition;
             }
-            
             else if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
                 if (this.currentPosition !== this.slidingPosition)
                     this.currentPosition = this.slidingPosition;
@@ -216,6 +208,7 @@ function AnimalSprite(options) {
         this.draw = function() {
             var coordinates = this.currentPosition.getPosition();
             this.context.clearEntireScreen();
+            console.log(this.isEvolved);
             //this.context.clearSection(coordinates.canvasX, coordinates.canvasY, this.size.width, this.size.height);
             this.context.drawImage(
                 this.image,
@@ -301,7 +294,7 @@ petSprite.referenceObject = game.pet;
 
 var enemySprite;
 
-function getSprite(animalType) {
+function getSprite(animalType, referenceObject) {
     if (animalType === ANIMAL_TYPES.CAT) {
         return getCatSprite();
     }
