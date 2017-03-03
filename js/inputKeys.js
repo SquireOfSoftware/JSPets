@@ -124,10 +124,12 @@ function walk() {
         foregroundBoard.clearEntireScreen();
         game.stepCounter.currentSteps = 0;
         game.pet.state = ANIMAL_STATES.IN_BATTLE;
+        
+        var currentCity = australia.TAS.regions[game.currentRegion][game.currentCity];
 
-        var randomBiomeState = australia.TAS.regions[game.currentRegion][game.currentCity].getRandomBiome();
+        var randomBiomeState = currentCity.getRandomBiome();
 
-        game.currentEnemy = generateEnemy(randomBiomeState);
+        game.currentEnemy = generateEnemy(randomBiomeState, currentCity.difficulty);
 
         game.currentEnemy.state = ANIMAL_STATES.IN_BATTLE;
         game.currentScreenState = cryState;//SCREEN_STATES.START_BATTLE.substates.CRY;

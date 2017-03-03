@@ -150,6 +150,13 @@ function AnimalSprite(options) {
         this.update = options.update;
     else // default to a pet object
         this.update = function() {
+            /*
+            if (this.isEvolved !== this.referenceObject.stats.currentLevel - 1) {
+                console.log(this.isEvolved, this.referenceObject.stats.currentLevel);
+                this.isEvolved = this.referenceObject.stats.currentLevel - 1;
+                console.log(this.isEvolved);
+            }*/
+            
             if (this.referenceObject.state !== referenceState) {
                 if (this.referenceObject.state === ANIMAL_STATES.IDLE) {
                     referenceState = ANIMAL_STATES.IDLE;
@@ -177,6 +184,18 @@ function AnimalSprite(options) {
             else if (game.currentScreenState.state === SCREEN_STATES.SADDENED_PET) {
                 this.currentPosition = this.saddenedPosition;
             }
+            
+            else if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
+                if (this.currentPosition !== this.slidingPosition)
+                    this.currentPosition = this.slidingPosition;
+                this.currentPosition.updateCanvas();
+            }
+            else if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.GROWL){
+                if (this.currentPosition !== this.barkingPosition)
+                    this.currentPosition = this.barkingPosition;
+                this.currentPosition.update();
+            }
+            
             this.currentPosition.update();
         };
 
@@ -219,7 +238,7 @@ var duckSprite = new AnimalSprite({
     image: generateImage("sprites/animals/duck.png"),
     context: drawingBoard,
     referenceObject: game.pet,
-	isEvolved: 0
+	//isEvolved: 0
 });
 
 var petSprite = duckSprite;
@@ -290,7 +309,7 @@ var catSprite = new AnimalSprite({
         multiplier: 48,
         canvasX: 15,
         canvasY: 0
-    }),*/
+    }),*//*
     update: function() {
         if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
             if (this.currentPosition !== this.slidingPosition)
@@ -303,13 +322,15 @@ var catSprite = new AnimalSprite({
             this.currentPosition.update();
         }
     }
+    */
 });
 
 var sealSprite = new AnimalSprite({
     image: generateImage("sprites/animals/duck.png"),
     context: drawingBoard,
     referenceObject: seal,
-    isEvolved: 0,
+    //isEvolved: 0,
+    /*
     update: function() {
         if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
             if (this.currentPosition !== this.slidingPosition)
@@ -321,14 +342,15 @@ var sealSprite = new AnimalSprite({
                 this.currentPosition = this.barkingPosition;
             this.currentPosition.update();
         }
-    }
+    }*/
 });
 
 var penguinSprite = new AnimalSprite({
     image: generateImage("sprites/animals/duck.png"),
     context: drawingBoard,
     referenceObject: penguin,
-    isEvolved: 0,
+    //isEvolved: 0,
+    /*
     update: function() {
         if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
             if (this.currentPosition !== this.slidingPosition)
@@ -340,14 +362,14 @@ var penguinSprite = new AnimalSprite({
                 this.currentPosition = this.barkingPosition;
             this.currentPosition.update();
         }
-    }
+    }*/
 });
 
 var pelicanSprite = new AnimalSprite({
     image: generateImage("sprites/animals/duck.png"),
     context: drawingBoard,
     referenceObject: pelican,
-    isEvolved: 0,
+    /*isEvolved: 0,
     update: function() {
         if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
             if (this.currentPosition !== this.slidingPosition)
@@ -359,14 +381,14 @@ var pelicanSprite = new AnimalSprite({
                 this.currentPosition = this.barkingPosition;
             this.currentPosition.update();
         }
-    }
+    }*/
 });
 
 var sandcastleSprite = new AnimalSprite({
     image: generateImage("sprites/animals/duck.png"),
     context: drawingBoard,
     referenceObject: sandcastle,
-    isEvolved: 0,
+    /*isEvolved: 0,
     update: function() {
         if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
             if (this.currentPosition !== this.slidingPosition)
@@ -378,7 +400,7 @@ var sandcastleSprite = new AnimalSprite({
                 this.currentPosition = this.barkingPosition;
             this.currentPosition.update();
         }
-    }
+    }*/
 });
 
 function GenericSprite(image, context, positions, size, update, draw) {

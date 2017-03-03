@@ -72,12 +72,32 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
         // aim to reset back to original state, but hp drops to whatever the equivalent is
     };
 
-    this.setupLevel = function(level) {
-        // this is used by the biome set up enemy function
-        if (level > this.maxLevel)
-            level = this.maxLevel; // prevent overflows
-        for(var counter = 0; counter < level; counter++){
-            this.evolveStats();
+    this.setupDifficulty = function(difficulty) {
+        if (this.maxLevel > 1) {
+            // generate a random number - scale this value according to maxLevel
+            //var randomLevel = Math.ceil(Math.random() * (this.maxLevel));
+            // this is equally distributed 
+            // I want to skew this in accordance to what level it is
+            // so that it is easier for easy levels, harder for harder levels
+            var randomRoll = Math.random() * 10; // this gives us the value to place in equation
+            
+            var randomLevel = this.maxLevel * Math.exp(-((Math.pow(randomRoll - difficulty,2))/(this.maxLevel * 10)))
+            
+            // ceiling the value to closest integer
+            
+            console.log(randomLevel, Math.ceil(randomLevel));
+            
+            randomLevel = Math.ceil(randomLevel);
+            
+            // evolve it that many times
+            
+            /*
+            if (level > this.maxLevel)
+                level = this.maxLevel; // prevent overflows
+            */
+            for(var counter = 0; counter < randomLevel; counter++){
+                this.evolveStats();
+            }
         }
     };
 
@@ -208,18 +228,21 @@ var biomes = [
     )
 ];
 
-function generateEnemy(biomeState) {
+function generateEnemy(biomeState, difficulty) {
     // locate the biome
-    var biome = null;
 
     for (var biomeCounter = 0; biomeCounter < biomes.length; biomeCounter++) {
         if (biomes[biomeCounter].state === biomeState) {
             //biome =
-            return biomes[biomeCounter].getRandomEnemy();
+            var enemy = biomes[biomeCounter].getRandomEnemy();
+            enemy.stats.setupDifficulty(difficulty);
+            console.log("stats", enemy.stats.currentStats);
+            return enemy;
         }
     }
     return undefined; // need to return enemy
 }
+
 function getCurrentEnemySprite() {
     var enemyType = game.currentEnemy.type;
     if (enemyType === ANIMAL_TYPES.CAT) {
