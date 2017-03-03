@@ -2,8 +2,6 @@
  * Created by JarvisWalker on 6/1/17.
  */
 
-
-
 function ScreenState(options) {
     this.state = options.state;
     if (options.right !== undefined)
@@ -508,7 +506,7 @@ function resetStats() {
 
 var game = {
     state: GAME_STATES.PET_STATUS,
-    pet: duck,
+    pet: getAnimalState(ANIMAL_TYPES.DUCK),
     stepCounter: {
         currentSteps: 0,
         total: bigInt(0),

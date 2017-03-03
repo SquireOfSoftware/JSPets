@@ -1,4 +1,4 @@
-function Animal(name, isPet, stats, walkingStatus, animalType) {
+function AnimalState(name, isPet, stats, walkingStatus, animalType) {
     this.name = name;
 
     this.stats = stats;
@@ -114,7 +114,78 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
     };
 }
 
-var cat = new Animal(
+function getAnimalState(state) {
+    if (state === ANIMAL_TYPES.DUCK)
+        return new AnimalState(
+            "DUCK",
+            false,
+            new Stats(
+                8, 4, 1,
+                3, 4, 1,
+                3, 0, 0),
+            ANIMAL_STATES.IDLE,
+            ANIMAL_TYPES.DUCK
+        );
+    else if (state === ANIMAL_TYPES.CAT)
+        return new AnimalState(
+            "CAT",
+            false,
+            new Stats(
+                9, 4, 1, // hp, attack, speed
+                2, 8, 1, // hpBuff, attackBuff, speedBuff
+                2, 3, 6),// maxLvl, blockability, escapability
+            ANIMAL_STATES.IDLE,
+            ANIMAL_TYPES.CAT
+        );
+    else if (state === ANIMAL_TYPES.PENGUIN)
+        return new AnimalState(
+            "PENGUIN",
+            false,
+            new Stats(
+                8, 4, 1,
+                3, 4, 2,
+                3, 0, 0),
+            ANIMAL_STATES.IDLE,
+            ANIMAL_TYPES.PENGUIN
+        );    
+    else if (state === ANIMAL_TYPES.PELICAN)
+        return new AnimalState(
+            "PELICAN",
+            false,
+            new Stats(
+                12, 3, 1,
+                3, 3, 1,
+                3, 0, 0),
+            ANIMAL_STATES.IDLE,
+            ANIMAL_TYPES.PELICAN
+        );
+    else if (state === ANIMAL_TYPES.SEAL)
+        return new AnimalState(
+            "SEAL",
+            false,
+            new Stats(
+                12, 5, 1,
+                3, 2, 0,
+                3, 0, 0),
+            ANIMAL_STATES.IDLE,
+            ANIMAL_TYPES.SEAL
+        );
+    else if (state === ANIMAL_TYPES.SANDCASTLE)
+        return new AnimalState(
+            "SANDCASTLE",
+            false,
+            new Stats(
+                20, 4, 1,
+                3, 3, 0,
+                3, 0, 0),
+            ANIMAL_STATES.IDLE,
+            ANIMAL_TYPES.SANDCASTLE
+        );
+    else
+        console.log("Unrecognised state for animal state creation: ", state);
+}
+/*
+var cat = new AnimalState(
     "CAT",
     false,
     new Stats(
@@ -125,7 +196,7 @@ var cat = new Animal(
     ANIMAL_TYPES.CAT
 );
 
-var duck = new Animal(
+var duck = new AnimalState(
     "DUCK",
     true,
     new Stats(
@@ -136,7 +207,7 @@ var duck = new Animal(
     ANIMAL_TYPES.DUCK
 );
 
-var penguin = new Animal(
+var penguin = new AnimalState(
     "PENGUIN",
     false,
     new Stats(
@@ -147,7 +218,7 @@ var penguin = new Animal(
     ANIMAL_TYPES.PENGUIN
 );
 
-var pelican = new Animal(
+var pelican = new AnimalState(
     "PELICAN",
     false,
     new Stats(
@@ -158,7 +229,7 @@ var pelican = new Animal(
     ANIMAL_TYPES.PELICAN
 );
 
-var seal = new Animal(
+var seal = new AnimalState(
     "SEAL",
     false,
     new Stats(
@@ -169,7 +240,7 @@ var seal = new Animal(
     ANIMAL_TYPES.SEAL
 );
 
-var sandcastle = new Animal(
+var sandcastle = new AnimalState(
     "SANDCASTLE",
     false,
     new Stats(
@@ -178,34 +249,34 @@ var sandcastle = new Animal(
         3, 0, 0),
     ANIMAL_STATES.IDLE,
     ANIMAL_TYPES.SANDCASTLE
-);
+);*/
 
-function BiomeState(state, animals) {
+function BiomeState(state, animalStates) {
     this.state = state;
     // add animals here, also need to test out if battle broke
     this.maxEncounter = 0;
-    this.animals = animals;
+    this.animalStates = animalStates;
 
-    for(var counter = 0; counter < animals.length; counter++) {
-        this.maxEncounter += animals[counter].percentage;
+    for(var counter = 0; counter < animalStates.length; counter++) {
+        this.maxEncounter += animalStates[counter].percentage;
     }
 
-    this.getRandomEnemy = function() {
+    this.getRandomEnemyState = function() {
         var randomIndex = Math.floor(Math.random() * (this.maxEncounter));
 
-        for(var counter = 0; counter < this.animals.length; counter++) {
-            console.log("randomIndex:", randomIndex, this.animals[counter].animal.name);
-            if ((randomIndex - this.animals[counter].percentage) > 0)
-                randomIndex -= this.animals[counter].percentage;
+        for(var counter = 0; counter < this.animalStates.length; counter++) {
+            console.log("randomIndex:", randomIndex, this.animalStates[counter].animalState.name);
+            if ((randomIndex - this.animalStates[counter].percentage) > 0)
+                randomIndex -= this.animalStates[counter].percentage;
             else
-                return this.animals[counter].animal;
+                return this.animalStates[counter].animalState;
         }
 
     };
 }
 
-function AnimalChance(animal, percentage) {
-    this.animal = animal;
+function AnimalChance(animalState, percentage) {
+    this.animalState = animalState;
     this.percentage = percentage;
 }
 
@@ -213,11 +284,11 @@ var biomes = [
     new BiomeState(
         BIOMES.BEACH,
         [
-            new AnimalChance(seal, 8),
-            new AnimalChance(penguin, 4),
-            new AnimalChance(pelican, 10),
-            new AnimalChance(duck, 5),
-            new AnimalChance(sandcastle, 1)
+            new AnimalChance(ANIMAL_TYPES.SEAL, 8),
+            new AnimalChance(ANIMAL_TYPES.PENGUIN, 4),
+            new AnimalChance(ANIMAL_TYPES.PELICAN, 10),
+            new AnimalChance(ANIMAL_TYPES.DUCK, 5),
+            new AnimalChance(ANIMAL_TYPES.SANDCASTLE, 1)
         ]
     ),
     new BiomeState(
@@ -234,35 +305,12 @@ function generateEnemy(biomeState, difficulty) {
     for (var biomeCounter = 0; biomeCounter < biomes.length; biomeCounter++) {
         if (biomes[biomeCounter].state === biomeState) {
             //biome =
-            var enemy = biomes[biomeCounter].getRandomEnemy();
+            var enemyState = biomes[biomeCounter].getRandomEnemyState();
+            var enemy = getAnimalState(enemyState);
             enemy.stats.setupDifficulty(difficulty);
             console.log("stats", enemy.stats.currentStats);
             return enemy;
         }
     }
     return undefined; // need to return enemy
-}
-
-function getCurrentEnemySprite() {
-    var enemyType = game.currentEnemy.type;
-    if (enemyType === ANIMAL_TYPES.CAT) {
-        return catSprite;
-    }
-    else if (enemyType === ANIMAL_TYPES.SEAL) {
-        return sealSprite;
-    }
-    else if (enemyType === ANIMAL_TYPES.PENGUIN) {
-        return penguinSprite;
-    }
-    else if (enemyType === ANIMAL_TYPES.PELICAN) {
-        return pelicanSprite;
-    }
-    else if (enemyType === ANIMAL_TYPES.SANDCASTLE) {
-        return sandcastleSprite;
-    }
-    else if (enemyType === ANIMAL_TYPES.DUCK) {
-        return duckSprite;
-    }
-    else
-        console.log("Unrecognisable animal type: ", enemyType);
 }

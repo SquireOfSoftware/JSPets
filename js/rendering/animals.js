@@ -15,6 +15,7 @@ function AnimalSprite(options) {
         this.idlePosition = options.idlePosition;
     else
         this.idlePosition = new SpritePosition({
+            name: "idlePosition",
             spriteSheetX: 0,
             spriteSheetY: 0,
             maxFrame: 1,
@@ -28,6 +29,7 @@ function AnimalSprite(options) {
         this.walkingPosition = options.walkingPosition;
     else
         this.walkingPosition = new SpritePosition({
+            name: "walkingPosition",
             spriteSheetX: 80, // fifth position on the sprite sheet
             spriteSheetY: 0,
             maxFrame: 1,
@@ -40,6 +42,7 @@ function AnimalSprite(options) {
     }
     else
         this.cryingOutPosition = new SpritePosition({
+            name: "cryingOutPosition",
             spriteSheetX: 32,
             spriteSheetY: 0,
             maxFrame: 1,
@@ -52,6 +55,7 @@ function AnimalSprite(options) {
         this.sickPosition = options.sickPosition;
     else
         this.sickPosition = new SpritePosition({
+            name: "sickPosition",
             spriteSheetX: 48,
             spriteSheetY: 0,
             maxFrame: 0,
@@ -66,30 +70,33 @@ function AnimalSprite(options) {
         this.slidingPosition = options.slidingPosition;
     else
         this.slidingPosition = new SpritePosition({
-        spriteSheetX: 0,
-        spriteSheetY: 0,
-        maxFrame: 4,
-        multiplier: -8,
-        canvasX: DEFAULT_SCREEN_SIZE.X,
-        canvasY: 0
-    });
+            name: "slidingPosition",
+            spriteSheetX: 0,
+            spriteSheetY: 0,
+            maxFrame: 4,
+            multiplier: -8,
+            canvasX: DEFAULT_SCREEN_SIZE.X,
+            canvasY: 0
+        });
 
     if (options.barkingPosition !== undefined)
         this.barkingPosition = options.barkingPosition;
     else
         this.barkingPosition = new SpritePosition({
-        spriteSheetX: 32,
-        spriteSheetY: 0,
-        maxFrame: 1,
-        multiplier: -32,
-        canvasX: 15, //DEFAULT_SCREEN_SIZE.X,//DEFAULT_SCREEN_SIZE.X - DEFAULT_SPRITE_SIZE,
-        canvasY: 0
-    });
+            name: "barkingPosition",
+            spriteSheetX: 32,
+            spriteSheetY: 0,
+            maxFrame: 1,
+            multiplier: -32,
+            canvasX: 15, //DEFAULT_SCREEN_SIZE.X,//DEFAULT_SCREEN_SIZE.X - DEFAULT_SPRITE_SIZE,
+            canvasY: 0
+        });
 
     if (options.attackingPosition !== undefined)
         this.attackingPosition = options.attackingPosition;
     else
         this.attackingPosition = new SpritePosition({
+            name: "attackingPosition",
             spriteSheetX: 32,
             spriteSheetY: 0,
             maxFrame: 1,
@@ -102,6 +109,7 @@ function AnimalSprite(options) {
         this.receivingPosition = options.receivingPosition;
     else
         this.receivingPosition = new SpritePosition({
+            name: "receivingPosition",
             spriteSheetX: 0,
             spriteSheetY: 0,
             maxFrame: 0,
@@ -114,6 +122,7 @@ function AnimalSprite(options) {
         this.rejoicingPosition = options.rejoicingPosition;
     else
         this.rejoicingPosition = new SpritePosition({
+            name: "rejoicingPosition",
             spriteSheetX: 0,
             spriteSheetY: 0,
             maxFrame: 1,
@@ -126,6 +135,7 @@ function AnimalSprite(options) {
         this.saddenedPosition = options.saddenedPosition;
     else
         this.saddenedPosition = new SpritePosition({
+            name: "saddenedPosition",
             spriteSheetX: 0,
             spriteSheetY: 0,
             maxFrame: 1,
@@ -165,6 +175,7 @@ function AnimalSprite(options) {
                 else if (this.referenceObject.state === ANIMAL_STATES.WALKING) {
                     referenceState = ANIMAL_STATES.WALKING;
                     this.currentPosition = this.walkingPosition;
+                    console.log("WALKING STATE");
                 }
                 else if (this.referenceObject.state === ANIMAL_STATES.SICK) {
                     referenceState = ANIMAL_STATES.SICK;
@@ -221,187 +232,97 @@ function AnimalSprite(options) {
 		
 	if (options.evolve !== undefined)
 		this.evolve = options.evolve;
-    else {
-        this.isEvolved ++;
-        if (this.isEvolved >= this.referenceObject.stats.maxLevel)
-            this.isEvolved = this.referenceObject.stats.maxLevel - 1;
-    }
+    else 
+        this.evolve = function() {
+            this.isEvolved ++;
+            if (this.isEvolved >= this.referenceObject.stats.maxLevel)
+                this.isEvolved = this.referenceObject.stats.maxLevel - 1;
+        }
 	
 	if (options.devolve !== undefined)
 		this.devolve = options.devolve;
-    else {
-        this.isEvolved = 0;
-    }
+    else 
+        this.devolve = function() {
+            this.isEvolved = 0;
+        }
 }
 
-var duckSprite = new AnimalSprite({
-    image: generateImage("sprites/animals/duck.png"),
-    context: drawingBoard,
-    referenceObject: game.pet,
-	//isEvolved: 0
-});
+function getDuckSprite() {
+    return new AnimalSprite({
+        image: generateImage("sprites/animals/duck.png"),
+        context: drawingBoard,
+        referenceObject: getAnimalState(ANIMAL_TYPES.DUCK)
+    });
+}
 
-var petSprite = duckSprite;
+function getCatSprite() {
+    return new AnimalSprite({
+        image: generateImage("sprites/animals/cat.png"),
+        context: drawingBoard,
+        referenceObject: getAnimalState(ANIMAL_TYPES.CAT)
+    });
+}
 
-var catSprite = new AnimalSprite({
-    image: generateImage("sprites/animals/cat.png"),
-    context: drawingBoard,
-    referenceObject: cat,/*
-    idlePosition: new SpritePosition({
-        spriteSheetX: 0,
-        spriteSheetY: 0,
-        maxFrame: 1,
-        canvasX: 15,
-        canvasY: 0
-    }),
-    cryingOutPosition: new SpritePosition({
-        spriteSheetX: 32,
-        spriteSheetY: 0,
-        maxFrame: 1,
-        multiplier: -32,
-        canvasX: 15,
-        canvasY: 0
-    }),
-    slidingPosition: new SpritePosition({
-        spriteSheetX: 0,
-        spriteSheetY: 0,
-        maxFrame: 4,
-        multiplier: -8,
-        canvasX: DEFAULT_SCREEN_SIZE.X,
-        canvasY: 0
-    }),
-    barkingPosition: new SpritePosition({
-        spriteSheetX: 32,
-        spriteSheetY: 0,
-        maxFrame: 1,
-        multiplier: -32,
-        canvasX: 15, //DEFAULT_SCREEN_SIZE.X,//DEFAULT_SCREEN_SIZE.X - DEFAULT_SPRITE_SIZE,
-        canvasY: 0
-    }),
-    attackingPosition: new SpritePosition({
-        spriteSheetX: 32,
-        spriteSheetY: 0,
-        maxFrame: 1,
-        multiplier: -32,
-        canvasX: 45 - 16,
-        canvasY: 0
-    }),
-    receivingPosition: new SpritePosition({
-        spriteSheetX: 0,
-        spriteSheetY: 0,
-        maxFrame: 0,
-        multiplier: 0,
-        canvasX: 29,
-        canvasY: 0
-    }),
-    rejoicingPosition: new SpritePosition({
-        spriteSheetX: 64,
-        spriteSheetY: 0,
-        maxFrame: 1,
-        multiplier: -64,
-        canvasX: 15,
-        canvasY: 0
-    }),
-    saddenedPosition: new SpritePosition({
-        spriteSheetX: 0,
-        spriteSheetY: 0,
-        maxFrame: 1,
-        multiplier: 48,
-        canvasX: 15,
-        canvasY: 0
-    }),*//*
-    update: function() {
-        if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
-            if (this.currentPosition !== this.slidingPosition)
-                this.currentPosition = this.slidingPosition;
-            this.currentPosition.updateCanvas();
-        }
-        else if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.GROWL){
-            if (this.currentPosition !== this.barkingPosition)
-                this.currentPosition = this.barkingPosition;
-            this.currentPosition.update();
-        }
+function getSealSprite() {
+    return new AnimalSprite({
+        image: generateImage("sprites/animals/duck.png"),
+        context: drawingBoard,
+        referenceObject: getAnimalState(ANIMAL_TYPES.SEAL)
+    });
+}
+
+function getPenguinSprite() {
+    return new AnimalSprite({
+        image: generateImage("sprites/animals/duck.png"),
+        context: drawingBoard,
+        referenceObject: getAnimalState(ANIMAL_TYPES.PENGUIN)
+    });
+}
+
+function getPelicanSprite() {
+    return new AnimalSprite({
+        image: generateImage("sprites/animals/duck.png"),
+        context: drawingBoard,
+        referenceObject: getAnimalState(ANIMAL_TYPES.PELICAN)
+    });
+}
+
+function getSandcastleSprite() {
+    return new AnimalSprite({
+        image: generateImage("sprites/animals/duck.png"),
+        context: drawingBoard,
+        referenceObject: getAnimalState(ANIMAL_TYPES.SANDCASTLE)
+    });
+}
+
+var petSprite = getDuckSprite();
+
+petSprite.referenceObject = game.pet;
+
+var enemySprite;
+
+function getSprite(animalType) {
+    if (animalType === ANIMAL_TYPES.CAT) {
+        return getCatSprite();
     }
-    */
-});
-
-var sealSprite = new AnimalSprite({
-    image: generateImage("sprites/animals/duck.png"),
-    context: drawingBoard,
-    referenceObject: seal,
-    //isEvolved: 0,
-    /*
-    update: function() {
-        if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
-            if (this.currentPosition !== this.slidingPosition)
-                this.currentPosition = this.slidingPosition;
-            this.currentPosition.updateCanvas();
-        }
-        else if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.GROWL){
-            if (this.currentPosition !== this.barkingPosition)
-                this.currentPosition = this.barkingPosition;
-            this.currentPosition.update();
-        }
-    }*/
-});
-
-var penguinSprite = new AnimalSprite({
-    image: generateImage("sprites/animals/duck.png"),
-    context: drawingBoard,
-    referenceObject: penguin,
-    //isEvolved: 0,
-    /*
-    update: function() {
-        if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
-            if (this.currentPosition !== this.slidingPosition)
-                this.currentPosition = this.slidingPosition;
-            this.currentPosition.updateCanvas();
-        }
-        else if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.GROWL){
-            if (this.currentPosition !== this.barkingPosition)
-                this.currentPosition = this.barkingPosition;
-            this.currentPosition.update();
-        }
-    }*/
-});
-
-var pelicanSprite = new AnimalSprite({
-    image: generateImage("sprites/animals/duck.png"),
-    context: drawingBoard,
-    referenceObject: pelican,
-    /*isEvolved: 0,
-    update: function() {
-        if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
-            if (this.currentPosition !== this.slidingPosition)
-                this.currentPosition = this.slidingPosition;
-            this.currentPosition.updateCanvas();
-        }
-        else if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.GROWL){
-            if (this.currentPosition !== this.barkingPosition)
-                this.currentPosition = this.barkingPosition;
-            this.currentPosition.update();
-        }
-    }*/
-});
-
-var sandcastleSprite = new AnimalSprite({
-    image: generateImage("sprites/animals/duck.png"),
-    context: drawingBoard,
-    referenceObject: sandcastle,
-    /*isEvolved: 0,
-    update: function() {
-        if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
-            if (this.currentPosition !== this.slidingPosition)
-                this.currentPosition = this.slidingPosition;
-            this.currentPosition.updateCanvas();
-        }
-        else if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.GROWL){
-            if (this.currentPosition !== this.barkingPosition)
-                this.currentPosition = this.barkingPosition;
-            this.currentPosition.update();
-        }
-    }*/
-});
+    else if (animalType === ANIMAL_TYPES.SEAL) {
+        return getSealSprite();
+    }
+    else if (animalType === ANIMAL_TYPES.PENGUIN) {
+        return getPenguinSprite();
+    }
+    else if (animalType === ANIMAL_TYPES.PELICAN) {
+        return getPelicanSprite();
+    }
+    else if (animalType === ANIMAL_TYPES.SANDCASTLE) {
+        return getSandcastleSprite();
+    }
+    else if (animalType === ANIMAL_TYPES.DUCK) {
+        return getDuckSprite();
+    }
+    else
+        console.log("Unrecognisable animal type: ", enemyType);
+}
 
 function GenericSprite(image, context, positions, size, update, draw) {
     this.image = image;

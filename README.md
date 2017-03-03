@@ -6,6 +6,18 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 3/3/2017 ==
+
+Managed to get a random animal being created.
+
+I created a few sprites as well, noted by the kitten sprite and the start of a dog sprite.
+
+There is one major bug that has been created and that is, having two of the same objects being rendered.
+
+So if you spawn two ducks...then one duck will override the other duck.
+
+I think I need to create throw-away factory objects.
+
 == 2/3/2017 ==
 
 Some ideas that came out from today:

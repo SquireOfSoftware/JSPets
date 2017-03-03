@@ -303,21 +303,22 @@ var battleScreens = {
                 this.context.clearEntireScreen(); // for some odd reason the screen isnt cleared properly
             }
             this.tick--;
-            if (this.enemySprite === undefined ||
-                this.enemySprite.referenceObject !== game.currentEnemy) {
-                this.enemySprite = getCurrentEnemySprite();
+            if (enemySprite === undefined ||
+                enemySprite.referenceObject !== game.currentEnemy) {
+                enemySprite = getSprite(game.currentEnemy.type);
+                enemySprite.referenceObject = game.currentEnemy;
             }
-            this.enemySprite.update();
+            
+            enemySprite.update();
 
             if (this.tick < 0){
-                this.enemySprite.currentPosition.reset();
+                enemySprite.currentPosition.reset();
                 currentScreen = battleScreens.GROWL;
                 currentScreen.update();
-
             }
         },
         draw: function() {
-            this.enemySprite.draw();
+            enemySprite.draw();
         }
     }),
     GROWL: new ScreenSprite({
@@ -330,14 +331,15 @@ var battleScreens = {
                 this.tick = 6;
             this.tick--;
 
-            if (this.enemySprite === undefined ||
-                this.enemySprite.referenceObject !== game.currentEnemy) {
-                this.enemySprite = getCurrentEnemySprite();
+            if (enemySprite === undefined ||
+                enemySprite.referenceObject !== game.currentEnemy) {
+                enemySprite = getSprite(game.currentEnemy.type);
+                enemySprite.referenceObject = game.currentEnemy;
             }
-            this.enemySprite.update();
+            enemySprite.update();
 			
             if (this.tick < 0){
-                this.enemySprite.currentPosition.reset();
+                enemySprite.currentPosition.reset();
                 currentScreen = battleMenuScreen.FIGHT;
                 game.currentScreenState = fightBattleState;
                 this.context.restore();
@@ -345,7 +347,7 @@ var battleScreens = {
             }
         },
         draw: function() {
-            this.enemySprite.draw();
+            enemySprite.draw();
         }
     })
 };
@@ -406,11 +408,10 @@ var attackSequenceScreen = {
                 disableKeyPress();
 				
                 if (this.rounds === 0) {
-                    var enemySprite = getCurrentEnemySprite();
+                    //var enemySprite = getSprite(game.currentEnemy.type);
+                    //enemySprite.referenceObject = game.currentEnemy;
+                    
                     if (game.currentEnemy.stats.currentStats.speed > game.pet.stats.currentStats.speed) {
-                        /*if (game.currentEnemy.type === ANIMAL_TYPES.CAT) {
-                            petSpriteStates.faster = catSprite;
-                        }*/
                         petSpriteStates.faster = enemySprite;
                         this.context.flipHorizontally();
                         foregroundBoard.flipHorizontally();

@@ -132,6 +132,10 @@ function walk() {
         game.currentEnemy = generateEnemy(randomBiomeState, currentCity.difficulty);
 
         game.currentEnemy.state = ANIMAL_STATES.IN_BATTLE;
+        
+        enemySprite = getSprite(game.currentEnemy.type);
+        enemySprite.referenceObject = game.currentEnemy;
+        
         game.currentScreenState = cryState;//SCREEN_STATES.START_BATTLE.substates.CRY;
         // generate the enemy here and store it in the game variable
         updateScreens();
