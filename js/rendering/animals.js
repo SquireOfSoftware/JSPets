@@ -193,17 +193,7 @@ function AnimalSprite(options) {
             else if (game.currentScreenState.state === SCREEN_STATES.SADDENED_PET) {
                 this.currentPosition = this.saddenedPosition;
             }
-            /*
-            if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
-                if (this.currentPosition !== this.slidingPosition)
-                    this.currentPosition = this.slidingPosition;
-                this.currentPosition.updateCanvas();
-            }
-            else if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.GROWL){
-                if (this.currentPosition !== this.barkingPosition)
-                    this.currentPosition = this.barkingPosition;
-                this.currentPosition.update();
-            }*/
+            
             if (this.currentPosition !== this.slidingPosition)
                 this.currentPosition.update();
             else
@@ -266,7 +256,7 @@ function getCatSprite(referenceObject) {
 
 function getSealSprite(referenceObject) {
     return new AnimalSprite({
-        image: generateImage("sprites/animals/duck.png"),
+        image: generateImage("sprites/animals/seal.png"),
         context: drawingBoard,
         referenceObject: referenceObject
     });

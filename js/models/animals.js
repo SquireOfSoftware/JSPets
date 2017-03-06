@@ -48,7 +48,7 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
             this.currentStats.attack += this.buffs.attack;
             this.currentStats.speed += this.buffs.speed;
 
-            console.log(this.currentStats);
+            //console.log(this.currentStats);
         }
     };
     
@@ -75,7 +75,6 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
     this.setupDifficulty = function(difficulty) {
         if (this.maxLevel > 1){// && this.currentLevel > 1) {
             // generate a random number - scale this value according to maxLevel
-            //var randomLevel = Math.ceil(Math.random() * (this.maxLevel));
             // this is equally distributed 
             // I want to skew this in accordance to what level it is
             // so that it is easier for easy levels, harder for harder levels
@@ -89,15 +88,11 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
             
             // evolve it that many times
             
-            /*
-            if (level > this.maxLevel)
-                level = this.maxLevel; // prevent overflows
-            */
             for(var counter = 0; counter < randomLevel; counter++){
                 this.evolveStats();
             }
             //this.currentLevel = randomLevel;
-            console.log(randomLevel, this.currentLevel, Math.ceil(randomLevel));
+            //console.log(randomLevel, this.currentLevel, Math.ceil(randomLevel));
         }
     };
 
@@ -197,13 +192,14 @@ function BiomeState(state, animalStates) {
 
     this.getRandomEnemyState = function() {
         var randomIndex = Math.floor(Math.random() * (this.maxEncounter));
-
+        console.log("max encounter", this.maxEncounter);
         for(var counter = 0; counter < this.animalStates.length; counter++) {
-            console.log("randomIndex:", randomIndex, this.animalStates[counter].animalState.name);
-            if ((randomIndex - this.animalStates[counter].percentage) > 0)
+            console.log("randomIndex:", randomIndex, this.animalStates[counter].animalState.name, this.animalStates.length);
+            if ((randomIndex - this.animalStates[counter].percentage) >= 0)
                 randomIndex -= this.animalStates[counter].percentage;
-            else
+            else {
                 return this.animalStates[counter].animalState;
+            }
         }
 
     };
@@ -242,7 +238,7 @@ function generateEnemy(biomeState, difficulty) {
             var enemyState = biomes[biomeCounter].getRandomEnemyState();
             var enemy = getAnimalState(enemyState);
             enemy.stats.setupDifficulty(difficulty);
-            console.log("stats", enemy.stats.currentStats);
+            //console.log("stats", enemy.stats.currentStats);
             return enemy;
         }
     }

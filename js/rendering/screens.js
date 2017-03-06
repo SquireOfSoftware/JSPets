@@ -302,12 +302,12 @@ var battleScreens = {
                 this.tick = 3;
                 this.context.clearEntireScreen(); // for some odd reason the screen isnt cleared properly
                 enemySprite.currentPosition = enemySprite.slidingPosition;
-                console.log("initial", enemySprite.currentPosition);
+                //console.log("initial", enemySprite.currentPosition);
             }
             this.tick--;
             
             enemySprite.update();
-            console.log(this.tick, enemySprite.currentPosition);
+            //console.log(this.tick, enemySprite.currentPosition);
 
             if (this.tick < 0){
                 enemySprite.currentPosition.reset();
@@ -328,7 +328,7 @@ var battleScreens = {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
                 //enemySprite.currentPosition = enemySprite.barkingPosition;
-                console.log("growling", enemySprite.currentPosition);
+                //console.log("growling", enemySprite.currentPosition);
             }
             this.tick--;
 
