@@ -301,15 +301,13 @@ var battleScreens = {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 3;
                 this.context.clearEntireScreen(); // for some odd reason the screen isnt cleared properly
+                enemySprite.currentPosition = enemySprite.slidingPosition;
+                console.log("initial", enemySprite.currentPosition);
             }
             this.tick--;
-            if (enemySprite === undefined ||
-                enemySprite.referenceObject !== game.currentEnemy) {
-                enemySprite = getSprite(game.currentEnemy.type);
-                enemySprite.referenceObject = game.currentEnemy;
-            }
             
             enemySprite.update();
+            console.log(this.tick, enemySprite.currentPosition);
 
             if (this.tick < 0){
                 enemySprite.currentPosition.reset();
@@ -327,15 +325,13 @@ var battleScreens = {
         context: drawingBoard,
         referenceState: SCREEN_STATES.START_BATTLE.substates.GROWL,
         update: function() {
-            if (this.tick === undefined || this.tick < 0) // the zero is to reset the animation
+            if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
+                //enemySprite.currentPosition = enemySprite.barkingPosition;
+                console.log("growling", enemySprite.currentPosition);
+            }
             this.tick--;
 
-            if (enemySprite === undefined ||
-                enemySprite.referenceObject !== game.currentEnemy) {
-                enemySprite = getSprite(game.currentEnemy.type);
-                enemySprite.referenceObject = game.currentEnemy;
-            }
             enemySprite.update();
 			
             if (this.tick < 0){

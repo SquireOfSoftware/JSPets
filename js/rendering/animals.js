@@ -160,7 +160,12 @@ function AnimalSprite(options) {
         this.update = options.update;
     else // default to a pet object
         this.update = function() {
-            if (this.referenceObject.state !== referenceState) {
+            if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
+                if (this.currentPosition !== this.slidingPosition)
+                    this.currentPosition = this.slidingPosition;
+                //this.currentPosition.updateCanvas();
+            }
+            else if (this.referenceObject.state !== referenceState) {
                 if (this.referenceObject.state === ANIMAL_STATES.IDLE) {
                     referenceState = ANIMAL_STATES.IDLE;
                     this.currentPosition = this.idlePosition;
@@ -188,7 +193,8 @@ function AnimalSprite(options) {
             else if (game.currentScreenState.state === SCREEN_STATES.SADDENED_PET) {
                 this.currentPosition = this.saddenedPosition;
             }
-            else if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
+            /*
+            if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
                 if (this.currentPosition !== this.slidingPosition)
                     this.currentPosition = this.slidingPosition;
                 this.currentPosition.updateCanvas();
@@ -197,9 +203,11 @@ function AnimalSprite(options) {
                 if (this.currentPosition !== this.barkingPosition)
                     this.currentPosition = this.barkingPosition;
                 this.currentPosition.update();
-            }
-            
-            this.currentPosition.update();
+            }*/
+            if (this.currentPosition !== this.slidingPosition)
+                this.currentPosition.update();
+            else
+                this.currentPosition.updateCanvas();
         };
 
     if (options.draw !== undefined)
@@ -208,7 +216,7 @@ function AnimalSprite(options) {
         this.draw = function() {
             var coordinates = this.currentPosition.getPosition();
             this.context.clearEntireScreen();
-            console.log(this.isEvolved);
+            //console.log(this.isEvolved);
             //this.context.clearSection(coordinates.canvasX, coordinates.canvasY, this.size.width, this.size.height);
             this.context.drawImage(
                 this.image,
@@ -240,51 +248,51 @@ function AnimalSprite(options) {
         }
 }
 
-function getDuckSprite() {
+function getDuckSprite(referenceObject) {
     return new AnimalSprite({
         image: generateImage("sprites/animals/duck.png"),
         context: drawingBoard,
-        referenceObject: getAnimalState(ANIMAL_TYPES.DUCK)
+        referenceObject: referenceObject
     });
 }
 
-function getCatSprite() {
+function getCatSprite(referenceObject) {
     return new AnimalSprite({
         image: generateImage("sprites/animals/cat.png"),
         context: drawingBoard,
-        referenceObject: getAnimalState(ANIMAL_TYPES.CAT)
+        referenceObject: referenceObject
     });
 }
 
-function getSealSprite() {
+function getSealSprite(referenceObject) {
     return new AnimalSprite({
         image: generateImage("sprites/animals/duck.png"),
         context: drawingBoard,
-        referenceObject: getAnimalState(ANIMAL_TYPES.SEAL)
+        referenceObject: referenceObject
     });
 }
 
-function getPenguinSprite() {
+function getPenguinSprite(referenceObject) {
     return new AnimalSprite({
         image: generateImage("sprites/animals/duck.png"),
         context: drawingBoard,
-        referenceObject: getAnimalState(ANIMAL_TYPES.PENGUIN)
+        referenceObject: referenceObject
     });
 }
 
-function getPelicanSprite() {
+function getPelicanSprite(referenceObject) {
     return new AnimalSprite({
         image: generateImage("sprites/animals/duck.png"),
         context: drawingBoard,
-        referenceObject: getAnimalState(ANIMAL_TYPES.PELICAN)
+        referenceObject: referenceObject
     });
 }
 
-function getSandcastleSprite() {
+function getSandcastleSprite(referenceObject) {
     return new AnimalSprite({
         image: generateImage("sprites/animals/duck.png"),
         context: drawingBoard,
-        referenceObject: getAnimalState(ANIMAL_TYPES.SANDCASTLE)
+        referenceObject: referenceObject
     });
 }
 
@@ -296,22 +304,22 @@ var enemySprite;
 
 function getSprite(animalType, referenceObject) {
     if (animalType === ANIMAL_TYPES.CAT) {
-        return getCatSprite();
+        return getCatSprite(referenceObject);
     }
     else if (animalType === ANIMAL_TYPES.SEAL) {
-        return getSealSprite();
+        return getSealSprite(referenceObject);
     }
     else if (animalType === ANIMAL_TYPES.PENGUIN) {
-        return getPenguinSprite();
+        return getPenguinSprite(referenceObject);
     }
     else if (animalType === ANIMAL_TYPES.PELICAN) {
-        return getPelicanSprite();
+        return getPelicanSprite(referenceObject);
     }
     else if (animalType === ANIMAL_TYPES.SANDCASTLE) {
-        return getSandcastleSprite();
+        return getSandcastleSprite(referenceObject);
     }
     else if (animalType === ANIMAL_TYPES.DUCK) {
-        return getDuckSprite();
+        return getDuckSprite(referenceObject);
     }
     else
         console.log("Unrecognisable animal type: ", enemyType);

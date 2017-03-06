@@ -133,8 +133,8 @@ function walk() {
 
         game.currentEnemy.state = ANIMAL_STATES.IN_BATTLE;
         
-        enemySprite = getSprite(game.currentEnemy.type);
-        enemySprite.referenceObject = game.currentEnemy;
+        enemySprite = getSprite(game.currentEnemy.type, game.currentEnemy);
+        //enemySprite.referenceObject = game.currentEnemy;
         enemySprite.isEvolved = game.currentEnemy.stats.currentLevel - 1;
         
         game.currentScreenState = cryState;//SCREEN_STATES.START_BATTLE.substates.CRY;
