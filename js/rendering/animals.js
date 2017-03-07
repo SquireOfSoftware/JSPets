@@ -264,7 +264,7 @@ function getSealSprite(referenceObject) {
 
 function getPenguinSprite(referenceObject) {
     return new AnimalSprite({
-        image: generateImage("sprites/animals/duck.png"),
+        image: generateImage("sprites/animals/penguin.png"),
         context: drawingBoard,
         referenceObject: referenceObject
     });
@@ -272,7 +272,7 @@ function getPenguinSprite(referenceObject) {
 
 function getPelicanSprite(referenceObject) {
     return new AnimalSprite({
-        image: generateImage("sprites/animals/duck.png"),
+        image: generateImage("sprites/animals/pelican.png"),
         context: drawingBoard,
         referenceObject: referenceObject
     });
@@ -280,7 +280,7 @@ function getPelicanSprite(referenceObject) {
 
 function getSandcastleSprite(referenceObject) {
     return new AnimalSprite({
-        image: generateImage("sprites/animals/duck.png"),
+        image: generateImage("sprites/animals/sandcastle.png"),
         context: drawingBoard,
         referenceObject: referenceObject
     });

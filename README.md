@@ -6,6 +6,18 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 7/3/2017 ==
+
+Added a bunch of animals.
+
+States have been fixed up (using some duct tape on the update method of animals) temporarily.
+
+Tested with the spawning rates of things like Sandcastle (there was a bug where the number did not equal zero and hence didn't subtract properly).
+
+Though one bit of a concern is that even thhough the difficulty has been shifted, level 2s continue to spawn on the first level.
+
+This has been fixed, for some odd reason it applied randomLevel oddly. See the && randomLevel > 1 under the setupDifficulty code for AnimalStates.
+
 == 3/3/2017 ==
 
 Managed to get a random animal being created.

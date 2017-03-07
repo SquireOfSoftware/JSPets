@@ -81,18 +81,18 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
             var randomRoll = Math.random() * 10; // this gives us the value to place in equation
             
             var randomLevel = this.maxLevel * Math.exp(-((Math.pow(randomRoll - difficulty,2))/(this.maxLevel * 10)))
-            
+            console.log(randomLevel, randomRoll);
             // ceiling the value to closest integer
             
             randomLevel = Math.ceil(randomLevel);
             
             // evolve it that many times
             
-            for(var counter = 0; counter < randomLevel; counter++){
+            for(var counter = 0; counter < randomLevel && randomLevel > 1; counter++){
                 this.evolveStats();
             }
             //this.currentLevel = randomLevel;
-            //console.log(randomLevel, this.currentLevel, Math.ceil(randomLevel));
+            console.log("randomLevel", randomLevel, this.currentLevel, difficulty, Math.ceil(randomLevel));
         }
     };
 
@@ -120,6 +120,17 @@ function getAnimalState(state) {
                 3, 0, 0),
             ANIMAL_STATES.IDLE,
             ANIMAL_TYPES.DUCK
+        );
+    else if (state === ANIMAL_TYPES.BAT)
+        return new AnimalState(
+            "BAT",
+            false,
+            new Stats(
+                4, 12, 1,
+                3, 4, 1,
+                3, 0, 0),
+            ANIMAL_STATES.IDLE,
+            ANIMAL_TYPES.BAT
         );
     else if (state === ANIMAL_TYPES.CAT)
         return new AnimalState(
