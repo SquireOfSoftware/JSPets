@@ -53,11 +53,10 @@ var australia = {
                     3,
                     -5,
                     [
-                        /*
                         new BiomeChance(BIOMES.COASTAL, 5),
                         new BiomeChance(BIOMES.GRASSLANDS, 4),
-                        new BiomeChance(BIOMES.URBAN, 1)*/
-                        new BiomeChance(BIOMES.BEACH, 1)
+                        new BiomeChance(BIOMES.URBAN, 1)
+                        //new BiomeChance(BIOMES.BEACH, 1)
                     ]
                 ),
                 new City(
@@ -87,7 +86,7 @@ var australia = {
                     3,
                     0,
                     [
-                        new BiomeChance(BIOMES.MARINE, 3),
+                        new BiomeChance(BIOMES.LAKE, 3),
                         new BiomeChance(BIOMES.CRAGS, 2),
                         new BiomeChance(BIOMES.ALPINE, 1),
                         new BiomeChance(BIOMES.WETLANDS, 4)
@@ -111,9 +110,10 @@ var australia = {
                     3,
                     2,
                     [
-                        new BiomeChance(BIOMES.COASTAL, 4),
+                        new BiomeChance(BIOMES.COASTAL, 3),
+                        new BiomeChance(BIOMES.MARINE, 2),
                         new BiomeChance(BIOMES.URBAN, 1),
-                        new BiomeChance(BIOMES.WETLANDS, 5)
+                        new BiomeChance(BIOMES.WETLANDS, 4)
                     ]
                 ),
                 new City(
@@ -142,7 +142,8 @@ var australia = {
                     3,
                     2,
                     [
-                        new BiomeChance(BIOMES.URBAN, 6),
+                        new BiomeChance(BIOMES.LAKE, 1),
+                        new BiomeChance(BIOMES.URBAN, 5),
                         new BiomeChance(BIOMES.CRAGS, 1),
                         new BiomeChance(BIOMES.GRASSLANDS, 3)
                     ]
@@ -164,8 +165,8 @@ var australia = {
                     3,
                     3,
                     [
+                        new BiomeChance(BIOMES.LAKE, 3),
                         new BiomeChance(BIOMES.RAINFOREST, 6),
-                        new BiomeChance(BIOMES.MARINE, 3),
                         new BiomeChance(BIOMES.WETLANDS, 1)
                     ]
                 ),
@@ -176,6 +177,7 @@ var australia = {
                     4,
                     [
                         new BiomeChance(BIOMES.ALPINE, 1),
+                        new BiomeChance(BIOMES.LAKE, 1),
                         new BiomeChance(BIOMES.CRAGS, 4),
                         new BiomeChance(BIOMES.URBAN, 2),
                         new BiomeChance(BIOMES.PLAINS, 3)
@@ -191,7 +193,8 @@ var australia = {
                     3,
                     3,
                     [
-                        new BiomeChance(BIOMES.COASTAL, 5),
+                        new BiomeChance(BIOMES.MARINE, 1),
+                        new BiomeChance(BIOMES.COASTAL, 4),
                         new BiomeChance(BIOMES.URBAN, 5)
                     ]
                 ),
@@ -201,8 +204,8 @@ var australia = {
                     3,
                     4,
                     [
+                        new BiomeChance(BIOMES.LAKE, 1),
                         new BiomeChance(BIOMES.RAINFOREST, 7),
-                        new BiomeChance(BIOMES.MARINE, 1),
                         new BiomeChance(BIOMES.WETLANDS, 2)
                     ]
                 ),
@@ -223,9 +226,10 @@ var australia = {
                     3,
                     4,
                     [
+                        new BiomeChance(BIOMES.MARINE, 3),
                         new BiomeChance(BIOMES.COASTAL, 3),
                         new BiomeChance(BIOMES.URBAN, 1),
-                        new BiomeChance(BIOMES.WETLANDS, 6)
+                        new BiomeChance(BIOMES.WETLANDS, 3)
                     ]
                 ),
                 new City(
@@ -234,8 +238,10 @@ var australia = {
                     3,
                     5,
                     [
-                        new BiomeChance(BIOMES.COASTAL, 3),
-                        new BiomeChance(BIOMES.URBAN, 4),
+                        new BiomeChance(BIOMES.MARINE, 1),
+                        new BiomeChance(BIOMES.BEACH, 2),
+                        new BiomeChance(BIOMES.COASTAL, 2),
+                        new BiomeChance(BIOMES.URBAN, 2),
                         new BiomeChance(BIOMES.WETLANDS, 3)
                     ]
                 ),
@@ -245,10 +251,11 @@ var australia = {
                     3,
                     5,
                     [
-                        new BiomeChance(BIOMES.BEACH, 2),
                         new BiomeChance(BIOMES.COASTAL, 3),
-                        new BiomeChance(BIOMES.URBAN, 2),
-                        new BiomeChance(BIOMES.WETLANDS, 3)
+                        new BiomeChance(BIOMES.SUPER_NATURAL, 1),
+                        new BiomeChance(BIOMES.MARINE, 1),
+                        new BiomeChance(BIOMES.GRASSLANDS, 3),
+                        new BiomeChance(BIOMES.WETLANDS, 2)
                     ]
                 )
             ]

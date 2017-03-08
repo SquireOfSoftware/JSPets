@@ -237,7 +237,7 @@ function AnimalSprite(options) {
             this.isEvolved = 0;
         }
 }
-
+/*
 function getDuckSprite(referenceObject) {
     return new AnimalSprite({
         image: generateImage("sprites/animals/duck.png"),
@@ -284,32 +284,222 @@ function getSandcastleSprite(referenceObject) {
         context: drawingBoard,
         referenceObject: referenceObject
     });
-}
+}*/
 
-var petSprite = getDuckSprite();
-
-petSprite.referenceObject = game.pet;
+var petSprite = getSprite(ANIMAL_TYPES.DUCK, game.pet);
 
 var enemySprite;
 
 function getSprite(animalType, referenceObject) {
-    if (animalType === ANIMAL_TYPES.CAT) {
-        return getCatSprite(referenceObject);
+    if (animalType === ANIMAL_TYPES.BAT) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
     }
-    else if (animalType === ANIMAL_TYPES.SEAL) {
-        return getSealSprite(referenceObject);
+    else if (animalType === ANIMAL_TYPES.BEE) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
     }
-    else if (animalType === ANIMAL_TYPES.PENGUIN) {
-        return getPenguinSprite(referenceObject);
+    else if (animalType === ANIMAL_TYPES.BUTTERFLY) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
     }
-    else if (animalType === ANIMAL_TYPES.PELICAN) {
-        return getPelicanSprite(referenceObject);
+    else if (animalType === ANIMAL_TYPES.CAT) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
     }
-    else if (animalType === ANIMAL_TYPES.SANDCASTLE) {
-        return getSandcastleSprite(referenceObject);
+    else if (animalType === ANIMAL_TYPES.COCKATOO) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.CROCODILE) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.DOG) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/dog.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
     }
     else if (animalType === ANIMAL_TYPES.DUCK) {
-        return getDuckSprite(referenceObject);
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/duck.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.ECHIDNA) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.FOX) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.KANGAROO) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.FRIDGE) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/fridge.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.FROG) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.KOOKABURRA) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.LORIKEET) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.OWL) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.PELICAN) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/pelican.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.PENGUIN) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/penguin.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.PIG) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.PLATYPUS) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.RABBIT) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.SANDCASTLE) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/sandcastle.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.SEAL) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/seal.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.SNAKE) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.SNOWMAN) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.TASMANIAN_DEVIL) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.TASMANIAN_TIGER) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.TURTLE) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.WHALE) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.WOMBAT) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/cat.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
     }
     else
         console.log("Unrecognisable animal type: ", enemyType);
@@ -361,9 +551,17 @@ var fireball = new GenericSprite(
             this.positions.launchingPosition.reset();
             this.positions.fullAttackPosition.reset();
             this.positions.receivingPosition.reset();
+            this.attackPower = Math.round(petSpriteStates.faster.referenceObject.stats.currentStats.attack / 10);
+            console.log("attackPower", petSpriteStates.faster.referenceObject.stats.currentStats.attack, this.attackPower);
+            
+            // this bit is really interesting
+            // 0 to 4 is a small attack
+            // 5 to 14 is the next attack
+            // 15 to 24 is the next largest attack
+            // 25 to 34 is the largest attack
         }
 
-        this.attackPower = petSpriteStates.faster.referenceObject.stats.currentStats.attack;
+        //this.attackPower = petSpriteStates.faster.referenceObject.stats.currentStats.attack;
         this.tick --;
 
         if (this.tick < 9) {
@@ -382,7 +580,7 @@ var fireball = new GenericSprite(
         this.context.clearSection(coordinates.canvasX, coordinates.canvasY, this.size.width * 2, this.size.height);
         this.context.drawImage(
             this.image,
-            coordinates.spriteSheetX + DEFAULT_SPRITE_SIZE * (Math.round(this.attackPower / 10)),
+            coordinates.spriteSheetX + DEFAULT_SPRITE_SIZE * (this.attackPower),
             coordinates.spriteSheetY,
             this.size.width,
             this.size.height,

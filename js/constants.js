@@ -58,6 +58,9 @@ var ANIMAL_TYPES = {
 	BAT: new LogicState({
         name: "BAT"
     }),
+    BEE: new LogicState({
+        name: "BEE"
+    }),
 	BUTTERFLY: new LogicState({
         name: "BUTTERFLY"
     }),
@@ -299,7 +302,10 @@ var BIOMES = {
     GRASSLANDS: new LogicState({ // plains
         name: "GRASSLANDS"
     }),
-    MARINE: new LogicState({ // lakes
+    LAKES: new LogicState({ 
+        name: "LAKES"
+    }),
+    MARINE: new LogicState({ 
         name: "MARINE"
     }),
 	PLAINS: new LogicState({ // valley
