@@ -6,6 +6,122 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 8/3/2017 ==
+
+Added all the animal states, a lake biome and adding in the framework to sprites.
+
+Starting to re-watch some theory on game design.
+
+Depth vs Complexity
+
+https://www.youtube.com/watch?v=jVL4st0blGU&list=PLhyKYa0YJ_5BkTruCmaBBZ8z6cP9KzPiX&index=19
+
+- Depth - tools to allow players to play around various different situations - meaningful choices - players ability to play around the rules of play - if people can’t make a conscious choice then there is no depth - learn from outcomes of choice
+
+- Complexity - mental burden placed on by the game - data that the player has to process or decisions to play - dependent on UI (if complex, more info to process), pace of play (how many decisions are you asking to make by the player per second?) and irreducible complexity (learning the rules)
+
+- Tutorials - help reduce the complexity
+
+- Depth - how the player can play with the game, complexity restricts depth
+
+- Elegant design - high depth to complexity ratio - look for deeper games rather than complexity - look to get the most depth for your complexity
+
+First Move Advantage
+
+https://www.youtube.com/watch?v=TRHdIScOMWQ&list=PLhyKYa0YJ_5BkTruCmaBBZ8z6cP9KzPiX&index=17
+
+- Tricky design problems for turn based games - build mechanics to compensate
+
+- Difficult to balance first turn
+
+- Identify what type of turn based game it is: static resource or developed resource
+
+- Static - players have all the pieces from the start of the game and don’t build up the board over time - FF tactics or chess
+
+- Developed - build resources over time - first turn affects this more
+
+- Build in the tools to fine tune the first move advantage - points in go, hearthstone - whole card or not is quite hard
+
+- Build in metrics to observe the advantages are
+
+- First move advantage grows over time - people getting better and better at the game - need to watch for this
+
+- Be aware of first moves in any pvp games that has turn based elements - LoL 
+
+MVP - Minimum Viable Product - Scope Small, Start Right
+
+https://www.youtube.com/watch?v=UvCri1tqIxQ&list=PLhyKYa0YJ_5BkTruCmaBBZ8z6cP9KzPiX&index=15
+
+- Make the first game small
+
+- Make a prototype, find edge cases, find what is engaging and stuff, cut, and cut
+
+- Cut down to core fundamentals of the game, minimum to build and test
+
+- Make sure the core is working first
+
+- Adding additional tools to help you work on the core
+
+- Can be really easy to get bogged down with content
+
+- Hone the foundations rather than content
+
+- Avoid multiplayer, stick to single player - work on foundation and testing things out
+
+Balancing for skill
+
+https://www.youtube.com/watch?v=EitZRLt2G3w&list=PLhyKYa0YJ_5BkTruCmaBBZ8z6cP9KzPiX&index=9
+
+- Can forget skill and just get bogged down with objects rather than player skill
+
+- Give new players something to play with whilst getting better - get people to stick around
+
+- ‘Foo’ strategies need to meet this wall earlier, forcing people to find new strategies, reward players for deviating from ‘Foo’ strategies
+
+How the first 5 minutes draw players in
+
+https://www.youtube.com/watch?v=EFU4tjMndi4&list=PLhyKYa0YJ_5BkTruCmaBBZ8z6cP9KzPiX&index=46
+
+- 1st 5 minutes, strong intro creates a strong first impression
+
+- Either do it via narratives, mechanics or spectacle
+
+- Narrative - story or world or tone you are playing - mystery is a good hook, calls you to explore, interaction rather than observation, make you something wonder what is going on - selling the world, understand whats compelling and not to hold back, use that upfront
+
+- Mechanics - a game feature or feats you can perform, drill down to why the player would want to play your game, could space out tutorials (don’t want to kill pacing of the intro)
+
+- Spectacle - makes you say “woah” hold up least over time, something big or exciting cut scene or play
+
+- Tool - In Medias Res - when you are thrown into the middle rather than the front, start you in the middle - thrown into a story already in progress - FF Tactics - tosses you straight into the action
+
+- Intros go for at least 2 of the three above, need meat to back it up at least
+
+Designing for a touch screen
+
+https://www.youtube.com/watch?v=NBHircZu5EI&list=PLhyKYa0YJ_5BkTruCmaBBZ8z6cP9KzPiX&index=47
+
+- Touch screen can do different things
+
+- Need games that are good in their own right
+
+- Touch screens are a lot better for turn based, strategy, puzzle, card games
+
+- Good for one action at a time, multiple inputs don’t work very well, hold in hand or play on table
+
+- Good for mimicking human actions
+
+- Don’t need precision controls
+
+- Turn based - most satisfying
+
+- If your game requires a virtual joystick or another input from another device then you are doing it wrong
+
+- Design for your platform
+
+- Consider how your hands will cover up your screen - hands will cover things up
+
+- More you can emulate human actions then the better to make it intuitive
+
 == 7/3/2017 ==
 
 Added a bunch of animals.
