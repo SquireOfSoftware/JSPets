@@ -293,7 +293,7 @@ var enemySprite;
 function getSprite(animalType, referenceObject) {
     if (animalType === ANIMAL_TYPES.BAT) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/bat.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
