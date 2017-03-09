@@ -237,54 +237,6 @@ function AnimalSprite(options) {
             this.isEvolved = 0;
         }
 }
-/*
-function getDuckSprite(referenceObject) {
-    return new AnimalSprite({
-        image: generateImage("sprites/animals/duck.png"),
-        context: drawingBoard,
-        referenceObject: referenceObject
-    });
-}
-
-function getCatSprite(referenceObject) {
-    return new AnimalSprite({
-        image: generateImage("sprites/animals/cat.png"),
-        context: drawingBoard,
-        referenceObject: referenceObject
-    });
-}
-
-function getSealSprite(referenceObject) {
-    return new AnimalSprite({
-        image: generateImage("sprites/animals/seal.png"),
-        context: drawingBoard,
-        referenceObject: referenceObject
-    });
-}
-
-function getPenguinSprite(referenceObject) {
-    return new AnimalSprite({
-        image: generateImage("sprites/animals/penguin.png"),
-        context: drawingBoard,
-        referenceObject: referenceObject
-    });
-}
-
-function getPelicanSprite(referenceObject) {
-    return new AnimalSprite({
-        image: generateImage("sprites/animals/pelican.png"),
-        context: drawingBoard,
-        referenceObject: referenceObject
-    });
-}
-
-function getSandcastleSprite(referenceObject) {
-    return new AnimalSprite({
-        image: generateImage("sprites/animals/sandcastle.png"),
-        context: drawingBoard,
-        referenceObject: referenceObject
-    });
-}*/
 
 var petSprite = getSprite(ANIMAL_TYPES.DUCK, game.pet);
 
@@ -300,14 +252,14 @@ function getSprite(animalType, referenceObject) {
     }
     else if (animalType === ANIMAL_TYPES.BEE) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/bee.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
     }
     else if (animalType === ANIMAL_TYPES.BUTTERFLY) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/butterfly.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
@@ -342,7 +294,7 @@ function getSprite(animalType, referenceObject) {
     }
     else if (animalType === ANIMAL_TYPES.DUCK) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/duck.png"),
+            image: generateImage("sprites/animals/butterfly.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
