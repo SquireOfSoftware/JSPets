@@ -62,10 +62,7 @@ function AnimalSprite(options) {
             canvasX: 15,
             canvasY: 0
         });
-
-    if (options.happyPosition !== undefined)
-        this.happyPosition = options.happyPosition;
-
+        
     if (options.slidingPosition !== undefined)
         this.slidingPosition = options.slidingPosition;
     else
@@ -238,6 +235,105 @@ function AnimalSprite(options) {
         }
 }
 
+function AnimalSprite32Width(image, drawingBoard, referenceObject) {
+    return new AnimalSprite({
+            image: generateImage("sprites/animals/crocodile.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject,
+            size: {width: DEFAULT_SPRITE_SIZE * 2, height: DEFAULT_SPRITE_SIZE},
+            idlePosition: new SpritePosition({
+                name: "idlePosition",
+                spriteSheetX: 0,
+                spriteSheetY: 0,
+                maxFrame: 1,
+                multiplier: 32,
+                canvasX: 15,
+                canvasY: 0
+            }),
+            walkingPosition: new SpritePosition({
+                name: "walkingPosition",
+                spriteSheetX: 160, // fifth position on the sprite sheet
+                spriteSheetY: 0,
+                maxFrame: 1,
+                multiplier: 32,
+                canvasX: 15,
+                canvasY: 0
+            }),
+            cryingOutPosition: new SpritePosition({
+                name: "cryingOutPosition",
+                spriteSheetX: 64,
+                spriteSheetY: 0,
+                maxFrame: 1,
+                multiplier: -64,
+                canvasX: 15,
+                canvasY: 0
+            }),
+            sickPosition: new SpritePosition({
+                name: "sickPosition",
+                spriteSheetX: 96,
+                spriteSheetY: 0,
+                maxFrame: 0,
+                multiplier: 32,
+                canvasX: 15,
+                canvasY: 0
+            }),/*
+            slidingPosition: new SpritePosition({
+                name: "slidingPosition",
+                spriteSheetX: 0,
+                spriteSheetY: 0,
+                maxFrame: 4,
+                multiplier: -8,
+                canvasX: DEFAULT_SCREEN_SIZE.X,
+                canvasY: 0
+            }),*/
+            barkingPosition: new SpritePosition({
+                name: "barkingPosition",
+                spriteSheetX: 64,
+                spriteSheetY: 0,
+                maxFrame: 1,
+                multiplier: -64,
+                canvasX: 15, 
+                canvasY: 0
+            }),
+            attackingPosition: new SpritePosition({
+                name: "attackingPosition",
+                spriteSheetX: 64,
+                spriteSheetY: 0,
+                maxFrame: 1,
+                multiplier: -64,
+                canvasX: 45 - 16,
+                canvasY: 0
+            }),
+            receivingPosition: new SpritePosition({
+                name: "receivingPosition",
+                spriteSheetX: 0,
+                spriteSheetY: 0,
+                maxFrame: 0,
+                multiplier: 0,
+                canvasX: 29,
+                canvasY: 0
+            }),
+            rejoicingPosition: new SpritePosition({
+                name: "rejoicingPosition",
+                spriteSheetX: 0,
+                spriteSheetY: 0,
+                maxFrame: 1,
+                multiplier: 128,
+                canvasX: 15,
+                canvasY: 0
+            }),
+            saddenedPosition: new SpritePosition({
+                name: "saddenedPosition",
+                spriteSheetX: 0,
+                spriteSheetY: 0,
+                maxFrame: 1,
+                multiplier: 96,
+                canvasX: 15,
+                canvasY: 0
+            })
+        });
+}
+
 var petSprite = getSprite(ANIMAL_TYPES.CROCODILE, game.pet);
 
 var enemySprite;
@@ -279,12 +375,11 @@ function getSprite(animalType, referenceObject) {
         });
     }
     else if (animalType === ANIMAL_TYPES.CROCODILE) {
-        return new AnimalSprite({
-            image: generateImage("sprites/animals/crocodile.png"),
-            context: drawingBoard,
-            referenceObject: referenceObject,
-            size: {width: DEFAULT_SPRITE_SIZE * 2, height: DEFAULT_SPRITE_SIZE}
-        });
+        return new AnimalSprite32Width(
+            "sprites/animals/crocodile.png",
+            drawingBoard,
+            referenceObject
+            );
     }
     else if (animalType === ANIMAL_TYPES.DOG) {
         return new AnimalSprite({

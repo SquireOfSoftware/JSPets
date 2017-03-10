@@ -53,10 +53,12 @@ var australia = {
                     3,
                     -5,
                     [
-                        new BiomeChance(BIOMES.COASTAL, 5),
+                        /*new BiomeChance(BIOMES.COASTAL, 5),
                         new BiomeChance(BIOMES.GRASSLANDS, 4),
                         new BiomeChance(BIOMES.URBAN, 1)
+                        */
                         //new BiomeChance(BIOMES.BEACH, 1)
+                        new BiomeChance(BIOMES.SUPER_NATURAL, 10)
                     ]
                 ),
                 new City(
