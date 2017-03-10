@@ -238,7 +238,7 @@ function AnimalSprite(options) {
         }
 }
 
-var petSprite = getSprite(ANIMAL_TYPES.DUCK, game.pet);
+var petSprite = getSprite(ANIMAL_TYPES.CROCODILE, game.pet);
 
 var enemySprite;
 
@@ -273,16 +273,17 @@ function getSprite(animalType, referenceObject) {
     }
     else if (animalType === ANIMAL_TYPES.COCKATOO) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/cockatoo.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
     }
     else if (animalType === ANIMAL_TYPES.CROCODILE) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/crocodile.png"),
             context: drawingBoard,
-            referenceObject: referenceObject
+            referenceObject: referenceObject,
+            size: {width: DEFAULT_SPRITE_SIZE * 2, height: DEFAULT_SPRITE_SIZE}
         });
     }
     else if (animalType === ANIMAL_TYPES.DOG) {
@@ -294,7 +295,7 @@ function getSprite(animalType, referenceObject) {
     }
     else if (animalType === ANIMAL_TYPES.DUCK) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/butterfly.png"),
+            image: generateImage("sprites/animals/crocodile.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
