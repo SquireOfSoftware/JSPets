@@ -334,7 +334,7 @@ function AnimalSprite32Width(image, drawingBoard, referenceObject) {
         });
 }
 
-var petSprite = getSprite(ANIMAL_TYPES.CROCODILE, game.pet);
+var petSprite = getSprite(ANIMAL_TYPES.DOG, game.pet);
 
 var enemySprite;
 

@@ -50,15 +50,15 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.REDPA,
                     getCoordinates(4, 3),
-                    3,
+                    10,
                     -5,
                     [
-                        /*new BiomeChance(BIOMES.COASTAL, 5),
+                        new BiomeChance(BIOMES.COASTAL, 5),
                         new BiomeChance(BIOMES.GRASSLANDS, 4),
                         new BiomeChance(BIOMES.URBAN, 1)
-                        */
+
                         //new BiomeChance(BIOMES.BEACH, 1)
-                        new BiomeChance(BIOMES.SUPER_NATURAL, 10)
+                        //new BiomeChance(BIOMES.SUPER_NATURAL, 10)
                     ]
                 ),
                 new City(

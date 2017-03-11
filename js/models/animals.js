@@ -85,7 +85,7 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
             // ceiling the value to closest integer
             
             randomLevel = Math.ceil(randomLevel);
-            randomLevel = 2;
+            //randomLevel = 2; // This is a test
             // evolve it that many times
             
             for(var counter = 0; counter < randomLevel && randomLevel > 1; counter++){
