@@ -183,7 +183,7 @@ function getAnimalState(state) {
             new Stats(
                 7, 7, 1,
                 1, 3, 1,
-                3, 0, 0),
+                2, 0, 0),
             ANIMAL_STATES.IDLE,
             ANIMAL_TYPES.DOG
         );
