@@ -334,7 +334,7 @@ function AnimalSprite32Width(image, drawingBoard, referenceObject) {
         });
 }
 
-var petSprite = getSprite(ANIMAL_TYPES.DOG, game.pet);
+var petSprite = getSprite(ANIMAL_TYPES.SNAKE, game.pet);
 
 var enemySprite;
 
@@ -397,21 +397,14 @@ function getSprite(animalType, referenceObject) {
     }
     else if (animalType === ANIMAL_TYPES.ECHIDNA) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/echidna.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
     }
     else if (animalType === ANIMAL_TYPES.FOX) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
-            context: drawingBoard,
-            referenceObject: referenceObject
-        });
-    }
-    else if (animalType === ANIMAL_TYPES.KANGAROO) {
-        return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/fox.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
@@ -425,28 +418,35 @@ function getSprite(animalType, referenceObject) {
     }
     else if (animalType === ANIMAL_TYPES.FROG) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/frog.png"),
+            context: drawingBoard,
+            referenceObject: referenceObject
+        });
+    }
+    else if (animalType === ANIMAL_TYPES.KANGAROO) {
+        return new AnimalSprite({
+            image: generateImage("sprites/animals/kangaroo.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
     }
     else if (animalType === ANIMAL_TYPES.KOOKABURRA) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/kookaburra.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
     }
     else if (animalType === ANIMAL_TYPES.LORIKEET) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/lorikeet.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
     }
     else if (animalType === ANIMAL_TYPES.OWL) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/owl.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
@@ -467,21 +467,21 @@ function getSprite(animalType, referenceObject) {
     }
     else if (animalType === ANIMAL_TYPES.PIG) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/pig.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
     }
     else if (animalType === ANIMAL_TYPES.PLATYPUS) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/platypus.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
     }
     else if (animalType === ANIMAL_TYPES.RABBIT) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/rabbit.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
@@ -502,7 +502,7 @@ function getSprite(animalType, referenceObject) {
     }
     else if (animalType === ANIMAL_TYPES.SNAKE) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/snake.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
