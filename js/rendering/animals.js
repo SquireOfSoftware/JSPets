@@ -237,7 +237,7 @@ function AnimalSprite(options) {
 
 function AnimalSprite32Width(image, drawingBoard, referenceObject) {
     return new AnimalSprite({
-            image: generateImage("sprites/animals/crocodile.png"),
+            image: image,
             context: drawingBoard,
             referenceObject: referenceObject,
             size: {width: DEFAULT_SPRITE_SIZE * 2, height: DEFAULT_SPRITE_SIZE},
@@ -334,7 +334,7 @@ function AnimalSprite32Width(image, drawingBoard, referenceObject) {
         });
 }
 
-var petSprite = getSprite(ANIMAL_TYPES.SNAKE, game.pet);
+var petSprite = getSprite(ANIMAL_TYPES.WHALE, game.pet);
 
 var enemySprite;
 
@@ -376,7 +376,7 @@ function getSprite(animalType, referenceObject) {
     }
     else if (animalType === ANIMAL_TYPES.CROCODILE) {
         return new AnimalSprite32Width(
-            "sprites/animals/crocodile.png",
+            generateImage("sprites/animals/crocodile.png"),
             drawingBoard,
             referenceObject
             );
@@ -509,42 +509,42 @@ function getSprite(animalType, referenceObject) {
     }
     else if (animalType === ANIMAL_TYPES.SNOWMAN) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/snowman.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
     }
     else if (animalType === ANIMAL_TYPES.TASMANIAN_DEVIL) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/tasmanian-devil.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
     }
     else if (animalType === ANIMAL_TYPES.TASMANIAN_TIGER) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/tasmanian-tiger.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
     }
     else if (animalType === ANIMAL_TYPES.TURTLE) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/turtle.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
     }
     else if (animalType === ANIMAL_TYPES.WHALE) {
-        return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
-            context: drawingBoard,
-            referenceObject: referenceObject
-        });
+        return new AnimalSprite32Width(
+            generateImage("sprites/animals/whale.png"),
+            drawingBoard,
+            referenceObject
+        );
     }
     else if (animalType === ANIMAL_TYPES.WOMBAT) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/cat.png"),
+            image: generateImage("sprites/animals/wombat.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
