@@ -2,30 +2,6 @@
  * Created by JarvisWalker on 6/1/17.
  */
 
-function Animal(options) {
-    this.name = options.name;
-	
-	this.evolvedStats = options.evolvedStats;
-	
-    this.stats = this.evolvedStats[0];
-
-    if (options.isPet !== undefined)
-        this.isPet = options.isPet;
-    else
-        this.isPet = false;
-
-    if (options.state !== undefined)
-        this.state = options.state;
-    else
-        this.state = ANIMAL_STATES.IDLE;
-
-    this.type = options.type;
-
-    this.resetStats = options.resetStats;
-	
-	this.resetAllStats = options.resetAllStats;
-}
-
 function ScreenState(options) {
     this.state = options.state;
     if (options.right !== undefined)
@@ -245,15 +221,16 @@ var evolveBattleState = new ScreenState({
 		// disable key presses
 		// evolution screen - this updates the pet sprite
 		disableKeyPress();
-		
+		/*
 		if (game.pet.stats.state === EVOLUTION_STATES.BASIC) {
-			game.pet.stats.resetStats();
-			game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.CHAMPION.value];
+			//game.pet.stats.resetStats();
+			//game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.CHAMPION.value];
 		}
 		else if (game.pet.stats.state === EVOLUTION_STATES.CHAMPION) {
 			game.pet.stats.resetStats();
 			game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.ULTIMATE.value];
-		}
+		}*/
+		game.pet.stats.evolveStats();
 
 		game.currentScreenState = evolvingAnimationState;
 		
@@ -383,16 +360,15 @@ var runBattleState = new ScreenState({
         if (roll % 2 === 1) {
             game.pet.state = ANIMAL_STATES.SICK;
             //currentScreen = statusScreens.SADDENED_DEVOLVE_ANIMATION;
-			if (game.pet.stats.state === EVOLUTION_STATES.BASIC)
+			if (game.pet.stats.currentLevel < 2)
 				game.currentScreenState = sadSequenceState;
 			else
 				game.currentScreenState = sadDevolvingAnimationstate;
         }
         else {
 			game.pet.state = ANIMAL_STATES.IDLE;
-			if (game.pet.stats.state === EVOLUTION_STATES.BASIC) {
+            if (game.pet.stats.currentLevel < 2)
 				game.currentScreenState = petState;
-			}
 			else 
 				game.currentScreenState = idleDevolvingAnimationstate;
         }
@@ -518,223 +494,19 @@ var mapScreenState = {
     })
 };
 
-// Land
-// Each piece of land has a "state" and a set of cities
-// each city has a set of "biomes" and a step count to reach the center of the city
-function State(name, regions) {
-    this.name = name;
-    this.regions = regions;
-}
-
-function City(referenceState, coordinates, stepCount, isCurrentCity){
-    
-	this.coordinates = coordinates;
-    this.stepCount = stepCount;
-    this.referenceState = referenceState;
-	
-	this.name = this.referenceState.name;
-}
-
-function getCoordinates(x, y) {
-    if (x > 45)
-        x -= 45;
-    if (y > 20)
-        y -= 20;
-	return {x: x - 1, y: y - 1}; // need to figure out how to display stuff on to the next map
-}
-
-var australia = {
-    TAS: new State(
-        "TAS",
-		[
-		    [
-                // NORTH
-                new City(
-                    MAP_STATES.TAS.substates.REDPA,
-                    getCoordinates(4, 3),
-                    3
-                ),
-                new City(
-                    MAP_STATES.TAS.substates.SMITHTON,
-                    getCoordinates(8, 2),
-                    3
-                ),
-                new City(
-                    MAP_STATES.TAS.substates.BURNIE_SOMERSET,
-                    getCoordinates(17, 6),
-                    3
-                ),
-                new City(
-                    MAP_STATES.TAS.substates.CRADLE_MOUNTAIN,
-                    getCoordinates(17, 12),
-                    3
-                ),
-                new City(
-                    MAP_STATES.TAS.substates.DELORAINE,
-                    getCoordinates(25, 11),
-                    3
-                ),
-                new City(
-                    MAP_STATES.TAS.substates.GEORGE_TOWN,
-                    getCoordinates(27, 6),
-                    3
-                ),
-                new City(
-                    MAP_STATES.TAS.substates.MUSSELROE_BAY,
-                    getCoordinates(41, 3),
-                    3
-                ),
-                new City(
-                    MAP_STATES.TAS.substates.SCAMANDER,
-                    getCoordinates(42, 12),
-                    3
-                ),
-                new City(
-                    MAP_STATES.TAS.substates.LAUNCESTON,
-                    getCoordinates(30, 10),
-                    3
-                ),
-                new City(
-                    MAP_STATES.TAS.substates.CAMPBELL_TOWN,
-                    getCoordinates(34, 17),
-                    3
-                ),
-                new City(
-                    MAP_STATES.TAS.substates.DERWENT_BRIDGE,
-                    getCoordinates(21, 18),
-                    3
-                ),
-                new City(
-                    MAP_STATES.TAS.substates.QUEENSTOWN,
-                    getCoordinates(13, 18),
-                    3
-                )]
-        ,
-        [
-            // SOUTH
-			new City(
-				MAP_STATES.TAS.substates.STRAHAN,
-				getCoordinates(19, 22), // next map
-				3
-			),
-			new City(
-				MAP_STATES.TAS.substates.STRATHGORDON,
-				getCoordinates(19, 30),
-				3
-			),
-			
-			new City(
-				MAP_STATES.TAS.substates.BOTHWELL,
-				getCoordinates(29, 25),
-				3
-			),
-			new City(
-				MAP_STATES.TAS.substates.TRIABUNNA,
-				getCoordinates(39, 27),
-				3
-			),
-			new City(
-				MAP_STATES.TAS.substates.HOBART,
-				getCoordinates(32, 31),
-				3
-			),
-			new City(
-				MAP_STATES.TAS.substates.PORT_ARTHUR,
-				getCoordinates(38, 36),
-				3
-			)
-		]
-        ]
-    )
-};
-
-function moveToNextCity() {
-    if(game.currentCity === australia.TAS.regions[game.currentRegion].length -1) {
-        game.currentCity = 0;
-        game.currentRegion++;
-        if (game.currentRegion > australia.TAS.regions.length - 1) {
-            game.currentRegion = 0;
-        }
-        game.currentViewableRegion = game.currentRegion;
-    }
-    else
-        game.currentCity++;
-}
-
-// ANIMALS
-
-function generateAnimalStats(hp, attk, spd, state) {
-    return {
-        hp: hp,
-        attk: attk,
-        spd: spd,
-        state: state,
-        resetStats: function() {
-            this.hp = hp;
-            this.attk = attk;
-            this.spd = spd;
-            this.state = state;
-			//console.log(this);
-        }
-    };
-}
-/*
-var currentEnemy = {
-    name: "Enemy",
-    currentEnemy: undefined,
-    currentBiome: undefined,
-    generateEnemy: function() {
-        //game.currentCity.biomes
-        var biomes = game.currentCity.biomes;
-        this.currentBiome = biomes[Math.floor(Math.random() * (biomes.length + 1))];
-        // set up new stats
-    },
-    stats: generateAnimalStats(5, 1, 1, EVOLUTION_STATES.BASIC)
-};*/
-
-var cat = new Animal({
-    name: "CAT",
-    //stats: generateAnimalStats(10, 10, 2, EVOLUTION_STATES.BASIC),
-	evolvedStats: [
-		generateAnimalStats(10, 10, 2, EVOLUTION_STATES.BASIC),
-		generateAnimalStats(20, 15, 5, EVOLUTION_STATES.CHAMPION),
-		generateAnimalStats(35, 20, 10, EVOLUTION_STATES.ULTIMATE)
-	],
-    type: ANIMAL_TYPES.CAT
-});
-
-var duck = new Animal({
-    name: "DUCK",
-    //stats: generateAnimalStats(10, 12, 1, EVOLUTION_STATES.BASIC),
-	evolvedStats: [
-		generateAnimalStats(10, 12, 1, EVOLUTION_STATES.BASIC),
-		generateAnimalStats(18, 2, 6, EVOLUTION_STATES.CHAMPION),
-		generateAnimalStats(27, 22, 9, EVOLUTION_STATES.ULTIMATE)
-	],
-	type: ANIMAL_TYPES.DUCK,
-	resetAllStats: function() {
-		for(var i = 0; i < this.evolvedStats.length; i++) {
-			this.evolvedStats[i].resetStats();
-			console.log("Resetting", this.evolvedStats[i]);
-		}
-	}
-});
-
-function resetStats() {
-	game.pet.stats.resetStats();
-	game.currentEnemy.stats.resetStats();
-	game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.BASIC.value];
-	
-	game.stepCounter.hasRecentlyStepped = false;
-}
-
 function update() {
     // Need to figure out how to link this to a screen
 }
 
+function resetStats() {
+	game.stepCounter.hasRecentlyStepped = false;
+    game.pet.stats.devolveStats();
+    game.currentEnemy.stats.fullyRestoreStats();
+}
+
 var game = {
     state: GAME_STATES.PET_STATUS,
-    pet: duck,
+    pet: getAnimalState(ANIMAL_TYPES.DUCK),
     stepCounter: {
         currentSteps: 0,
         total: bigInt(0),
@@ -759,8 +531,8 @@ var game = {
     currentScreenState: petState,
     currentRegion: 0,
     currentViewableRegion: 0,
-    currentCity: 11,
-    currentEnemy: cat
+    currentCity: 0
+    //currentEnemy: cat
 };
 
 game.pet.isPet = true;

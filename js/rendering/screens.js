@@ -301,25 +301,22 @@ var battleScreens = {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 3;
                 this.context.clearEntireScreen(); // for some odd reason the screen isnt cleared properly
+                enemySprite.currentPosition = enemySprite.slidingPosition;
+                //console.log("initial", enemySprite.currentPosition);
             }
             this.tick--;
-            if (this.enemySprite === undefined ||
-                this.enemySprite.referenceObject !== game.currentEnemy) {
-                if (game.currentEnemy.type === ANIMAL_TYPES.CAT) {
-                    this.enemySprite = catSprite;
-                }
-            }
-            this.enemySprite.update();
+            
+            enemySprite.update();
+            //console.log(this.tick, enemySprite.currentPosition);
 
             if (this.tick < 0){
-                this.enemySprite.currentPosition.reset();
+                enemySprite.currentPosition.reset();
                 currentScreen = battleScreens.GROWL;
                 currentScreen.update();
-
             }
         },
         draw: function() {
-            this.enemySprite.draw();
+            enemySprite.draw();
         }
     }),
     GROWL: new ScreenSprite({
@@ -328,20 +325,17 @@ var battleScreens = {
         context: drawingBoard,
         referenceState: SCREEN_STATES.START_BATTLE.substates.GROWL,
         update: function() {
-            if (this.tick === undefined || this.tick < 0) // the zero is to reset the animation
+            if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
+                //enemySprite.currentPosition = enemySprite.barkingPosition;
+                //console.log("growling", enemySprite.currentPosition);
+            }
             this.tick--;
 
-            if (this.enemySprite === undefined ||
-                this.enemySprite.referenceObject !== game.currentEnemy) {
-                if (game.currentEnemy.type === ANIMAL_TYPES.CAT) {
-                    this.enemySprite = catSprite;
-                }
-            }
-            this.enemySprite.update();
+            enemySprite.update();
 			
             if (this.tick < 0){
-                this.enemySprite.currentPosition.reset();
+                enemySprite.currentPosition.reset();
                 currentScreen = battleMenuScreen.FIGHT;
                 game.currentScreenState = fightBattleState;
                 this.context.restore();
@@ -349,7 +343,7 @@ var battleScreens = {
             }
         },
         draw: function() {
-            this.enemySprite.draw();
+            enemySprite.draw();
         }
     })
 };
@@ -410,10 +404,11 @@ var attackSequenceScreen = {
                 disableKeyPress();
 				
                 if (this.rounds === 0) {
-                    if (game.currentEnemy.stats.spd > game.pet.stats.spd) {
-                        if (game.currentEnemy.type === ANIMAL_TYPES.CAT) {
-                            petSpriteStates.faster = catSprite;
-                        }
+                    //var enemySprite = getSprite(game.currentEnemy.type);
+                    //enemySprite.referenceObject = game.currentEnemy;
+                    
+                    if (game.currentEnemy.stats.currentStats.speed > game.pet.stats.currentStats.speed) {
+                        petSpriteStates.faster = enemySprite;
                         this.context.flipHorizontally();
                         foregroundBoard.flipHorizontally();
 
@@ -421,7 +416,7 @@ var attackSequenceScreen = {
                     }
                     else {
                         petSpriteStates.faster = petSprite;
-                        petSpriteStates.slower = catSprite;
+                        petSpriteStates.slower = enemySprite;
                     }
                 }
                 else {
@@ -607,13 +602,13 @@ var attackSequenceScreen = {
                 case 4:
                     break;
                 case 3:
-                    petSpriteStates.slower.referenceObject.stats.hp -= petSpriteStates.faster.referenceObject.stats.attk;
-                    if (petSpriteStates.slower.referenceObject.stats.hp < 1) {
+                    petSpriteStates.slower.referenceObject.stats.currentStats.hp -= petSpriteStates.faster.referenceObject.stats.currentStats.attack;
+                    if (petSpriteStates.slower.referenceObject.stats.currentStats.hp < 1) {
                         petSpriteStates.hasDeath = true;
-                        petSpriteStates.slower.referenceObject.stats.hp = 0;
+                        petSpriteStates.slower.referenceObject.stats.currentStats.hp = 0;
                         console.log("Someone has died");
                     }
-                    addLine(petSpriteStates.slower.referenceObject.stats.hp + " hp left");
+                    addLine(petSpriteStates.slower.referenceObject.stats.currentStats.hp + " hp left");
                     break;
                 case 2:
                     break;
@@ -669,7 +664,7 @@ function performEndingAnimation() {
 	disableKeyPress();
 	// figure out who died
 	// if your pet died, change state to sick, switch to petScreen
-	if (petSprite.referenceObject.stats.hp < 1) {
+	if (petSprite.referenceObject.stats.currentStats.hp < 1) {
 		currentScreen = statusScreens.SADDENED_ANIMATION;
 		game.currentScreenState = sadSequenceState;
 
@@ -757,7 +752,7 @@ var statusScreens = {
                 petSprite.currentPosition = petSprite.sickPosition;
                 petSprite.update();
                 enableKeyPress();
-                console.log(game.pet.state);
+                //console.log(game.pet.state);
             }
         },
         draw: function() {
@@ -790,7 +785,6 @@ var statusScreens = {
             if (this.tick < 0) {
 				game.currentScreenState = attackSequenceState;
 				currentScreen = attackSequenceScreen.LAUNCHING_ATTACK;
-				console.log(currentScreen.rounds);
 				currentScreen.update();
 				console.log(currentScreen.rounds);
             }

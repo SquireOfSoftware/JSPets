@@ -6,6 +6,234 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 8/3/2017 ==
+
+Added all the animal states, a lake biome and adding in the framework to sprites.
+
+Starting to re-watch some theory on game design.
+
+Depth vs Complexity
+
+https://www.youtube.com/watch?v=jVL4st0blGU&list=PLhyKYa0YJ_5BkTruCmaBBZ8z6cP9KzPiX&index=19
+
+- Depth - tools to allow players to play around various different situations - meaningful choices - players ability to play around the rules of play - if people can’t make a conscious choice then there is no depth - learn from outcomes of choice
+
+- Complexity - mental burden placed on by the game - data that the player has to process or decisions to play - dependent on UI (if complex, more info to process), pace of play (how many decisions are you asking to make by the player per second?) and irreducible complexity (learning the rules)
+
+- Tutorials - help reduce the complexity
+
+- Depth - how the player can play with the game, complexity restricts depth
+
+- Elegant design - high depth to complexity ratio - look for deeper games rather than complexity - look to get the most depth for your complexity
+
+First Move Advantage
+
+https://www.youtube.com/watch?v=TRHdIScOMWQ&list=PLhyKYa0YJ_5BkTruCmaBBZ8z6cP9KzPiX&index=17
+
+- Tricky design problems for turn based games - build mechanics to compensate
+
+- Difficult to balance first turn
+
+- Identify what type of turn based game it is: static resource or developed resource
+
+- Static - players have all the pieces from the start of the game and don’t build up the board over time - FF tactics or chess
+
+- Developed - build resources over time - first turn affects this more
+
+- Build in the tools to fine tune the first move advantage - points in go, hearthstone - whole card or not is quite hard
+
+- Build in metrics to observe the advantages are
+
+- First move advantage grows over time - people getting better and better at the game - need to watch for this
+
+- Be aware of first moves in any pvp games that has turn based elements - LoL 
+
+MVP - Minimum Viable Product - Scope Small, Start Right
+
+https://www.youtube.com/watch?v=UvCri1tqIxQ&list=PLhyKYa0YJ_5BkTruCmaBBZ8z6cP9KzPiX&index=15
+
+- Make the first game small
+
+- Make a prototype, find edge cases, find what is engaging and stuff, cut, and cut
+
+- Cut down to core fundamentals of the game, minimum to build and test
+
+- Make sure the core is working first
+
+- Adding additional tools to help you work on the core
+
+- Can be really easy to get bogged down with content
+
+- Hone the foundations rather than content
+
+- Avoid multiplayer, stick to single player - work on foundation and testing things out
+
+Balancing for skill
+
+https://www.youtube.com/watch?v=EitZRLt2G3w&list=PLhyKYa0YJ_5BkTruCmaBBZ8z6cP9KzPiX&index=9
+
+- Can forget skill and just get bogged down with objects rather than player skill
+
+- Give new players something to play with whilst getting better - get people to stick around
+
+- ‘Foo’ strategies need to meet this wall earlier, forcing people to find new strategies, reward players for deviating from ‘Foo’ strategies
+
+How the first 5 minutes draw players in
+
+https://www.youtube.com/watch?v=EFU4tjMndi4&list=PLhyKYa0YJ_5BkTruCmaBBZ8z6cP9KzPiX&index=46
+
+- 1st 5 minutes, strong intro creates a strong first impression
+
+- Either do it via narratives, mechanics or spectacle
+
+- Narrative - story or world or tone you are playing - mystery is a good hook, calls you to explore, interaction rather than observation, make you something wonder what is going on - selling the world, understand whats compelling and not to hold back, use that upfront
+
+- Mechanics - a game feature or feats you can perform, drill down to why the player would want to play your game, could space out tutorials (don’t want to kill pacing of the intro)
+
+- Spectacle - makes you say “woah” hold up least over time, something big or exciting cut scene or play
+
+- Tool - In Medias Res - when you are thrown into the middle rather than the front, start you in the middle - thrown into a story already in progress - FF Tactics - tosses you straight into the action
+
+- Intros go for at least 2 of the three above, need meat to back it up at least
+
+Designing for a touch screen
+
+https://www.youtube.com/watch?v=NBHircZu5EI&list=PLhyKYa0YJ_5BkTruCmaBBZ8z6cP9KzPiX&index=47
+
+- Touch screen can do different things
+
+- Need games that are good in their own right
+
+- Touch screens are a lot better for turn based, strategy, puzzle, card games
+
+- Good for one action at a time, multiple inputs don’t work very well, hold in hand or play on table
+
+- Good for mimicking human actions
+
+- Don’t need precision controls
+
+- Turn based - most satisfying
+
+- If your game requires a virtual joystick or another input from another device then you are doing it wrong
+
+- Design for your platform
+
+- Consider how your hands will cover up your screen - hands will cover things up
+
+- More you can emulate human actions then the better to make it intuitive
+
+== 7/3/2017 ==
+
+Added a bunch of animals.
+
+States have been fixed up (using some duct tape on the update method of animals) temporarily.
+
+Tested with the spawning rates of things like Sandcastle (there was a bug where the number did not equal zero and hence didn't subtract properly).
+
+Though one bit of a concern is that even thhough the difficulty has been shifted, level 2s continue to spawn on the first level.
+
+This has been fixed, for some odd reason it applied randomLevel oddly. See the && randomLevel > 1 under the setupDifficulty code for AnimalStates.
+
+== 3/3/2017 ==
+
+Managed to get a random animal being created.
+
+I created a few sprites as well, noted by the kitten sprite and the start of a dog sprite.
+
+There is one major bug that has been created and that is, having two of the same objects being rendered.
+
+So if you spawn two ducks...then one duck will override the other duck.
+
+I think I need to create throw-away factory objects.
+
+--
+
+A few hours later I did create those objects.
+
+Problem now is several things:
+
+1. The sprite doesnt evolve even though the stats have evolved - created an enemy object to force the stat linkage
+
+2. The sliding animation doesn't play properly, not sure why this is
+
+So the last thing is to test that this works and then this branch can be merged with develop.
+
+The test I need to make is the following:
+
+1. Randomised levelling stats work
+
+2. The sprite matches what the stats reflect
+
+3. The sprite can be generated on a whim and have stats to link to.
+
+== 2/3/2017 ==
+
+Some ideas that came out from today:
+
+- Faster/Multiple attacks
+
+- An attack sequence that the user must memorise and block when receiving damage
+
+- Stats will have to be static or roughly the same to add some sort of "fair" element into the game
+
+- Could use a sliding scale for mobs, have a huge mob table and then have a sliding scale for each "biome" or theme for the respective town that it is at, this would be quite efficient as it would mean you are interacting with the numbers rather than the table
+
+- Another thought was abstracting out the biomes, cities and mobs out into separate json files, though it would sound good to load things as need be, but the downside is that javascript accessing files outside of the browser is a CORS security issue and will be blocked by firefox and chrome
+
+- Also another idea was to split up the rolls into: Biomes then species for that biome and then the animal that belows to that species
+
+Some immediate milestones that need to be completed are:
+
+1. Fill in the rest of the stats
+
+2. Implement the rest of the stats
+
+3. Add in the animals into the game
+
+4. Draw up the sprites for each of the animals
+
+== 1/3/2017 ==
+
+Worked on updating the stat data structures. It operates on a "live" stat structure and it updates itself accordingly.
+
+Note that the stats can now be abstractly reset as well with "devolve" and "evolve" working in accordance.
+
+Note also that devolve will scale the health back down to the original scale. Meaning you "lose" less hp in high evolution stages.
+
+Started also figuring out where all the animals to each biome belong.
+
+These scenarios have been roughly tested in a live battle, though further investigation and testing will need to reveal issues with these changes.
+
+A good change nonetheless for the stats used to be manipulated from all over the system.
+
+A walking heal has also been implemented in which every 100 steps will heal you 1 hp.
+
+== 28/2/2017 ==
+
+I have filled in the biomes for each city, as noted in maps.js.
+
+The problem now is trying to figure out how to link animals to a biome so that when you look up a biome you can then generate an animal.
+
+However the problem that I have is that once you figure out what animal to spawn in, how do you control what level it is at?
+
+I have been poking around and I would like to follow a normal distribution that shifts itself the closer you get to the last stage.
+
+Each value then would correspond to a level in which would reflect what level the animal will be placed into for the given battle.
+
+Unfortunately there isn't a lot of notes on fast normal distributions.
+
+Upon further investigation, I did find one:
+
+https://github.com/bramp/prob.js
+
+This one requires random.min.js which is apparently an independent random library file designed to remove your dependency on the many implementations of Math.random.
+
+I thought I could use a difficulty value but this got quickly complicated.
+
+https://github.com/RichieAHB/normal-distribution
+
+The above seems to be in C++ I think or some other language. Not sure why it is in a JS file.
+
 == 24/2/2017 ==
 
 If you look at the list below I have updated the biomes that are in each of the cities.
@@ -107,6 +335,9 @@ Reptiles:
 SOURCE: http://www.themercury.com.au/news/tasmania/a-freshwater-croc-seized-during-police-raids-is-on-its-way-north-to-the-tropics/news-story/2140761efae3d04ddb1c1fd731f8d784
 
 - Turtles - are apparently a pest - found mainly in lakes or rivers
+
+- Snakes - generally found in wetlands, generally where frogs are, also rocky areas, places with trees, inactive in winter, avoid urban areas
+SOURCE: http://dpipwe.tas.gov.au/wildlife-management/animals-of-tasmania/reptiles-and-frogs/snakes-of-tasmania
 
 Invertebrates:
 

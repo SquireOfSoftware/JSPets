@@ -55,8 +55,23 @@ var EVOLUTION_STATES = {
 };
 
 var ANIMAL_TYPES = {
+	BAT: new LogicState({
+        name: "BAT"
+    }),
+    BEE: new LogicState({
+        name: "BEE"
+    }),
+	BUTTERFLY: new LogicState({
+        name: "BUTTERFLY"
+    }),
     CAT: new LogicState({
         name: "CAT"
+    }),
+	COCKATOO: new LogicState({
+        name: "COCKATOO"
+    }),
+	CROCODILE: new LogicState({
+        name: "CROCODILE"
     }),
     DOG: new LogicState({
         name: "DOG"
@@ -64,9 +79,72 @@ var ANIMAL_TYPES = {
     DUCK: new LogicState({
         name: "DUCK"
     }),
+	ECHIDNA: new LogicState({
+        name: "ECHIDNA"
+    }),
+	FOX: new LogicState({
+        name: "FOX"
+    }),
+	FRIDGE: new LogicState({
+        name: "FRIDGE"
+    }),
+	FROG: new LogicState({
+        name: "FROG"
+    }),
     KANGAROO: new LogicState({
         name: "KANGAROO"
-    })
+    }),
+	KOOKABURRA: new LogicState({
+        name: "KOOKABURRA"
+    }),
+	LORIKEET: new LogicState({
+        name: "LORIKEET"
+    }),
+	OWL: new LogicState({
+        name: "OWL"
+    }),
+	PELICAN: new LogicState({
+        name: "PELICAN"
+    }),
+	PENGUIN: new LogicState({
+        name: "PENGUIN"
+    }),
+	PIG: new LogicState({
+        name: "PIG"
+    }),
+	PLATYPUS: new LogicState({
+        name: "PLATYPUS"
+    }),
+	RABBIT: new LogicState({
+        name: "RABBIT"
+    }),
+	SANDCASTLE: new LogicState({
+        name: "SANDCASTLE"
+    }),
+	SEAL: new LogicState({
+        name: "SEAL"
+    }),
+	SNAKE: new LogicState({
+        name: "SNAKE"
+    }),
+	SNOWMAN: new LogicState({
+        name: "SNOWMAN"
+    }),
+	TURTLE: new LogicState({
+        name: "TURTLE"
+    }),
+	TASMANIAN_DEVIL: new LogicState({
+        name: "TASMANIAN_DEVIL"
+    }),
+	TASMANIAN_TIGER: new LogicState({
+        name: "TASMANIAN_TIGER"
+    }),
+	WHALE: new LogicState({
+        name: "WHALE"
+    }),
+	WOMBAT: new LogicState({
+        name: "WOMBAT"
+    }),
 };
 
 var GAME_STATES = {
@@ -209,32 +287,41 @@ var SCREEN_STATES = {
 
 // http://www.australia.gov.au/about-australia/australian-story/austn-weather-and-the-seasons
 var BIOMES = {
+	ALPINE: new LogicState({ // snow
+        name: "ALPINE"
+    }),
+	BEACH: new LogicState({
+        name: "BEACH"
+    }),
     COASTAL: new LogicState({
         name: "COASTAL"
+    }),
+	CRAGS: new LogicState({ // rocks
+        name: "CRAGS"
+    }),
+    GRASSLANDS: new LogicState({ // plains
+        name: "GRASSLANDS"
+    }),
+    LAKES: new LogicState({ 
+        name: "LAKES"
+    }),
+    MARINE: new LogicState({ 
+        name: "MARINE"
+    }),
+	PLAINS: new LogicState({ // valley
+        name: "PLAINS"
     }),
     RAINFOREST: new LogicState({
         name: "RAINFOREST"
     }),
-    GRASSLAND: new LogicState({
-        name: "GRASSLAND"
+	SUPER_NATURAL: new LogicState({ // ghosts
+        name: "SUPER NATURAL"
     }),
-    DESERT: new LogicState({
-        name: "DESERT"
+    URBAN: new LogicState({
+        name: "URBAN"
     }),
-    SNOW: new LogicState({
-        name: "SNOW"
-    }),
-    SWAMP: new LogicState({
-        name: "SWAMP"
-    }),
-    FLOODLAND: new LogicState({
-        name: "FLOODLAND"
-    }),
-    CITY: new LogicState({
-        name: "CITY"
-    }),
-    UNDERGROUND: new LogicState({
-        name: "UNDERGROUND"
+    WETLANDS: new LogicState({
+        name: "WETLANDS"
     })
 };
 

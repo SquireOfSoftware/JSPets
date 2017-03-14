@@ -3,6 +3,7 @@
  */
 
 function SpritePosition(options) {
+    this.name = options.name;
     var spriteSheetX = options.spriteSheetX;
     this.spriteSheetY = options.spriteSheetY;
     this.updatedSpriteSheetX = spriteSheetX;
