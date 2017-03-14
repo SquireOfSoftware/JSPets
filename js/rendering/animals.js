@@ -390,7 +390,7 @@ function getSprite(animalType, referenceObject) {
     }
     else if (animalType === ANIMAL_TYPES.DUCK) {
         return new AnimalSprite({
-            image: generateImage("sprites/animals/crocodile.png"),
+            image: generateImage("sprites/animals/duck.png"),
             context: drawingBoard,
             referenceObject: referenceObject
         });
