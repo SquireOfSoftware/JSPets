@@ -53,6 +53,7 @@ var careState = new ScreenState({
         // show healing animation, has happy then idle
         if (game.pet.state === ANIMAL_STATES.SICK) {
             game.currentScreenState = happySequenceState;
+            game.pet.stats.currentStats.hp = 1;
             asyncRender = true;
         }
     },
@@ -221,15 +222,6 @@ var evolveBattleState = new ScreenState({
 		// disable key presses
 		// evolution screen - this updates the pet sprite
 		disableKeyPress();
-		/*
-		if (game.pet.stats.state === EVOLUTION_STATES.BASIC) {
-			//game.pet.stats.resetStats();
-			//game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.CHAMPION.value];
-		}
-		else if (game.pet.stats.state === EVOLUTION_STATES.CHAMPION) {
-			game.pet.stats.resetStats();
-			game.pet.stats = game.pet.evolvedStats[EVOLUTION_STATES.ULTIMATE.value];
-		}*/
 		game.pet.stats.evolveStats();
 
 		game.currentScreenState = evolvingAnimationState;
@@ -529,9 +521,9 @@ var game = {
         }
     },
     currentScreenState: petState,
-    currentRegion: 0,
-    currentViewableRegion: 0,
-    currentCity: 0
+    currentRegion: 1,
+    currentViewableRegion: 1,
+    currentCity: 5
     //currentEnemy: cat
 };
 

@@ -395,7 +395,7 @@ var attackSequenceScreen = {
         referenceState: SCREEN_STATES.ATTACK_SEQUENCE.substates.LAUNCHING_ATTACK,
         update: function() {
             if(this.rounds === undefined || this.rounds > 1) {
-				console.log("Resetting rounds");
+				//console.log("Resetting rounds");
                 this.rounds = 0; // use rounds to repeat
             }
 
@@ -467,7 +467,7 @@ var attackSequenceScreen = {
 
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 4;
-                console.log("ATTACKING", this.rounds);
+                //console.log("ATTACKING", this.rounds);
                 this.context.clearEntireScreen();
                 addLine("ATTACKING " + this.rounds);
                 enableKeyPress();
@@ -507,7 +507,7 @@ var attackSequenceScreen = {
                 this.tick = 4;
 
                 this.context.clearEntireScreen();
-                console.log("RECEIVING", this.rounds);
+                //console.log("RECEIVING", this.rounds);
 
                 if (petSpriteStates.faster.referenceObject.isPet) {
                     // flip the canvas
@@ -549,7 +549,7 @@ var attackSequenceScreen = {
                 this.tick = 6;
                 foregroundBoard.clearEntireScreen();
                 this.context.clearEntireScreen();
-                console.log("GETTING HIT");
+                //console.log("GETTING HIT");
             }
 
             this.tick--;
@@ -586,7 +586,7 @@ var attackSequenceScreen = {
             // this state is to be entered upon if the pet has received damage and has not dodged it
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
-                console.log("CALCULATING", this.rounds);
+                //console.log("CALCULATING", this.rounds);
                 petSpriteStates.slower.currentPosition = petSpriteStates.slower.idlePosition;
                 petSpriteStates.slower.currentPosition.reset();
             }
@@ -706,7 +706,7 @@ var statusScreens = {
         update: function () {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
-                console.log("HAPPY-ing?");
+                //console.log("HAPPY-ing?");
                 petSprite.currentPosition = petSprite.rejoicingPosition;
                 this.context.restore();
                 foregroundBoard.restore();
@@ -737,7 +737,7 @@ var statusScreens = {
         update: function () {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
-                console.log("SADDENING");
+                //console.log("SADDENING");
                 petSprite.currentPosition = petSprite.saddenedPosition;
             }
             this.tick--;
@@ -770,7 +770,7 @@ var statusScreens = {
                 this.tick = 16;
 				petSprite.currentPosition = petSprite.idlePosition;
 				petSprite.currentPosition.reset();
-                console.log("EVOLVING");
+                //console.log("EVOLVING");
 				// evolve the petSprite
             }
             this.tick--;
@@ -786,7 +786,7 @@ var statusScreens = {
 				game.currentScreenState = attackSequenceState;
 				currentScreen = attackSequenceScreen.LAUNCHING_ATTACK;
 				currentScreen.update();
-				console.log(currentScreen.rounds);
+				//console.log(currentScreen.rounds);
             }
 		},
 		draw: function () {
@@ -803,7 +803,7 @@ var statusScreens = {
 		update: function () {
 			if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
-                console.log("DEVOLVING");
+                //console.log("DEVOLVING");
 				// evolve the petSprite
 				
 				petSprite.currentPosition = petSprite.idlePosition;
@@ -836,7 +836,7 @@ var statusScreens = {
 		update: function () {
 			if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
-                console.log("DEVOLVING");
+                //console.log("DEVOLVING");
 				petSprite.currentPosition = petSprite.idlePosition;
 				petSprite.currentPosition.reset();
 				
@@ -852,6 +852,7 @@ var statusScreens = {
             if (this.tick < 0) {
 				resetStats();
 				resetAttackSequence();
+                foregroundBoard.clearEntireScreen();
 				currentScreen = statusScreens.SADDENED_ANIMATION;
 				game.currentScreenState = sadSequenceState;
             }
@@ -870,7 +871,7 @@ var statusScreens = {
 		update: function () {
 			if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
-                console.log("DEVOLVING");
+                //console.log("DEVOLVING");
 
 				petSprite.currentPosition = petSprite.idlePosition;
 				petSprite.currentPosition.reset();
@@ -886,6 +887,7 @@ var statusScreens = {
             if (this.tick < 0) {
 				resetStats();
 				resetAttackSequence();
+                foregroundBoard.clearEntireScreen();
 				currentScreen = petScreen;
 				game.currentScreenState = petState;
             }
@@ -911,7 +913,7 @@ var statusScreens = {
             }
             this.tick--;
 			
-			console.log("DEVOLVING happily", this.tick);
+			//console.log("DEVOLVING happily", this.tick);
 			
 			evolutionSprites.DEVOLVE.update();
 
@@ -920,9 +922,9 @@ var statusScreens = {
 			}
 
             if (this.tick < 0) {
-				console.log("DEVOLVED?");
 				resetStats();
 				resetAttackSequence();
+                foregroundBoard.clearEntireScreen();
 				currentScreen = statusScreens.HAPPY_ANIMATION;
 				game.currentScreenState = happySequenceState;
             }

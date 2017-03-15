@@ -47,8 +47,6 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
             this.currentStats.hp *= this.buffs.hp;
             this.currentStats.attack += this.buffs.attack;
             this.currentStats.speed += this.buffs.speed;
-
-            //console.log(this.currentStats);
         }
     };
     
@@ -58,7 +56,6 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
         if (this.currentLevel > 1) {
             var remainderHp = this.currentStats.hp % Math.pow(this.buffs.hp, this.currentLevel - 1);
             if (remainderHp > 0) {
-                console.log(remainderHp);
                 this.currentStats.hp -= remainderHp;
             }
 
@@ -81,7 +78,6 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
             var randomRoll = Math.random() * 10; // this gives us the value to place in equation
             
             var randomLevel = this.maxLevel * Math.exp(-((Math.pow(randomRoll - difficulty,2))/(this.maxLevel * 10)))
-            console.log(randomLevel, randomRoll);
             // ceiling the value to closest integer
             
             randomLevel = Math.ceil(randomLevel);
@@ -91,8 +87,6 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
             for(var counter = 0; counter < randomLevel && randomLevel > 1; counter++){
                 this.evolveStats();
             }
-            //this.currentLevel = randomLevel;
-            console.log("randomLevel", randomLevel, this.currentLevel, difficulty, Math.ceil(randomLevel));
         }
     };
 
@@ -137,9 +131,9 @@ function getAnimalState(state) {
             "BUTTERFLY",
             false,
             new Stats(
-                8, 4, 1, // hp, attack, speed
-                1, 1, 1, // hpBuff, attackBuff, speedBuff
-                3, 0, 0),// maxLvl, blockability, escapability
+                8, 4, 1, 
+                1, 1, 1, 
+                3, 0, 0),
             ANIMAL_STATES.IDLE,
             ANIMAL_TYPES.BUTTERFLY
         );
@@ -148,9 +142,9 @@ function getAnimalState(state) {
             "CAT",
             false,
             new Stats(
-                9, 6, 1, // hp, attack, speed
-                1, 1, 1, // hpBuff, attackBuff, speedBuff
-                2, 0, 0),// maxLvl, blockability, escapability
+                9, 6, 1, 
+                1, 1, 1, 
+                2, 0, 0),
             ANIMAL_STATES.IDLE,
             ANIMAL_TYPES.CAT
         );
@@ -159,9 +153,9 @@ function getAnimalState(state) {
             "COCKATOO",
             false,
             new Stats(
-                8, 5, 1, // hp, attack, speed
-                1, 1, 1, // hpBuff, attackBuff, speedBuff
-                3, 0, 0),// maxLvl, blockability, escapability
+                8, 5, 1, 
+                1, 1, 1, 
+                3, 0, 0),
             ANIMAL_STATES.IDLE,
             ANIMAL_TYPES.COCKATOO
         );
@@ -170,9 +164,9 @@ function getAnimalState(state) {
             "CROCODILE",
             false,
             new Stats(
-                16, 12, 0, // hp, attack, speed
-                1, 1, 1, // hpBuff, attackBuff, speedBuff
-                2, 0, 0),// maxLvl, blockability, escapability
+                16, 12, 0, 
+                1, 1, 1, 
+                2, 0, 0),
             ANIMAL_STATES.IDLE,
             ANIMAL_TYPES.CROCODILE
         );

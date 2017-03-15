@@ -831,15 +831,16 @@ var evolutionSprites = {
 			height: 20
 		},
 		function() {
-			if (this.tick === undefined || this.tick > 1) {
-                this.tick = -1;
+			if (this.tick === undefined || this.tick < 0) {
+                this.tick = 6;
             }
-			
-			this.tick++;
+            this.tick--;
+            
 		},
 		function() {
-			
-			if (this.tick % 2 === 1) {
+			console.log("drawing cross-hatching", this.tick);
+            this.context.clearEntireScreen();
+			if (this.tick === 1 && this.tick > 0) {
 				this.context.drawImage(
 					this.image,
 					0,
@@ -852,8 +853,7 @@ var evolutionSprites = {
 					this.size.height
 				)
 			}
-			else
-				this.context.clearEntireScreen();
+				
 		}
 	)
 };
@@ -928,12 +928,12 @@ var citySprite = new GenericSprite(
         this.context.clearEntireScreen();
 
         var region = australia.TAS.regions[game.currentViewableRegion];
-
+        
         for(var city = 0; city < region.length; city++) {
-            if (city === game.currentCity && game.currentViewableRegion === game.currentRegion)
+            if ((city === game.currentCity) && (game.currentViewableRegion === game.currentRegion))
                 this.currentPosition = this.positions.currentPosition;
-            else if (game.currentViewableRegion < game.currentRegion ||
-                game.currentViewableRegion === game.currentRegion && city < game.currentCity)
+            else if ((game.currentViewableRegion < game.currentRegion) ||
+                (game.currentViewableRegion === game.currentRegion && city < game.currentCity))
                 this.currentPosition = this.positions.defeatedPosition;
             else
                 this.currentPosition = this.positions.toBeVisitedPosition;
