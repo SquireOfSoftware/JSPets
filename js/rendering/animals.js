@@ -195,6 +195,9 @@ function AnimalSprite(options) {
                     this.currentPosition = this.cryingOutPosition;
                 }
             }
+            else if (currentScreen.referenceState === SCREEN_STATES.PETS) {
+                this.currentPosition = this.idlePosition;
+            }
             else if (game.currentScreenState.state === SCREEN_STATES.ATTACK_SEQUENCE) {
                 this.currentPosition = this.attackingPosition;
             }
@@ -955,7 +958,7 @@ var citySprite = new GenericSprite(
         this.context.clearEntireScreen();
 
         var region = australia.TAS.regions[game.currentViewableRegion];
-        
+        console.log(region.length);
         for(var city = 0; city < region.length; city++) {
             if ((city === game.currentCity) && (game.currentViewableRegion === game.currentRegion))
                 this.currentPosition = this.positions.currentPosition;
@@ -966,7 +969,6 @@ var citySprite = new GenericSprite(
                 this.currentPosition = this.positions.toBeVisitedPosition;
 
             var spriteCoordinates = this.currentPosition.getPosition();
-
             this.context.drawImage(
                 this.image,
                 spriteCoordinates.spriteSheetX,

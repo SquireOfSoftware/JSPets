@@ -6,6 +6,44 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 15/3/2017 ==
+
+All sprites have been created and added into the game.
+
+A stat screen has been added.
+
+Steps have been approximated with Google maps and using the ruler. It assumes a bird flying to each point with some deviation due to bridges and lakes.
+
+Various bugs such as the map screen bug has been fixed...not entirely sure what was fixed though as I was just tinkering with the boundaries and it magically fixed itself when I was tinkering around...
+
+Some features which may need to be created:
+
+1. Items which cooldown based on the steps taken
+
+- Healing item which cools down on every 500 steps (note that total steps in the game is 12000)
+
+- Muliplying attack cooldown on 700 steps
+
+- Speed boost on 300 steps
+
+2. Displaying how many steps to the next battle
+
+3. Showing the next city after conquering the city
+
+4. (Way too complicated) Speed up the framerate for fast attacks and slowing the framerate down for slower attacks - easier blocking
+
+5. An intro cut scene to introduce the game
+
+6. A way to pick a pet - sort of tied to the intro screen
+
+7. Figuring out an ending sequence when you defeat a tassie tiger
+
+8. Figuring out how to "earn" various animals
+
+9. Saving the data so that you can reload the game
+
+10. Controls for touch screens
+
 == 8/3/2017 ==
 
 Added all the animal states, a lake biome and adding in the framework to sprites.

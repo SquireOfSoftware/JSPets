@@ -7,8 +7,30 @@
     <link rel="stylesheet" href="css/game.css" />
 </head>
 <body onclick="walk()" onkeydown="processKeyDown(event)">
-    <canvas id="ctx" height="20" width="45"></canvas>
-    <canvas id="foreground" height="20" width="45"></canvas>
+    <div id="canvas-box">
+        <canvas id="ctx" height="20" width="45"></canvas>
+        <canvas id="foreground" height="20" width="45"></canvas>
+    </div>
+    <div id="controls-box">
+        <div id="top-controls-box" class="controls">
+            <div id="up-button" class="control-button">
+            
+            </div>
+        </div>
+        <div id="mid-controls-box" class="controls">
+            <div id="left-button" class="control-button">
+            
+            </div>
+            <div id="right-button" class="control-button">
+            
+            </div>
+        </div>
+        <div id="bottom-controls-box" class="controls">
+            <div id="down-button" class="control-button">
+            
+            </div>
+        </div>
+    </div>
     <div id="debug-box">
         <label><input id="fps" type="text" /> fps</label>
         <label><input id="steps" type="text" /> steps</label>

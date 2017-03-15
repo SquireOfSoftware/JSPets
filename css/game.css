@@ -12,11 +12,26 @@ canvas {
 }
 
 /* Classes */
+.controls {
+    max-height: 100px;
+    min-height: 10px;
+}
+
+.control-buttons {
+    max-width: 50%;
+}
 
 /* IDs */
+#canvas-box {
+    /*position: relative;*/
+    width: 100%;
+    padding-bottom: 45%;
+}
+
 #debug-box {
     position: absolute;
     bottom: 0;
+    display: none;
 }
 
 #debugger {

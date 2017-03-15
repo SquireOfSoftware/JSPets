@@ -70,7 +70,7 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
     };
 
     this.setupDifficulty = function(difficulty) {
-        if (this.maxLevel > 1){// && this.currentLevel > 1) {
+        if (this.maxLevel > 1){
             // generate a random number - scale this value according to maxLevel
             // this is equally distributed 
             // I want to skew this in accordance to what level it is
@@ -103,11 +103,6 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
     };
     
     this.getString = function() {
-        /*return {
-            hp: this.currentStats.hp.toString(),
-            attack: this.currentStats.attack.toString(),
-            speed: this.currentStats.speed.toString()
-        }*/
         return [
             this.currentStats.hp.toString(),
             this.currentStats.attack.toString(),

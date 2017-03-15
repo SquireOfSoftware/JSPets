@@ -467,13 +467,15 @@ var mapScreenState = {
             if(game.currentViewableRegion < 0)
                 game.currentViewableRegion = australia.TAS.regions.length - 1;
             asyncRender = true;
+            console.log("NORTH, left", game.currentViewableRegion);
         },
         right: function() {
             game.currentScreenState = mapScreenState.SOUTH;
             game.currentViewableRegion++;
-            if(game.currentViewableRegion >= australia.TAS.regions)
+            if(game.currentViewableRegion > australia.TAS.regions.length)
                 game.currentViewableRegion = 0;
             asyncRender = true;
+            console.log("NORTH, right", game.currentViewableRegion);
         }
     }),
     SOUTH: new ScreenState({
@@ -492,13 +494,15 @@ var mapScreenState = {
             game.currentViewableRegion--;
             if(game.currentViewableRegion < 0)
                 game.currentViewableRegion = australia.TAS.regions.length - 1;
+            console.log("SOUTH, left", game.currentViewableRegion);
             asyncRender = true;
         },
         right: function() {
             game.currentScreenState = mapScreenState.NORTH;
             game.currentViewableRegion++;
-            if(game.currentViewableRegion >= australia.TAS.regions)
+            if(game.currentViewableRegion > australia.TAS.regions.length - 1)
                 game.currentViewableRegion = 0;
+            console.log("SOUTH, right", game.currentViewableRegion);
             asyncRender = true;
         }
     })
