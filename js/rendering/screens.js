@@ -260,9 +260,9 @@ var currentStatScreen = new ScreenSprite({
             45,
             20
         );
-        // draw the pet
+        
         petSprite.draw();
-        // draw the hp
+        
         var stats = game.pet.stats.getString();
         for(var statCounter = 0; statCounter < 3; statCounter++) {
             var position = 2;
@@ -271,8 +271,6 @@ var currentStatScreen = new ScreenSprite({
                 position--;
             }
         }
-        // draw the attack
-        // draw the speed
     }
 });
 

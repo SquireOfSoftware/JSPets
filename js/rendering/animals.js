@@ -986,7 +986,7 @@ var citySprite = new GenericSprite(
 function NumberSprite () {
     var sprite = {};
     sprite.image = generateImage("sprites/step-alphabet.png");
-    sprite.context = foregroundBoard;
+    sprite.context = drawingBoard;
     
     sprite.draw = function(character, canvasX, canvasY, isInverted) {
         var spriteSheetY = 0;
