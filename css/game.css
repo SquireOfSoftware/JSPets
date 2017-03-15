@@ -12,28 +12,26 @@ canvas {
 
 /* Classes */
 .controls {
-    /*max-height: 100px;
-    min-height: 10px;*/
     min-height: 100px;
-    /*padding: 10px;
-    position: relative;*/
 }
 
 .control-button {
     width: 49%;
-    /*min-height:10px;
-    max-height: 20px;*/
     min-height: 100px;
-    background-color: #68b84b;
+    background-color: grey;
     color: #fff;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     text-align: center;
-    justify-content: center;
+    line-height: 6em;
+}
+
+.middle-buttons {
+    max-height: 100px;
+    line-height: 4em;
 }
 
 /* IDs */
 #canvas-box {
-    /*position: relative;*/
     width: 100%;
     padding-bottom: 45%;
 }
@@ -46,7 +44,6 @@ canvas {
 
 #debugger {
     width: 100%;
-    max-height: auto;
 }
 
 #foreground {
