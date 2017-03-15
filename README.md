@@ -22,7 +22,7 @@ Some features which may need to be created:
 
 - Healing item which cools down on every 500 steps (note that total steps in the game is 12000)
 
-- Muliplying attack cooldown on 700 steps
+- Multiplying attack cooldown on 700 steps
 
 - Speed boost on 300 steps
 
@@ -42,7 +42,7 @@ Some features which may need to be created:
 
 9. Saving the data so that you can reload the game
 
-10. Controls for touch screens
+-10. Controls for touch screens- This has been partially done for now
 
 == 8/3/2017 ==
 
