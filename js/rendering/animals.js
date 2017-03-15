@@ -838,7 +838,7 @@ var evolutionSprites = {
             
 		},
 		function() {
-			console.log("drawing cross-hatching", this.tick);
+			//console.log("drawing cross-hatching", this.tick);
             this.context.clearEntireScreen();
 			if (this.tick === 1 && this.tick > 0) {
 				this.context.drawImage(
