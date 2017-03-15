@@ -102,7 +102,7 @@ var currentStatsState = new ScreenState({
     right: function() {
         
     }
-})
+});
 
 var stepsState = new ScreenState({
     state: SCREEN_STATES.STEPS,
@@ -225,7 +225,8 @@ var powerupBattleState = new ScreenState({
         asyncRender = true;
     },
     right: function() {
-        game.currentScreenState = autoBattleState;
+        //game.currentScreenState = autoBattleState; // until I sort out how AI will work in the game
+        game.currentScreenState = runBattleState;
         asyncRender = true;
     }
 });
@@ -324,13 +325,13 @@ var autoBattleState = new ScreenState({
 
     },
     down: function() {
+
 		var roll = Math.round(Math.random() * 10, 0);
         addLine("Auto battle rolled " + roll);
 		
 		if (roll % 2 === 1) {
             game.pet.state = ANIMAL_STATES.SICK;
-            //currentScreen = statusScreens.SADDENED_DEVOLVE_ANIMATION;
-			if (game.pet.stats.state === EVOLUTION_STATES.BASIC)
+            if (game.pet.stats.state === EVOLUTION_STATES.BASIC)
 				game.currentScreenState = sadSequenceState;
 			else
 				game.currentScreenState = sadDevolvingAnimationstate;
@@ -386,7 +387,8 @@ var runBattleState = new ScreenState({
         game.stepCounter.resetWaitPeriod();
     },
     left: function() {
-        game.currentScreenState = autoBattleState;
+        //game.currentScreenState = autoBattleState; // until I sort out how AI will work in the game
+        game.currentScreenState = powerupBattleState;
         asyncRender = true;
     },
     right: function() {
