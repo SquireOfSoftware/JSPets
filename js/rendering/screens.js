@@ -236,6 +236,46 @@ var totalStepsScreen = new ScreenSprite({
     }
 });
 
+var currentStatScreen = new ScreenSprite({
+    name: "STATS_SCREEN",
+    image: generateImage("sprites/screens/displaying-current-stats.png"),
+    context: drawingBoard,
+    referenceState: SCREEN_STATES.STATS.substates.CURRENT_STATS,
+    update: function() {
+        // set the pet into "display mode" at coordinates 3,2
+        petSprite.update();
+    },
+    draw: function() {
+        // clear the screen
+        this.context.clearEntireScreen();
+        // draw the screen
+        this.context.drawImage(
+            this.image,
+            0,
+            0,
+            45,
+            20,
+            0,
+            0,
+            45,
+            20
+        );
+        // draw the pet
+        petSprite.draw();
+        // draw the hp
+        var stats = game.pet.stats.getString();
+        for(var statCounter = 0; statCounter < 3; statCounter++) {
+            var position = 2;
+            for (var digit = stats[statCounter].length - 1; digit >= 0 && position >= 0; digit--) {
+                numberDrawingSprite.draw(stats[statCounter].charAt(digit), 30 + ((position) * 4), 2 + statCounter * 6, false);
+                position--;
+            }
+        }
+        // draw the attack
+        // draw the speed
+    }
+});
+
 var cryingOutSprite = new ScreenSprite({
     name: "CRYING_OUT_SPRITE",
     image: generateImage("sprites/battle-seq-circle.png"),

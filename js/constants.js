@@ -36,10 +36,10 @@ var ANIMAL_STATES = {
 
 // use this as a multiplier for stats as well
 var EVOLUTION_STATES = {
-    BABY: new LogicState({
+    /*BABY: new LogicState({
         name: "BABY",
 		value: 3
-    }),
+    }),*/
     BASIC: new LogicState({
         name: "BASIC",
 		value: 0
@@ -189,7 +189,11 @@ var SCREEN_STATES = {
     }),
     STATS: new LogicState({
         name: "STATS",
-        substates: EVOLUTION_STATES
+        substates: {
+            CURRENT_STATS: new LogicState ({
+                name: "CURRENT_STATS"
+            })
+        }
     }),
     STEPS: new LogicState({
         name: "STEPS",

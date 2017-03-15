@@ -76,6 +76,9 @@ function updateScreens() {
         else if (currentScreenState === SCREEN_STATES.MAP.substates.TAS.substates.SOUTH) {
             currentScreen = mapScreens.SOUTH;
         }
+        else if (currentScreenState === SCREEN_STATES.STATS.substates.CURRENT_STATS) {
+            currentScreen = currentStatScreen;
+        }
         else {
             //currentScreen = petScreen;
             addLine("Cannot locate screen: " + game.currentScreenState.state.name);

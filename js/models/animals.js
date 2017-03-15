@@ -101,6 +101,19 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
         if (this.currentStats.hp < this.originalStats.hp)
             this.currentStats.hp++;
     };
+    
+    this.getString = function() {
+        /*return {
+            hp: this.currentStats.hp.toString(),
+            attack: this.currentStats.attack.toString(),
+            speed: this.currentStats.speed.toString()
+        }*/
+        return [
+            this.currentStats.hp.toString(),
+            this.currentStats.attack.toString(),
+            this.currentStats.speed.toString()
+        ];
+    };
 }
 
 function getAnimalState(state) {

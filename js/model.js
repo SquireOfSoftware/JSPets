@@ -74,7 +74,8 @@ var statsState = new ScreenState({
         asyncRender = true;
     },
     down: function() {
-
+        game.currentScreenState = currentStatsState;
+        asyncRender = true;
     },
     left: function() {
         game.currentScreenState = stepsState;
@@ -85,6 +86,23 @@ var statsState = new ScreenState({
         asyncRender = true;
     }
 });
+
+var currentStatsState = new ScreenState({
+    state: SCREEN_STATES.STATS.substates.CURRENT_STATS,
+    up: function() {
+        game.currentScreenState = statsState;
+        asyncRender = true;
+    },
+    down: function() {
+        
+    },
+    left: function() {
+        
+    },
+    right: function() {
+        
+    }
+})
 
 var stepsState = new ScreenState({
     state: SCREEN_STATES.STEPS,

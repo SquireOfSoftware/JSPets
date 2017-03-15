@@ -140,6 +140,17 @@ function AnimalSprite(options) {
             canvasX: 15,
             canvasY: 0
         });
+    if (options.presentationPosition !== undefined)
+        this.presentationPosition = options.presentationPosition;
+    else
+        this.presentationPosition = new SpritePosition({
+            name: "presentationPosition",
+            spriteSheetX: 0,
+            spriteSheetY: 0,
+            maxFrame: 1,
+            canvasX: 3,
+            canvasY: 2
+        });
 	
 	if (options.isEvolved !== undefined)
 		this.isEvolved = options.isEvolved;
@@ -161,6 +172,9 @@ function AnimalSprite(options) {
                 if (this.currentPosition !== this.slidingPosition)
                     this.currentPosition = this.slidingPosition;
                 //this.currentPosition.updateCanvas();
+            }
+            else if (currentScreen.referenceState === SCREEN_STATES.STATS.substates.CURRENT_STATS) {
+                this.currentPosition = this.presentationPosition;
             }
             else if (this.referenceObject.state !== referenceState) {
                 if (this.referenceObject.state === ANIMAL_STATES.IDLE) {
@@ -202,20 +216,33 @@ function AnimalSprite(options) {
     else
         this.draw = function() {
             var coordinates = this.currentPosition.getPosition();
-            this.context.clearEntireScreen();
-            //console.log(this.isEvolved);
-            //this.context.clearSection(coordinates.canvasX, coordinates.canvasY, this.size.width, this.size.height);
-            this.context.drawImage(
-                this.image,
-                coordinates.spriteSheetX,
-                coordinates.spriteSheetY + this.isEvolved * DEFAULT_SPRITE_SIZE,
-                this.size.width,
-                this.size.height,
-                coordinates.canvasX,
-                coordinates.canvasY,
-                this.size.width,
-                this.size.height
-            );
+            if (this.currentPosition !== this.presentationPosition) {
+                this.context.clearEntireScreen();
+                this.context.drawImage(
+                    this.image,
+                    coordinates.spriteSheetX,
+                    coordinates.spriteSheetY + this.isEvolved * DEFAULT_SPRITE_SIZE,
+                    this.size.width,
+                    this.size.height,
+                    coordinates.canvasX,
+                    coordinates.canvasY,
+                    this.size.width,
+                    this.size.height
+                );
+            }
+            else {
+                this.context.drawImage(
+                    this.image,
+                    coordinates.spriteSheetX,
+                    coordinates.spriteSheetY + this.isEvolved * DEFAULT_SPRITE_SIZE,
+                    DEFAULT_SPRITE_SIZE,
+                    DEFAULT_SPRITE_SIZE,
+                    coordinates.canvasX,
+                    coordinates.canvasY,
+                    DEFAULT_SPRITE_SIZE,
+                    DEFAULT_SPRITE_SIZE
+                );
+            }
         };
 		
 	if (options.evolve !== undefined)
@@ -276,16 +303,7 @@ function AnimalSprite32Width(image, drawingBoard, referenceObject) {
                 multiplier: 32,
                 canvasX: 15,
                 canvasY: 0
-            }),/*
-            slidingPosition: new SpritePosition({
-                name: "slidingPosition",
-                spriteSheetX: 0,
-                spriteSheetY: 0,
-                maxFrame: 4,
-                multiplier: -8,
-                canvasX: DEFAULT_SCREEN_SIZE.X,
-                canvasY: 0
-            }),*/
+            }),
             barkingPosition: new SpritePosition({
                 name: "barkingPosition",
                 spriteSheetX: 64,
@@ -330,11 +348,20 @@ function AnimalSprite32Width(image, drawingBoard, referenceObject) {
                 multiplier: 96,
                 canvasX: 15,
                 canvasY: 0
+            }),
+            presentationPosition: new SpritePosition({
+                name: "presentationPosition",
+                spriteSheetX: 0,
+                spriteSheetY: 0,
+                maxFrame: 1,
+                multiplier: 32,
+                canvasX: 3,
+                canvasY: 2
             })
         });
 }
 
-var petSprite = getSprite(ANIMAL_TYPES.DUCK, game.pet);
+var petSprite = getSprite(ANIMAL_TYPES.WHALE, game.pet);
 
 var enemySprite;
 
@@ -955,3 +982,31 @@ var citySprite = new GenericSprite(
         }
     }
 );
+
+function NumberSprite () {
+    var sprite = {};
+    sprite.image = generateImage("sprites/step-alphabet.png");
+    sprite.context = foregroundBoard;
+    
+    sprite.draw = function(character, canvasX, canvasY, isInverted) {
+        var spriteSheetY = 0;
+        if (this.isInverted !== undefined && this.isInverted === true)
+            spriteSheetY = 1;
+        
+        this.context.drawImage(
+            this.image,
+            NUMBER_POSITIONS[parseInt(character)],
+            spriteSheetY,
+            NUMBER_PX_SIZE.WIDTH, 
+            NUMBER_PX_SIZE.HEIGHT,
+            canvasX,
+            canvasY,
+            NUMBER_PX_SIZE.WIDTH,
+            NUMBER_PX_SIZE.HEIGHT
+        )
+    }
+    
+    return sprite;
+}
+
+var numberDrawingSprite = new NumberSprite();
