@@ -69,11 +69,13 @@ function toggleKeyPress() {
 
 function enableKeyPress() {
     blockKeyPress = false;
+    lastKeyPress = null;
     addLine("Key presses enabled");
 }
 
 function disableKeyPress() {
     blockKeyPress = true;
+    lastKeyPress = null;
     addLine("Key presses disabled");
 }
 

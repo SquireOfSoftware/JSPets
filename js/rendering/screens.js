@@ -340,12 +340,10 @@ var battleScreens = {
                 this.tick = 3;
                 this.context.clearEntireScreen(); // for some odd reason the screen isnt cleared properly
                 enemySprite.currentPosition = enemySprite.slidingPosition;
-                //console.log("initial", enemySprite.currentPosition);
             }
             this.tick--;
             
             enemySprite.update();
-            //console.log(this.tick, enemySprite.currentPosition);
 
             if (this.tick < 0){
                 enemySprite.currentPosition.reset();
@@ -366,7 +364,6 @@ var battleScreens = {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
                 enemySprite.currentPosition = enemySprite.barkingPosition;
-                //console.log("growling", enemySprite.currentPosition);
             }
             this.tick--;
 
@@ -377,7 +374,6 @@ var battleScreens = {
                 currentScreen = battleMenuScreen.FIGHT;
                 game.currentScreenState = fightBattleState;
                 this.context.restore();
-                enableKeyPress();
             }
         },
         draw: function() {
@@ -391,7 +387,12 @@ var battleMenuScreen = {
         name: "FIGHT",
         image: generateImage("sprites/screens/fight-battle-menu.png"),
         context: drawingBoard,
-        referenceState: SCREEN_STATES.FIGHT
+        referenceState: SCREEN_STATES.FIGHT,
+        update: function() {
+            if (blockKeyPress !== false) {
+                enableKeyPress();
+            }
+        }
     }),
     POWER_UP: new ScreenSprite({
         name: "POWER_UP",
