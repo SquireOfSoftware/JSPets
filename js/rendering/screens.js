@@ -365,7 +365,7 @@ var battleScreens = {
         update: function() {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
-                //enemySprite.currentPosition = enemySprite.barkingPosition;
+                enemySprite.currentPosition = enemySprite.barkingPosition;
                 //console.log("growling", enemySprite.currentPosition);
             }
             this.tick--;

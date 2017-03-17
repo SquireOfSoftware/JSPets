@@ -169,8 +169,11 @@ function AnimalSprite(options) {
     else // default to a pet object
         this.update = function() {
             if (currentScreen.referenceState === SCREEN_STATES.START_BATTLE.substates.SLIDE) {
+                console.log("trying to slide now");
                 if (this.currentPosition !== this.slidingPosition)
                     this.currentPosition = this.slidingPosition;
+                else
+                    console.log("it is sliding now");
                 //this.currentPosition.updateCanvas();
             }
             else if (this.referenceObject.state !== referenceState && currentScreen.referenceState === SCREEN_STATES.PETS) {
