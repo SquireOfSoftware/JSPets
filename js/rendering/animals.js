@@ -109,8 +109,8 @@ function AnimalSprite(options) {
             name: "receivingPosition",
             spriteSheetX: 0,
             spriteSheetY: 0,
-            maxFrame: 0,
-            multiplier: 0,
+            maxFrame: 1,
+            multiplier: 16,
             canvasX: 29,
             canvasY: 0
         });
@@ -190,7 +190,6 @@ function AnimalSprite(options) {
                     this.currentPosition = this.cryingOutPosition;
                 }
             }
-            
             else if (currentScreen.referenceState === SCREEN_STATES.STATS.substates.CURRENT_STATS) {
                 this.currentPosition = this.presentationPosition;
             }
@@ -365,6 +364,9 @@ function AnimalSprite32Width(image, drawingBoard, referenceObject) {
 var petSprite = getSprite(ANIMAL_TYPES.DUCK, game.pet);
 
 var enemySprite;
+
+// FINAL_SCENE TEST
+//enemySprite = getSprite(ANIMAL_TYPES.TASMANIAN_TIGER, getAnimalState(ANIMAL_TYPES.TASMANIAN_TIGER));
 
 function getSprite(animalType, referenceObject) {
     if (animalType === ANIMAL_TYPES.BAT) {
@@ -985,9 +987,125 @@ var citySprite = new GenericSprite(
 
 var finalTextSprite = new GenericSprite(
     generateImage("sprites/finals.png"),
-    drawingBoard,
+    foregroundBoard,
+    new SpritePosition({
+        spriteSheetX: 0,
+        spriteSheetY: 0,
+        maxFrame: 3,
+        multiplier: 25,
+        canvasX: 20, 
+        canvasY: 0  
+    }),
     {
-        // TODO
+        width: 25,
+        height: 17
+    },
+    function() {
+        this.positions.update();
+    },
+    function() {
+        var spriteCoordinates = this.positions.getPosition();
+        this.context.clearSection(
+            spriteCoordinates.canvasX,
+            spriteCoordinates.canvasY,
+            this.size.width,
+            this.size.height
+        );
+        this.context.drawImage(
+            this.image,
+            spriteCoordinates.spriteSheetX,
+            spriteCoordinates.spriteSheetY,
+            this.size.width,
+            this.size.height,
+            spriteCoordinates.canvasX,
+            spriteCoordinates.canvasY,
+            this.size.width,
+            this.size.height
+        );
+    }
+);
+
+var arrow = new GenericSprite(
+    generateImage("sprites/arrow.png"),
+    foregroundBoard,
+    new SpritePosition({
+        spriteSheetX: 0,
+        spriteSheetY: 0,
+        maxFrame: 1,
+        multiplier: 5,
+        canvasX: 0, // not used
+        canvasY: 0  // not used
+    }),
+    {
+        width: 5,
+        height: 4
+    },
+    function() {
+        this.positions.update();
+    },
+    function(x, y) {
+        
+        var spriteCoordinates = this.positions.getPosition();
+        this.context.clearSection(
+            x,
+            y,
+            this.size.width,
+            this.size.height
+        );
+        this.context.drawImage(
+            this.image,
+            spriteCoordinates.spriteSheetX,
+            spriteCoordinates.spriteSheetY,
+            this.size.width,
+            this.size.height,
+            x,
+            y,
+            this.size.width,
+            this.size.height
+        );
+    }
+);
+
+var fadingOverlaySprite = new GenericSprite(
+    generateImage("sprites/fade.png"),
+    foregroundBoard,
+    new SpritePosition({
+        spriteSheetX: 0,
+        spriteSheetY: 0,
+        maxFrame: 2,
+        multiplier: 45,
+        canvasX: 0, // not used
+        canvasY: 0  // not used
+    }),
+    {
+        width: 45,
+        height: 20
+    },
+    function() {
+        this.positions.update();
+    },
+    function() {
+        var spriteCoordinates = this.positions.getPosition();
+        this.context.clearSection(
+            spriteCoordinates.canvasX,
+            spriteCoordinates.canvasY,
+            this.size.width,
+            this.size.height
+        );
+        
+        console.log(spriteCoordinates);
+        
+        this.context.drawImage(
+            this.image,
+            spriteCoordinates.spriteSheetX,
+            spriteCoordinates.spriteSheetY,
+            this.size.width,
+            this.size.height,
+            spriteCoordinates.canvasX,
+            spriteCoordinates.canvasY,
+            this.size.width,
+            this.size.height
+        );
     }
 );
 

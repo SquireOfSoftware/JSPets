@@ -280,7 +280,18 @@ var SCREEN_STATES = {
 				name: "HAPPY"
 			})
 		}
-	})
+	}),
+    ENDINGS: new LogicState({
+        name: "ENDINGS",
+        substates: {
+            FINAL_SCENE: new LogicState({
+                name: "FINAL_SCENE"
+            }),
+            THANK_YOU: new LogicState({
+                name: "THANK_YOU"
+            })
+        }
+    })
 };
 
 // === MAP CONSTANTS === //

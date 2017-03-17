@@ -510,6 +510,17 @@ var mapScreenState = {
     })
 };
 
+// ENDING SEQUENCES
+
+var endingScreenState = {
+    FINAL_SCENE: new ScreenState({
+        state: SCREEN_STATES.ENDINGS.substates.FINAL_SCENE
+    }),
+    THANK_YOU: new ScreenState({
+        state: SCREEN_STATES.ENDINGS.substates.THANK_YOU
+    }),
+};
+
 function update() {
     // Need to figure out how to link this to a screen
 }
@@ -544,7 +555,7 @@ var game = {
             }
         }
     },
-    currentScreenState: petState,
+    currentScreenState: endingScreenState.FINAL_SCENE, //petState,
     currentRegion: 1,
     currentViewableRegion: 1,
     currentCity: 5

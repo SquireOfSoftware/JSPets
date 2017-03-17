@@ -582,7 +582,7 @@ var attackSequenceScreen = {
         name: "GETTING_HIT",
         image: null,
         context: drawingBoard,
-        referenceSTate: SCREEN_STATES.ATTACK_SEQUENCE.substates.GETTING_HIT,
+        referenceState: SCREEN_STATES.ATTACK_SEQUENCE.substates.GETTING_HIT,
         update: function() {
             if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
@@ -976,11 +976,75 @@ var statusScreens = {
 };
 
 var endingGameScene = {
-    GOODBYE: new ScreenSprite({
-        
+    FINAL_SCENE: new ScreenSprite({
+        name: "FINAL_SCENE",
+        referenceState: SCREEN_STATES.ENDINGS.substates.FINAL_SCENE,
+        update: function() {
+            if(this.tick === undefined || this.tick < 0) {
+                disableKeyPress();
+                this.tick = 18;
+                //enemySprite.currentPosition = enemySprite.presentationPosition;
+                drawingBoard.flipHorizontally();
+                this.enemySprite = getSprite(ANIMAL_TYPES.TASMANIAN_TIGER, getAnimalState(ANIMAL_TYPES.TASMANIAN_TIGER));
+                this.enemySprite.currentPosition = this.enemySprite.receivingPosition;
+            }
+            this.tick --;
+            this.enemySprite.update();
+            
+            if (this.tick === 12 || this.tick === 6) {
+                finalTextSprite.update();
+            } 
+            else if (this.tick === -1) {
+                currentScreen = endingGameScene.THANK_YOU;
+                currentScreen.update();
+            }
+            //finalTextSprite.update();
+        },
+        draw: function() {
+            this.enemySprite.draw();
+            finalTextSprite.draw();
+        }
     }),
-    THANKYOU: new ScreenSprite({
+    THANK_YOU: new ScreenSprite({
         // this always appears at the end of the game
-        
+        image: generateImage("sprites/thanks.png"),
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.ENDINGS.substates.THANK_YOU,
+        update: function() {
+            if (this.tick === undefined || this.tick < 0) {
+                this.context.restore();
+                this.tick = 18;
+                this.context.clearEntireScreen();
+            }
+            
+            this.tick --;
+            
+            if (this.tick === 16 || this.tick === 15) {
+                fadingOverlaySprite.update();
+            }
+            else if (this.tick === -1) {
+                this.tick = 0;
+            }
+        },
+        draw: function() {
+            if (this.tick > 15)
+                fadingOverlaySprite.draw();
+            else if (this.tick === 15) {
+                foregroundBoard.clearEntireScreen();
+                fadingOverlaySprite.positions.reset();
+            }
+            
+            this.context.drawImage(
+                this.image,
+                0,
+                0,
+                45,
+                20,
+                0,
+                0,
+                45,
+                20
+            );
+        }
     })
 }

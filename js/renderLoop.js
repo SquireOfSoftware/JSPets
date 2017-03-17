@@ -4,7 +4,8 @@
 
 var DRAW_TO_SCREEN = true; // the boolean that is controlled by debug
 
-var currentScreen = petScreen;
+//var currentScreen = petScreen;
+var currentScreen = endingGameScene.FINAL_SCENE;
 
 function updateScreens() {
     // only triggered when a button is pressed or when a walk has reached a checkpoint
@@ -57,8 +58,6 @@ function updateScreens() {
 		}
 		else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.EVOLVING) {
 			currentScreen = statusScreens.EVOLVE_ANIMATION;
-			//game.currentScreenState.state = SCREEN_STATES.ATTACK_SEQUENCE;
-			//console.log(currentScreenState);
 		}
 		else if (currentScreenState === SCREEN_STATES.DEVOLVING.substates.SAD) {
 			currentScreen = statusScreens.SADDENED_DEVOLVE_ANIMATION;
@@ -79,10 +78,14 @@ function updateScreens() {
         else if (currentScreenState === SCREEN_STATES.STATS.substates.CURRENT_STATS) {
             currentScreen = currentStatScreen;
         }
+        else if (currentScreenState === SCREEN_STATES.ENDINGS.substates.FINAL_SCENE) {
+            currentScreen = endingGameScene.FINAL_SCENE;
+            console.log("CHEQUE PLZ")
+        }
         else {
             //currentScreen = petScreen;
-            addLine("Cannot locate screen: " + game.currentScreenState.state.name);
-			//console.log(game.currentScreenState);
+            //addLine("Cannot locate screen: " + game.currentScreenState.state.name);
+			console.log(game.currentScreenState);
         }
         //clearScreen();
         drawingBoard.clearEntireScreen();
