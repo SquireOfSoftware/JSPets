@@ -91,6 +91,7 @@ var currentStatsState = new ScreenState({
     state: SCREEN_STATES.STATS.substates.CURRENT_STATS,
     up: function() {
         game.currentScreenState = statsState;
+        petSprite.currentPosition = petSprite.idlePosition;
         asyncRender = true;
     },
     down: function() {
@@ -370,7 +371,6 @@ var runBattleState = new ScreenState({
 		
         if (roll % 2 === 1) {
             game.pet.state = ANIMAL_STATES.SICK;
-            //currentScreen = statusScreens.SADDENED_DEVOLVE_ANIMATION;
 			if (game.pet.stats.currentLevel < 2)
 				game.currentScreenState = sadSequenceState;
 			else
