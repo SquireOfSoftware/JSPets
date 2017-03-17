@@ -173,10 +173,7 @@ function AnimalSprite(options) {
                     this.currentPosition = this.slidingPosition;
                 //this.currentPosition.updateCanvas();
             }
-            else if (currentScreen.referenceState === SCREEN_STATES.STATS.substates.CURRENT_STATS) {
-                this.currentPosition = this.presentationPosition;
-            }
-            else if (this.referenceObject.state !== referenceState) {
+            else if (this.referenceObject.state !== referenceState && currentScreen.referenceState === SCREEN_STATES.PETS) {
                 if (this.referenceObject.state === ANIMAL_STATES.IDLE) {
                     referenceState = ANIMAL_STATES.IDLE;
                     this.currentPosition = this.idlePosition;
@@ -184,7 +181,6 @@ function AnimalSprite(options) {
                 else if (this.referenceObject.state === ANIMAL_STATES.WALKING) {
                     referenceState = ANIMAL_STATES.WALKING;
                     this.currentPosition = this.walkingPosition;
-                    console.log("WALKING STATE");
                 }
                 else if (this.referenceObject.state === ANIMAL_STATES.SICK) {
                     referenceState = ANIMAL_STATES.SICK;
@@ -194,6 +190,10 @@ function AnimalSprite(options) {
                     referenceState = ANIMAL_STATES.IN_BATTLE;
                     this.currentPosition = this.cryingOutPosition;
                 }
+            }
+            
+            else if (currentScreen.referenceState === SCREEN_STATES.STATS.substates.CURRENT_STATS) {
+                this.currentPosition = this.presentationPosition;
             }
             else if (currentScreen.referenceState === SCREEN_STATES.PETS) {
                 this.currentPosition = this.idlePosition;
@@ -207,11 +207,16 @@ function AnimalSprite(options) {
             else if (game.currentScreenState.state === SCREEN_STATES.SADDENED_PET) {
                 this.currentPosition = this.saddenedPosition;
             }
+            /*
+            else
+                console.log("unknown position");*/
             
             if (this.currentPosition !== this.slidingPosition)
                 this.currentPosition.update();
             else
                 this.currentPosition.updateCanvas();
+            
+            //console.log("currentPosition", this.currentPosition);
         };
 
     if (options.draw !== undefined)
@@ -219,33 +224,30 @@ function AnimalSprite(options) {
     else
         this.draw = function() {
             var coordinates = this.currentPosition.getPosition();
-            if (this.currentPosition !== this.presentationPosition) {
+            //console.log("Test", this.currentPosition !== this.presentationPosition);
+            
+            var drawnSize = this.size;
+            
+            if (this.currentPosition === this.presentationPosition) {
+                drawSize = {
+                    width: DEFAULT_SPRITE_SIZE,
+                    height: DEFAULT_SPRITE_SIZE
+                };
+            }
+            else
                 this.context.clearEntireScreen();
-                this.context.drawImage(
-                    this.image,
-                    coordinates.spriteSheetX,
-                    coordinates.spriteSheetY + this.isEvolved * DEFAULT_SPRITE_SIZE,
-                    this.size.width,
-                    this.size.height,
-                    coordinates.canvasX,
-                    coordinates.canvasY,
-                    this.size.width,
-                    this.size.height
-                );
-            }
-            else {
-                this.context.drawImage(
-                    this.image,
-                    coordinates.spriteSheetX,
-                    coordinates.spriteSheetY + this.isEvolved * DEFAULT_SPRITE_SIZE,
-                    DEFAULT_SPRITE_SIZE,
-                    DEFAULT_SPRITE_SIZE,
-                    coordinates.canvasX,
-                    coordinates.canvasY,
-                    DEFAULT_SPRITE_SIZE,
-                    DEFAULT_SPRITE_SIZE
-                );
-            }
+            
+            this.context.drawImage(
+                this.image,
+                coordinates.spriteSheetX,
+                coordinates.spriteSheetY + this.isEvolved * DEFAULT_SPRITE_SIZE,
+                drawnSize.width,
+                drawnSize.height,
+                coordinates.canvasX,
+                coordinates.canvasY,
+                drawnSize.width,
+                drawnSize.height
+            );
         };
 		
 	if (options.evolve !== undefined)
@@ -709,7 +711,7 @@ var damageSprite = new GenericSprite(
 );
 
 var healthRemainingSprite = new GenericSprite(
-    generateImage("sprites/step-alphabet.png"),
+    generateImage("sprites/step-numbers.png"),
     foregroundBoard,
     {
         inverted: 5,
@@ -985,9 +987,17 @@ var citySprite = new GenericSprite(
     }
 );
 
+var finalTextSprite = new GenericSprite(
+    generateImage("sprites/finals.png"),
+    drawingBoard,
+    {
+        
+    }
+);
+
 function NumberSprite () {
     var sprite = {};
-    sprite.image = generateImage("sprites/step-alphabet.png");
+    sprite.image = generateImage("sprites/step-numbers.png");
     sprite.context = drawingBoard;
     
     sprite.draw = function(character, canvasX, canvasY, isInverted) {

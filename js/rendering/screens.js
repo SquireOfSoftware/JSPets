@@ -177,7 +177,7 @@ var menuScreen = [
 
 var totalStepsScreen = new ScreenSprite({
     name: "STEPS_SCREEN",
-    image: generateImage("sprites/step-alphabet.png"),
+    image: generateImage("sprites/step-numbers.png"),
     context: drawingBoard,
     referenceState: SCREEN_STATES.STEPS.substates.TOTAL_STEPS,
     update: function() {
@@ -973,3 +973,13 @@ var statusScreens = {
 		}
 	})
 };
+
+var endingGameScene = {
+    GOODBYE: new ScreenSprite({
+        
+    }),
+    THANKYOU: new ScreenSprite({
+        // this always appears at the end of the game
+        
+    })
+}
