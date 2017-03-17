@@ -364,7 +364,7 @@ function AnimalSprite32Width(image, drawingBoard, referenceObject) {
         });
 }
 
-var petSprite = getSprite(ANIMAL_TYPES.WHALE, game.pet);
+var petSprite = getSprite(ANIMAL_TYPES.DUCK, game.pet);
 
 var enemySprite;
 
