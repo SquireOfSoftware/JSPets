@@ -44,7 +44,7 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
         // buff the stats in accordance with the level and buffs
         if (this.currentLevel < this.maxLevel) {
             this.currentLevel++;
-            this.currentStats.hp *= this.buffs.hp;
+            this.currentStats.hp += this.buffs.hp * this.originalStats.hp;
             this.currentStats.attack += this.buffs.attack;
             this.currentStats.speed += this.buffs.speed;
         }
@@ -54,12 +54,9 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
         // be sure to round evenly off when devolving
         // goal is that you "take less damage" whilst evolved
         if (this.currentLevel > 1) {
-            var remainderHp = this.currentStats.hp % Math.pow(this.buffs.hp, this.currentLevel - 1);
-            if (remainderHp > 0) {
-                this.currentStats.hp -= remainderHp;
-            }
+            
+            this.currentStats.hp = Math.floor(this.currentStats.hp / this.currentLevel);
 
-            this.currentStats.hp /= Math.pow(this.buffs.hp, this.currentLevel - 1);
             this.currentStats.attack = this.originalStats.attack;
             this.currentStats.speed = this.originalStats.speed;
 
