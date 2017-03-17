@@ -552,5 +552,3 @@ var game = {
 };
 
 game.pet.isPet = true;
-
-game.pet.state = ANIMAL_STATES.SICK;

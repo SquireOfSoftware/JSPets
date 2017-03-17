@@ -625,11 +625,9 @@ function generateEnemy(biomeState, difficulty) {
 
     for (var biomeCounter = 0; biomeCounter < biomes.length; biomeCounter++) {
         if (biomes[biomeCounter].state === biomeState) {
-            //biome =
             var enemyState = biomes[biomeCounter].getRandomEnemyState();
             var enemy = getAnimalState(enemyState);
             enemy.stats.setupDifficulty(difficulty);
-            //console.log("stats", enemy.stats.currentStats);
             return enemy;
         }
     }

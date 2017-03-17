@@ -195,9 +195,6 @@ function AnimalSprite(options) {
             else if (currentScreen.referenceState === SCREEN_STATES.STATS.substates.CURRENT_STATS) {
                 this.currentPosition = this.presentationPosition;
             }
-            else if (currentScreen.referenceState === SCREEN_STATES.PETS) {
-                this.currentPosition = this.idlePosition;
-            }
             else if (game.currentScreenState.state === SCREEN_STATES.ATTACK_SEQUENCE) {
                 this.currentPosition = this.attackingPosition;
             }
