@@ -366,7 +366,6 @@ var petSprite = getSprite(ANIMAL_TYPES.DUCK, game.pet);
 var enemySprite;
 
 // FINAL_SCENE TEST
-//enemySprite = getSprite(ANIMAL_TYPES.TASMANIAN_TIGER, getAnimalState(ANIMAL_TYPES.TASMANIAN_TIGER));
 
 function getSprite(animalType, referenceObject) {
     if (animalType === ANIMAL_TYPES.BAT) {
@@ -993,7 +992,7 @@ var finalTextSprite = new GenericSprite(
         spriteSheetY: 0,
         maxFrame: 3,
         multiplier: 25,
-        canvasX: 20, 
+        canvasX: 18,
         canvasY: 0  
     }),
     {
@@ -1029,6 +1028,7 @@ var arrow = new GenericSprite(
     generateImage("sprites/arrow.png"),
     foregroundBoard,
     new SpritePosition({
+        name: "SWAP",
         spriteSheetX: 0,
         spriteSheetY: 0,
         maxFrame: 1,
@@ -1069,23 +1069,44 @@ var arrow = new GenericSprite(
 var fadingOverlaySprite = new GenericSprite(
     generateImage("sprites/fade.png"),
     foregroundBoard,
-    new SpritePosition({
-        spriteSheetX: 0,
-        spriteSheetY: 0,
-        maxFrame: 2,
-        multiplier: 45,
-        canvasX: 0, // not used
-        canvasY: 0  // not used
-    }),
+    {
+        FADE_OUT: new SpritePosition({
+            name: "FADE_OUT",
+            spriteSheetX: 0,
+            spriteSheetY: 0,
+            maxFrame: 2,
+            multiplier: 45,
+            canvasX: 0, // not used
+            canvasY: 0  // not used
+        }),
+        FADE_IN: new SpritePosition({
+            name: "FADE_IN",
+            spriteSheetX: 90,
+            spriteSheetY: 0,
+            maxFrame: 2,
+            multiplier: -45,
+            canvasX: 0, // not used
+            canvasY: 0  // not used
+        })
+    },
     {
         width: 45,
         height: 20
     },
     function() {
-        this.positions.update();
+        console.log("Fade has been triggered");
+        if (this.currentPosition === undefined || this.reverse !== undefined) {
+            if (this.reverse === true)
+                this.currentPosition = this.positions.FADE_IN;
+            else
+                this.currentPosition = this.positions.FADE_OUT;
+            this.currentPosition.reset();
+        }
+
+        this.currentPosition.update();
     },
     function() {
-        var spriteCoordinates = this.positions.getPosition();
+        var spriteCoordinates = this.currentPosition.getPosition();
         this.context.clearSection(
             spriteCoordinates.canvasX,
             spriteCoordinates.canvasY,
@@ -1130,7 +1151,7 @@ function NumberSprite () {
             NUMBER_PX_SIZE.WIDTH,
             NUMBER_PX_SIZE.HEIGHT
         )
-    }
+    };
     
     return sprite;
 }

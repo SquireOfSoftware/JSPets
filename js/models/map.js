@@ -265,12 +265,15 @@ var australia = {
     )
 };
 
+var gameResets = 0;
+
 function moveToNextCity() {
     if(game.currentCity === australia.TAS.regions[game.currentRegion].length -1) {
         game.currentCity = 0;
         game.currentRegion++;
         if (game.currentRegion > australia.TAS.regions.length - 1) {
             game.currentRegion = 0;
+            gameResets++;
         }
         game.currentViewableRegion = game.currentRegion;
     }

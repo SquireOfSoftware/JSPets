@@ -319,7 +319,7 @@ var happyDevolvingAnimationstate = new ScreenState({
 
     }
 });
-
+/*
 var autoBattleState = new ScreenState({
     state: SCREEN_STATES.AUTO,
     up: function() {
@@ -356,7 +356,7 @@ var autoBattleState = new ScreenState({
         game.currentScreenState = runBattleState;
         asyncRender = true;
     }
-});
+});*/
 
 var runBattleState = new ScreenState({
     state: SCREEN_STATES.RUN,
@@ -514,11 +514,23 @@ var mapScreenState = {
 
 var endingScreenState = {
     FINAL_SCENE: new ScreenState({
-        state: SCREEN_STATES.ENDINGS.substates.FINAL_SCENE
+        state: SCREEN_STATES.ENDINGS.substates.FINAL_SCENE,
+        up: function() {
+
+        },
+        left: function() {
+
+        },
+        right: function() {
+
+        },
+        down: function() {
+
+        }
     }),
     THANK_YOU: new ScreenState({
         state: SCREEN_STATES.ENDINGS.substates.THANK_YOU
-    }),
+    })
 };
 
 function update() {

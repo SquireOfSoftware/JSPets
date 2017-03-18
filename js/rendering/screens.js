@@ -707,15 +707,29 @@ function performEndingAnimation() {
 		currentScreen = statusScreens.SADDENED_ANIMATION;
 		game.currentScreenState = sadSequenceState;
 
-		console.log("LOST");
+		//console.log("LOST");
 	}
 	// if your pet won, change state to happy, switch to petScreen
 	else {
-		currentScreen = statusScreens.HAPPY_ANIMATION;
-		game.currentScreenState = happySequenceState;
-		console.log("WIN!");
+		//console.log("WIN!");
 		// select next city
+        var currentGameResets = gameResets;
         moveToNextCity();
+
+        if (currentGameResets !== gameResets) {
+            if (game.currentEnemy.type === ANIMAL_TYPES.TASMANIAN_TIGER) {
+                currentScreen = endingGameScene.FINAL_SCENE;
+                game.currentScreenState = endingScreenState.FINAL_SCENE;
+            }
+            else {
+                currentScreen = endingGameScene.THANK_YOU;
+                game.currentScreenState = endingScreenState.THANK_YOU;
+            }
+        }
+        else { // normal city
+            currentScreen = statusScreens.HAPPY_ANIMATION;
+            game.currentScreenState = happySequenceState;
+        }
 	}
 	
 	resetStats();
@@ -723,7 +737,7 @@ function performEndingAnimation() {
 	
 	petSpriteStates.hasDeath = false;
 	
-	addLine("Battle is over");
+	//addLine("Battle is over");
 	petSprite.update();
 
 	currentScreen.update();
@@ -951,9 +965,7 @@ var statusScreens = {
 				
             }
             this.tick--;
-			
-			//console.log("DEVOLVING happily", this.tick);
-			
+
 			evolutionSprites.DEVOLVE.update();
 
 			if (this.tick == 3) {
@@ -985,7 +997,14 @@ var endingGameScene = {
                 this.tick = 18;
                 //enemySprite.currentPosition = enemySprite.presentationPosition;
                 drawingBoard.flipHorizontally();
-                this.enemySprite = getSprite(ANIMAL_TYPES.TASMANIAN_TIGER, getAnimalState(ANIMAL_TYPES.TASMANIAN_TIGER));
+
+                if (enemySprite === undefined) {
+                    this.enemySprite = getSprite(ANIMAL_TYPES.TASMANIAN_TIGER, getAnimalState(ANIMAL_TYPES.TASMANIAN_TIGER));
+                    this.enemySprite.isEvolved = 1;
+                }
+                else {
+                    this.enemySprite = enemySprite;
+                }
                 this.enemySprite.currentPosition = this.enemySprite.receivingPosition;
             }
             this.tick --;
@@ -1012,26 +1031,35 @@ var endingGameScene = {
         referenceState: SCREEN_STATES.ENDINGS.substates.THANK_YOU,
         update: function() {
             if (this.tick === undefined || this.tick < 0) {
+                disableKeyPress();
                 this.context.restore();
                 this.tick = 18;
                 this.context.clearEntireScreen();
             }
             
             this.tick --;
-            
-            if (this.tick === 16 || this.tick === 15) {
+
+            if (this.tick > 15) {
                 fadingOverlaySprite.update();
             }
             else if (this.tick === -1) {
-                this.tick = 0;
+                fadingOverlaySprite.currentPosition.reset();
+                foregroundBoard.clearEntireScreen();
+                drawingBoard.clearEntireScreen();
+                currentScreen = petScreen;
+                game.currentScreenState = petState;
+
+                game.pet.state = ANIMAL_STATES.IDLE;
+                petSprite.update();
+
+                enableKeyPress();
             }
         },
         draw: function() {
-            if (this.tick > 15)
+            if (this.tick > 15 && this.tick < 18)
                 fadingOverlaySprite.draw();
             else if (this.tick === 15) {
                 foregroundBoard.clearEntireScreen();
-                fadingOverlaySprite.positions.reset();
             }
             
             this.context.drawImage(
