@@ -6,6 +6,20 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 23/3/2017 ==
+
+What have I been up to?
+
+- I have finished off the ending screen
+
+- Added a start screen (it is really basic)
+
+- Cleaned up some of the code
+
+Probably the next thing on my to do list is the buff cooldowns.
+
+Need to figure out how to implement those and to test it out.
+
 == 15/3/2017 ==
 
 All sprites have been created and added into the game.
