@@ -1026,6 +1026,7 @@ var endingGameScene = {
     }),
     THANK_YOU: new ScreenSprite({
         // this always appears at the end of the game
+        name: "THANK_YOU",
         image: generateImage("sprites/thanks.png"),
         context: drawingBoard,
         referenceState: SCREEN_STATES.ENDINGS.substates.THANK_YOU,
@@ -1075,4 +1076,44 @@ var endingGameScene = {
             );
         }
     })
-}
+};
+
+var introScene = new ScreenSprite({
+    name: "INTRO",
+    referenceState: SCREEN_STATES.INTRO,
+    update: function() {
+        if(this.tick === undefined || this.tick < 0) {
+            disableKeyPress();
+            this.tick = 8;
+            introSequenceSprite.positions.reset();
+        }
+        this.tick --;
+
+        /*if (this.tick > 5)
+            introSequenceSprite.update();*/
+
+        if (this.tick > 5)
+            fadingOverlaySprite.update();
+
+        if (this.tick < 0) {
+            //foregroundBoard.clearEntireScreen();
+            drawingBoard.clearEntireScreen();
+            currentScreen = petScreen;
+            game.currentScreenState = petState;
+
+            game.pet.state = ANIMAL_STATES.IDLE;
+            petSprite.update();
+
+            enableKeyPress();
+        }
+    },
+    draw: function() {
+        if (this.tick > 5)
+            fadingOverlaySprite.draw();
+        else if (this.tick === 5)
+            foregroundBoard.clearEntireScreen();
+
+        if (this.tick > 6)
+            introSequenceSprite.draw();
+    }
+});

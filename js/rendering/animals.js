@@ -1130,6 +1130,58 @@ var fadingOverlaySprite = new GenericSprite(
     }
 );
 
+var introSequenceSprite = new GenericSprite(
+    generateImage("sprites/intro-seq.png"),
+    drawingBoard,
+    new SpritePosition({
+        name: "SLIDING_INTRO",
+        spriteSheetX: 0,
+        spriteSheetY: 0,
+        maxFrame: 10,
+        multiplier: 45,
+        canvasX: 0, // not used
+        canvasY: 0  // not used
+    }),
+    {
+        width: 45,
+        height: 20
+    },
+    function() {
+        if(this.tick === undefined || this.tick < 0)
+            this.tick = 10;
+        this.tick--;
+
+        this.positions.update();
+
+        if (this.tick < 0) {
+            this.positions.reset();
+        }
+    },
+    function() {
+        var spriteCoordinates = this.positions.getPosition();
+        this.context.clearSection(
+            spriteCoordinates.canvasX,
+            spriteCoordinates.canvasY,
+            this.size.width,
+            this.size.height
+        );
+
+        //console.log(this.positions.name, spriteCoordinates);
+
+        this.context.drawImage(
+            this.image,
+            spriteCoordinates.spriteSheetX,
+            spriteCoordinates.spriteSheetY,
+            this.size.width,
+            this.size.height,
+            spriteCoordinates.canvasX,
+            spriteCoordinates.canvasY,
+            this.size.width,
+            this.size.height
+        );
+    }
+);
+
 function NumberSprite () {
     var sprite = {};
     sprite.image = generateImage("sprites/step-numbers.png");

@@ -291,6 +291,9 @@ var SCREEN_STATES = {
                 name: "THANK_YOU"
             })
         }
+    }),
+    INTRO: new LogicState({
+        name: "INTRO"
     })
 };
 

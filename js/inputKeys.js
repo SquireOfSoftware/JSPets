@@ -11,9 +11,9 @@ var keyPressBuffer = {
 };
 
 function Key (name, keyCode) {
-    this.pressed = false;
+    /*this.pressed = false;
     this.hold = false;
-    this.released = false;
+    this.released = false;*/
     this.name = name;
     this.keyCode = keyCode;
 }

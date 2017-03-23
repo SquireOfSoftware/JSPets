@@ -5,7 +5,8 @@
 var DRAW_TO_SCREEN = true; // the boolean that is controlled by debug
 
 //var currentScreen = petScreen;
-var currentScreen = endingGameScene.FINAL_SCENE;
+//var currentScreen = endingGameScene.FINAL_SCENE;
+var currentScreen = introScene;
 
 function updateScreens() {
     // only triggered when a button is pressed or when a walk has reached a checkpoint
@@ -80,7 +81,9 @@ function updateScreens() {
         }
         else if (currentScreenState === SCREEN_STATES.ENDINGS.substates.FINAL_SCENE) {
             currentScreen = endingGameScene.FINAL_SCENE;
-            console.log("CHEQUE PLZ")
+        }
+        else if (currentScreenState === SCREEN_STATES.INTRO) {
+            currentScreen = introScene;
         }
         else {
             //currentScreen = petScreen;

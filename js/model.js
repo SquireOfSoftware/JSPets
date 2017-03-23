@@ -568,9 +568,9 @@ var game = {
         }
     },
     currentScreenState: endingScreenState.FINAL_SCENE, //petState,
-    currentRegion: 1,
-    currentViewableRegion: 1,
-    currentCity: 5
+    currentRegion: 0,
+    currentViewableRegion: 0,
+    currentCity: 0
     //currentEnemy: cat
 };
 
