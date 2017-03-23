@@ -50,7 +50,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.REDPA,
                     getCoordinates(4, 3),
-                    10,
+                    200,
                     -5,
                     [
                         new BiomeChance(BIOMES.COASTAL, 5),
@@ -64,7 +64,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.SMITHTON,
                     getCoordinates(8, 2),
-                    3,
+                    350,
                     -3, 
                     [
                         new BiomeChance(BIOMES.COASTAL, 3),
@@ -75,7 +75,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.BURNIE_SOMERSET,
                     getCoordinates(17, 6),
-                    3,
+                    644,
                     -2, 
                     [
                         new BiomeChance(BIOMES.COASTAL, 6),
@@ -85,7 +85,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.CRADLE_MOUNTAIN,
                     getCoordinates(17, 12),
-                    3,
+                    570,
                     0,
                     [
                         new BiomeChance(BIOMES.LAKE, 3),
@@ -97,7 +97,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.DELORAINE,
                     getCoordinates(25, 11),
-                    3,
+                    596,
                     3,
                     [
                         new BiomeChance(BIOMES.URBAN, 1),
@@ -109,7 +109,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.GEORGE_TOWN,
                     getCoordinates(27, 6),
-                    3,
+                    500,
                     2,
                     [
                         new BiomeChance(BIOMES.COASTAL, 3),
@@ -121,7 +121,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.MUSSELROE_BAY,
                     getCoordinates(41, 3),
-                    3,
+                    1160,
                     3,
                     [
                         new BiomeChance(BIOMES.BEACH, 4),
@@ -132,7 +132,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.SCAMANDER,
                     getCoordinates(42, 12),
-                    3,
+                    714,
                     4,
                     [
                         new BiomeChance(BIOMES.BEACH, 10)
@@ -141,7 +141,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.LAUNCESTON,
                     getCoordinates(30, 10),
-                    3,
+                    916,
                     2,
                     [
                         new BiomeChance(BIOMES.LAKE, 1),
@@ -153,7 +153,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.CAMPBELL_TOWN,
                     getCoordinates(34, 17),
-                    3,
+                    633,
                     1,
                     [
                         new BiomeChance(BIOMES.URBAN, 1),
@@ -164,7 +164,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.DERWENT_BRIDGE,
                     getCoordinates(21, 18),
-                    3,
+                    1070,
                     3,
                     [
                         new BiomeChance(BIOMES.LAKE, 3),
@@ -175,7 +175,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.QUEENSTOWN,
                     getCoordinates(13, 18),
-                    3,
+                    577,
                     4,
                     [
                         new BiomeChance(BIOMES.ALPINE, 1),
@@ -192,7 +192,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.STRAHAN,
                     getCoordinates(19, 22), // next map
-                    3,
+                    231,
                     3,
                     [
                         new BiomeChance(BIOMES.MARINE, 1),
@@ -203,7 +203,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.STRATHGORDON,
                     getCoordinates(19, 30),
-                    3,
+                    975,
                     4,
                     [
                         new BiomeChance(BIOMES.LAKE, 1),
@@ -215,7 +215,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.BOTHWELL,
                     getCoordinates(29, 25),
-                    3,
+                    1040,
                     3,
                     [
                         new BiomeChance(BIOMES.GRASSLANDS, 5),
@@ -225,7 +225,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.TRIABUNNA,
                     getCoordinates(39, 27),
-                    3,
+                    768,
                     4,
                     [
                         new BiomeChance(BIOMES.MARINE, 3),
@@ -237,7 +237,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.HOBART,
                     getCoordinates(32, 31),
-                    3,
+                    659,
                     5,
                     [
                         new BiomeChance(BIOMES.MARINE, 1),
@@ -250,7 +250,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.PORT_ARTHUR,
                     getCoordinates(38, 36),
-                    3,
+                    852,
                     5,
                     [
                         new BiomeChance(BIOMES.COASTAL, 3),

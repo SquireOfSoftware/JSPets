@@ -110,38 +110,40 @@ function interpretKeys() {
 
 function walk() {
     // this is triggered on click or on step
-    if (game.pet.state === ANIMAL_STATES.IDLE ||
-        game.pet.state === ANIMAL_STATES.WALKING) {
-        game.stepCounter.total = game.stepCounter.total.add(1);
-        game.stepCounter.currentSteps++;
-        game.stepCounter.hasRecentlyStepped = true;
-        game.stepCounter.resetWaitPeriod();
-        document.getElementById("steps").value = game.stepCounter.total.toString();
-        if (game.stepCounter.currentSteps % 100 === 0)
-            game.pet.stats.walkingHeal();
+    if (!blockKeyPress) {
+        if (game.pet.state === ANIMAL_STATES.IDLE ||
+            game.pet.state === ANIMAL_STATES.WALKING) {
+            game.stepCounter.total = game.stepCounter.total.add(1);
+            game.stepCounter.currentSteps++;
+            game.stepCounter.hasRecentlyStepped = true;
+            game.stepCounter.resetWaitPeriod();
+            document.getElementById("steps").value = game.stepCounter.total.toString();
+            if (game.stepCounter.currentSteps % 100 === 0)
+                game.pet.stats.walkingHeal();
 
-    }
-    if (game.stepCounter.currentSteps >= australia.TAS.regions[game.currentRegion][game.currentCity].stepCount) {
-        disableKeyPress();
-        foregroundBoard.clearEntireScreen();
-        game.stepCounter.currentSteps = 0;
-        game.pet.state = ANIMAL_STATES.IN_BATTLE;
-        
-        var currentCity = australia.TAS.regions[game.currentRegion][game.currentCity];
+        }
+        if (game.stepCounter.currentSteps >= australia.TAS.regions[game.currentRegion][game.currentCity].stepCount) {
+            disableKeyPress();
+            foregroundBoard.clearEntireScreen();
+            game.stepCounter.currentSteps = 0;
+            game.pet.state = ANIMAL_STATES.IN_BATTLE;
 
-        var randomBiomeState = currentCity.getRandomBiome();
+            var currentCity = australia.TAS.regions[game.currentRegion][game.currentCity];
 
-        game.currentEnemy = generateEnemy(randomBiomeState, currentCity.difficulty);
+            var randomBiomeState = currentCity.getRandomBiome();
 
-        game.currentEnemy.state = ANIMAL_STATES.IN_BATTLE;
-        
-        enemySprite = getSprite(game.currentEnemy.type, game.currentEnemy);
-        //enemySprite.referenceObject = game.currentEnemy;
-        enemySprite.isEvolved = game.currentEnemy.stats.currentLevel - 1;
-        
-        game.currentScreenState = cryState;//SCREEN_STATES.START_BATTLE.substates.CRY;
-        // generate the enemy here and store it in the game variable
-        updateScreens();
+            game.currentEnemy = generateEnemy(randomBiomeState, currentCity.difficulty);
+
+            game.currentEnemy.state = ANIMAL_STATES.IN_BATTLE;
+
+            enemySprite = getSprite(game.currentEnemy.type, game.currentEnemy);
+            //enemySprite.referenceObject = game.currentEnemy;
+            enemySprite.isEvolved = game.currentEnemy.stats.currentLevel - 1;
+
+            game.currentScreenState = cryState;//SCREEN_STATES.START_BATTLE.substates.CRY;
+            // generate the enemy here and store it in the game variable
+            updateScreens();
+        }
     }
 }
 

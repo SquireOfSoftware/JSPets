@@ -455,9 +455,7 @@ function BiomeState(state, animalStates) {
 
     this.getRandomEnemyState = function() {
         var randomIndex = Math.floor(Math.random() * (this.maxEncounter));
-        console.log("max encounter", this.maxEncounter);
         for(var counter = 0; counter < this.animalStates.length; counter++) {
-            console.log("randomIndex:", randomIndex, this.animalStates[counter].animalState.name, this.animalStates.length);
             if ((randomIndex - this.animalStates[counter].percentage) >= 0)
                 randomIndex -= this.animalStates[counter].percentage;
             else {

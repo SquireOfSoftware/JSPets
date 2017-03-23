@@ -533,6 +533,10 @@ var endingScreenState = {
     })
 };
 
+var introScreenState = new ScreenState({
+    state: SCREEN_STATES.INTRO
+});
+
 function update() {
     // Need to figure out how to link this to a screen
 }
@@ -567,11 +571,10 @@ var game = {
             }
         }
     },
-    currentScreenState: endingScreenState.FINAL_SCENE, //petState,
+    currentScreenState: introScreenState,
     currentRegion: 0,
     currentViewableRegion: 0,
     currentCity: 0
-    //currentEnemy: cat
 };
 
 game.pet.isPet = true;

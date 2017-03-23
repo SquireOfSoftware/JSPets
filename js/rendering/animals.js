@@ -629,7 +629,7 @@ var fireball = new GenericSprite(
             this.positions.fullAttackPosition.reset();
             this.positions.receivingPosition.reset();
             this.attackPower = Math.round(petSpriteStates.faster.referenceObject.stats.currentStats.attack / 10);
-            console.log("attackPower", petSpriteStates.faster.referenceObject.stats.currentStats.attack, this.attackPower);
+            //console.log("attackPower", petSpriteStates.faster.referenceObject.stats.currentStats.attack, this.attackPower);
             
             // this bit is really interesting
             // 0 to 4 is a small attack
@@ -867,7 +867,6 @@ var evolutionSprites = {
             
 		},
 		function() {
-			console.log("drawing cross-hatching", this.tick);
             this.context.clearEntireScreen();
 			if (this.tick === 1 && this.tick > 0) {
 				this.context.drawImage(
@@ -886,7 +885,7 @@ var evolutionSprites = {
 		}
 	)
 };
-
+/*
 function CitySprite(position, context) {
     var citySprite = new GenericSprite(
         generateImage("sprites/location-indicators.png"),
@@ -915,7 +914,7 @@ function CitySprite(position, context) {
     };
 
     return citySprite;
-}
+}*/
 
 var citySprite = new GenericSprite(
     generateImage("sprites/location-indicators.png"),
@@ -957,7 +956,7 @@ var citySprite = new GenericSprite(
         this.context.clearEntireScreen();
 
         var region = australia.TAS.regions[game.currentViewableRegion];
-        console.log(region.length);
+        //console.log(region.length);
         for(var city = 0; city < region.length; city++) {
             if ((city === game.currentCity) && (game.currentViewableRegion === game.currentRegion))
                 this.currentPosition = this.positions.currentPosition;
@@ -1094,7 +1093,6 @@ var fadingOverlaySprite = new GenericSprite(
         height: 20
     },
     function() {
-        console.log("Fade has been triggered");
         if (this.currentPosition === undefined || this.reverse !== undefined) {
             if (this.reverse === true)
                 this.currentPosition = this.positions.FADE_IN;
@@ -1113,9 +1111,7 @@ var fadingOverlaySprite = new GenericSprite(
             this.size.width,
             this.size.height
         );
-        
-        console.log(spriteCoordinates);
-        
+
         this.context.drawImage(
             this.image,
             spriteCoordinates.spriteSheetX,
