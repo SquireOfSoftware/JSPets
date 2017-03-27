@@ -224,11 +224,31 @@ var SCREEN_STATES = {
         name: "POWER_UP",
         substates: {
             EVOLVE: new LogicState({
-                name: "EVOLVE"
+                name: "EVOLVE",
+                substates: {
+                    TO_CHAMPION: new LogicState({
+                        name: "TO_CHAMPION"
+                    }),
+                    TO_ULTIMATE: new LogicState({
+                        name: "TO_ULTIMATE"
+                    })
+                }
             }),
 			EVOLVING: new LogicState({
 				name: "EVOLVING"
-			})
+			}),
+            BOOSTS: new LogicState({
+                name: "BOOSTS"
+            }),
+            HEAL_HALF: new LogicState({
+                name: "HEAL_HALF"
+            }),
+            DOUBLE_ATTACK: new LogicState({
+                name: "DOUBLE_ATTACK"
+            }),
+            DOUBLE_SPEED: new LogicState({
+                name: "DOUBLE_SPEED"
+            })
         }
     }),
     AUTO: new LogicState({
@@ -338,11 +358,6 @@ var BIOMES = {
         name: "WETLANDS"
     })
 };
-
-function MapStates(name, biomes) {
-    this.name = name;
-    this.biomes = biomes;
-}
 
 var MAP_STATES = {
     TAS: new LogicState({

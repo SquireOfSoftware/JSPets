@@ -50,7 +50,7 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.REDPA,
                     getCoordinates(4, 3),
-                    200,
+                    2, //200,
                     -5,
                     [
                         new BiomeChance(BIOMES.COASTAL, 5),

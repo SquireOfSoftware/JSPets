@@ -420,6 +420,45 @@ var battleMenuScreen = {
     })
 };
 
+var powerUpScreens = {
+    HOME: new ScreenSprite({
+        name: "BOOSTS_HOME",
+        image: generateImage("sprites/45 by 20.png"), // placeholder
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.POWER_UP.substates.BOOSTS
+    }),
+    CHAMPION: new ScreenSprite({
+        name: "TO_CHAMPION",
+        image: generateImage("sprites/45 by 20.png"), // placeholder
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.POWER_UP.substates.EVOLVE.substates.TO_CHAMPION
+    }),
+    ULTIMATE: new ScreenSprite({
+        name: "TO_ULTIMATE",
+        image: generateImage("sprites/45 by 20.png"), // placeholder
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.POWER_UP.substates.EVOLVE.substates.TO_ULTIMATE
+    }),
+    HEAL_HALF: new ScreenSprite({
+        name: "HEAL_HALF",
+        image: generateImage("sprites/screens/cooldown-healing.png"),
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.POWER_UP.substates.HEAL_HALF
+    }),
+    DOUBLE_ATTACK: new ScreenSprite({
+        name: "DOUBLE_ATTACK",
+        image: generateImage("sprites/screens/cooldown-attack-buff.png"),
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.POWER_UP.substates.DOUBLE_ATTACK
+    }),
+    DOUBLE_SPEED: new ScreenSprite({
+        name: "DOUBLE_SPEED",
+        image: generateImage("sprites/screens/cooldown-speed-buff.png"),
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.POWER_UP.substates.DOUBLE_SPEED
+    })
+};
+
 var petSpriteStates = {
     faster: undefined,
     slower: undefined,

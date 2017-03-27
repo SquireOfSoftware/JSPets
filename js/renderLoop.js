@@ -4,9 +4,9 @@
 
 var DRAW_TO_SCREEN = true; // the boolean that is controlled by debug
 
-//var currentScreen = petScreen;
+var currentScreen = petScreen;
 //var currentScreen = endingGameScene.FINAL_SCENE;
-var currentScreen = introScene;
+//var currentScreen = introScene;
 
 function updateScreens() {
     // only triggered when a button is pressed or when a walk has reached a checkpoint
@@ -39,9 +39,22 @@ function updateScreens() {
         else if (currentScreenState === SCREEN_STATES.POWER_UP) {
             currentScreen = battleMenuScreen.POWER_UP;
         }
+        else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.BOOSTS) {
+            currentScreen = powerUpScreens.HOME;
+        }
+        else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.HEAL_HALF) {
+            currentScreen = powerUpScreens.HEAL_HALF;
+        }
+        else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.DOUBLE_ATTACK) {
+            currentScreen = powerUpScreens.DOUBLE_ATTACK;
+        }
+        else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.DOUBLE_SPEED) {
+            currentScreen = powerUpScreens.DOUBLE_SPEED;
+        }
+        /*
         else if (currentScreenState === SCREEN_STATES.AUTO) {
             currentScreen = battleMenuScreen.AUTO;
-        }
+        }*/
         else if (currentScreenState === SCREEN_STATES.RUN) {
             currentScreen = battleMenuScreen.RUN;
         }
@@ -57,6 +70,12 @@ function updateScreens() {
 		else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.EVOLVE) {
 			currentScreen = battleMenuScreen.EVOLVE;
 		}
+        else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.EVOLVE.substates.TO_CHAMPION) {
+            currentScreen = powerUpScreens.CHAMPION;
+        }
+        else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.EVOLVE.substates.TO_ULTIMATE) {
+            currentScreen = powerUpScreens.ULTIMATE;
+        }
 		else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.EVOLVING) {
 			currentScreen = statusScreens.EVOLVE_ANIMATION;
 		}
