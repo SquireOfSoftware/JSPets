@@ -406,6 +406,26 @@ var MAP_STATES = {
     })
 };
 
+// === COOL DOWNS === //
+
+var COOLDOWN_TYPES = {
+    HP_HEAL: new LogicState({
+        name: "HP_HEAL"
+    }),
+    ATTACK_BUFF: new LogicState({
+        name: "ATTACK_BUFF"
+    }),
+    SPEED_BUFF: new LogicState({
+        name: "SPEED_BUFF"
+    }),
+    CHAMPION_BUFF: new LogicState({
+        name: "CHAMPION_BUFF"
+    }),
+    ULTIMATE_BUFF: new LogicState({
+        name: "ULTIMATE_BUFF"
+    })
+};
+
 // === KEY CONSTANTS === //
 
 var ARROW_KEYS = {

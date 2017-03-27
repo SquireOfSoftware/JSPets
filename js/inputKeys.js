@@ -108,15 +108,25 @@ function interpretKeys() {
     }
 }
 
+function takeAStep() {
+    game.stepCounter.total = game.stepCounter.total.add(1);
+    game.stepCounter.currentSteps++;
+    game.stepCounter.hasRecentlyStepped = true;
+    game.stepCounter.resetWaitPeriod();
+
+    buffCooldowns.hp.increment();
+    buffCooldowns.attack.increment();
+    buffCooldowns.speed.increment();
+    buffCooldowns.championEvolve.increment();
+    buffCooldowns.ultimateEvolve.increment();
+}
+
 function walk() {
     // this is triggered on click or on step
     if (!blockKeyPress) {
         if (game.pet.state === ANIMAL_STATES.IDLE ||
             game.pet.state === ANIMAL_STATES.WALKING) {
-            game.stepCounter.total = game.stepCounter.total.add(1);
-            game.stepCounter.currentSteps++;
-            game.stepCounter.hasRecentlyStepped = true;
-            game.stepCounter.resetWaitPeriod();
+            takeAStep();
             document.getElementById("steps").value = game.stepCounter.total.toString();
             if (game.stepCounter.currentSteps % 100 === 0)
                 game.pet.stats.walkingHeal();
