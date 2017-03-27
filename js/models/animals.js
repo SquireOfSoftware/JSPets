@@ -20,7 +20,8 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
     this.currentStats = {
         hp: hp,
         attack: attack,
-        speed: speed
+        speed: speed,
+        maxHp: hp
     };
 
     this.originalStats = {
@@ -47,6 +48,8 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
             this.currentStats.hp += this.buffs.hp * this.originalStats.hp;
             this.currentStats.attack += this.buffs.attack;
             this.currentStats.speed += this.buffs.speed;
+
+            this.currentStats.maxHp += this.buffs.hp * this.originalStats.hp;
         }
     };
     
@@ -59,6 +62,8 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
 
             this.currentStats.attack = this.originalStats.attack;
             this.currentStats.speed = this.originalStats.speed;
+
+            this.currentStats.maxHp = this.originalStats.hp;
 
             this.currentLevel = 1;
         }

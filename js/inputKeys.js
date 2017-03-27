@@ -114,11 +114,7 @@ function takeAStep() {
     game.stepCounter.hasRecentlyStepped = true;
     game.stepCounter.resetWaitPeriod();
 
-    buffCooldowns.hp.increment();
-    buffCooldowns.attack.increment();
-    buffCooldowns.speed.increment();
-    buffCooldowns.championEvolve.increment();
-    buffCooldowns.ultimateEvolve.increment();
+    incrementCooldowns();
 }
 
 function walk() {
