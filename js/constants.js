@@ -314,6 +314,26 @@ var SCREEN_STATES = {
     }),
     INTRO: new LogicState({
         name: "INTRO"
+    }),
+    BOOSTS_ANIMATIONS: new LogicState({
+        name: "BOOSTS_ANIMATIONS",
+        substates: {
+            HEALING_HALF: new LogicState({
+                name: "HEALING_HALF"
+            }),
+            DOUBLING_ATTACK: new LogicState({
+                name: "DOUBLING_ATTACK"
+            }),
+            DOUBLING_SPEED: new LogicState({
+                name: "DOUBLING_SPEED"
+            }),
+            TO_CHAMPION: new LogicState({
+                name: "TO_CHAMPION"
+            }),
+            TO_ULTIMATE: new LogicState({
+                name: "TO_ULTIMATE"
+            })
+        }
     })
 };
 

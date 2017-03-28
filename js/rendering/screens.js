@@ -433,11 +433,6 @@ var powerUpScreens = {
         context: drawingBoard,
         referenceState: SCREEN_STATES.POWER_UP.substates.EVOLVE.substates.TO_CHAMPION,
         draw: function() {
-            foregroundBoard.clearEntireScreen();
-            if(!buffCooldowns.championEvolve.isReady) {
-                // TODO pre-draw this
-            }
-
             this.context.clearSection(this.screenPosition.canvasX, this.screenPosition.canvasY, this.size.width, this.size.height);
             this.context.drawImage(
                 this.image,
@@ -456,25 +451,81 @@ var powerUpScreens = {
         name: "TO_ULTIMATE",
         image: generateImage("sprites/screens/ultimate-evolve-battle-menu.png"),
         context: drawingBoard,
-        referenceState: SCREEN_STATES.POWER_UP.substates.EVOLVE.substates.TO_ULTIMATE
+        referenceState: SCREEN_STATES.POWER_UP.substates.EVOLVE.substates.TO_ULTIMATE,
+        draw: function() {
+            this.context.clearSection(this.screenPosition.canvasX, this.screenPosition.canvasY, this.size.width, this.size.height);
+            this.context.drawImage(
+                this.image,
+                this.screenPosition.currentPosition.x,
+                this.screenPosition.currentPosition.y,
+                this.size.width,
+                this.size.height,
+                this.screenPosition.canvasX,
+                this.screenPosition.canvasY,
+                this.size.width,
+                this.size.height
+            );
+        }
     }),
     HEAL_HALF: new ScreenSprite({
         name: "HEAL_HALF",
         image: generateImage("sprites/screens/cooldown-healing.png"),
         context: drawingBoard,
-        referenceState: SCREEN_STATES.POWER_UP.substates.HEAL_HALF
+        referenceState: SCREEN_STATES.POWER_UP.substates.HEAL_HALF,
+        draw: function() {
+            this.context.clearSection(this.screenPosition.canvasX, this.screenPosition.canvasY, this.size.width, this.size.height);
+            this.context.drawImage(
+                this.image,
+                this.screenPosition.currentPosition.x,
+                this.screenPosition.currentPosition.y,
+                this.size.width,
+                this.size.height,
+                this.screenPosition.canvasX,
+                this.screenPosition.canvasY,
+                this.size.width,
+                this.size.height
+            );
+        }
     }),
     DOUBLE_ATTACK: new ScreenSprite({
         name: "DOUBLE_ATTACK",
         image: generateImage("sprites/screens/cooldown-attack-buff.png"),
         context: drawingBoard,
-        referenceState: SCREEN_STATES.POWER_UP.substates.DOUBLE_ATTACK
+        referenceState: SCREEN_STATES.POWER_UP.substates.DOUBLE_ATTACK,
+        draw: function() {
+            this.context.clearSection(this.screenPosition.canvasX, this.screenPosition.canvasY, this.size.width, this.size.height);
+            this.context.drawImage(
+                this.image,
+                this.screenPosition.currentPosition.x,
+                this.screenPosition.currentPosition.y,
+                this.size.width,
+                this.size.height,
+                this.screenPosition.canvasX,
+                this.screenPosition.canvasY,
+                this.size.width,
+                this.size.height
+            );
+        }
     }),
     DOUBLE_SPEED: new ScreenSprite({
         name: "DOUBLE_SPEED",
         image: generateImage("sprites/screens/cooldown-speed-buff.png"),
         context: drawingBoard,
-        referenceState: SCREEN_STATES.POWER_UP.substates.DOUBLE_SPEED
+        referenceState: SCREEN_STATES.POWER_UP.substates.DOUBLE_SPEED,
+        draw: function() {
+            this.context.clearSection(this.screenPosition.canvasX, this.screenPosition.canvasY, this.size.width, this.size.height);
+            this.context.drawImage(
+                this.image,
+                this.screenPosition.currentPosition.x,
+                this.screenPosition.currentPosition.y,
+                this.size.width,
+                this.size.height,
+                this.screenPosition.canvasX,
+                this.screenPosition.canvasY,
+                this.size.width,
+                this.size.height
+            );
+        }
     })
 };
 
@@ -982,7 +1033,6 @@ var statusScreens = {
 		update: function () {
 			if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
-                //console.log("DEVOLVING");
 
 				petSprite.currentPosition = petSprite.idlePosition;
 				petSprite.currentPosition.reset();

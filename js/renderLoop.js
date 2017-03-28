@@ -119,6 +119,7 @@ function updateScreens() {
 function draw() {
     if (DRAW_TO_SCREEN === true) {
         currentScreen.update();
+        foregroundBoard.clearEntireScreen();
         currentScreen.draw();
     }
 }

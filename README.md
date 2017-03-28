@@ -6,6 +6,16 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
+== 28/3/2017 ==
+
+Some of the boosts (renamed from cooldowns) menus have been implemented. I now need to sort out the logic and the animation of each boost screen.
+
+One idea also comes from random monster encounters say, every 100 steps.
+
+Though it probably doesn't sound very good.
+
+I also built in a set of tests to test out the cooldowns (see cooldownTests.js).
+
 == 23/3/2017 ==
 
 What have I been up to?

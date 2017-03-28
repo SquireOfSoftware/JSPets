@@ -216,12 +216,8 @@ var powerupBattleState = new ScreenState({
 
     },
     down: function() {
-		if (game.pet.stats.currentLevel < game.pet.stats.maxLevel) {
-			game.currentScreenState = evolveBattleState;
-            // TODO MAP THIS OUT
-            //game.currentScreenState = toChampionBattleState;
-			asyncRender = true;
-		}
+        game.currentScreenState = evolveBattleState;
+        asyncRender = true;
     },
     left: function() {
         game.currentScreenState = fightBattleState;
@@ -272,7 +268,13 @@ var evolutionBattleStates = {
             asyncRender = true;
         },
         down: function() {
-
+            if (buffCooldowns.championEvolve.isReady) {
+                game.currentScreenState = boostsAnimationState.TO_CHAMPION;
+                asyncRender = true;
+            }
+            else {
+                readyInXSprite.draw(buffCooldowns.championEvolve.remainingSteps());
+            }
         },
         left: function() {
             var levelDifference = game.pet.stats.maxLevel - game.pet.stats.currentLevel;
@@ -286,6 +288,7 @@ var evolutionBattleStates = {
             if (levelDifference > 1) {
                 game.currentScreenState = evolutionBattleStates.ULTIMATE;
                 asyncRender = true;
+
             }
         }
     }),
@@ -296,7 +299,13 @@ var evolutionBattleStates = {
             asyncRender = true;
         },
         down: function() {
-
+            if (buffCooldowns.ultimateEvolve.isReady) {
+                game.currentScreenState = boostsAnimationState.TO_ULTIMATE;
+                asyncRender = true;
+            }
+            else {
+                readyInXSprite.draw(buffCooldowns.ultimateEvolve.remainingSteps());
+            }
         },
         left: function() {
             game.currentScreenState = evolutionBattleStates.CHAMPION;
@@ -336,7 +345,13 @@ var boostsState = {
             asyncRender = true;
         },
         down: function() {
-
+            if (buffCooldowns.hp.isReady) {
+                game.currentScreenState = boostsAnimationState.HEALING_HALF;
+                asyncRender = true;
+            }
+            else {
+                readyInXSprite.draw(buffCooldowns.hp.remainingSteps());
+            }
         },
         left: function() {
             game.currentScreenState = boostsState.DOUBLE_SPEED;
@@ -354,7 +369,13 @@ var boostsState = {
             asyncRender = true;
         },
         down: function() {
-
+            if (buffCooldowns.speed.isReady) {
+                game.currentScreenState = boostsAnimationState.DOUBLING_SPEED;
+                asyncRender = true;
+            }
+            else {
+                readyInXSprite.draw(buffCooldowns.speed.remainingSteps());
+            }
         },
         left: function() {
             game.currentScreenState = boostsState.DOUBLE_ATTACK;
@@ -372,7 +393,13 @@ var boostsState = {
             asyncRender = true;
         },
         down: function() {
-
+            if (buffCooldowns.attack.isReady) {
+                game.currentScreenState = boostsAnimationState.DOUBLING_SPEED;
+                asyncRender = true;
+            }
+            else {
+                readyInXSprite.draw(buffCooldowns.attack.remainingSteps());
+            }
         },
         left: function() {
             game.currentScreenState = boostsState.HEAL_HALF;
@@ -384,32 +411,25 @@ var boostsState = {
         }
     })
 };
+
+var boostsAnimationState = {
+    HEALING_HALF: new ScreenState({
+        state: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.HEAL_HALF
+    }),
+    DOUBLING_ATTACK: new ScreenState({
+        state: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.DOUBLE_ATTACK
+    }),
+    DOUBLING_SPEED: new ScreenState({
+        state: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.DOUBLE_SPEED
+    }),
+    TO_CHAMPION: new ScreenState({
+        state: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.TO_CHAMPION
+    }),
+    TO_ULTIMATE: new ScreenState({
+        state: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.TO_ULTIMATE
+    })
+};
 /*
-var healHalfBattleState = new ScreenState({
-    state: SCREEN_STATES.POWER_UP.substates.BOOSTS.substates.HEAL_HALF,
-    up: function() {
-        game.currentScreenState = powerupBattleState;
-        asyncRender = true;
-    },
-    down: function() {
-
-    },
-    left: function() {
-
-    },
-    right: function() {
-
-    }
-});
-
-var doubleSpeedBattleState = new ScreenState({
-    state: SCREEN_STATES.POWER_UP.substates.BOOSTS.substates.DOUBLE_SPEED
-});
-
-var doubleAttackBattleState = new ScreenState({
-    state: SCREEN_STATES.POWER_UP.substates.BOOSTS.substates.DOUBLE_ATTACK
-});*/
-
 var evolvingAnimationState = new ScreenState({
 	state: SCREEN_STATES.POWER_UP.substates.EVOLVING,
     up: function() {
@@ -424,7 +444,7 @@ var evolvingAnimationState = new ScreenState({
     right: function() {
 
     }
-});
+});*/
 
 var sadDevolvingAnimationstate = new ScreenState({
 	state: SCREEN_STATES.DEVOLVING.substates.SAD,
@@ -458,6 +478,7 @@ var idleDevolvingAnimationstate = new ScreenState({
     }
 });
 
+/*
 var happyDevolvingAnimationstate = new ScreenState({
 	state: SCREEN_STATES.DEVOLVING.substates.HAPPY,
     up: function() {
@@ -472,7 +493,7 @@ var happyDevolvingAnimationstate = new ScreenState({
     right: function() {
 
     }
-});
+});*/
 /*
 var autoBattleState = new ScreenState({
     state: SCREEN_STATES.AUTO,

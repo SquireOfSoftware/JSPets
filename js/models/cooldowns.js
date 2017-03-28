@@ -32,7 +32,11 @@ function Cooldown(state, maxSteps, specialFunction) {
             this.currentSteps = 0;
             specialFunction();
         }
-    }
+    };
+
+    this.remainingSteps = function() {
+        return maxSteps - this.currentSteps;
+    };
 }
 
 var buffCooldowns = {

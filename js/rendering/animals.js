@@ -1126,6 +1126,47 @@ var fadingOverlaySprite = new GenericSprite(
     }
 );
 
+var readyInXSprite = new GenericSprite(
+    generateImage("sprites/powerup-not-ready.png"),
+    drawingBoard,
+    new SpritePosition({
+        name: "DEFAULT",
+        spriteSheetX: 0,
+        spriteSheetY: 0,
+        maxFrame: 0,
+        multiplier: 45,
+        canvasX: 0,
+        canvasY: 0
+    }),
+    {
+        width: 45,
+        height: 20
+    },
+    function() {},
+    function(number) {
+        var spriteCoordinates = this.positions.getPosition();
+        this.context.drawImage(
+            this.image,
+            spriteCoordinates.spriteSheetX,
+            spriteCoordinates.spriteSheetY,
+            this.size.width,
+            this.size.height,
+            spriteCoordinates.canvasX,
+            spriteCoordinates.canvasY,
+            this.size.width,
+            this.size.height
+        );
+
+        var numberString = number.toString();
+        var position = 2;
+
+        for (var digit = numberString.length - 1; digit >= 0 && position >= 0; digit--) {
+            numberDrawingSprite.draw(numberString.charAt(digit), 31 + ((position) * 4), 14, true);
+            position--;
+        }
+    }
+);
+
 var introSequenceSprite = new GenericSprite(
     generateImage("sprites/intro-seq.png"),
     drawingBoard,
@@ -1185,13 +1226,13 @@ function NumberSprite () {
     
     sprite.draw = function(character, canvasX, canvasY, isInverted) {
         var spriteSheetY = 0;
-        if (this.isInverted !== undefined && this.isInverted === true)
+        /*if (this.isInverted !== undefined && this.isInverted === true)
             spriteSheetY = 1;
-        
+        */
         this.context.drawImage(
             this.image,
             NUMBER_POSITIONS[parseInt(character)],
-            spriteSheetY,
+            spriteSheetY + isInverted * 5,
             NUMBER_PX_SIZE.WIDTH, 
             NUMBER_PX_SIZE.HEIGHT,
             canvasX,
