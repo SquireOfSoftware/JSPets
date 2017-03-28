@@ -19,11 +19,12 @@ function ScreenPosition(options) {
     else
         this.canvasY = 0;
 
+    /*
     var multiplier;
     if (options.multiplier !== undefined)
         multiplier = options.multiplier;
     else
-        multiplier = DEFAULT_SCREEN_SIZE.X;
+        multiplier = DEFAULT_SCREEN_SIZE.X;*/
 }
 
 function ScreenSprite(options) {
@@ -36,11 +37,10 @@ function ScreenSprite(options) {
 
     this.referenceState = options.referenceState;
 
-    var size;
     if (options.size !== undefined)
-        size = options.size;
+        this.size = options.size;
     else
-        size = {width: DEFAULT_SCREEN_SIZE.X, height: DEFAULT_SCREEN_SIZE.Y};
+        this.size = {width: DEFAULT_SCREEN_SIZE.X, height: DEFAULT_SCREEN_SIZE.Y};
 
     if (options.update !== undefined)
         this.update = options.update;
@@ -63,17 +63,17 @@ function ScreenSprite(options) {
     else {
         this.draw = function () {
             // Need to figure out xy coordinates
-            this.context.clearSection(this.screenPosition.canvasX, this.screenPosition.canvasY, size.width, size.height);
+            this.context.clearSection(this.screenPosition.canvasX, this.screenPosition.canvasY, this.size.width, this.size.height);
             this.context.drawImage(
                 this.image,
                 this.screenPosition.currentPosition.x,
                 this.screenPosition.currentPosition.y,
-                size.width,
-                size.height,
+                this.size.width,
+                this.size.height,
                 this.screenPosition.canvasX,
                 this.screenPosition.canvasY,
-                size.width,
-                size.height
+                this.size.width,
+                this.size.height
             );
         };
     }
@@ -429,13 +429,32 @@ var powerUpScreens = {
     }),
     CHAMPION: new ScreenSprite({
         name: "TO_CHAMPION",
-        image: generateImage("sprites/45 by 20.png"), // placeholder
+        image: generateImage("sprites/screens/champion-evolve-battle-menu.png"),
         context: drawingBoard,
-        referenceState: SCREEN_STATES.POWER_UP.substates.EVOLVE.substates.TO_CHAMPION
+        referenceState: SCREEN_STATES.POWER_UP.substates.EVOLVE.substates.TO_CHAMPION,
+        draw: function() {
+            foregroundBoard.clearEntireScreen();
+            if(!buffCooldowns.championEvolve.isReady) {
+                // TODO pre-draw this
+            }
+
+            this.context.clearSection(this.screenPosition.canvasX, this.screenPosition.canvasY, this.size.width, this.size.height);
+            this.context.drawImage(
+                this.image,
+                this.screenPosition.currentPosition.x,
+                this.screenPosition.currentPosition.y,
+                this.size.width,
+                this.size.height,
+                this.screenPosition.canvasX,
+                this.screenPosition.canvasY,
+                this.size.width,
+                this.size.height
+            );
+        }
     }),
     ULTIMATE: new ScreenSprite({
         name: "TO_ULTIMATE",
-        image: generateImage("sprites/45 by 20.png"), // placeholder
+        image: generateImage("sprites/screens/ultimate-evolve-battle-menu.png"),
         context: drawingBoard,
         referenceState: SCREEN_STATES.POWER_UP.substates.EVOLVE.substates.TO_ULTIMATE
     }),
