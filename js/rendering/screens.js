@@ -423,7 +423,7 @@ var battleMenuScreen = {
 var powerUpScreens = {
     HOME: new ScreenSprite({
         name: "BOOSTS_HOME",
-        image: generateImage("sprites/45 by 20.png"), // placeholder
+        image: generateImage("sprites/screens/boosts-battle-menu.png"),
         context: drawingBoard,
         referenceState: SCREEN_STATES.POWER_UP.substates.BOOSTS
     }),

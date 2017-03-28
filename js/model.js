@@ -340,9 +340,11 @@ var boostsState = {
         },
         left: function() {
             game.currentScreenState = boostsState.DOUBLE_SPEED;
+            asyncRender = true;
         },
         right: function() {
             game.currentScreenState = boostsState.DOUBLE_ATTACK;
+            asyncRender = true;
         }
     }),
     DOUBLE_SPEED: new ScreenState({
@@ -356,9 +358,11 @@ var boostsState = {
         },
         left: function() {
             game.currentScreenState = boostsState.DOUBLE_ATTACK;
+            asyncRender = true;
         },
         right: function() {
             game.currentScreenState = boostsState.HEAL_HALF;
+            asyncRender = true;
         }
     }),
     DOUBLE_ATTACK: new ScreenState({
@@ -372,12 +376,14 @@ var boostsState = {
         },
         left: function() {
             game.currentScreenState = boostsState.HEAL_HALF;
+            asyncRender = true;
         },
         right: function() {
             game.currentScreenState = boostsState.DOUBLE_SPEED;
+            asyncRender = true;
         }
     })
-}
+};
 /*
 var healHalfBattleState = new ScreenState({
     state: SCREEN_STATES.POWER_UP.substates.BOOSTS.substates.HEAL_HALF,
