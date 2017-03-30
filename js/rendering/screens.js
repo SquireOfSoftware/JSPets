@@ -926,8 +926,13 @@ var statusScreens = {
 			}
 
             if (this.tick < 0) {
-				game.currentScreenState = attackSequenceState;
-				currentScreen = attackSequenceScreen.LAUNCHING_ATTACK;
+                game.currentScreenState = fightBattleState;
+                currentScreen = battleMenuScreen.FIGHT;
+
+                // old code
+				//game.currentScreenState = attackSequenceState;
+				//currentScreen = attackSequenceScreen.LAUNCHING_ATTACK;
+
 				currentScreen.update();
 				//console.log(currentScreen.rounds);
             }

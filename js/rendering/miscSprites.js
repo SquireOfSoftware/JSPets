@@ -336,19 +336,19 @@ var evolutionSprites = {
         },
         function() {
             this.context.clearEntireScreen();
-            //if (this.tick === 1 && this.tick > 0) {
-            this.context.drawImage(
-                this.image,
-                0,
-                0,
-                this.size.width,
-                this.size.height,
-                0,
-                0,
-                this.size.width,
-                this.size.height
-            );
-            //}
+            if (this.tick % 2 === 1 && this.tick > 0) {
+                this.context.drawImage(
+                    this.image,
+                    0,
+                    0,
+                    this.size.width,
+                    this.size.height,
+                    0,
+                    0,
+                    this.size.width,
+                    this.size.height
+                );
+            }
 
         }
     )

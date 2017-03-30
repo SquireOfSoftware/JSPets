@@ -237,17 +237,20 @@ var evolveBattleState = new ScreenState({
         asyncRender = true;
     },
     down: function() {
-		// disable key presses
-		// evolution screen - this updates the pet sprite
-		/*disableKeyPress();
-		game.pet.stats.evolveStats();
-
-		game.currentScreenState = evolvingAnimationState;
-		*/
 		var levelDifference = game.pet.stats.maxLevel - game.pet.stats.currentLevel;
-		if (levelDifference > 0) {
-            game.currentScreenState = evolutionBattleStates.CHAMPION;
-            asyncRender = true;
+		switch(levelDifference) {
+            case 2: {
+                game.currentScreenState = evolutionBattleStates.CHAMPION;
+                asyncRender = true;
+                break;
+            }
+            case 1: {
+                game.currentScreenState = evolutionBattleStates.ULTIMATE;
+                asyncRender = true;
+                break;
+            }
+            default:
+                console.log(levelDifference);
         }
     },
     left: function() {
@@ -293,7 +296,6 @@ var evolutionBattleStates = {
             if (levelDifference > 1) {
                 game.currentScreenState = evolutionBattleStates.ULTIMATE;
                 asyncRender = true;
-
             }
         }
     }),
@@ -306,6 +308,9 @@ var evolutionBattleStates = {
         down: function() {
             if (buffCooldowns.ultimateEvolve.isReady) {
                 game.currentScreenState = boostsAnimationState.TO_ULTIMATE;
+
+                buffCooldowns.ultimateEvolve.use();
+
                 asyncRender = true;
             }
             else {
@@ -313,12 +318,18 @@ var evolutionBattleStates = {
             }
         },
         left: function() {
-            game.currentScreenState = evolutionBattleStates.CHAMPION;
-            asyncRender = true;
+            var levelDifference = game.pet.stats.maxLevel - game.pet.stats.currentLevel;
+            if (levelDifference > 1) {
+                game.currentScreenState = evolutionBattleStates.CHAMPION;
+                asyncRender = true;
+            }
         },
         right: function() {
-            game.currentScreenState = evolutionBattleStates.CHAMPION;
-            asyncRender = true;
+            var levelDifference = game.pet.stats.maxLevel - game.pet.stats.currentLevel;
+            if (levelDifference > 1) {
+                game.currentScreenState = evolutionBattleStates.CHAMPION;
+                asyncRender = true;
+            }
         }
     })
 };
