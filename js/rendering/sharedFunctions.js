@@ -61,13 +61,9 @@ function generateImage(source) {
     return image;
 }
 
-function clearScreen() {
-    drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
-}
-
-function DrawingBoard(id) {
+function DrawingBoard(id, name) {
+    this.name = name;
     var drawingBoard = document.getElementById(id).getContext("2d");
-    var isFlipped = false;
 
     this.flipHorizontally = function () {
         addLine("Flipping the board");
@@ -75,26 +71,17 @@ function DrawingBoard(id) {
 
         drawingBoard.translate(45, 0);
         drawingBoard.scale(-1, 1);
-        //drawingBoard.transform(0, 0, 0, 0, 300, 0);
-        //isFlipped = true;
     };
 
     this.restore = function() {
         drawingBoard.restore();
-        //isFlipped = false;
     };
 
     this.clearSection = function(x, y, width, height) {
-        //console.log("Trying to clear area", x, y, width, height);
         drawingBoard.clearRect(x, y, width, height);
     };
 
     this.clearEntireScreen = function() {
-        /*
-        if(isFlipped)
-            drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
-        else*/
-
         drawingBoard.clearRect(0, 0, DEFAULT_SCREEN_SIZE.X, DEFAULT_SCREEN_SIZE.Y);
     };
 
@@ -126,6 +113,6 @@ function DrawingBoard(id) {
 }
 
 //var drawingBoard = document.getElementById("ctx").getContext("2d");
-var drawingBoard = new DrawingBoard("ctx");
+var drawingBoard = new DrawingBoard("ctx", "drawingBoard");
 
-var foregroundBoard = new DrawingBoard("foreground");
+var foregroundBoard = new DrawingBoard("foreground", "foregroundBoard");

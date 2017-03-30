@@ -269,7 +269,12 @@ var evolutionBattleStates = {
         },
         down: function() {
             if (buffCooldowns.championEvolve.isReady) {
+                disableKeyPress();
                 game.currentScreenState = boostsAnimationState.TO_CHAMPION;
+
+                buffCooldowns.championEvolve.use();
+                //game.pet.stats.evolveStats();
+
                 asyncRender = true;
             }
             else {
@@ -429,7 +434,7 @@ var boostsAnimationState = {
         state: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.TO_ULTIMATE
     })
 };
-/*
+
 var evolvingAnimationState = new ScreenState({
 	state: SCREEN_STATES.POWER_UP.substates.EVOLVING,
     up: function() {
@@ -444,7 +449,7 @@ var evolvingAnimationState = new ScreenState({
     right: function() {
 
     }
-});*/
+});
 
 var sadDevolvingAnimationstate = new ScreenState({
 	state: SCREEN_STATES.DEVOLVING.substates.SAD,

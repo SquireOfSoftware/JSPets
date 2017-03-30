@@ -79,26 +79,6 @@ function ScreenSprite(options) {
     }
 }
 
-var blackBar = new ScreenSprite({
-    name: "BLACK_BAR",
-    image: generateImage("sprites/black-bar.png"),
-    context: drawingBoard,
-    screenPosition: new ScreenPosition({
-        firstScreenX: 0,
-        firstScreenY: 20 - 7,
-        maxScreens: 0,
-        canvasX: 0,
-        canvasY: 20 - 7
-    }),
-    size: {
-        width: 45,
-        height: 7
-    },
-    update: function() {
-
-    }
-});
-
 var petScreen = new ScreenSprite({
     name: "PET_SCREEN",
     image: null,
@@ -581,7 +561,7 @@ var attackSequenceScreen = {
 
                 fireball.currentPosition = fireball.positions.launchingPosition;
 
-                console.log("LAUNCHING ATTACK", this.rounds);
+                //console.log("LAUNCHING ATTACK", this.rounds);
             }
             this.tick--;
             // need fireball
@@ -934,6 +914,7 @@ var statusScreens = {
 				petSprite.currentPosition.reset();
                 //console.log("EVOLVING");
 				// evolve the petSprite
+                //evolutionSprites.EVOLVE.currentPosition.reset();
             }
             this.tick--;
 			

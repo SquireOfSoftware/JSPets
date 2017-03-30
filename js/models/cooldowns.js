@@ -72,6 +72,9 @@ var buffCooldowns = {
                 game.pet.stats.evolveStats();
             else
                 console.log("There is no further evolution for this animal");
+
+            currentScreen = statusScreens.EVOLVE_ANIMATION;
+            asyncRender = true;
         }
     ),
     ultimateEvolve: new Cooldown(

@@ -76,7 +76,9 @@ function updateScreens() {
         else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.EVOLVE.substates.TO_ULTIMATE) {
             currentScreen = powerUpScreens.ULTIMATE;
         }
-		else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.EVOLVING) {
+		else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.EVOLVING ||
+            SCREEN_STATES.BOOSTS_ANIMATIONS.substates.TO_CHAMPION ||
+            SCREEN_STATES.BOOSTS_ANIMATIONS.substates.TO_ULTIMATE) {
 			currentScreen = statusScreens.EVOLVE_ANIMATION;
 		}
 		else if (currentScreenState === SCREEN_STATES.DEVOLVING.substates.SAD) {
