@@ -81,15 +81,8 @@ function updateScreens() {
             SCREEN_STATES.BOOSTS_ANIMATIONS.substates.TO_ULTIMATE) {
 			currentScreen = statusScreens.EVOLVE_ANIMATION;
 		}
-		else if (currentScreenState === SCREEN_STATES.DEVOLVING.substates.SAD) {
-			currentScreen = statusScreens.SADDENED_DEVOLVE_ANIMATION;
-		}
 		else if (currentScreenState === SCREEN_STATES.DEVOLVING.substates.IDLE) {
 			currentScreen = statusScreens.IDLE_DEVOLVE_ANIMATION;
-		}
-		else if (currentScreenState === SCREEN_STATES.DEVOLVING.substates.HAPPY) {
-			currentScreen = statusScreens.HAPPY_DEVOLVE_ANIMATION;
-			console.log(currentScreen);
 		}
         else if (currentScreenState === SCREEN_STATES.MAP.substates.TAS.substates.NORTH) {
             currentScreen = mapScreens.NORTH;
@@ -111,8 +104,8 @@ function updateScreens() {
             //addLine("Cannot locate screen: " + game.currentScreenState.state.name);
 			console.log(game.currentScreenState);
         }
-        //clearScreen();
         drawingBoard.clearEntireScreen();
+        foregroundBoard.clearEntireScreen();
     }
 	else
 		console.log("current screen state", game.currentScreenState);
@@ -121,7 +114,6 @@ function updateScreens() {
 function draw() {
     if (DRAW_TO_SCREEN === true) {
         currentScreen.update();
-        foregroundBoard.clearEntireScreen();
         currentScreen.draw();
     }
 }

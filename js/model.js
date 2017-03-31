@@ -276,7 +276,6 @@ var evolutionBattleStates = {
                 game.currentScreenState = boostsAnimationState.TO_CHAMPION;
 
                 buffCooldowns.championEvolve.use();
-                //game.pet.stats.evolveStats();
 
                 asyncRender = true;
             }
@@ -446,39 +445,7 @@ var boostsAnimationState = {
     })
 };
 
-var evolvingAnimationState = new ScreenState({
-	state: SCREEN_STATES.POWER_UP.substates.EVOLVING,
-    up: function() {
-
-    },
-    down: function() {
-
-    },
-    left: function() {
-
-    },
-    right: function() {
-
-    }
-});
-
-var sadDevolvingAnimationstate = new ScreenState({
-	state: SCREEN_STATES.DEVOLVING.substates.SAD,
-    up: function() {
-
-    },
-    down: function() {
-
-    },
-    left: function() {
-
-    },
-    right: function() {
-
-    }
-});
-
-var idleDevolvingAnimationstate = new ScreenState({
+var idleDevolvingAnimationState = new ScreenState({
 	state: SCREEN_STATES.DEVOLVING.substates.IDLE,
     up: function() {
 
@@ -493,61 +460,6 @@ var idleDevolvingAnimationstate = new ScreenState({
 
     }
 });
-
-/*
-var happyDevolvingAnimationstate = new ScreenState({
-	state: SCREEN_STATES.DEVOLVING.substates.HAPPY,
-    up: function() {
-
-    },
-    down: function() {
-
-    },
-    left: function() {
-
-    },
-    right: function() {
-
-    }
-});*/
-/*
-var autoBattleState = new ScreenState({
-    state: SCREEN_STATES.AUTO,
-    up: function() {
-
-    },
-    down: function() {
-
-		var roll = Math.round(Math.random() * 10, 0);
-        addLine("Auto battle rolled " + roll);
-		
-		if (roll % 2 === 1) {
-            game.pet.state = ANIMAL_STATES.SICK;
-            if (game.pet.stats.state === EVOLUTION_STATES.BASIC)
-				game.currentScreenState = sadSequenceState;
-			else
-				game.currentScreenState = sadDevolvingAnimationstate;
-        }
-        else {
-			if (game.pet.stats.state === EVOLUTION_STATES.BASIC) {
-				currentScreen = statusScreens.HAPPY_ANIMATION;
-				game.currentScreenState = happySequenceState;
-			}
-			else {
-				game.currentScreenState = happyDevolvingAnimationstate;
-				currentScreen = statusScreens.HAPPY_DEVOLVE_ANIMATION;
-			}
-        }
-    },
-    left: function() {
-        game.currentScreenState = powerupBattleState;
-        asyncRender = true;
-    },
-    right: function() {
-        game.currentScreenState = runBattleState;
-        asyncRender = true;
-    }
-});*/
 
 var runBattleState = new ScreenState({
     state: SCREEN_STATES.RUN,
@@ -565,14 +477,14 @@ var runBattleState = new ScreenState({
 			if (game.pet.stats.currentLevel < 2)
 				game.currentScreenState = sadSequenceState;
 			else
-				game.currentScreenState = sadDevolvingAnimationstate;
+				game.currentScreenState = idleDevolvingAnimationState;
         }
         else {
 			game.pet.state = ANIMAL_STATES.IDLE;
             if (game.pet.stats.currentLevel < 2)
 				game.currentScreenState = petState;
 			else 
-				game.currentScreenState = idleDevolvingAnimationstate;
+				game.currentScreenState = idleDevolvingAnimationState;
         }
 	
         game.stepCounter.resetWaitPeriod();

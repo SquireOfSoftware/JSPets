@@ -202,16 +202,11 @@ function AnimalSprite(options) {
             else if (game.currentScreenState.state === SCREEN_STATES.SADDENED_PET) {
                 this.currentPosition = this.saddenedPosition;
             }
-            /*
-            else
-                console.log("unknown position");*/
             
             if (this.currentPosition !== this.slidingPosition)
                 this.currentPosition.update();
             else
                 this.currentPosition.updateCanvas();
-            
-            //console.log("currentPosition", this.currentPosition);
         };
 
     if (options.draw !== undefined)
@@ -219,8 +214,6 @@ function AnimalSprite(options) {
     else
         this.draw = function() {
             var coordinates = this.currentPosition.getPosition();
-            //console.log("Test", this.currentPosition !== this.presentationPosition);
-            
             var drawnSize = this.size;
             
             if (this.currentPosition === this.presentationPosition) {
