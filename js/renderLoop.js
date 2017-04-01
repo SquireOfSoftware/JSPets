@@ -31,7 +31,6 @@ function updateScreens() {
         }
         else if (currentScreenState === SCREEN_STATES.START_BATTLE) {
             currentScreen = battleScreens.CRY;
-            addLine("Battle screen triggered");
         }
         else if (currentScreenState === SCREEN_STATES.FIGHT) {
             currentScreen = battleMenuScreen.FIGHT;

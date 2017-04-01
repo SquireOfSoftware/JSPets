@@ -549,8 +549,6 @@ var attackSequenceScreen = {
                 }
 
                 fireball.currentPosition = fireball.positions.launchingPosition;
-
-                //console.log("LAUNCHING ATTACK", this.rounds);
             }
             this.tick--;
             // need fireball
@@ -561,7 +559,6 @@ var attackSequenceScreen = {
             // need enemySprite to hold a position in one shot
             if (this.tick < 0){
                 currentScreen = attackSequenceScreen.ATTACK;
-                //currentScreen = attackSequenceScreen.CALCULATING_DAMAGE; // TEST
                 currentScreen.update();
                 this.rounds++;
             }
@@ -810,8 +807,7 @@ function performEndingAnimation() {
 	resetAttackSequence();
 	
 	petSpriteStates.hasDeath = false;
-	
-	//addLine("Battle is over");
+
 	petSprite.update();
 
 	currentScreen.update();
@@ -895,9 +891,6 @@ var statusScreens = {
                 this.tick = 16;
 				petSprite.currentPosition = petSprite.idlePosition;
 				petSprite.currentPosition.reset();
-                //console.log("EVOLVING");
-				// evolve the petSprite
-                //evolutionSprites.EVOLVE.currentPosition.reset();
             }
             this.tick--;
 			
@@ -928,9 +921,6 @@ var statusScreens = {
 		update: function () {
 			if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
                 this.tick = 6;
-                //console.log("DEVOLVING");
-				// evolve the petSprite
-				
 				petSprite.currentPosition = petSprite.idlePosition;
 				petSprite.currentPosition.reset();
 				
@@ -1002,7 +992,6 @@ var endingGameScene = {
             if(this.tick === undefined || this.tick < 0) {
                 disableKeyPress();
                 this.tick = 18;
-                //enemySprite.currentPosition = enemySprite.presentationPosition;
                 drawingBoard.flipHorizontally();
 
                 if (enemySprite === undefined) {
@@ -1024,7 +1013,6 @@ var endingGameScene = {
                 currentScreen = endingGameScene.THANK_YOU;
                 currentScreen.update();
             }
-            //finalTextSprite.update();
         },
         draw: function() {
             this.enemySprite.draw();

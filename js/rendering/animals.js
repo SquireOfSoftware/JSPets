@@ -242,11 +242,7 @@ function AnimalSprite(options) {
 		this.evolve = options.evolve;
     else 
         this.evolve = function() {
-            /*this.isEvolved ++;
-            if (this.isEvolved >= this.referenceObject.stats.maxLevel)
-                this.isEvolved = this.referenceObject.stats.maxLevel - 1;*/
             this.isEvolved = this.referenceObject.stats.currentLevel - 1;
-            //console.log(this.isEvolved);
         };
 	
 	if (options.devolve !== undefined)
@@ -359,8 +355,6 @@ function AnimalSprite32Width(image, drawingBoard, referenceObject) {
 var petSprite = getSprite(ANIMAL_TYPES.DUCK, game.pet);
 
 var enemySprite;
-
-// FINAL_SCENE TEST
 
 function getSprite(animalType, referenceObject) {
     if (animalType === ANIMAL_TYPES.BAT) {
