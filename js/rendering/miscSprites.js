@@ -664,9 +664,6 @@ function NumberSprite () {
 
     sprite.draw = function(character, canvasX, canvasY, isInverted) {
         var spriteSheetY = 0;
-        /*if (this.isInverted !== undefined && this.isInverted === true)
-         spriteSheetY = 1;
-         */
         this.context.drawImage(
             this.image,
             NUMBER_POSITIONS[parseInt(character)],
@@ -684,3 +681,69 @@ function NumberSprite () {
 }
 
 var numberDrawingSprite = new NumberSprite();
+
+function LetterSprite () {
+    var sprite = {};
+    sprite.image = generateImage("sprites/alphabet.png");
+    sprite.context = drawingBoard;
+
+    sprite.draw = function(character, canvasX, canvasY, isInverted) {
+        var spriteSheetY = 0;
+        //A - 65, Z - 90
+        var charCode = character.charCodeAt();
+
+        var size = {
+            width: 4,
+            height: 5
+        };
+
+        var charPosition = 0;
+        if (charCode < 77) {
+            charPosition = (charCode - 65) * 4;
+        }
+        // note that M, Q, W pushes the assumptions out
+        else if (charCode === 77) { // M
+            charPosition = (charCode - 65) * 4;
+            size.width = 5;
+        }
+        else if (charCode < 81) {
+            charPosition = (charCode - 65) * 4 + 2;
+            //size.width = 4;
+        }
+        else if (charCode === 81) { // Q
+            charPosition = (charCode - 65) * 4 + 2;
+            size.width = 5;
+        }
+        else if (charCode < 87) {
+            charPosition = (charCode - 65) * 4 + 3;
+            //size.width = 4;
+        }
+        else if (charCode === 87) { // W
+            charPosition = (charCode - 65) * 4 + 3;
+            size.width = 5;
+        }
+        else if (charCode <= 90) {
+            charPosition = (charCode - 65) * 4 + 5;
+        }
+
+        // note that there is also commas, apostrophes and full stops
+
+        this.context.drawImage(
+            this.image,
+            //NUMBER_POSITIONS[parseInt(character)],
+            //(charCode - 65) * 4,
+            charPosition,
+            spriteSheetY + isInverted * 5, // 3 by 5
+            size.width,
+            size.height,
+            canvasX,
+            canvasY,
+            size.width,
+            size.height
+        )
+    };
+
+    return sprite;
+}
+
+var letterDrawingSprite = new LetterSprite();
