@@ -34,6 +34,7 @@ var ANIMAL_STATES = {
     })
 };
 
+/*
 // use this as a multiplier for stats as well
 var EVOLUTION_STATES = {
     BASIC: new LogicState({
@@ -48,7 +49,7 @@ var EVOLUTION_STATES = {
         name: "ULTIMATE",
 		value: 2
     })
-};
+};*/
 
 var ANIMAL_TYPES = {
 	BAT: new LogicState({

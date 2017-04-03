@@ -984,6 +984,75 @@ var statusScreens = {
 	})
 };
 
+var boostAnimationsScreens = {
+    HEALING_HALF: new ScreenSprite({
+        referenceState: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.HEALING_HALF,
+        name: "HEALING_HALF",
+        update: function() {
+            // 4 ticks, 2 old hp, 2 changed
+            if (this.tick === undefined || this.tick < 0) {
+                this.tick = 4;
+            }
+
+            this.tick--;
+
+            if (this.tick < 0) {
+                // switch back to fight screen
+                game.currentScreenState = fightBattleState;
+                currentScreen = battleMenuScreen.FIGHT;
+                currentScreen.update();
+            }
+        },
+        draw: function() {
+
+        }
+    }),
+    DOUBLING_ATTACK: new ScreenSprite({
+        referenceState: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.DOUBLING_ATTACK,
+        name: "DOUBLING_ATTACK",
+        update: function() {
+            // 4 ticks, 2 old hp, 2 changed
+            if (this.tick === undefined || this.tick < 0) {
+                this.tick = 4;
+            }
+
+            this.tick--;
+
+            if (this.tick < 0) {
+                // switch back to fight screen
+                game.currentScreenState = fightBattleState;
+                currentScreen = battleMenuScreen.FIGHT;
+                currentScreen.update();
+            }
+        },
+        draw: function() {
+
+        }
+    }),
+    DOUBLING_SPEED: new ScreenSprite({
+        referenceState: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.DOUBLING_SPEED,
+        name: "DOUBLING_SPEED",
+        update: function() {
+            // 4 ticks, 2 old hp, 2 changed
+            if (this.tick === undefined || this.tick < 0) {
+                this.tick = 4;
+            }
+
+            this.tick--;
+
+            if (this.tick < 0) {
+                // switch back to fight screen
+                game.currentScreenState = fightBattleState;
+                currentScreen = battleMenuScreen.FIGHT;
+                currentScreen.update();
+            }
+        },
+        draw: function() {
+
+        }
+    })
+};
+
 var endingGameScene = {
     FINAL_SCENE: new ScreenSprite({
         name: "FINAL_SCENE",

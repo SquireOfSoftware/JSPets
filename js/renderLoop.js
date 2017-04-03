@@ -41,15 +41,27 @@ function updateScreens() {
         else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.BOOSTS) {
             currentScreen = powerUpScreens.HOME;
         }
+
+        // Boosts and their animations
         else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.HEAL_HALF) {
             currentScreen = powerUpScreens.HEAL_HALF;
+        }
+        else if (currentScreenState === SCREEN_STATES.BOOSTS_ANIMATIONS.substates.HEALING_HALF) {
+            currentScreen = boostAnimationsScreens.HEALING_HALF;
         }
         else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.DOUBLE_ATTACK) {
             currentScreen = powerUpScreens.DOUBLE_ATTACK;
         }
+        else if (currentScreenState === SCREEN_STATES.BOOSTS_ANIMATIONS.substates.DOUBLING_ATTACK) {
+            currentScreen = boostAnimationsScreens.DOUBLING_ATTACK;
+        }
         else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.DOUBLE_SPEED) {
             currentScreen = powerUpScreens.DOUBLE_SPEED;
         }
+        else if (currentScreenState === SCREEN_STATES.BOOSTS_ANIMATIONS.substates.DOUBLING_SPEED) {
+            currentScreen = boostAnimationsScreens.DOUBLING_SPEED;
+        }
+
         /*
         else if (currentScreenState === SCREEN_STATES.AUTO) {
             currentScreen = battleMenuScreen.AUTO;

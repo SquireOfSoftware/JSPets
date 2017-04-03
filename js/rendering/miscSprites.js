@@ -673,6 +673,7 @@ function NumberSprite () {
             canvasX,
             canvasY,
             NUMBER_PX_SIZE.WIDTH,
+
             NUMBER_PX_SIZE.HEIGHT
         )
     };
@@ -708,7 +709,6 @@ function LetterSprite () {
         }
         else if (charCode < 81) {
             charPosition = (charCode - 65) * 4 + 2;
-            //size.width = 4;
         }
         else if (charCode === 81) { // Q
             charPosition = (charCode - 65) * 4 + 2;
@@ -716,7 +716,6 @@ function LetterSprite () {
         }
         else if (charCode < 87) {
             charPosition = (charCode - 65) * 4 + 3;
-            //size.width = 4;
         }
         else if (charCode === 87) { // W
             charPosition = (charCode - 65) * 4 + 3;
