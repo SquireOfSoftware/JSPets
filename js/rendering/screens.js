@@ -897,7 +897,7 @@ var statusScreens = {
 			if (this.tick > 3 && this.tick !== 16)
 				evolutionSprites.EVOLVE.update();
 
-			if (this.tick == 7) {
+			if (this.tick === 7) {
 				petSprite.evolve();
 			}
 
@@ -929,7 +929,7 @@ var statusScreens = {
 			
 			evolutionSprites.DEVOLVE.update();
 
-			if (this.tick == 3) {
+			if (this.tick === 3) {
 				petSprite.devolve();
 			}
 
@@ -958,7 +958,7 @@ var statusScreens = {
 			
 			evolutionSprites.DEVOLVE.update();
 
-			if (this.tick == 3) {
+			if (this.tick === 3) {
 				petSprite.devolve();
 			}
 
@@ -991,10 +991,16 @@ var boostAnimationsScreens = {
         update: function() {
             // 4 ticks, 2 old hp, 2 changed
             if (this.tick === undefined || this.tick < 0) {
-                this.tick = 4;
+                this.tick = 8;
+                petSprite.currentPosition = petSprite.idlePosition;
+                petSprite.currentPosition.reset();
             }
 
             this.tick--;
+
+            if (this.tick === 3) {
+                buffCooldowns.hp.use();
+            }
 
             if (this.tick < 0) {
                 // switch back to fight screen
@@ -1004,7 +1010,24 @@ var boostAnimationsScreens = {
             }
         },
         draw: function() {
+            petSprite.draw();
+            if (this.tick < 6) {
+                backgroundBlackBar.draw();
+                var hpText = "HP";
+                for(var i = 0; i < hpText.length; i++) {
+                    letterDrawingSprite.draw(hpText.charAt(i), 1 + i * 5, BOTTOM_TEXT_HEIGHT, true);
+                }
 
+                var petHp = game.pet.stats.currentStats.hp.toString();
+                for (var index = petHp.length - 1; index > -1; index--) {
+
+                    var position = 2;
+                    for (var digit = petHp.length - 1; digit >= 0 && position >= 0; digit--) {
+                        numberDrawingSprite.draw(petHp.charAt(digit), 30 + ((position) * 4), BOTTOM_TEXT_HEIGHT, true);
+                        position--;
+                    }
+                }
+            }
         }
     }),
     DOUBLING_ATTACK: new ScreenSprite({

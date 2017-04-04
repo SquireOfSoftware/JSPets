@@ -14,6 +14,7 @@ function updateScreens() {
     if (currentScreen.referenceState !== game.currentScreenState.state) {
         // change screen
         var currentScreenState = game.currentScreenState.state;
+        //console.log(currentScreenState);
         if(currentScreenState === SCREEN_STATES.PETS)
             currentScreen = petScreen;
         else if (currentScreenState === SCREEN_STATES.MAP)

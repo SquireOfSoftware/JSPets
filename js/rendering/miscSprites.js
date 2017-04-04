@@ -43,8 +43,32 @@ var blackBar = new GenericSprite(
 
     },
     function() {
-        //console.log("I AM BEING DRAWN");
-        //this.context.clearSection(0, 0, this.size.width, this.size.height);
+        this.context.drawImage(
+            this.image,
+            0,
+            0,
+            this.size.width,
+            this.size.height,
+            0,
+            0,
+            this.size.width,
+            this.size.height
+        );
+    }
+);
+
+var backgroundBlackBar = new GenericSprite(
+    generateImage("sprites/black-bar.png"),
+    drawingBoard,
+    [],
+    {
+        width: 45,
+        height: 20
+    },
+    function() {
+
+    },
+    function() {
         this.context.drawImage(
             this.image,
             0,

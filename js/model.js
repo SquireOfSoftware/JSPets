@@ -429,13 +429,13 @@ var boostsState = {
 
 var boostsAnimationState = {
     HEALING_HALF: new ScreenState({
-        state: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.HEAL_HALF
+        state: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.HEALING_HALF
     }),
     DOUBLING_ATTACK: new ScreenState({
-        state: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.DOUBLE_ATTACK
+        state: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.DOUBLING_ATTACK
     }),
     DOUBLING_SPEED: new ScreenState({
-        state: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.DOUBLE_SPEED
+        state: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.DOUBLING_SPEED
     }),
     TO_CHAMPION: new ScreenState({
         state: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.TO_CHAMPION
