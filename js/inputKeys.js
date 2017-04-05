@@ -124,7 +124,9 @@ function walk() {
             game.pet.state === ANIMAL_STATES.WALKING) {
             takeAStep();
             document.getElementById("steps").value = game.stepCounter.total.toString();
-            if (game.stepCounter.currentSteps % 100 === 0)
+            //if (game.stepCounter.currentSteps % 100 === 0)
+
+            if (game.stepCounter.total.mod(100).value === 0)
                 game.pet.stats.walkingHeal();
 
         }

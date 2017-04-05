@@ -20,6 +20,30 @@ Next step is to look at implementing the actual buff cooldowns. I suspect I need
 
 If this is the case, then maybe I could optimise this further by introducing one black bar with text or something.
 
+== 5/4/2017 ==
+
+Cooldowns are finally implemented. There is a potential bug and that comes from not holding a strict "you must always display a max of three digits"
+
+So if people decide to hack the game, they can easily overflow the screen display.
+
+Something that I will be working on is trying to get intiative to "gain" friends along the way.
+
+Though some thought will need to go into how stats are "retained" through switching in and out.
+
+One thought is to only allow switching when out of battle and this would prevent the issue of "oh I am low on health, let me switch out to someone fresh".
+
+So probably need to figure out a data structure that hold stat values, but also need to also think about taking steps.
+
+As you know, every 100 steps will heal a pet, which means that-
+
+Just fixed up a potential bug, in that it wouldn't heal properly...
+
+Anyways, so every 100 steps will heal a pet, so does this mean it heals all the pets? Or does it only heal the one that is out?
+
+I would say that it heals all of them, it is sort of crappy to send someone out and it is only like 1 hp.
+
+So I would need to figure out how to "heal" all pets in one efficient go.
+
 == 28/3/2017 ==
 
 Some of the boosts (renamed from cooldowns) menus have been implemented. I now need to sort out the logic and the animation of each boost screen.
