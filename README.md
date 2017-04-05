@@ -6,20 +6,6 @@ Think of it like a digivice but with a duck as your digimon.
 
 This whole thing would be a lot easier if I could get my own digivice to work…unfortunately I think the battery leaked into the internals and it has stopped working. So I need to go with the power of the internet and rely on what other people have put up. From my observations, it looks like the japanese D-power is a lot harder than the european one.
 
-== 1/4/2017 ==
-
-April FOOLS!
-
-Anyways, so like I have adjusted and optimised the devolving animation and added in a "champion" cooldown and an "utimate" cooldown so that they can be used in battle.
-
-The evolutions are taking a different direction in that you no longer attack immediately after evolving, you actually instead get redirected to the battle menu to make more decisions.
-
-Something that I was thinking of introducing was a stat page to see what the stats were...but that wasn't really in the original game, you sort of needed to track how much damage was being done in your head.
-
-Next step is to look at implementing the actual buff cooldowns. I suspect I need to create some sort of alphabet to display "LIFE", "ATK" and "SPD" boosts on the page.
-
-If this is the case, then maybe I could optimise this further by introducing one black bar with text or something.
-
 == 5/4/2017 ==
 
 Cooldowns are finally implemented. There is a potential bug and that comes from not holding a strict "you must always display a max of three digits"
@@ -43,6 +29,20 @@ Anyways, so every 100 steps will heal a pet, so does this mean it heals all the 
 I would say that it heals all of them, it is sort of crappy to send someone out and it is only like 1 hp.
 
 So I would need to figure out how to "heal" all pets in one efficient go.
+
+== 1/4/2017 ==
+
+April FOOLS!
+
+Anyways, so like I have adjusted and optimised the devolving animation and added in a "champion" cooldown and an "utimate" cooldown so that they can be used in battle.
+
+The evolutions are taking a different direction in that you no longer attack immediately after evolving, you actually instead get redirected to the battle menu to make more decisions.
+
+Something that I was thinking of introducing was a stat page to see what the stats were...but that wasn't really in the original game, you sort of needed to track how much damage was being done in your head.
+
+Next step is to look at implementing the actual buff cooldowns. I suspect I need to create some sort of alphabet to display "LIFE", "ATK" and "SPD" boosts on the page.
+
+If this is the case, then maybe I could optimise this further by introducing one black bar with text or something.
 
 == 28/3/2017 ==
 
