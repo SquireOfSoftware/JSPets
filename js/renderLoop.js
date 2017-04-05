@@ -119,8 +119,8 @@ function updateScreens() {
         drawingBoard.clearEntireScreen();
         foregroundBoard.clearEntireScreen();
     }
-	else
-		console.log("current screen state", game.currentScreenState);
+	/*else
+		console.log("current screen state", game.currentScreenState);*/
 }
 
 function draw() {

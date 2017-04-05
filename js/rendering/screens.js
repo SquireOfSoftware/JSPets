@@ -620,7 +620,6 @@ var attackSequenceScreen = {
                 this.tick = 4;
 
                 this.context.clearEntireScreen();
-                //console.log("RECEIVING", this.rounds);
 
                 if (petSpriteStates.faster.referenceObject.isPet) {
                     // flip the canvas
@@ -989,21 +988,19 @@ var boostAnimationsScreens = {
         referenceState: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.HEALING_HALF,
         name: "HEALING_HALF",
         update: function() {
-            // 4 ticks, 2 old hp, 2 changed
             if (this.tick === undefined || this.tick < 0) {
-                this.tick = 8;
+                this.tick = 6;
                 petSprite.currentPosition = petSprite.idlePosition;
                 petSprite.currentPosition.reset();
             }
 
             this.tick--;
 
-            if (this.tick === 3) {
+            if (this.tick === 2) {
                 buffCooldowns.hp.use();
             }
 
             if (this.tick < 0) {
-                // switch back to fight screen
                 game.currentScreenState = fightBattleState;
                 currentScreen = battleMenuScreen.FIGHT;
                 currentScreen.update();
@@ -1011,67 +1008,70 @@ var boostAnimationsScreens = {
         },
         draw: function() {
             petSprite.draw();
-            if (this.tick < 6) {
-                backgroundBlackBar.draw();
-                var hpText = "HP";
-                for(var i = 0; i < hpText.length; i++) {
-                    letterDrawingSprite.draw(hpText.charAt(i), 1 + i * 5, BOTTOM_TEXT_HEIGHT, true);
-                }
+            backgroundBlackBar.draw();
+            fullLetterSprite.draw("HP", 1, BOTTOM_TEXT_HEIGHT);
 
-                var petHp = game.pet.stats.currentStats.hp.toString();
-                for (var index = petHp.length - 1; index > -1; index--) {
-
-                    var position = 2;
-                    for (var digit = petHp.length - 1; digit >= 0 && position >= 0; digit--) {
-                        numberDrawingSprite.draw(petHp.charAt(digit), 30 + ((position) * 4), BOTTOM_TEXT_HEIGHT, true);
-                        position--;
-                    }
-                }
-            }
+            fullNumberSprite.draw(game.pet.stats.currentStats.hp.toString(), 30, BOTTOM_TEXT_HEIGHT);
         }
     }),
     DOUBLING_ATTACK: new ScreenSprite({
         referenceState: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.DOUBLING_ATTACK,
         name: "DOUBLING_ATTACK",
         update: function() {
-            // 4 ticks, 2 old hp, 2 changed
             if (this.tick === undefined || this.tick < 0) {
-                this.tick = 4;
+                this.tick = 6;
+                petSprite.currentPosition = petSprite.idlePosition;
+                petSprite.currentPosition.reset();
             }
 
             this.tick--;
 
+            if (this.tick === 2) {
+                buffCooldowns.attack.use();
+            }
+
             if (this.tick < 0) {
-                // switch back to fight screen
                 game.currentScreenState = fightBattleState;
                 currentScreen = battleMenuScreen.FIGHT;
                 currentScreen.update();
             }
         },
         draw: function() {
+            petSprite.draw();
+            backgroundBlackBar.draw();
+            fullLetterSprite.draw("ATTK", 1, BOTTOM_TEXT_HEIGHT);
 
+            fullNumberSprite.draw(game.pet.stats.currentStats.attack.toString(), 30, BOTTOM_TEXT_HEIGHT);
         }
     }),
     DOUBLING_SPEED: new ScreenSprite({
         referenceState: SCREEN_STATES.BOOSTS_ANIMATIONS.substates.DOUBLING_SPEED,
         name: "DOUBLING_SPEED",
         update: function() {
-            // 4 ticks, 2 old hp, 2 changed
             if (this.tick === undefined || this.tick < 0) {
-                this.tick = 4;
+                this.tick = 6;
+                petSprite.currentPosition = petSprite.idlePosition;
+                petSprite.currentPosition.reset();
             }
 
             this.tick--;
 
+            if (this.tick === 2) {
+                buffCooldowns.speed.use();
+            }
+
             if (this.tick < 0) {
-                // switch back to fight screen
                 game.currentScreenState = fightBattleState;
                 currentScreen = battleMenuScreen.FIGHT;
                 currentScreen.update();
             }
         },
         draw: function() {
+            petSprite.draw();
+            backgroundBlackBar.draw();
+            fullLetterSprite.draw("SPD", 1, BOTTOM_TEXT_HEIGHT);
 
+            fullNumberSprite.draw(game.pet.stats.currentStats.speed.toString(), 30, BOTTOM_TEXT_HEIGHT);
         }
     })
 };

@@ -770,3 +770,28 @@ function LetterSprite () {
 }
 
 var letterDrawingSprite = new LetterSprite();
+
+function FullNumberSprite() {
+    this.draw = function(numberString, canvasX, canvasY) {
+        for (var index = numberString.length - 1; index > -1; index--) {
+
+            var position = 2;
+            for (var digit = numberString.length - 1; digit >= 0 && position >= 0; digit--) {
+                numberDrawingSprite.draw(numberString.charAt(digit), canvasX + ((position) * 4), canvasY, true);
+                position--;
+            }
+        }
+    }
+}
+
+var fullNumberSprite = new FullNumberSprite();
+
+function FullLetterSprite() {
+    this.draw = function(letterString, canvasX, canvasY) {
+        for(var i = 0; i < letterString.length; i++) {
+            letterDrawingSprite.draw(letterString.charAt(i), canvasX + i * 5, canvasY, true);
+        }
+    }
+}
+
+var fullLetterSprite = new FullLetterSprite();

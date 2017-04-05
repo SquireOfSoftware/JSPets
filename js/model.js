@@ -409,7 +409,7 @@ var boostsState = {
         },
         down: function() {
             if (buffCooldowns.attack.isReady) {
-                game.currentScreenState = boostsAnimationState.DOUBLING_SPEED;
+                game.currentScreenState = boostsAnimationState.DOUBLING_ATTACK;
                 asyncRender = true;
             }
             else {
