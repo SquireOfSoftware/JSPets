@@ -26,6 +26,10 @@ function updateScreens() {
         else if (currentScreenState === SCREEN_STATES.STEPS) {
             currentScreen = menuScreen[3];
         }
+        else if (currentScreenState === SCREEN_STATES.CHANGE.substates.MENU) {
+            currentScreen = changeScreens.MENU;
+        }
+
         else if (currentScreenState === SCREEN_STATES.STEPS.substates.TOTAL_STEPS) {
             currentScreen = totalStepsScreen;
             currentScreen.newScreen = true;

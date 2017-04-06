@@ -823,6 +823,34 @@ function resetAttackSequence() {
 	attackSequenceScreen.CALCULATING_DAMAGE.rounds = 0;
 }
 
+var changeScreens = {
+    MENU: new ScreenSprite({
+        name: "CHANGE_MENU",
+        image: generateImage("sprites/screens/change-menu.png"),
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.CHANGE.substates.MENU,
+        draw: function() {
+            this.context.clearSection(this.screenPosition.canvasX, this.screenPosition.canvasY, this.size.width, this.size.height);
+            this.context.drawImage(
+                this.image,
+                this.screenPosition.currentPosition.x,
+                this.screenPosition.currentPosition.y,
+                this.size.width,
+                this.size.height,
+                this.screenPosition.canvasX,
+                this.screenPosition.canvasY,
+                this.size.width,
+                this.size.height
+            );
+        }
+    }),
+    DISPLAY: new ScreenSprite({
+        name: "CHANGE_DISPLAY",
+        context: drawingBoard,
+        referenceState: SCREEN_STATES.CHANGE.substates.DISPLAY
+    })
+};
+
 var statusScreens = {
     HAPPY_ANIMATION: new ScreenSprite({
         name: "HAPPY_ANIMATION",
@@ -915,36 +943,7 @@ var statusScreens = {
 			if (this.tick > 3 && this.tick !== 16)
 				evolutionSprites.EVOLVE.draw();
 		}
-	}),/*
-	DEVOLVE_ANIMATION: new ScreenSprite({
-		name: "DEVOLVE_ANIMATION",
-		image: null,
-		context: null,
-		referenceState: SCREEN_STATES.DEVOLVING,
-		update: function () {
-			if (this.tick === undefined || this.tick < 0) { // the zero is to reset the animation
-                this.tick = 6;
-				petSprite.currentPosition = petSprite.idlePosition;
-				petSprite.currentPosition.reset();
-				
-            }
-            this.tick--;
-			
-			evolutionSprites.DEVOLVE.update();
-
-			if (this.tick === 3) {
-				petSprite.devolve();
-			}
-
-            if (this.tick < 0) {
-				performEndingAnimation();
-            }
-		},
-		draw: function () {
-			petSprite.draw();
-			evolutionSprites.DEVOLVE.draw();
-		}
-	}),*/
+	}),
 	IDLE_DEVOLVE_ANIMATION: new ScreenSprite({
 		name: "IDLE_DEVOLVE_ANIMATION",
 		image: null,
@@ -969,14 +968,6 @@ var statusScreens = {
 				resetStats();
 				resetAttackSequence();
                 foregroundBoard.clearEntireScreen();
-                /*if (game.pet.state === ANIMAL_STATES.SICK) {
-                    currentScreen = statusScreens.SADDENED_ANIMATION;
-                    game.currentScreenState = sadSequenceState;
-                }
-                else {
-                    currentScreen = petScreen;
-                    game.currentScreenState = petState;
-                }*/
                 performEndingAnimation();
             }
 		},
@@ -1180,15 +1171,10 @@ var introScene = new ScreenSprite({
             introSequenceSprite.positions.reset();
         }
         this.tick --;
-
-        /*if (this.tick > 5)
-            introSequenceSprite.update();*/
-
         if (this.tick > 5)
             fadingOverlaySprite.update();
 
         if (this.tick < 0) {
-            //foregroundBoard.clearEntireScreen();
             drawingBoard.clearEntireScreen();
             currentScreen = petScreen;
             game.currentScreenState = petState;

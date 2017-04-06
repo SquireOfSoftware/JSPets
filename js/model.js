@@ -115,7 +115,8 @@ var stepsState = new ScreenState({
         game.currentScreenState = totalStepsState;
     },
     left: function() {
-        game.currentScreenState = mapState;
+        //game.currentScreenState = mapState;
+        game.currentScreenState = changeStates.MENU;
         asyncRender = true;
     },
     right: function() {
@@ -147,10 +148,50 @@ var mapState = new ScreenState({
         asyncRender = true;
     },
     right: function() {
-        game.currentScreenState = stepsState;
+        /*
+        game.currentScreenState = stepsState;*/
+        game.currentScreenState = changeStates.MENU;
         asyncRender = true;
     }
 });
+
+var changeStates = {
+    MENU: new ScreenState({
+        state: SCREEN_STATES.CHANGE.substates.MENU,
+        up: function() {
+            game.currentScreenState = petState;
+            asyncRender = true;
+        },
+        down: function() {
+            game.currentScreenState = changeStates.DISPLAY;
+            asyncRender = true;
+        },
+        left: function() {
+            game.currentScreenState = mapState;
+            asyncRender = true;
+        },
+        right: function() {
+            game.currentScreenState = stepsState;
+            asyncRender = true;
+        }
+    }),
+    DISPLAY: new ScreenState({
+        state: SCREEN_STATES.CHANGE.substates.DISPLAY,
+        up: function() {
+            game.currentScreenState = changeStates.MENU;
+            asyncRender = true;
+        },
+        down: function() {
+
+        },
+        left: function() {
+
+        },
+        right: function() {
+
+        }
+    })
+};
 
 // STEPS
 

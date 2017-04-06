@@ -34,23 +34,6 @@ var ANIMAL_STATES = {
     })
 };
 
-/*
-// use this as a multiplier for stats as well
-var EVOLUTION_STATES = {
-    BASIC: new LogicState({
-        name: "BASIC",
-		value: 0
-    }),
-    CHAMPION: new LogicState({
-        name: "CHAMPION",
-		value: 1
-    }),
-    ULTIMATE: new LogicState({
-        name: "ULTIMATE",
-		value: 2
-    })
-};*/
-
 var ANIMAL_TYPES = {
 	BAT: new LogicState({
         name: "BAT"
@@ -178,6 +161,14 @@ var SCREEN_STATES = {
                         name: "SOUTH"
                     })
                 }
+            })
+        }
+    }),
+    CHANGE: new LogicState({
+        name: "CHANGE",
+        substates: {
+            DISPLAY: new LogicState({
+                name: "DISPLAY"
             })
         }
     }),
