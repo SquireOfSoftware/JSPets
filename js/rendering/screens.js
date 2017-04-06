@@ -754,7 +754,8 @@ var attackSequenceScreen = {
 					drawingBoard.restore();
 					foregroundBoard.restore();
 					if (petSprite.isEvolved > 0) {
-						currentScreen = statusScreens.DEVOLVE_ANIMATION;
+						//currentScreen = statusScreens.DEVOLVE_ANIMATION;
+                        currentScreen = statusScreens.IDLE_DEVOLVE_ANIMATION;
 						currentScreen.update();
 					}
 					else
@@ -765,8 +766,11 @@ var attackSequenceScreen = {
         draw: function() {
             petSpriteStates.slower.draw();
             if (this.tick < 5) {
-                blackBar.draw(); // note that this is 7 pixels high from the bottom
+
+                backgroundBlackBar.draw(); // note that this is 7 pixels high from the bottom
+
                 healthRemainingSprite.draw();
+                fullLetterSprite.draw("HP", 1, BOTTOM_TEXT_HEIGHT);
             }
         }
     })
@@ -911,7 +915,7 @@ var statusScreens = {
 			if (this.tick > 3 && this.tick !== 16)
 				evolutionSprites.EVOLVE.draw();
 		}
-	}),
+	}),/*
 	DEVOLVE_ANIMATION: new ScreenSprite({
 		name: "DEVOLVE_ANIMATION",
 		image: null,
@@ -940,7 +944,7 @@ var statusScreens = {
 			petSprite.draw();
 			evolutionSprites.DEVOLVE.draw();
 		}
-	}),
+	}),*/
 	IDLE_DEVOLVE_ANIMATION: new ScreenSprite({
 		name: "IDLE_DEVOLVE_ANIMATION",
 		image: null,
@@ -965,14 +969,15 @@ var statusScreens = {
 				resetStats();
 				resetAttackSequence();
                 foregroundBoard.clearEntireScreen();
-                if (game.pet.state === ANIMAL_STATES.SICK) {
+                /*if (game.pet.state === ANIMAL_STATES.SICK) {
                     currentScreen = statusScreens.SADDENED_ANIMATION;
                     game.currentScreenState = sadSequenceState;
                 }
                 else {
                     currentScreen = petScreen;
                     game.currentScreenState = petState;
-                }
+                }*/
+                performEndingAnimation();
             }
 		},
 		draw: function () {

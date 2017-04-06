@@ -220,6 +220,12 @@ var healthRemainingSprite = new GenericSprite(
         // draw numbers 1px up from bottom, 10px from the right
         var screenColumnPosition = 0;
         //this.context.clearEntireScreen();
+        this.context.clearSection(
+            HP_BOUNDARIES.STARTING_X_COORD - NUMBER_PX_SIZE.WIDTH * 3,
+            HP_BOUNDARIES.STARTING_HEIGHT,
+            NUMBER_PX_SIZE.WIDTH * 3, // width on canvas
+            NUMBER_PX_SIZE.HEIGHT
+        );
         for (var index = this.health.length - 1; index > -1; index--) {
             // need to track positions
             this.context.drawImage(
@@ -684,7 +690,7 @@ var introSequenceSprite = new GenericSprite(
 function NumberSprite () {
     var sprite = {};
     sprite.image = generateImage("sprites/step-numbers.png");
-    sprite.context = drawingBoard;
+    sprite.context = foregroundBoard;
 
     sprite.draw = function(character, canvasX, canvasY, isInverted) {
         var spriteSheetY = 0;
@@ -710,7 +716,7 @@ var numberDrawingSprite = new NumberSprite();
 function LetterSprite () {
     var sprite = {};
     sprite.image = generateImage("sprites/alphabet.png");
-    sprite.context = drawingBoard;
+    sprite.context = foregroundBoard;
 
     sprite.draw = function(character, canvasX, canvasY, isInverted) {
         var spriteSheetY = 0;
