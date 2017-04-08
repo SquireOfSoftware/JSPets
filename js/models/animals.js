@@ -21,7 +21,7 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
         hp: hp,
         attack: attack,
         speed: speed,
-        maxHp: hp
+        maxHp: hp // this is used to track the evolution hp when it goes higher, originalHp only tracks stage 1
     };
 
     this.originalStats = {
@@ -79,7 +79,7 @@ function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, block
             // so that it is easier for easy levels, harder for harder levels
             var randomRoll = Math.random() * 10; // this gives us the value to place in equation
             
-            var randomLevel = this.maxLevel * Math.exp(-((Math.pow(randomRoll - difficulty,2))/(this.maxLevel * 10)))
+            var randomLevel = this.maxLevel * Math.exp(-((Math.pow(randomRoll - difficulty,2))/(this.maxLevel * 10)));
             // ceiling the value to closest integer
             
             randomLevel = Math.ceil(randomLevel);
@@ -506,7 +506,7 @@ var biomes = [
             new AnimalChance(ANIMAL_TYPES.RABBIT, 10),
             new AnimalChance(ANIMAL_TYPES.SEAL, 2),
             new AnimalChance(ANIMAL_TYPES.TASMANIAN_DEVIL, 10),
-            new AnimalChance(ANIMAL_TYPES.WOMBAT, 1),
+            new AnimalChance(ANIMAL_TYPES.WOMBAT, 1)
         ]
     ),
     new BiomeState(
@@ -520,7 +520,7 @@ var biomes = [
         ]
     ),
     new BiomeState(
-        BIOMES.FOREST,
+        BIOMES.RAINFOREST,
         [
             new AnimalChance(ANIMAL_TYPES.BAT, 10),
             new AnimalChance(ANIMAL_TYPES.BEE, 8),
@@ -532,7 +532,7 @@ var biomes = [
             new AnimalChance(ANIMAL_TYPES.PLATYPUS, 10),
             new AnimalChance(ANIMAL_TYPES.RABBIT, 8),
             new AnimalChance(ANIMAL_TYPES.SNAKE, 3),
-            new AnimalChance(ANIMAL_TYPES.TASMANIAN_DEVIL, 10),
+            new AnimalChance(ANIMAL_TYPES.TASMANIAN_DEVIL, 10)
         ]
     ),
     new BiomeState(
@@ -546,18 +546,18 @@ var biomes = [
             new AnimalChance(ANIMAL_TYPES.KOOKABURRA, 5),
             new AnimalChance(ANIMAL_TYPES.OWL, 5),
             new AnimalChance(ANIMAL_TYPES.RABBIT, 10),
-            new AnimalChance(ANIMAL_TYPES.WOMBAT, 8),
+            new AnimalChance(ANIMAL_TYPES.WOMBAT, 8)
         ]
     ),
     new BiomeState(
-        BIOMES.LAKE,
+        BIOMES.LAKES,
         [
             new AnimalChance(ANIMAL_TYPES.DUCK, 10),
             new AnimalChance(ANIMAL_TYPES.KOOKABURRA, 5),
             new AnimalChance(ANIMAL_TYPES.LORIKEET, 5),
             new AnimalChance(ANIMAL_TYPES.PLATYPUS, 10),
-            new AnimalChance(ANIMAL_TYPES.SANKE, 1),
-            new AnimalChance(ANIMAL_TYPES.TURTLE, 5),
+            new AnimalChance(ANIMAL_TYPES.SANDCASTLE, 1),
+            new AnimalChance(ANIMAL_TYPES.TURTLE, 5)
         ]
     ),
     new BiomeState(
@@ -568,7 +568,7 @@ var biomes = [
             new AnimalChance(ANIMAL_TYPES.PENGUIN, 1),
             new AnimalChance(ANIMAL_TYPES.SEAL, 2),
             new AnimalChance(ANIMAL_TYPES.TURTLE, 10),
-            new AnimalChance(ANIMAL_TYPES.WHALE, 5),
+            new AnimalChance(ANIMAL_TYPES.WHALE, 5)
         ]
     ),
     new BiomeState(

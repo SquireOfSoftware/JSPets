@@ -847,7 +847,14 @@ var changeScreens = {
     DISPLAY: new ScreenSprite({
         name: "CHANGE_DISPLAY",
         context: drawingBoard,
-        referenceState: SCREEN_STATES.CHANGE.substates.DISPLAY
+        referenceState: SCREEN_STATES.CHANGE.substates.DISPLAY,
+        update: function() {
+            // need to figure out what to update
+            // how to "iteratively" go through the various pets
+        },
+        draw: function() {
+            this.context.clearSection(this.screenPosition.canvasX, this.screenPosition.canvasY, this.size.width, this.size.height);
+        }
     })
 };
 
