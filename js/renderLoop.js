@@ -4,9 +4,9 @@
 
 var DRAW_TO_SCREEN = true; // the boolean that is controlled by debug
 
-var currentScreen = petScreen;
+//var currentScreen = petScreen;
 //var currentScreen = endingGameScene.FINAL_SCENE;
-//var currentScreen = introScene;
+var currentScreen = introScene;
 
 function updateScreens() {
     // only triggered when a button is pressed or when a walk has reached a checkpoint
@@ -88,11 +88,7 @@ function updateScreens() {
         else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.EVOLVE.substates.TO_ULTIMATE) {
             currentScreen = powerUpScreens.ULTIMATE;
         }
-		else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.EVOLVING ||
-            SCREEN_STATES.BOOSTS_ANIMATIONS.substates.TO_CHAMPION ||
-            SCREEN_STATES.BOOSTS_ANIMATIONS.substates.TO_ULTIMATE) {
-			currentScreen = statusScreens.EVOLVE_ANIMATION;
-		}
+
 		else if (currentScreenState === SCREEN_STATES.DEVOLVING.substates.IDLE) {
 			currentScreen = statusScreens.IDLE_DEVOLVE_ANIMATION;
 		}
@@ -110,6 +106,11 @@ function updateScreens() {
         }
         else if (currentScreenState === SCREEN_STATES.INTRO) {
             currentScreen = introScene;
+        }
+        else if (currentScreenState === SCREEN_STATES.POWER_UP.substates.EVOLVING ||
+            SCREEN_STATES.BOOSTS_ANIMATIONS.substates.TO_CHAMPION ||
+            SCREEN_STATES.BOOSTS_ANIMATIONS.substates.TO_ULTIMATE) {
+            currentScreen = statusScreens.EVOLVE_ANIMATION;
         }
         else {
             //currentScreen = petScreen;
