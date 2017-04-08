@@ -50,15 +50,12 @@ var australia = {
                 new City(
                     MAP_STATES.TAS.substates.REDPA,
                     getCoordinates(4, 3),
-                    2, //200,
+                    200,
                     -5,
                     [
                         new BiomeChance(BIOMES.COASTAL, 5),
                         new BiomeChance(BIOMES.GRASSLANDS, 4),
                         new BiomeChance(BIOMES.URBAN, 1)
-
-                        //new BiomeChance(BIOMES.BEACH, 1)
-                        //new BiomeChance(BIOMES.SUPER_NATURAL, 10)
                     ]
                 ),
                 new City(
@@ -88,7 +85,7 @@ var australia = {
                     570,
                     0,
                     [
-                        new BiomeChance(BIOMES.LAKE, 3),
+                        new BiomeChance(BIOMES.LAKES, 3),
                         new BiomeChance(BIOMES.CRAGS, 2),
                         new BiomeChance(BIOMES.ALPINE, 1),
                         new BiomeChance(BIOMES.WETLANDS, 4)
@@ -144,7 +141,7 @@ var australia = {
                     916,
                     2,
                     [
-                        new BiomeChance(BIOMES.LAKE, 1),
+                        new BiomeChance(BIOMES.LAKES, 1),
                         new BiomeChance(BIOMES.URBAN, 5),
                         new BiomeChance(BIOMES.CRAGS, 1),
                         new BiomeChance(BIOMES.GRASSLANDS, 3)
@@ -167,7 +164,7 @@ var australia = {
                     1070,
                     3,
                     [
-                        new BiomeChance(BIOMES.LAKE, 3),
+                        new BiomeChance(BIOMES.LAKES, 3),
                         new BiomeChance(BIOMES.RAINFOREST, 6),
                         new BiomeChance(BIOMES.WETLANDS, 1)
                     ]
@@ -179,7 +176,7 @@ var australia = {
                     4,
                     [
                         new BiomeChance(BIOMES.ALPINE, 1),
-                        new BiomeChance(BIOMES.LAKE, 1),
+                        new BiomeChance(BIOMES.LAKES, 1),
                         new BiomeChance(BIOMES.CRAGS, 4),
                         new BiomeChance(BIOMES.URBAN, 2),
                         new BiomeChance(BIOMES.PLAINS, 3)
@@ -206,7 +203,7 @@ var australia = {
                     975,
                     4,
                     [
-                        new BiomeChance(BIOMES.LAKE, 1),
+                        new BiomeChance(BIOMES.LAKES, 1),
                         new BiomeChance(BIOMES.RAINFOREST, 7),
                         new BiomeChance(BIOMES.WETLANDS, 2)
                     ]
