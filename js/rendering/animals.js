@@ -2,6 +2,10 @@
  * Created by JarvisWalker on 13/2/17.
  */
 
+var petSprite = getSprite(ANIMAL_TYPES.DUCK, game.pet);
+
+var enemySprite;
+
 function AnimalSprite(options) {
     this.image = options.image;
     this.referenceObject = options.referenceObject;
@@ -351,10 +355,6 @@ function AnimalSprite32Width(image, drawingBoard, referenceObject) {
             })
         });
 }
-
-var petSprite = getSprite(ANIMAL_TYPES.DUCK, game.pet);
-
-var enemySprite;
 
 function getSprite(animalType, referenceObject) {
     if (animalType === ANIMAL_TYPES.BAT) {

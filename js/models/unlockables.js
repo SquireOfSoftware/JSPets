@@ -4,15 +4,6 @@
  */
 
 var party = new Party();
-//{
-    // either an array or object or some sort, is there such things as pairs?
-    // needs to:
-    // 1. pick out what animal you want
-    // 2.
-
-    // can push and pop objects on and off
-
-//};
 
 function PartyMember(referenceObject, maxNumberToUnlock) { //, isUnlocked) {
     this.referenceObject = referenceObject; // this is the actual animal object with stats
@@ -29,19 +20,43 @@ function PartyMember(referenceObject, maxNumberToUnlock) { //, isUnlocked) {
     }
 }
 
-function Party(animals) {
+// assume that animals is an array of animals
+function Party() {
     this.collection = {};
+    this.currentPet = {};
+
+    for (key in ANIMAL_TYPES) {
+        //var partyMember = new PartyMember(getAnimalState(ANIMAL_TYPES[key]), 100);
+        if (ANIMAL_TYPES.hasOwnProperty(key)) {
+            var partyMember = new PartyMember(getAnimalState(ANIMAL_TYPES[key]), 100);
+
+            // TODO apparently there is a bug with wombat constantly being set as the variable
+            // I think it has something to do with animalstate
+            partyMember.isPet = true;
+            this.collection[ANIMAL_TYPES[key]] = partyMember;
+        }
+    }
 
     this.add = function(state, referenceObject) {
-        //this.collection.push(animal);
+        referenceObject.isPet = true;
         this.collection[state] = referenceObject;
     };
 
     this.heal = function() {
         // run through heal only those who need healing, this might need to be changed dynamically though
+        for(key in this.collection) {
+            if (this.collection.hasOwnProperty(key))
+                this.collection[key].referenceObject.stats.walkingHeal();
+        }
     };
 
     this.getAnimal = function(state) {
         return this.collection[state];
+    };
+
+    this.change = function(state) {
+        currentPet = this.collection[state];
+        game.pet = currentPet;
+        petSprite = getSprite(state, currentPet);
     };
 }
