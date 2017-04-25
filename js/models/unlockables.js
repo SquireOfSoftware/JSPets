@@ -4,7 +4,7 @@
  */
 
 var party = new Party();
-
+/*
 function PartyMember(referenceObject, maxNumberToUnlock) { //, isUnlocked) {
     this.referenceObject = referenceObject; // this is the actual animal object with stats
     var currentNumberToUnlock = 0;
@@ -18,45 +18,56 @@ function PartyMember(referenceObject, maxNumberToUnlock) { //, isUnlocked) {
     this.numberLeftToUnlock = function() {
         return maxNumberToUnlock - currentNumberToUnlock;
     }
-}
+}*/
 
 // assume that animals is an array of animals
 function Party() {
-    this.collection = {};
+    // goal: fast look up with ordered arrays...exactly how frequently will i be using the lookup?
+    // realistic goal: use an array and just look up when I need to.
+    this.collection = [];
     this.currentPet = {};
 
-    for (key in ANIMAL_TYPES) {
-        //var partyMember = new PartyMember(getAnimalState(ANIMAL_TYPES[key]), 100);
-        if (ANIMAL_TYPES.hasOwnProperty(key)) {
-            var partyMember = new PartyMember(getAnimalState(ANIMAL_TYPES[key]), 100);
-
-            // TODO apparently there is a bug with wombat constantly being set as the variable
-            // I think it has something to do with animalstate
-            partyMember.isPet = true;
-            this.collection[ANIMAL_TYPES[key]] = partyMember;
+    function setup() {
+        var collection = [];
+        for (key in ANIMAL_TYPES) {
+            if (ANIMAL_TYPES.hasOwnProperty(key)) {
+                var partyMember = getAnimalState(ANIMAL_TYPES[key]);//new PartyMember(getAnimalState(ANIMAL_TYPES[key]), 100);
+                partyMember.isPet = true;
+                collection.push(partyMember);
+            }
         }
+        return collection;
     }
 
-    this.add = function(state, referenceObject) {
+    this.collection = setup();
+
+    this.add = function(referenceObject) {
         referenceObject.isPet = true;
-        this.collection[state] = referenceObject;
+        this.collection.push(referenceObject);
     };
 
     this.heal = function() {
-        // run through heal only those who need healing, this might need to be changed dynamically though
-        for(key in this.collection) {
-            if (this.collection.hasOwnProperty(key))
-                this.collection[key].referenceObject.stats.walkingHeal();
+        for(var i = 0; i < this.collection.length; i++) {
+            this.collection[i].stats.walkingHeal();
         }
     };
 
     this.getAnimal = function(state) {
-        return this.collection[state];
+        for(var i = 0; i < this.collection.length; i++) {
+            if (this.collection[i].state === state)
+                return this.collection[i];
+        }
+        return undefined;
     };
 
     this.change = function(state) {
-        currentPet = this.collection[state];
-        game.pet = currentPet;
-        petSprite = getSprite(state, currentPet);
+        for(var i = 0; i < this.collection.length; i++) {
+            if (this.collection[i].state === state) {
+                this.currentPet = this.collection[i];
+                game.pet = this.currentPet;
+                petSprite = getSprite(state, currentPet);
+                break;
+            }
+        }
     };
 }

@@ -1,4 +1,4 @@
-function AnimalState(name, isPet, stats, walkingStatus, animalType) {
+function AnimalState(name, isPet, stats, walkingStatus, animalType, unlockCondition) {
     this.name = name;
 
     this.stats = stats;
@@ -14,6 +14,41 @@ function AnimalState(name, isPet, stats, walkingStatus, animalType) {
         this.state = ANIMAL_STATES.IDLE;
 
     this.type = animalType;
+
+    this.unlockCondition = unlockCondition;
+}
+
+function UnlockCondition(isUnlocked, increment, leftToUnlock) {
+    this.isUnlocked = isUnlocked;
+    this.increment = increment;
+    this.leftToUnlock = leftToUnlock;
+}
+
+function generateDefeatCondition(maxSteps, isUnlocked) {
+    if (isUnlocked === undefined)
+        isUnlocked = false;
+
+    return new UnlockCondition(
+        isUnlocked,
+        function() {
+            if(this.currentSteps === undefined) {
+                this.currentSteps = 0;
+            }
+
+            if (this.currentSteps < maxSteps) {
+                this.currentSteps++;
+            }
+            else if (this.currentSteps === maxSteps) {
+                this.isUnlocked = true;
+            }
+        },
+        function() {
+            if (this.currentSteps !== undefined) {
+                return maxSteps - this.currentSteps;
+            }
+            return maxSteps; // theres an error somewhere, just display the max
+        }
+    )
 }
 
 function Stats(hp, attack, speed, hpBuff, attackBuff, speedBuff, maxLevel, blockBonus, escapeBonus) {
@@ -123,7 +158,8 @@ function getAnimalState(state) {
                 1, 2, 2,
                 2, 0, 0),
             ANIMAL_STATES.IDLE,
-            ANIMAL_TYPES.BAT
+            ANIMAL_TYPES.BAT,
+            generateDefeatCondition(5)
         );
     else if (state === ANIMAL_TYPES.BEE)
         return new AnimalState(
@@ -134,7 +170,8 @@ function getAnimalState(state) {
                 1, 1, 1, // hpBuff, attackBuff, speedBuff
                 3, 0, 0),// maxLvl, blockability, escapability
             ANIMAL_STATES.IDLE,
-            ANIMAL_TYPES.BEE
+            ANIMAL_TYPES.BEE,
+            generateDefeatCondition(6)
         );
     else if (state === ANIMAL_TYPES.BUTTERFLY)
         return new AnimalState(
